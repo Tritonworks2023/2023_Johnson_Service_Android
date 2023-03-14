@@ -1,0 +1,1736 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_back_arrow" />
+
+            <TextView
+                android:id="@+id/title_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Repair Work Approval Request"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/main_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="JOB HAZARD ANALYSIS AT SITE-REPAIR ACTIVITY"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Job No."
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_job_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Job Number"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Branch Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_branch_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Branch Name"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Site Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_site_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Site Name"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Nature Of Work"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_nature_work"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Nature Of Work"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="GENERAL"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="1. Mechanic / team aware of standard repair process and understand to perform activity"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_team_aware_stand_repair"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="2. mechanic trained / competent to conduct the process"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_comp_conduct"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="3. All process related PPEs are available"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_rel_ppes"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="4. Proper and special Tools are available"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_prop_spec_tools"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="5. Mechanics not working at different levels"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_mech_differ_level"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="6. Barricade and maintenance display card available"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_barr_main_display"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="7. Disconnecting of electrical circuit while on work "
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_discon_elect_cic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="8. Certified Hoisting tools used in process"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_cert_hoist_tool"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="MACHINE ROOM"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="1. Access to Machine room is safe &amp; Well lit."
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_access_mach_room"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="2. Lighting is adequate on machine room"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_light_adeq_machine_room"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="3. Floor is free of oil &amp; material which may cause tripping Hazard"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_floor_free_tripping"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="4. Oils &amp; Lubricants are in closed &amp; sealed containers"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_oil_lub_closed"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="5. Speed governor functional"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_speed_gov_func"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="6. Safe means of hoisting is available. (Capacity,hook locking,etc)"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_host_available"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="CAR AND CWT"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="1. Emergency stop switch easily accessible &amp; identified in Car and Cwt"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_stop_switch_easily_access_iden_car"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="2. Emergency stop switch functional &amp; verified in Car and Cwt"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_stop_switch_func_ver_car"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="3. car top inspection box installed &amp; Functioning properly and verified"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_car_top_insp_func_prop_verif"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="4. Lighting is adequate on car top"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_light_adeq_car_top"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="5. Car top barricade angle installed (To loop FBH while on work)"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_car_top_barri_angle_install"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="6. Car top wiring guarded to ensure no physical damage of cables / wire while on work"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_car_top_phy_dam_cab_wire_work"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="7. Tools &amp; material required for repair activity placed safely on car top"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_tools_mater_repair"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="8. Mechanical safety gear (OSG) functional"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_mech_safety_gear"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="HOISTWAY"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="1. Lighting is adequate on hoist way"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_light_adeq_hoist_way"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="2. All covers / Fascia installed"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_covers_fascia_install"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="3. Hoistway screening / protection installed"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_hoist_screen_protect_insta"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="PIT"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="1. Emergency stop switch easily accessible &amp; identified. Functional &amp; Verified in Pit"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_stop_switch_easily_access_iden_pit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="2. Emergency stop switch functional &amp; verified"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_stop_switch_func_ver_pit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="3. Lighting is adequate on Pit"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_light_adeq_pit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="4. Pit ladder is installed &amp; easily accessible"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_pit_lad_install_access"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="5. CWT screen guard installed &amp; level below CWT buffer top"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_cwt_scr_guard_blo_buf_top"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="6. Exercise caution while working on duplex shafts where PIT separation is not done"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_dup_shaft_pit_not_done"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="7. Floor must be free of water leakage, oil &amp; materials which may cause tripping Hazard"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <Spinner
+                        android:id="@+id/spin_free_wat_oil_mat_trip_hazard"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Remarks : (Potential Hazard identified &amp; action taken)"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rectangle_border_square"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    android:lines="10"
+                    android:maxLength="250"
+                    android:maxLines="250"
+                    android:minLines="5"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Mechanic Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_mech_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Mechanic Name"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Mechanic EMP No."
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_mech_emp_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Mechanic Employee Number"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_mech_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Mechanic Signature"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/llMechanicSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.github.gcacace.signaturepad.views.SignaturePad
+                        android:id="@+id/signaturePadMechanic"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+                    <LinearLayout
+                        android:id="@+id/buttons_container_mechanic"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
+
+                        <Button
+                            android:id="@+id/clear_button_mechanic"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Clear"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/save_button_mechanic"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Save"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Zonal/Route Engineer Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_eng_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Zonal/Route Engineer Name"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Engineer EMP No."
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_eng_emp_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Engineer Employee Number"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_eng_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Engineer Signature"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/llEngineerSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.github.gcacace.signaturepad.views.SignaturePad
+                        android:id="@+id/signaturePadEngineer"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+                    <LinearLayout
+                        android:id="@+id/buttons_container_engineer"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
+
+                        <Button
+                            android:id="@+id/clear_button_engineer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Clear"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/save_button_engineer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Save"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/blue_button_background_with_radius"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="submit"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

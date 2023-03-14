@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Service_Activity.failureReportModule.FailureReportFormActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_back_arrow" />
+
+            <TextView
+                android:id="@+id/title_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="DEVICE/COMPONENT FAILURE REPORT"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/main_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Branch Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_branch_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Job No."
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_job_id"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Site Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_sit_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Department ( Testing / Service )"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_dept"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Department ( Testing / Service )"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Type of service"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbPremier"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="40dp"
+                        android:text="Platinum"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                    <CheckBox
+                        android:id="@+id/cbGold"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="40dp"
+                        android:text="Gold"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbSilver"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="40dp"
+                        android:text="Silver"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                    <CheckBox
+                        android:id="@+id/cbF"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="40dp"
+                        android:text="Free"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbNA"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="40dp"
+                        android:text="N/A"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="40dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Device /  Component Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_dev_com_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Device /  Component Name"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Model No. &amp; Make"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_mod_mak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Model No. &amp; Make"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Rating"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:digits="0987654321"
+                    android:ellipsize="end"
+                    android:hint="Enter Rating"
+                    android:imeOptions=""
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Serial No."
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_serial_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Serial Number"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Device / Component installation Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_device_ins_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Device / Component Installation Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Date of Failure"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_failure_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Failure Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Failure Observation"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_fail_observe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Failure Observation"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Incoming Supply Voltage"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_inc_sup_volt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:digits="0987654321"
+                    android:ellipsize="end"
+                    android:hint="Enter Incoming Supply Voltage"
+                    android:imeOptions=""
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Comments about this failure ( Explain how the failure happened )"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_comments_failure"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rectangle_border_square"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    android:lines="10"
+                    android:maxLength="250"
+                    android:maxLines="250"
+                    android:minLines="5"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Environmental Condition ( Brief description to be given )"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edt_environmental_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rectangle_border_square"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    android:lines="10"
+                    android:maxLength="250"
+                    android:maxLines="250"
+                    android:minLines="5"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Mechanic Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_mechanic_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Mechanic Name"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Mechanic Signature"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/llMechanicSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.github.gcacace.signaturepad.views.SignaturePad
+                        android:id="@+id/signaturePadMechanic"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+                    <LinearLayout
+                        android:id="@+id/buttons_container_mechanic"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
+
+                        <Button
+                            android:id="@+id/clear_button_mechanic"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Clear"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/save_button_mechanic"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Save"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Engineer Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Engineer Name"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Engineer Signature"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/llEngineerSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.github.gcacace.signaturepad.views.SignaturePad
+                        android:id="@+id/signaturePadEngineer"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+                    <LinearLayout
+                        android:id="@+id/buttons_container_engineer"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
+
+                        <Button
+                            android:id="@+id/clear_button_engineer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Clear"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/save_button_engineer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Save"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+                </LinearLayout>-->
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/blue_button_background_with_radius"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="submit"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
