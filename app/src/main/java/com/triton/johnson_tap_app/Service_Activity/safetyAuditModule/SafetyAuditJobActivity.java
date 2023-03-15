@@ -35,35 +35,32 @@ import com.triton.johnson_tap_app.utils.ConnectionDetector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewJobSafetyAuditActivity extends AppCompatActivity implements PetBreedTypeSelectListener, OnItemClickDataChangeListener {
+public class SafetyAuditJobActivity extends AppCompatActivity implements PetBreedTypeSelectListener, OnItemClickDataChangeListener {
 
-    ImageView img_back, img_clearsearch;
+    ImageView img_back, img_clearSearch;
     RecyclerView rv_new_job_safety_audit;
-    EditText edtsearch;
+    EditText edtSearch;
     TextView txt_no_records, txt_menu_name;
     RelativeLayout Job;
     NewJobListSafetyAuditAdapter newJobListSafetyAuditAdapter;
     Context context;
     Button btn_search;
-    String TAG = NewJobSafetyAuditActivity.class.getSimpleName(), se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, networkStatus = "";
+    String TAG = SafetyAuditJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name, se_id,
+            check_id, service_title, message, networkStatus = "";
     SharedPreferences sharedPreferences;
     List<NewJobListSafetyAuditResponse.DataBean> breedTypedataBeanList = new ArrayList<>();
     private String PetBreedType = "";
-
-//    ArrayList<String> arli_jobid = new ArrayList<String>();
-//    ArrayList<String> arli_custname = new ArrayList<String>();
-//    ArrayList<String> arli_auditdate = new ArrayList<String>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_new_job_safety_audit);
+        setContentView(R.layout.activity_safety_audit_job);
         context = this;
 
         img_back = findViewById(R.id.img_back);
-        edtsearch = findViewById(R.id.edt_search);
-        img_clearsearch = findViewById(R.id.img_clearsearch);
+        edtSearch = findViewById(R.id.edt_search);
+        img_clearSearch = findViewById(R.id.img_clearsearch);
         txt_no_records = findViewById(R.id.txt_no_records);
         rv_new_job_safety_audit = findViewById(R.id.rv_new_job_safety_audit);
         Job = findViewById(R.id.rel_job);
@@ -79,18 +76,6 @@ public class NewJobSafetyAuditActivity extends AppCompatActivity implements PetB
         Log.i(TAG, "onCreate: service_title --> " + service_title);
         Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
 
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            //  service_title = extras.getString("service_title");
-            status = extras.getString("status");
-            //   Log.e("Name",":" + service_title);
-            Log.i(TAG, "onCreate: status --> " + status);
-        }
-        if (status.equals("new")) {
-            txt_menu_name.setText("Escalator Survey New Job List");
-        } else {
-            txt_menu_name.setText("Escalator Survey Pause Job List");
-        }*/
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
         Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);
@@ -101,43 +86,12 @@ public class NewJobSafetyAuditActivity extends AppCompatActivity implements PetB
 
         } else {
 
-            /*if (status.equals("new")) {
-
-                newJobList();
-            } else {
-
-                Job.setVisibility(View.GONE);
-                edtsearch.setVisibility(View.GONE);
-                pausedJobResponseCall();
-            }*/
         }
-
-//        arli_jobid.add("L-44291");
-//        arli_jobid.add("L-44292");
-//        arli_jobid.add("L-44293");
-//        arli_jobid.add("L-44294");
-//        arli_jobid.add("L-44295");
-//
-//        arli_custname.add("John");
-//        arli_custname.add("Sam");
-//        arli_custname.add("Devi");
-//        arli_custname.add("Anisha");
-//        arli_custname.add("Nishanth");
-//
-//        arli_auditdate.add("12-09-2022");
-//        arli_auditdate.add("15-09-2022");
-//        arli_auditdate.add("17-09-2022");
-//        arli_auditdate.add("17-09-2022");
-//        arli_auditdate.add("10-09-2022");
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-//                Intent send = new Intent(context, SiteAudit_Activity.class);
-//                //send.putExtra("service_title",service_title);
-//                send.putExtra("status", status);
-//                startActivity(send);
             }
         });
 
@@ -152,17 +106,17 @@ public class NewJobSafetyAuditActivity extends AppCompatActivity implements PetB
             }
         });
 
-        edtsearch.addTextChangedListener(new TextWatcher() {
+        edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String Search = edtsearch.getText().toString();
+                String Search = edtSearch.getText().toString();
                 if (Search.equals("")) {
                     rv_new_job_safety_audit.setVisibility(View.VISIBLE);
-                    img_clearsearch.setVisibility(View.INVISIBLE);
+                    img_clearSearch.setVisibility(View.INVISIBLE);
                 } else {
                     filter(Search);
                 }
@@ -170,7 +124,7 @@ public class NewJobSafetyAuditActivity extends AppCompatActivity implements PetB
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String Search = edtsearch.getText().toString();
+                String Search = edtSearch.getText().toString();
                 rv_new_job_safety_audit.setVisibility(View.VISIBLE);
                 txt_no_records.setVisibility(View.GONE);
                 filter(Search);
@@ -332,5 +286,6 @@ public class NewJobSafetyAuditActivity extends AppCompatActivity implements PetB
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
 }

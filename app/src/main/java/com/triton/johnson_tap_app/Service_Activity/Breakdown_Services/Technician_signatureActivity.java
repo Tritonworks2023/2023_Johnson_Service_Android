@@ -667,13 +667,13 @@ public class Technician_signatureActivity extends AppCompatActivity {
                                 mr10 = response.body().getData().getMr_10();
                             }
                             breakdown_servies = response.body().getData().getBreakdown_service();
-
-                            uploadimagepath = response.body().getData().getTech_signature();
-                            Log.e("Tech Sign Retrive", "" + uploadimagepath);
+                            if (uploadimagepath.isEmpty() && response.body().getData().getTech_signature() != null) {
+                                uploadimagepath = response.body().getData().getTech_signature();
+                            }
+                            Log.i(TAG, "retrive_LocalValue: onResponse: " + uploadimagepath);
 
                             if (uploadimagepath.isEmpty()) {
-
-                                Log.e("hi", "sign empty");
+                                Log.e(TAG, "retrive_LocalValue: onResponse: uploadimagepath Signature Empty");
                             } else {
                                 Picasso.get().load(uploadimagepath).into(img_Siganture);
                             }
@@ -726,7 +726,9 @@ public class Technician_signatureActivity extends AppCompatActivity {
             signfile = cur.getString(cur.getColumnIndex(DbHelper.SIGN_FILE));
             String jon = cur.getString(cur.getColumnIndex(DbHelper.JOBID));
             String ss = cur.getString(cur.getColumnIndex(DbHelper.MYACTIVITY));
-            uploadimagepath = cur.getString(cur.getColumnIndex(DbHelper.SIGN_PATH));
+            if (uploadimagepath.isEmpty() && cur.getString(cur.getColumnIndex(DbHelper.SIGN_PATH)) != null) {
+                uploadimagepath = cur.getString(cur.getColumnIndex(DbHelper.SIGN_PATH));
+            }
 
             Log.e("job", "" + jon);
             Log.e("act", "" + ss);
@@ -777,10 +779,12 @@ public class Technician_signatureActivity extends AppCompatActivity {
                     if (200 == response.body().getCode()) {
                         Log.w(TAG, "Profpic" + "--->" + new Gson().toJson(response.body()));
 
-                        uploadimagepath = response.body().getData();
+                        if (uploadimagepath.isEmpty() && response.body().getData() != null) {
+                            uploadimagepath = response.body().getData();
+                        }
+                        Log.i(TAG, "uploadDigitalSignatureImageRequest: onResponse: uploadimagepath -> " + uploadimagepath);
 
-                        Log.d("image", uploadimagepath);
-                        if (uploadimagepath != null) {
+                        if (uploadimagepath != null && !uploadimagepath.isEmpty()) {
 
                             //   Picasso.get().load(uploadimagepath).into(image);
 

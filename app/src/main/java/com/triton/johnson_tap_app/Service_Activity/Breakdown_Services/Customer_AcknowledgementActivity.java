@@ -92,7 +92,7 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
     ImageView image;
     String str2 = "", sstring, TAG = Customer_AcknowledgementActivity.class.getSimpleName();
     List<Feedback_DetailsResponse.DataBean> pet_imgList = new ArrayList();
-    String value = "", job_id, feedback_group, Str_feedback_details, bd_dta, feedback_remark = "", mr1, mr2, mr3, mr4, mr5, mr6, mr7, mr8, mr9, mr10, breakdown_servies = "", tech_signature = "", customer_name, customer_no, str_customer_acknowledgement = "";
+    String value = "", job_id, feedback_group = "", Str_feedback_details = "", bd_dta, feedback_remark = "", mr1, mr2, mr3, mr4, mr5, mr6, mr7, mr8, mr9, mr10, breakdown_servies = "", tech_signature = "", customer_name, customer_no, str_customer_acknowledgement = "";
     String se_user_mobile_no, se_user_name, se_id, check_id, service_title;
     String str_job_status = "", message;
     ProgressDialog progressDialog;
@@ -145,17 +145,16 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
         se_user_name = sharedPreferences.getString("user_name", "default value");
         job_id = sharedPreferences.getString("job_id", "default value");
         service_title = sharedPreferences.getString("service_title", "default value");
-        Str_feedback_details = sharedPreferences.getString("feedbackdetails", "FG0003");
-        feedback_group = sharedPreferences.getString("feedbackgroup", "FG0003");
+        Str_feedback_details = sharedPreferences.getString("feedbackdetails", "");
+        feedback_group = sharedPreferences.getString("feedbackgroup", "");
         // String name = sharedPreferences.getString("Hi","");
         value = sharedPreferences.getString("value", "default value");
         Log.e("Value", value);
         //    Str_feedback_details = Str_feedback_details.replaceAll("\\[", "").replaceAll("\\]","");
         // Log.e("Hi Nish",""+name);
-        Log.e("JobID", "" + job_id);
-        Log.e("Name", "" + service_title);
-        Log.e("Feedback DEtails", Str_feedback_details);
-        Log.e("Feedback Group", feedback_group);
+        Log.i(TAG, "onCreate: job_id -> " + job_id + " service_title -> "
+                + " Str_feedback_details -> " + Str_feedback_details + " feedback_group -> " + feedback_group);
+
         compno = sharedPreferences.getString("compno", "123");
         sertype = sharedPreferences.getString("sertype", "123");
         feedback_remark = sharedPreferences.getString("feedback_remark", "hi");
@@ -535,7 +534,9 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
             outputList.add("" + item + "");
             outputList.remove("null");
         }
-        Str_feedback_details = String.valueOf(outputList);
+        if (CommonFunction.nullPointerValidator(String.valueOf(outputList))) {
+            Str_feedback_details = String.valueOf(outputList);
+        }
 //                   pre_check = pre_check.replaceAll("\\[", "").replaceAll("\\]","");
 //                  System.out.println("EEEEEEEEEEE"+ddd);
 
@@ -547,13 +548,13 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
     private Breakdowm_Submit_Request getSample() {
 
-        Log.e("before ", Str_feedback_details);
+        Log.i(TAG, "getSample: before - Str_feedback_details -> " + Str_feedback_details);
         Str_feedback_details = Str_feedback_details.replaceAll("\n", "").replaceAll("", "");
-        Log.e("after ", Str_feedback_details);
+        Log.i(TAG, "getSample: after - Str_feedback_details -> " + Str_feedback_details);
 
-        Log.e("before ", feedback_group);
+        Log.i(TAG, "getSample: before - feedback_group -> " + feedback_group);
         feedback_group = feedback_group.replaceAll("\n", "").replaceAll("", "");
-        Log.e("after ", feedback_group);
+        Log.i(TAG, "getSample: after - feedback_group -> " + feedback_group);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -773,16 +774,15 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
                                 feedback_remark = response.body().getData().getFeedback_remark_text();
                             }
                             str_BDDetails = response.body().getData().getBd_details();
-                            Str_feedback_details = response.body().getData().getFeedback_details();
+                            if (Str_feedback_details.isEmpty() && !response.body().getData().getFeedback_details().isEmpty()) {
+                                Str_feedback_details = response.body().getData().getFeedback_details();
+                            }
                             feedback_group = response.body().getData().getCode_list();
                             breakdown_servies = response.body().getData().getBreakdown_service();
 
-                            Log.e("Nish Cname", "" + customer_name);
-                            Log.e("Nish CNo", "" + customer_no);
-                            Log.e("Nish Feedback Details", "" + Str_feedback_details);
-                            Log.e("Nish Feedback Group", "" + feedback_group);
-                            Log.e("Nish BD Data", "" + str_BDDetails);
-
+                            Log.i(TAG, "onResponse: str_BDDetails -> " + str_BDDetails +
+                                    "Str_feedback_details ->  " + Str_feedback_details + " feedback_group -> " + feedback_group +
+                                    " breakdown_servies -> " + breakdown_servies);
                         }
                     } else {
                         ErrorMyLocationAlert(response.body().getMessage());
@@ -898,13 +898,13 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
     private Breakdowm_Submit_Request createLocalRequest() {
 
-        Log.e("before ", feedback_group);
+        Log.i(TAG, "createLocalRequest: before - feedback_group -> " + feedback_group);
         feedback_group = feedback_group.replaceAll("\n", "").replaceAll("", "");
-        Log.e("after ", feedback_group);
+        Log.i(TAG, "createLocalRequest: after - feedback_group -> " + feedback_group);
 
-        Log.e("before 1 ", Str_feedback_details);
+        Log.i(TAG, "createLocalRequest: before - Str_feedback_details -> " + Str_feedback_details);
         Str_feedback_details = Str_feedback_details.replaceAll("\n", "").replaceAll("", "");
-        Log.e("after 1 ", Str_feedback_details);
+        Log.i(TAG, "createLocalRequest: after - Str_feedback_details -> " + Str_feedback_details);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -1126,8 +1126,11 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
     }
 
     private Breakdowm_Submit_Request submitDailyRequest() {
-
-        Str_feedback_details = Str_feedback_details.replaceAll("\n", "").replaceAll("", "");
+        Log.i(TAG, "submitDailyRequest: before Str_feedback_details -> " + Str_feedback_details);
+        if (!Str_feedback_details.isEmpty()) {
+            Str_feedback_details = Str_feedback_details.replaceAll("\n", "").replaceAll("", "");
+        }
+        Log.i(TAG, "submitDailyRequest: after Str_feedback_details -> " + Str_feedback_details);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());

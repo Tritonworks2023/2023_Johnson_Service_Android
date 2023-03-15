@@ -50,74 +50,97 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
-            android:name=".Service_Activity.safetyAuditModule.NewJobSafetyAuditActivity"
+            android:name=".Service_Activity.safetyAuditModule.SafetyAuditJobActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.safetyAuditModule.SafetyAuditFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.ropeMaintenanceModule.RopeMaintenanceFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.ropeMaintenanceModule.JobRopeMaintenanceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.repairWorkModule.RepairWorkApprovalActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.repairWorkApprovalRequestModule.NewJobRepairWorkApprovalRequestActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.repairWorkApprovalRequestModule.RepairWorkApprovalRequestFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.failureReportModule.FailureReportFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.failureReportModule.JobFailureReportActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.serviceVisibilityModule.OtherServiceVisibilityFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.serviceVisibilityModule.SchSafServiceVisibilityFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.serviceVisibilityModule.SmartServiceVisibilityFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.DailyAttendanceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.PreventiveMRListtwo_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.PreventiveMRListOne_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.BreakdownMRListtwo_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.BreakdownMRListOne_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Engineer_Dashboard.Agent_Pop_New_ScreenActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Engineer_Dashboard.CustomerDetails_DashboardActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Engineer_Dashboard.JobList_DashboardActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Engineer_Dashboard.ServicesList_DashboardActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Engineer_Dashboard.AgentList_DashboardActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -127,48 +150,63 @@
         </activity>
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.TechnicianSignature_PreventiveMRActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.StartJob_PreventiveMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.PreventiveMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.PausedServicesPreventiveMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.MRForms_PreventiveMRActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.JobDetails_PreventiveMRActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PreventiveMRApproval.CustomerDetailsPreventiveMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.TechnicianSignature_BreakdownMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.StartJob_BreakdownMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.PausedServicesBreakdownMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.MRForms_BreakdownMRActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.JobDetails_BreakdownMRActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.CustomerDetailsBreakdownMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.BreakdownMRApprovel.BreakdownMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Recycler_SpinnerActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -181,6 +219,7 @@
         </activity>
         <activity
             android:name=".Service_Activity.Preventive_Services.Material_Request_PreventiveActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -191,21 +230,27 @@
         </activity>
         <activity
             android:name=".Service_Activity.Preventive_Services.Material_Request_MR_Screen_PreventiveActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Job_Details_PreventiveActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Preventive_StatusActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Customer_Acknowledgement_PreventiveActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Customer_Details_PreventiveActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Technician_signature_preventiveActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -218,9 +263,11 @@
         </activity>
         <activity
             android:name=".Service_Activity.Preventive_Services.Preventive_action_requiredActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Preventive_checklistActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -231,21 +278,27 @@
         </activity>
         <activity
             android:name=".Service_Activity.Preventive_Services.Quarterly_Top_PitActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Esc_TrvActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Start_Job_Text_PreventiveActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Customer_Details_preActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.PreventiveMaintance_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Sample_testActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -257,33 +310,43 @@
         </activity>
         <activity
             android:name=".Service_Activity.Breakdown_Services.Customer_AcknowledgementActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Customer_Details_BreakdownActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Technician_signatureActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.BD_StatusActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Material_Request_MR_ScreenActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Material_RequestActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Feedback_RemarkActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Feedback_DetailsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Feedback_GroupActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.BD_DetailsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -293,12 +356,15 @@
         </activity>
         <activity
             android:name=".Service_Activity.Breakdown_Services.Start_Job_TextActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.New_LoginActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".SampleActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -311,6 +377,7 @@
         </activity>
         <activity
             android:name=".SearchActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -323,6 +390,7 @@
         </activity>
         <activity
             android:name=".ImageUploadActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -335,18 +403,23 @@
         </activity>
         <activity
             android:name=".TestActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.InputValueFormListActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Paused_ServicesActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Customer_DetailsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Agent_ProfileActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -359,24 +432,31 @@
         </activity>
         <activity
             android:name=".activity.Change_PasswordActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Job_DetailsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.ServicesActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Breakdown_Services.Breakdown_ServiceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".ViewStatus.Job_StatusActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.Main_Menu_ServicesActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.Dashbaord_MainActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -387,6 +467,7 @@
         </activity>
         <activity
             android:name=".Spinner_addActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -397,13 +478,16 @@
         </activity>
         <activity
             android:name=".activity.RTGS_PopActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Main3Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".Main2Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -416,17 +500,21 @@
         </activity>
         <activity
             android:name=".activity.DownloadapkfileActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.Pending_Collection_ReviewActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.Enquiry_Status_ReviewActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.Daily_Collection_DetailsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:screenOrientation="landscape">
 
@@ -440,130 +528,169 @@
         </activity> <!-- //Form 5 -->
         <activity
             android:name=".Service_Activity.LR_Service.LR_Service_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.LR_Service.JobDetails_LRService_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.LR_Service.LR_Details_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.LR_Service.CustomerDetails_LRServiceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.LR_Service.TechnicianSignature_LRServiceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.LR_Service.CustomerAcknowledgement_LRServiceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.LR_Service.StartJob_LRService_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.Monthlist_Preventive_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" /> <!-- //Form 6 -->
         <activity
             android:name=".Service_Activity.PartsReplacementACK.ACK_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PartsReplacementACK.JobDetails_ACKActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PartsReplacementACK.MRDetails_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PartsReplacementACK.MaterialDetailsACK_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PartsReplacementACK.TechnicianSignature_ACKServiceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PartsReplacementACK.CustomerAcknowledgement_ACKServiceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.PartsReplacementACK.StartJob_ACK_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.Preventive_Services.ESCTRV"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.SiteAudit_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.escalatorSurveyModule.EscalatorSurveyFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.escalatorSurveyModule.NewJobEscalatorSurveyActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.elevatorSurveyModule.NewJobElevatorSurveyActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.elevatorSurveyModule.ElevatorSurveyFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.serviceVisibilityModule.ServiceVisibilityJobActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.JobdetailsSiteaudit_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.AD_DetailsSiteAudit_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.StartJob_AuditActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.Checklist_AuditActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.MaterialRequest_AuditActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.AuditChecklist"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.AuditMR_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.AuditMRList_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.SiteAudit.TechnicianSigantureAudit_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.UI_Serv_LeadsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.UI_Servenq_RequestActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".activity.LoginActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" /> <!-- Activity Based -->
         <activity
             android:name=".ViewStatus.JobStatusList_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.Notification_Activity"
+            android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.SplashActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

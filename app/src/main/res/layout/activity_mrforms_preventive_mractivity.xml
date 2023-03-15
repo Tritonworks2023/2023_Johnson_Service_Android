@@ -550,7 +550,6 @@
         android:layout_centerInParent="true"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <TextView
             android:id="@+id/txt_message"
             android:layout_width="match_parent"

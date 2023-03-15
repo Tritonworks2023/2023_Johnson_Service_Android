@@ -24,7 +24,7 @@ import com.triton.johnson_tap_app.Service_Activity.failureReportModule.JobFailur
 import com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalRequestModule.NewJobRepairWorkApprovalRequestActivity;
 import com.triton.johnson_tap_app.Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity;
 import com.triton.johnson_tap_app.Service_Activity.ropeMaintenanceModule.JobRopeMaintenanceActivity;
-import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.NewJobSafetyAuditActivity;
+import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.SafetyAuditJobActivity;
 import com.triton.johnson_tap_app.Service_Activity.serviceVisibilityModule.ServiceVisibilityJobActivity;
 import com.triton.johnson_tap_app.responsepojo.ServiceResponse;
 
@@ -124,7 +124,7 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<RecyclerV
                     // n_act.putExtra("service_title", s);
                     context.startActivity(n_act);
                 } else if (s.equals("Safety Audit")) {
-                    Intent n_act = new Intent(context, NewJobSafetyAuditActivity.class);
+                    Intent n_act = new Intent(context, SafetyAuditJobActivity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     // n_act.putExtra("service_title", s);
                     context.startActivity(n_act);

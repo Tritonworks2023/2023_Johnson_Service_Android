@@ -47,7 +47,6 @@ import retrofit2.Response;
 
 public class ServiceVisibilityJobActivity extends AppCompatActivity implements OnItemClickDataChangeListener, View.OnClickListener {
 
-
     boolean init = false;
     private ImageView img_back, img_clearsearch;
     private RecyclerView rv_job_service_visibility, rv_employee_service_visibility;

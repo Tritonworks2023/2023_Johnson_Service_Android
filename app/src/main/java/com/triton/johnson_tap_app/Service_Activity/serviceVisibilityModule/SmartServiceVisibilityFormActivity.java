@@ -167,6 +167,9 @@ public class SmartServiceVisibilityFormActivity extends AppCompatActivity implem
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_location = sharedPreferences.getString("user_location", "default value");
 
+        Log.i(TAG, "onCreate: user_id -> " + se_id + " user_name -> " + se_user_name
+                + " user_mobile_no -> " + se_user_mobile_no + " user_location -> " + se_user_location);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("employeeDetailsDataResponse")) {

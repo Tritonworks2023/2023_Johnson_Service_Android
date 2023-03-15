@@ -122,7 +122,6 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
         compno = sharedPreferences.getString("compno", "123");
         sertype = sharedPreferences.getString("sertype", "123");
 
-
         Spannable name_Upload = new SpannableString("Start Job ");
         name_Upload.setSpan(new ForegroundColorSpan(StartJob_BreakdownMR_Activity.this.getResources().getColor(R.color.colorAccent)), 0, name_Upload.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         text.setText(name_Upload);
@@ -200,8 +199,7 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Log.e("Status", "" + message);
-
+                    Log.i(TAG, "onClick: message -> " + message);
                     if (Objects.equals(message, "Not Started")) {
 
                         Log.e("Hi", "inside");
@@ -209,7 +207,7 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                         currentDateandTime = df.format(Calendar.getInstance().getTime());
                         Log.e("Start Time", "" + currentDateandTime);
                         str_StartTime = currentDateandTime;
-
+                        Log.i(TAG, "onCreate: onClick: str_StartTime -> " + str_StartTime);
                         alert();
 
                     } else {
@@ -226,10 +224,7 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                         editor.putString("add", address);
                         editor.apply();
                         startActivity(send);
-
                     }
-
-
                 }
             });
         }
@@ -242,7 +237,6 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -332,9 +326,7 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                         mDialog.dismiss();
                         ErrorAlert();
                     }
-
                 }
-
             }
         });
     }
@@ -429,14 +421,14 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<Job_statusResponse> call = apiInterface.CheckworkStatusCall(RestUtils.getContentType(), job_statusRequest());
-        Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
 
+        Log.i(TAG, "Job_status: URL -> " + call.request().url().toString());
         call.enqueue(new Callback<Job_statusResponse>() {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<Job_statusResponse> call, @NonNull retrofit2.Response<Job_statusResponse> response) {
+                Log.i(TAG, "Job_status: onResponse: Job_statusResponse -> " + new Gson().toJson(response.body()));
 
-                Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     message = response.body().getMessage();
 
@@ -448,8 +440,7 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                             if (!Objects.equals(message, "Not Started")) {
 
                                 str_StartTime = response.body().getTime();
-
-                                Log.e(" Start Time  API", "" + str_StartTime);
+                                Log.i(TAG, "Job_status: onResponse: str_StartTime -> " + str_StartTime);
 
                             } else {
                                 ErrorMsgDialog(message);
@@ -468,7 +459,8 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Job_statusResponse> call, @NonNull Throwable t) {
-                Log.e("OTP", "--->" + t.getMessage());
+
+                Log.e(TAG, "Job_status: onFailure: error -> " + t.getMessage());
                 ErrorMsgDialog(t.getMessage());
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -501,8 +493,8 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<Job_status_updateResponse> call, @NonNull retrofit2.Response<Job_status_updateResponse> response) {
+                Log.i(TAG, "Job_status_update: onResponse: Job_status_updateResponse -> " + new Gson().toJson(response.body()));
 
-                Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     message = response.body().getMessage();
 
@@ -514,6 +506,7 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                             if (Objects.equals(status, "new")) {
                                 mDialog.dismiss();
                             }
+                            Log.i(TAG, "Job_status_update: onResponse: str_StartTime -> " + str_StartTime);
                             Intent send = new Intent(StartJob_BreakdownMR_Activity.this, MRForms_BreakdownMRActivity.class);
                             send.putExtra("job_id", str_job_id);
                             send.putExtra("status", status);
@@ -523,13 +516,12 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
                             startActivity(send);
                         }
 
-
                     } else {
                         Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
 
                         ErrorMsgDialog(message);
                     }
-                }else {
+                } else {
                     ErrorMsgDialog("");
                 }
             }

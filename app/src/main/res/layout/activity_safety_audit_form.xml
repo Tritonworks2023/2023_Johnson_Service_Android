@@ -47,7 +47,10 @@
         android:layout_below="@id/main_bar"
         android:background="@color/colorPrimary"
         android:gravity="center_vertical"
-        android:padding="10dp">
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp">
 
         <LinearLayout
             android:id="@+id/ll_jobid"
@@ -107,10 +110,53 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rel_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rel_id"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_rating_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Rating (Score): "
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_rating_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="5"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="A - Does not comply (0),\nB - Complied with serious issue (1),\nC - Complied with minor issue (1.5), &amp;\nD - Complied (2.5)"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rel_id">
+        android:layout_below="@id/rel_info">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -3441,7 +3487,344 @@
                         android:textSize="15dp" />
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/darker_gray" />
+
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="All Observations:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="A"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edt_comments_a"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectangle_border_square"
+                android:gravity="top|left"
+                android:hint="Enter observation for A"
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:maxLength="250"
+                android:maxLines="250"
+                android:minLines="5"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="B"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edt_comments_b"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectangle_border_square"
+                android:gravity="top|left"
+                android:hint="Enter observation for B"
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:maxLength="250"
+                android:maxLines="250"
+                android:minLines="5"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="C"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edt_comments_c"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectangle_border_square"
+                android:gravity="top|left"
+                android:hint="Enter observation for C"
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:maxLength="250"
+                android:maxLines="250"
+                android:minLines="5"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="D"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edt_comments_d"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectangle_border_square"
+                android:gravity="top|left"
+                android:hint="Enter observation for D"
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:maxLength="250"
+                android:maxLines="250"
+                android:minLines="5"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="General"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edt_general"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectangle_border_square"
+                android:gravity="top|left"
+                android:hint="Enter General Comment"
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:maxLength="250"
+                android:maxLines="250"
+                android:minLines="5"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Work Completed By"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="Engineer Name"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_engineer_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Engineer Name"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="Conducted On"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_conducted_on"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Date"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="Engineer Signature"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/llheaderdigitalsignature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/child_back_ground"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.github.gcacace.signaturepad.views.SignaturePad
+                    android:id="@+id/signaturePad"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+                <LinearLayout
+                    android:id="@+id/buttons_container"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <Button
+                        android:id="@+id/clear_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:text="Clear"
+                        tools:ignore="HardcodedText" />
+
+                    <Button
+                        android:id="@+id/save_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:text="Save"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/blue_button_background_with_radius"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="submit"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
