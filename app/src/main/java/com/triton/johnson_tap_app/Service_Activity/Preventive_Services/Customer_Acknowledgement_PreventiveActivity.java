@@ -72,8 +72,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
@@ -1160,7 +1158,6 @@ public class Customer_Acknowledgement_PreventiveActivity extends AppCompatActivi
                 // signatureBitmap = signaturePad.getSignatureBitmap();
             } while (cur.moveToNext());
 
-
         }
     }
 
@@ -1175,21 +1172,13 @@ public class Customer_Acknowledgement_PreventiveActivity extends AppCompatActivi
         Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(siganaturePart);
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
-        long delayInMillis = 3000;
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-            }
-        }, delayInMillis);
-
         call.enqueue(new Callback<FileUploadResponse>() {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {
                 progressDialog.dismiss();
                 if (response.body() != null) {
+                    message = response.body().getMessage();
                     if (200 == response.body().getCode()) {
                         Log.w(TAG, "Profpic" + "--->" + new Gson().toJson(response.body()));
 
@@ -1197,7 +1186,6 @@ public class Customer_Acknowledgement_PreventiveActivity extends AppCompatActivi
 
                         image.setVisibility(View.INVISIBLE);
 
-                        Log.d("image", uploadimagepath);
 
                         Toast.makeText(Customer_Acknowledgement_PreventiveActivity.this, "Signature Saved", Toast.LENGTH_SHORT).show();
 
@@ -1213,21 +1201,14 @@ public class Customer_Acknowledgement_PreventiveActivity extends AppCompatActivi
                             Log.e("b", "" + service_title);
                             Log.e("c", "" + uploadimagepath);
                             Log.e("d", "" + file);
-                            progressDialog.dismiss();
 
                         }
                     } else {
-
-                        long delayInMillis = 1000;
-                        Timer timer = new Timer();
-                        timer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                            }
-                        }, delayInMillis);
+                        showErrorAlert(message);
                     }
 
+                } else {
+                    showErrorAlert("");
                 }
 
             }

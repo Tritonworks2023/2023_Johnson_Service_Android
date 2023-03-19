@@ -20,6 +20,7 @@ import com.triton.johnson_tap_app.requestpojo.Count_pasusedRequest;
 import com.triton.johnson_tap_app.requestpojo.CreateFailureReportRequest;
 import com.triton.johnson_tap_app.requestpojo.CreateRequest;
 import com.triton.johnson_tap_app.requestpojo.CreateRopeMaintenanceRequest;
+import com.triton.johnson_tap_app.requestpojo.CreateSafetyAuditRequest;
 import com.triton.johnson_tap_app.requestpojo.Custom_detailsRequest;
 import com.triton.johnson_tap_app.requestpojo.Custom_nameRequest;
 import com.triton.johnson_tap_app.requestpojo.ElevatorCheckDateRequest;
@@ -87,6 +88,7 @@ import com.triton.johnson_tap_app.responsepojo.GetPopupImageResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListFailureReportResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListRopeMaintenanceResponse;
+import com.triton.johnson_tap_app.responsepojo.JobListSafetyAuditResponse;
 import com.triton.johnson_tap_app.responsepojo.Job_Details_TextResponse;
 import com.triton.johnson_tap_app.responsepojo.Job_statusResponse;
 import com.triton.johnson_tap_app.responsepojo.Job_status_updateResponse;
@@ -456,10 +458,8 @@ public interface APIInterface {
     @POST("service_temp_data/create_local_value_form_check_two")
     Call<SuccessResponse> createLocalValueformcheckAudit(@Header("Content-Type") String type, @Body AuditRequest auditRequest);
 
-
     @POST("service_temp_data/retrive_local_value_form_7")
     Call<RetriveResponseAudit> retriveLocalValueCallAudit(@Header("Content-Type") String type, @Body Job_status_updateRequest job_status_updateRequest);
-    ///////
 
     @POST("service_admin/getlist_userlist")
     Call<Agent_new_screenResponse> Agent_new_screenResponseCall(@Header("Content-Type") String type, @Body Agent_new_screenRequest serviceRequest);
@@ -601,5 +601,11 @@ public interface APIInterface {
 
     @POST("additional_forms/rope_maintenance/create")
     Call<SuccessResponse> getRopeMaintenanceCreate(@Header("Content-Type") String type, @Body CreateRopeMaintenanceRequest createRopeMaintenanceRequest);
+
+    @POST("additional_forms/escalator_survey/fetch_data_job_id")
+    Call<JobListSafetyAuditResponse> getSafetyAuditFetchDataJobId(@Header("Content-Type") String type, @Body JobIdRequest jobIdRequest);
+
+    @POST("additional_forms/safety_audit/create")
+    Call<SuccessResponse> getSafetyAuditCreate(@Header("Content-Type") String type, @Body CreateSafetyAuditRequest createSafetyAuditRequest);
 
 }

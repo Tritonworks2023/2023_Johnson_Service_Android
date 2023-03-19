@@ -1,8 +1,5 @@
 package com.triton.johnson_tap_app.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.session.SessionManager;
 
@@ -19,28 +19,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    private String TAG ="MainActivity";
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_job)
     Button btn_job;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_enquiry)
     Button btn_enquird;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_pending)
     Button btn_pending;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_activity)
     Button btn_activity;
-
     @SuppressLint("NonConstatntResourceId")
     @BindView(R.id.btn_general)
     Button btn_general;
     ImageView iv_back;
+    private String TAG = "MainActivity";
     private SessionManager session;
     private String url = "http://smart.johnsonliftsltd.com/";
     private ProgressDialog progDailog;
@@ -48,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   getSupportActionBar().hide();
+        //   getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        Log.w(TAG,"Oncreate -->");
+        Log.w(TAG, "Oncreate -->");
         session = new SessionManager(getApplicationContext());
         iv_back = (ImageView) findViewById(R.id.iv_back);
 
@@ -132,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show();
     }
-
-
 
 
 }

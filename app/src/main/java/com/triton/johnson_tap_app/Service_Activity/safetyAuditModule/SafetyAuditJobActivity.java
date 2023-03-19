@@ -7,17 +7,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -25,31 +26,37 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.triton.johnson_tap_app.PetBreedTypeSelectListener;
 import com.triton.johnson_tap_app.R;
+import com.triton.johnson_tap_app.api.APIInterface;
+import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.requestpojo.JobListRequest;
-import com.triton.johnson_tap_app.responsepojo.NewJobListSafetyAuditResponse;
+import com.triton.johnson_tap_app.requestpojo.JobIdRequest;
+import com.triton.johnson_tap_app.responsepojo.JobListSafetyAuditResponse;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
+import com.triton.johnson_tap_app.utils.RestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SafetyAuditJobActivity extends AppCompatActivity implements PetBreedTypeSelectListener, OnItemClickDataChangeListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    ImageView img_back, img_clearSearch;
-    RecyclerView rv_new_job_safety_audit;
+public class SafetyAuditJobActivity extends AppCompatActivity implements OnItemClickDataChangeListener, View.OnClickListener {
+
+    ImageView img_back;
+    RecyclerView rv_job_safety_audit;
     EditText edtSearch;
     TextView txt_no_records, txt_menu_name;
     RelativeLayout Job;
-    NewJobListSafetyAuditAdapter newJobListSafetyAuditAdapter;
+    JobListSafetyAuditAdapter jobListSafetyAuditAdapter;
     Context context;
     Button btn_search;
     String TAG = SafetyAuditJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name, se_id,
             check_id, service_title, message, networkStatus = "";
     SharedPreferences sharedPreferences;
-    List<NewJobListSafetyAuditResponse.DataBean> breedTypedataBeanList = new ArrayList<>();
-    private String PetBreedType = "";
+    List<JobListSafetyAuditResponse.Data> jobListSafetyAuditDataResponseList = new ArrayList<>();
+    private Dialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +67,8 @@ public class SafetyAuditJobActivity extends AppCompatActivity implements PetBree
 
         img_back = findViewById(R.id.img_back);
         edtSearch = findViewById(R.id.edt_search);
-        img_clearSearch = findViewById(R.id.img_clearsearch);
         txt_no_records = findViewById(R.id.txt_no_records);
-        rv_new_job_safety_audit = findViewById(R.id.rv_new_job_safety_audit);
+        rv_job_safety_audit = findViewById(R.id.rv_job_safety_audit);
         Job = findViewById(R.id.rel_job);
         txt_menu_name = findViewById(R.id.txt_menu_name);
         btn_search = findViewById(R.id.btn_search);
@@ -76,86 +82,8 @@ public class SafetyAuditJobActivity extends AppCompatActivity implements PetBree
         Log.i(TAG, "onCreate: service_title --> " + service_title);
         Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
 
-        networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
-
-        Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);
-
-        if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
-
-            NoInternetDialog();
-
-        } else {
-
-        }
-
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        btn_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                breedTypedataBeanList.add(new NewJobListSafetyAuditResponse.DataBean("T-I123",
-                        "Shrinika Apartment", "Escalator", "Rajakilpakkam",
-                        "Automatic", "12-01-2023", "20-01-2023", "25-01-2023"));
-
-                setBreedTypeView(breedTypedataBeanList);
-            }
-        });
-
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String Search = edtSearch.getText().toString();
-                if (Search.equals("")) {
-                    rv_new_job_safety_audit.setVisibility(View.VISIBLE);
-                    img_clearSearch.setVisibility(View.INVISIBLE);
-                } else {
-                    filter(Search);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String Search = edtSearch.getText().toString();
-                rv_new_job_safety_audit.setVisibility(View.VISIBLE);
-                txt_no_records.setVisibility(View.GONE);
-                filter(Search);
-            }
-        });
-    }
-
-    private void filter(String search) {
-        List<NewJobListSafetyAuditResponse.DataBean> filterlist = new ArrayList<>();
-
-        try {
-            for (NewJobListSafetyAuditResponse.DataBean item : breedTypedataBeanList) {
-                if (item.getJob_no().toLowerCase().contains(search.toLowerCase()) ||
-                        item.getBuilding_name().toLowerCase().contains(search.toLowerCase())) {
-                    Log.i(TAG, "filter: " + item.getJob_no().toLowerCase().contains(search.toLowerCase()));
-                    filterlist.add(item);
-                }
-            }
-        } catch (NullPointerException e) {
-
-            Log.e(TAG, "filter: error --> " + e.getMessage());
-        }
-
-        if (filterlist.isEmpty()) {
-            // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
-            rv_new_job_safety_audit.setVisibility(View.GONE);
-            txt_no_records.setVisibility(View.VISIBLE);
-            txt_no_records.setText("No Data Found");
-        } else {
-            newJobListSafetyAuditAdapter.filterrList(filterlist);
-        }
+        img_back.setOnClickListener(this);
+        btn_search.setOnClickListener(this);
     }
 
     public void NoInternetDialog() {
@@ -181,111 +109,128 @@ public class SafetyAuditJobActivity extends AppCompatActivity implements PetBree
         });
     }
 
-    /*private void newJobList() {
+    private void getFetchDataJobId(String strSearch) {
+
+        dialog = new Dialog(context, R.style.NewProgressDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.progroess_popup);
+        dialog.show();
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<JobListResponse> call = apiInterface.NewJobAuditListCall(RestUtils.getContentType(), joblistRequest());
+        JobIdRequest jobIdRequest = jobListRequest(strSearch);
 
-        Log.i(TAG, "newJobList: URL --> " + call.request().url().toString());
-        call.enqueue(new Callback<JobListResponse>() {
-            @SuppressLint("LogNotTimber")
-            @Override
-            public void onResponse(@NonNull Call<JobListResponse> call, @NonNull Response<JobListResponse> response) {
-                Log.i(TAG, "newJobList: onResponse: JobListResponse --> " + new Gson().toJson(response.body()));
+        if (jobIdRequest != null) {
 
-                if (response.body() != null) {
+            Call<JobListSafetyAuditResponse> call = apiInterface.getSafetyAuditFetchDataJobId(RestUtils.getContentType(), jobIdRequest);
+            Log.i(TAG, "getFetchDataJobId: URL -> " + call.request().url().toString());
 
-                    message = response.body().getMessage();
+            call.enqueue(new Callback<JobListSafetyAuditResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<JobListSafetyAuditResponse> call, @NonNull Response<JobListSafetyAuditResponse> response) {
+                    dialog.dismiss();
+                    Log.i(TAG, "getFetchDataJobId: onResponse: JobListRopeMaintenanceResponse -> " + new Gson().toJson(response.body()));
+                    jobListSafetyAuditDataResponseList = new ArrayList<>();
+                    if (response.body() != null) {
+                        message = response.body().getMessage();
 
-                    Log.i(TAG, "newJobList: onResponse: message --> " + message);
+                        if (200 == response.body().getCode()) {
+                            if (response.body().getData() != null) {
+                                jobListSafetyAuditDataResponseList = response.body().getData();
 
-                    if (200 == response.body().getCode()) {
-                        if (response.body().getData() != null) {
-                            breedTypedataBeanList = response.body().getData();
+                                if (jobListSafetyAuditDataResponseList.isEmpty()) {
 
-                            if (breedTypedataBeanList.size() == 0) {
-
-                                rv_new_job_escalator_survey.setVisibility(View.GONE);
-                                txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No Records Found");
-//                                edtsearch.setEnabled(false);
+                                    rv_job_safety_audit.setVisibility(View.GONE);
+                                    txt_no_records.setVisibility(View.VISIBLE);
+                                    txt_no_records.setText("No Records Found");
+//                                edtSearch.setEnabled(false);
+                                } else {
+                                    setView(jobListSafetyAuditDataResponseList);
+                                }
                             }
-                            setBreedTypeView(breedTypedataBeanList);
-
-                            Log.i(TAG, "newJobList: onResponse: breedTypedataBeanList --> " + String.valueOf(breedTypedataBeanList));
                         }
-                    } else if (400 == response.body().getCode()) {
-                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
-
-                            rv_new_job_escalator_survey.setVisibility(View.GONE);
-                            txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("Error 404 Found");
-//                            edtsearch.setEnabled(false);
-                        }
-                    } else {
-
-                        rv_new_job_escalator_survey.setVisibility(View.GONE);
-                        txt_no_records.setVisibility(View.VISIBLE);
-                        txt_no_records.setText("Error 404 Found");
-//                        edtsearch.setEnabled(false);
-                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<JobListResponse> call, @NonNull Throwable t) {
+                @Override
+                public void onFailure(@NonNull Call<JobListSafetyAuditResponse> call, @NonNull Throwable t) {
+                    dialog.dismiss();
+                    Log.e(TAG, "getFetchDataJobId: onFailure: error --> " + t.getMessage());
+                    rv_job_safety_audit.setVisibility(View.GONE);
+                    txt_no_records.setVisibility(View.VISIBLE);
+                    txt_no_records.setText("Something Went Wrong.. Try Again Later");
+//                edtSearch.setEnabled(false);
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            dialog.dismiss();
+        }
+    }
 
-                Log.e(TAG, "newJobList: onFailure: error --> " + t.getMessage());
-                rv_new_job_escalator_survey.setVisibility(View.GONE);
-                txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText("Something Went Wrong.. Try Again Later");
-//                edtsearch.setEnabled(false);
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
-
-    private void setBreedTypeView(List<NewJobListSafetyAuditResponse.DataBean> breedTypedataBeanList) {
-        rv_new_job_safety_audit.setVisibility(View.VISIBLE);
+    private void setView(List<JobListSafetyAuditResponse.Data> jobListSafetyAuditDataResponseList) {
+        rv_job_safety_audit.setVisibility(View.VISIBLE);
         txt_no_records.setVisibility(View.GONE);
-        rv_new_job_safety_audit.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rv_new_job_safety_audit.setItemAnimator(new DefaultItemAnimator());
-        newJobListSafetyAuditAdapter = new NewJobListSafetyAuditAdapter(getApplicationContext(), breedTypedataBeanList, this);
-        rv_new_job_safety_audit.setAdapter(newJobListSafetyAuditAdapter);
+        rv_job_safety_audit.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_job_safety_audit.setItemAnimator(new DefaultItemAnimator());
+        jobListSafetyAuditAdapter = new JobListSafetyAuditAdapter(getApplicationContext(), jobListSafetyAuditDataResponseList, this);
+        rv_job_safety_audit.setAdapter(jobListSafetyAuditAdapter);
     }
 
-    private JobListRequest joblistRequest() {
+    private JobIdRequest jobListRequest(String strSearch) {
 
-        JobListRequest job = new JobListRequest();
-        job.setUser_mobile_no(se_user_mobile_no);
-        job.setService_name(service_title);
+        JobIdRequest job = new JobIdRequest();
 
-        Log.i(TAG, "joblistRequest: JobListRequest --> " + new Gson().toJson(job));
-        return job;
-    }
-
-    public void petBreedTypeSelectListener(String petbreedtitle, String petbreedid) {
-        PetBreedType = petbreedtitle;
+        if (strSearch != null && !strSearch.isEmpty()) {
+            job.setJob_id(strSearch);
+            Log.i(TAG, "jobListRequest: JobIdRequest --> " + new Gson().toJson(job));
+            return job;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void itemClickDataChangeListener(int position, String strParam, String strData) {
-        NewJobListSafetyAuditResponse.DataBean breedTypedataBean = new NewJobListSafetyAuditResponse.DataBean();
-        breedTypedataBean = breedTypedataBeanList.get(position);
+        JobListSafetyAuditResponse.Data jobListSafetyAuditDateResponse = new JobListSafetyAuditResponse.Data();
+        jobListSafetyAuditDateResponse = jobListSafetyAuditDataResponseList.get(position);
 
         Intent intent = new Intent(context, SafetyAuditFormActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("job_no", breedTypedataBean.getJob_no());
-        intent.putExtra("build_name", breedTypedataBean.getBuilding_name());
+        intent.putExtra("jobListSafetyAuditDateResponse", jobListSafetyAuditDateResponse);
         context.startActivity(intent);
 
-        Log.i(TAG, "itemClickDataChangeListener: breedTypedataBeanList --> " + new Gson().toJson(breedTypedataBean));
+        Log.i(TAG, "itemClickDataChangeListener: jobListSafetyAuditDateResponse --> " + new Gson().toJson(jobListSafetyAuditDateResponse));
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_back: {
+                onBackPressed();
+            }
+            break;
+            case R.id.btn_search: {
+                networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
+
+                Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);
+
+                if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
+                    NoInternetDialog();
+                } else {
+                    if (edtSearch.getText().toString().toUpperCase().trim() != null && !edtSearch.getText().toString().toUpperCase().trim().isEmpty()) {
+                        getFetchDataJobId(edtSearch.getText().toString().toUpperCase().trim());
+                    } else {
+                        Toast.makeText(context, "Enter valid Job Id", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            break;
+        }
     }
 }

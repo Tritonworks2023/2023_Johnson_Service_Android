@@ -258,7 +258,6 @@ public class StartJob_BreakdownMR_Activity extends AppCompatActivity {
         TextView txt_Message = mView.findViewById(R.id.txt_message);
         Button btn_Ok = mView.findViewById(R.id.btn_ok);
 
-
         mBuilder.setView(mView);
         mDialog = mBuilder.create();
         mDialog.setCanceledOnTouchOutside(false);

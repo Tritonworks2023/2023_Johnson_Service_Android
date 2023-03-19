@@ -12,47 +12,37 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.triton.johnson_tap_app.PetBreedTypeSelectListener;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.responsepojo.NewJobListSafetyAuditResponse;
+import com.triton.johnson_tap_app.responsepojo.JobListSafetyAuditResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class NewJobListSafetyAuditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JobListSafetyAuditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    String status, service_title, TAG = NewJobListSafetyAuditAdapter.class.getSimpleName();
-    List<NewJobListSafetyAuditResponse.DataBean> breedTypedataBeanList;
-    PetBreedTypeSelectListener petBreedTypeSelectListener;
-    NewJobListSafetyAuditResponse.DataBean currentItem;
+    String service_title, TAG = JobListSafetyAuditAdapter.class.getSimpleName();
+    List<JobListSafetyAuditResponse.Data> jobListSafetyAuditDataResponseList;
+    JobListSafetyAuditResponse.Data currentItem;
     SharedPreferences sharedPreferences;
     OnItemClickDataChangeListener onItemClickDataChangeListener;
-    private ArrayList<String> arliJobid;
-    private ArrayList<String> arliCustname;
-    private ArrayList<String> arliAuditdate;
 
-    public NewJobListSafetyAuditAdapter(Context applicationContext, List<NewJobListSafetyAuditResponse.DataBean> breedTypedataBeanList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
+    public JobListSafetyAuditAdapter(Context applicationContext, List<JobListSafetyAuditResponse.Data> jobListSafetyAuditDataResponseList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
 
         this.context = applicationContext;
-        this.breedTypedataBeanList = breedTypedataBeanList;
+        this.jobListSafetyAuditDataResponseList = jobListSafetyAuditDataResponseList;
         this.onItemClickDataChangeListener = onItemClickDataChangeListener;
-
-        Log.e("Status", "" + status);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         service_title = sharedPreferences.getString("service_title", "Services");
 
-        Log.i(TAG, "NewJobListSafetyAuditAdapter: service_title --> " + service_title);
-        Log.i(TAG, "NewJobListSafetyAuditAdapter: status --> " + status);
-
+        Log.i(TAG, "JobListSafetyAuditAdapter: service_title --> " + service_title);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_new_job_safety_audit, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_job_safety_audit, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -64,10 +54,10 @@ public class NewJobListSafetyAuditAdapter extends RecyclerView.Adapter<RecyclerV
 
     private void initLayoutOne(ViewHolderOne holder, int position) {
 
-        currentItem = breedTypedataBeanList.get(position);
+        currentItem = jobListSafetyAuditDataResponseList.get(position);
 
-        holder.txt_jobid.setText(currentItem.getJob_no());
-        holder.txt_building_number.setText(currentItem.getBuilding_name());
+        holder.txt_jobid.setText(currentItem.getJOBNO());
+        holder.txt_building_number.setText(currentItem.getCUST_NAME());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,11 +69,11 @@ public class NewJobListSafetyAuditAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public int getItemCount() {
-        return breedTypedataBeanList.size();
+        return jobListSafetyAuditDataResponseList.size();
     }
 
-    public void filterrList(List<NewJobListSafetyAuditResponse.DataBean> filterlist) {
-        breedTypedataBeanList = filterlist;
+    public void filterList(List<JobListSafetyAuditResponse.Data> filterlist) {
+        jobListSafetyAuditDataResponseList = filterlist;
         notifyDataSetChanged();
     }
 

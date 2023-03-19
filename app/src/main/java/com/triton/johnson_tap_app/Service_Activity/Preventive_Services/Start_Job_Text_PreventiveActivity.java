@@ -427,7 +427,9 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
                             Log.i(TAG, "retriveLocalvalue: onResponse: message - " + response.body().getMessage());
                             Log.i(TAG, "retriveLocalvalue: onResponse: PageNumber - " + response.body().getData().getPage_number());
 
-                            str_job_status = response.body().getData().getJob_status_type();
+                            if (str_job_status.isEmpty() && response.body().getData().getJob_status_type() != null && !response.body().getData().getJob_status_type().isEmpty()) {
+                                str_job_status = response.body().getData().getJob_status_type();
+                            }
                             PageNumber = response.body().getData().getPage_number();
                             SubPageNumber = response.body().getData().getSubPage_number();
 //                            Log.e("Status Type",str_job_status);
@@ -466,7 +468,7 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
                                 });
                             }*/
 
-                            if (PageNumber == 0) {
+                            if (str_job_status != null && !str_job_status.isEmpty() && str_job_status.equals("POD") && PageNumber == 0) {
 
                                 Intent send = new Intent(Start_Job_Text_PreventiveActivity.this, Monthlist_Preventive_Activity.class);
                                 send.putExtra("job_id", str_job_id);
@@ -474,6 +476,25 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
 
                                 SharedPreferences.Editor editor1 = sharedPreferences.edit();
                                 editor1.putString("statustype", "POD");
+                                editor1.putString("starttime", str_StartTime);
+                                editor1.putString("lati", String.valueOf(Latitude));
+                                editor1.putString("long", String.valueOf(Logitude));
+                                editor1.putString("add", address);
+                                editor1.apply();
+
+                                send.putExtra("service_title", service_title);
+                                send.putExtra("status", status);
+                                Log.i(TAG, "onResponse: status - " + status);
+                                startActivity(send);
+
+                            } else if (str_job_status != null && !str_job_status.isEmpty() && str_job_status.equals("MOD") && PageNumber == 0) {
+
+                                Intent send = new Intent(Start_Job_Text_PreventiveActivity.this, Monthlist_Preventive_Activity.class);
+                                send.putExtra("job_id", str_job_id);
+                                send.putExtra("value", str_job_status);
+
+                                SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                                editor1.putString("statustype", str_job_status);
                                 editor1.putString("starttime", str_StartTime);
                                 editor1.putString("lati", String.valueOf(Latitude));
                                 editor1.putString("long", String.valueOf(Logitude));
@@ -508,7 +529,8 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
 
                                 Intent send = new Intent(Start_Job_Text_PreventiveActivity.this, Monthlist_Preventive_Activity.class);
                                 send.putExtra("job_id", str_job_id);
-                                send.putExtra("value", "POD");
+                                send.putExtra("value", str_job_status);
+//                                send.putExtra("value", "POD");
 
                                 SharedPreferences.Editor editor1 = sharedPreferences.edit();
                                 editor1.putString("statustype", str_job_status);
@@ -815,7 +837,7 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
                                 mDialog.dismiss();
 
                             }
-                            Log.i(TAG, "onResponse: status - " + status);
+                            Log.i(TAG, "Check_Pod_Status: onResponse: status - " + status);
 
 //                            Intent send3 = new Intent(Start_Job_Text_PreventiveActivity.this, Esc_TrvActivity.class);
 //                            send3.putExtra("job_id",str_job_id);
@@ -839,7 +861,7 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
 
                                     send.putExtra("service_title", service_title);
                                     send.putExtra("status", status);
-                                    Log.i(TAG, "onResponse: status - " + status);
+                                    Log.i(TAG, "Check_Pod_Status: onResponse: status - " + status);
                                     startActivity(send);
                                 } else if (str_job_status.equals("SEMPOD")) {
                                     Intent send1 = new Intent(Start_Job_Text_PreventiveActivity.this, Monthlist_Preventive_Activity.class);
@@ -856,7 +878,7 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
 
                                     send1.putExtra("service_title", service_title);
                                     send1.putExtra("status", status);
-                                    Log.i(TAG, "onResponse: status - " + status);
+                                    Log.i(TAG, "Check_Pod_Status: onResponse: status - " + status);
                                     startActivity(send1);
                                 } else if (str_job_status.equals("MOD")) {
                                     Intent send2 = new Intent(Start_Job_Text_PreventiveActivity.this, Monthlist_Preventive_Activity.class);
@@ -873,7 +895,7 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
 
                                     send2.putExtra("service_title", service_title);
                                     send2.putExtra("status", status);
-                                    Log.i(TAG, "onResponse: status - " + status);
+                                    Log.i(TAG, "Check_Pod_Status: onResponse: status - " + status);
                                     startActivity(send2);
                                 } else {
                                     Intent send3 = new Intent(Start_Job_Text_PreventiveActivity.this, ESCTRV.class);
@@ -890,7 +912,7 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
 
                                     send3.putExtra("service_title", service_title);
                                     send3.putExtra("status", status);
-                                    Log.i(TAG, "onResponse: status - " + status);
+                                    Log.i(TAG, "Check_Pod_Status: onResponse: status - " + status);
                                     startActivity(send3);
                                 }
                             } else {

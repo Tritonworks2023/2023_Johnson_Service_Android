@@ -201,24 +201,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb1A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb1B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -231,24 +233,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb1C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb1D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -282,24 +286,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb2A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb2B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -312,24 +318,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb2C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb2D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -344,7 +352,7 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="3. All applicable service signages, safety stickers / warning signs are fixed."
+                android:text="3. All applicable service signage, safety stickers / warning signs are fixed."
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -363,24 +371,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb3A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb3B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -393,24 +403,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb3C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb3D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -459,24 +471,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb4A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb4B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -489,24 +503,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb4C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb4D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -540,24 +556,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb5A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb5B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -570,24 +588,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb5C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb5D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -621,24 +641,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb6A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb6B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -651,24 +673,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb6C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb6D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -702,24 +726,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb7A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb7B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -732,24 +758,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb7C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb7D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -783,24 +811,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb8A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb8B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -813,24 +843,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb8C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb8D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -864,24 +896,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb9A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb9B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -894,24 +928,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb9C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb9D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -945,24 +981,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb10A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb10B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -975,24 +1013,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb10C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb10D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1026,24 +1066,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb11A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb11B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1056,24 +1098,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb11C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb11D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1107,24 +1151,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb12A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb12B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1137,24 +1183,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb12C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb12D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1188,24 +1236,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb13A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb13B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1218,24 +1268,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb13C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb13D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1269,24 +1321,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb14A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb14B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1299,24 +1353,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb14C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb14D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1350,24 +1406,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb15A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb15B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1380,24 +1438,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb15C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb15D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1431,24 +1491,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb16A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb16B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1461,24 +1523,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb16C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb16D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1527,24 +1591,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb17A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb17B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1557,24 +1623,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb17C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb17D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1608,24 +1676,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb18A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb18B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1638,24 +1708,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb18C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb18D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1689,24 +1761,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb19A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb19B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1719,24 +1793,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb19C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb19D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1770,24 +1846,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb20A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb20B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1800,24 +1878,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb20C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb20D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1851,24 +1931,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb21A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb21B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1881,24 +1963,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb21C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb21D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1932,24 +2016,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb22A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb22B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -1962,24 +2048,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb22C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb22D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2028,24 +2116,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb23A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb23B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2058,24 +2148,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb23C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb23D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2109,24 +2201,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb24A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb24B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2139,24 +2233,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb24C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb24D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2190,24 +2286,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb25A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb25B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2220,24 +2318,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb25C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb25D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2271,24 +2371,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb26A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb26B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2301,24 +2403,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb26C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb26D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2352,24 +2456,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb27A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb27B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2382,24 +2488,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb27C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb27D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2433,24 +2541,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb28A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb28B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2463,24 +2573,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb28C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb28D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2529,24 +2641,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb29A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb29B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2559,24 +2673,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb29C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb29D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2591,7 +2707,7 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="30. CWT screen correctly set to cover buffer and buffer clearence is acceptable."
+                android:text="30. CWT screen correctly set to cover buffer and buffer clearance is acceptable."
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -2610,24 +2726,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb30A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb30B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2640,24 +2758,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb30C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb30D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2691,24 +2811,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb31A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb31B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2721,24 +2843,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb31C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb31D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2772,24 +2896,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb32A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb32B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2802,24 +2928,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb32C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb32D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2853,24 +2981,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb33A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb33B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2883,24 +3013,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb33C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb33D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2934,24 +3066,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb34A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb34B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -2964,24 +3098,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb34C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb34D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3030,24 +3166,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb35A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb35B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3060,24 +3198,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb35C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb35D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3111,24 +3251,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb36A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb36B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3141,24 +3283,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb36C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb36D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3192,24 +3336,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb37A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb37B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3222,24 +3368,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb37C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb37D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3273,24 +3421,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb38A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb38B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3303,24 +3453,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb38C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb38D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3354,24 +3506,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb39A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb39B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3384,24 +3538,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb39C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb39D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3435,24 +3591,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb40A"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Does not comply"
+                        android:text="A"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <CheckBox
+                        android:id="@+id/cb40B"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with serious issue"
+                        android:text="B"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
@@ -3465,24 +3623,26 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb40C"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied with minor issue"
+                        android:text="C"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 
                     <CheckBox
+                        android:id="@+id/cb40D"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Complied"
+                        android:text="D"
                         android:textColor="#000000"
                         android:textSize="15dp" />
 

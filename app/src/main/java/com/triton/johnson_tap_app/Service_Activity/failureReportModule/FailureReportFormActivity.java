@@ -67,7 +67,7 @@ public class FailureReportFormActivity extends AppCompatActivity implements Comp
     private EditText edt_dept, edt_dev_com_name, edt_mod_mak, edt_rating, edt_serial_no,
             edt_fail_observe, edt_inc_sup_volt, edt_comments_failure, edt_environmental_condition;
     private String strDateType = "", TAG = FailureReportFormActivity.class.getSimpleName(),
-            se_user_id, se_user_location, se_user_mobile_no, se_user_name, networkStatus = "", uploadImagePath;
+            se_user_id, se_user_location, se_user_mobile_no, se_user_name, networkStatus = "", uploadImagePath="";
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
     private MultipartBody.Part signaturePart;

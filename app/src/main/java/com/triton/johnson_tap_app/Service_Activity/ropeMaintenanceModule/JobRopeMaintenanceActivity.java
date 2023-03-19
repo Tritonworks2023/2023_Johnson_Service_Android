@@ -44,7 +44,7 @@ import retrofit2.Response;
 
 public class JobRopeMaintenanceActivity extends AppCompatActivity implements OnItemClickDataChangeListener, View.OnClickListener {
 
-    ImageView img_back, img_clearsearch;
+    ImageView img_back;
     RecyclerView rv_job_rope_maintenance;
     EditText edtSearch;
     TextView txt_no_records, txt_menu_name;
@@ -67,7 +67,6 @@ public class JobRopeMaintenanceActivity extends AppCompatActivity implements OnI
 
         img_back = findViewById(R.id.img_back);
         edtSearch = findViewById(R.id.edt_search);
-        img_clearsearch = findViewById(R.id.img_clearsearch);
         txt_no_records = findViewById(R.id.txt_no_records);
         rv_job_rope_maintenance = findViewById(R.id.rv_job_rope_maintenance);
         Job = findViewById(R.id.rel_job);
@@ -168,12 +167,12 @@ public class JobRopeMaintenanceActivity extends AppCompatActivity implements OnI
         }
     }
 
-    private void setView(List<JobListRopeMaintenanceResponse.Data> breedTypedataBeanList) {
+    private void setView(List<JobListRopeMaintenanceResponse.Data> jobListRopeMaintenanceDataResponseList) {
         rv_job_rope_maintenance.setVisibility(View.VISIBLE);
         txt_no_records.setVisibility(View.GONE);
         rv_job_rope_maintenance.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_job_rope_maintenance.setItemAnimator(new DefaultItemAnimator());
-        jobListRopeMaintenanceAdapter = new JobListRopeMaintenanceAdapter(getApplicationContext(), breedTypedataBeanList, this);
+        jobListRopeMaintenanceAdapter = new JobListRopeMaintenanceAdapter(getApplicationContext(), jobListRopeMaintenanceDataResponseList, this);
         rv_job_rope_maintenance.setAdapter(jobListRopeMaintenanceAdapter);
     }
 

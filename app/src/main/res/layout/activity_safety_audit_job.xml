@@ -60,10 +60,9 @@
             android:id="@+id/edt_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="2dp"
             android:layout_toStartOf="@+id/btn_search"
             android:layout_toEndOf="@id/img_search"
             android:background="@null"
@@ -84,7 +83,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="2dp"
             android:background="@drawable/blue_button_background_with_radius"
             android:text="Search"
             android:textColor="#ffffff"
@@ -103,7 +102,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_new_job_safety_audit"
+                android:id="@+id/rv_job_safety_audit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"

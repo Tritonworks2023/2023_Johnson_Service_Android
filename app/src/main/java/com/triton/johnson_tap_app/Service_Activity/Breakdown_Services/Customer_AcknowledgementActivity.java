@@ -966,19 +966,9 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-
         APIInterface apiInterface = RetrofitClient.getImageClient().create(APIInterface.class);
         Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(siganaturePart);
         Log.w(TAG, "url  :%s" + call.request().url().toString());
-
-        long delayInMillis = 3000;
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-            }
-        }, delayInMillis);
 
         call.enqueue(new Callback<FileUploadResponse>() {
             @SuppressLint("LogNotTimber")
@@ -1002,8 +992,6 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
                             Glide.with(Customer_AcknowledgementActivity.this)
                                     .load(uploadimagepath)
                                     .into(image);
-
-                            progressDialog.dismiss();
 
                         }
                     } else {
