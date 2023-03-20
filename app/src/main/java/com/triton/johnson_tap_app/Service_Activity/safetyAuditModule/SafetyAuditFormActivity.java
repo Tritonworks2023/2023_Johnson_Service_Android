@@ -34,7 +34,7 @@ import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.requestpojo.CreateSafetyAuditRequest;
-import com.triton.johnson_tap_app.requestpojo.FailureReportCheckDataRequest;
+import com.triton.johnson_tap_app.requestpojo.SafetyAuditCheckDataRequest;
 import com.triton.johnson_tap_app.responsepojo.FileUploadResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListSafetyAuditResponse;
 import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
@@ -77,12 +77,12 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
             cb37A, cb37B, cb37C, cb37D, cb38A, cb38B, cb38C, cb38D, cb39A, cb39B, cb39C, cb39D, cb40A, cb40B, cb40C, cb40D;
     private JobListSafetyAuditResponse.Data jobListSafetyAuditDateResponse = new JobListSafetyAuditResponse.Data();
     private CreateSafetyAuditRequest createSafetyAuditRequest = new CreateSafetyAuditRequest();
-    private FailureReportCheckDataRequest failureReportCheckDataRequest = new FailureReportCheckDataRequest();
+    private SafetyAuditCheckDataRequest safetyAuditCheckDataRequest = new SafetyAuditCheckDataRequest();
     private Context context;
     private SharedPreferences sharedPreferences;
     private Dialog dialog;
     private Button btn_submit, clear_button, save_button;
-    private SignaturePad signaturePadMechanic;
+    private SignaturePad signaturePad;
     private Bitmap signatureBitmap;
     private MultipartBody.Part signaturePart;
     private ProgressDialog progressDialog;
@@ -119,7 +119,7 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
         clear_button = findViewById(R.id.clear_button);
         save_button = findViewById(R.id.save_button);
 
-        signaturePadMechanic = findViewById(R.id.signaturePadMechanic);
+        signaturePad = findViewById(R.id.signaturePad);
 
         cb1A = findViewById(R.id.cb1A);
         cb1B = findViewById(R.id.cb1B);
@@ -283,11 +283,12 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
         cb40D = findViewById(R.id.cb40D);
 
         iv_back.setOnClickListener(this);
+        btn_submit.setOnClickListener(this);
         txt_conducted_on.setOnClickListener(this);
         save_button.setOnClickListener(this);
         clear_button.setOnClickListener(this);
 
-        signaturePadMechanic.setOnSignedListener(new SignaturePad.OnSignedListener() {
+        signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
             public void onStartSigning() {
 
@@ -479,12 +480,15 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
         createSafetyAuditRequest.setSubmitted_by_name(se_user_name);
         createSafetyAuditRequest.setSubmitted_by_emp_code(se_user_id);
         createSafetyAuditRequest.setJob_id(jobListSafetyAuditDateResponse.getJOBNO());
+        createSafetyAuditRequest.setBrcode(jobListSafetyAuditDateResponse.getBRCODE());
+        createSafetyAuditRequest.setSite_name(jobListSafetyAuditDateResponse.getCUST_NAME());
 
-        failureReportCheckDataRequest.setJob_id(jobListSafetyAuditDateResponse.getJOBNO());
-        failureReportCheckDataRequest.setSubmitted_by_num(se_user_mobile_no);
+        safetyAuditCheckDataRequest.setJob_id(jobListSafetyAuditDateResponse.getJOBNO());
+        safetyAuditCheckDataRequest.setSubmitted_by_num(se_user_mobile_no);
 
         txt_jobid.setText(jobListSafetyAuditDateResponse.getJOBNO());
         txt_building_name.setText(jobListSafetyAuditDateResponse.getCUST_NAME());
+        txt_engineer_name.setText(se_user_name);
 
         initLoadingDialog();
         getTodayDate();
@@ -546,15 +550,15 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
             Log.i(TAG, "setDate: formattedDate-> " + formattedDate);
             if (strDateType.equalsIgnoreCase("txt_conducted_on")) {
                 createSafetyAuditRequest.setConducted_on(formattedDate);
-                failureReportCheckDataRequest.setReport_date(formattedDate);
+                safetyAuditCheckDataRequest.setReport_date(formattedDate);
 
-//                getFailureReportCheckDate();
+                getSafetyAuditCheckDate();
             } else if (strDateType.equalsIgnoreCase("txt_both")) {
                 createSafetyAuditRequest.setSubmitted_by_on(formattedDate);
                 createSafetyAuditRequest.setConducted_on(formattedDate);
-                failureReportCheckDataRequest.setReport_date(formattedDate);
+                safetyAuditCheckDataRequest.setReport_date(formattedDate);
 
-//                getFailureReportCheckDate();
+                getSafetyAuditCheckDate();
             }
 
         } catch (ParseException e) {
@@ -628,7 +632,7 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
                         uploadImagePath = response.body().getData();
                         createSafetyAuditRequest.setEngineer_signature(uploadImagePath);
                         if (uploadImagePath != null) {
-                            signaturePadMechanic.setEnabled(false);
+                            signaturePad.setEnabled(false);
                             save_button.setEnabled(false);
                             clear_button.setEnabled(false);
                             Toast.makeText(context, "Signature Saved", Toast.LENGTH_SHORT).show();
@@ -650,22 +654,22 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
         });
     }
 
-    private void getFailureReportCheckDate() {
+    private void getSafetyAuditCheckDate() {
 
         if (!dialog.isShowing()) {
             dialog.show();
         }
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Log.i(TAG, "getFailureReportCheckDate: failureReportCheckDataRequest -> " + new Gson().toJson(failureReportCheckDataRequest));
-        Call<SuccessResponse> call = apiInterface.getFailureReportCheckDate(getContentType(), failureReportCheckDataRequest);
-        Log.i(TAG, "getFailureReportCheckDate: URL -> " + call.request().url().toString());
+        Log.i(TAG, "getSafetyAuditCheckDate: safetyAuditCheckDataRequest -> " + new Gson().toJson(safetyAuditCheckDataRequest));
+        Call<SuccessResponse> call = apiInterface.getSafetyAuditCheckDate(getContentType(), safetyAuditCheckDataRequest);
+        Log.i(TAG, "getSafetyAuditCheckDate: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<SuccessResponse>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
                 dialog.dismiss();
-                Log.i(TAG, "getFailureReportCheckDate: onResponse: SuccessResponse -> " + new Gson().toJson(response.body()));
+                Log.i(TAG, "getSafetyAuditCheckDate: onResponse: SuccessResponse -> " + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
                     if (response.body().getCode() == 200) {
@@ -680,7 +684,7 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
             @Override
             public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                Log.e(TAG, "getFailureReportCheckDate: onFailure: error --> " + t.getMessage());
+                Log.e(TAG, "getSafetyAuditCheckDate: onFailure: error --> " + t.getMessage());
                 ErrorMsgDialog(t.getMessage());
             }
         });
@@ -781,7 +785,7 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
         } else if (!nullPointerValidator(createSafetyAuditRequest.getJob_id())) {
             ErrorMsgDialog("Please Select Job ID");
         } else if (!nullPointerValidator(createSafetyAuditRequest.getSubmitted_by_num())) {
-            ErrorMsgDialog("Please Select Submitted By Num");
+            ErrorMsgDialog("Please Select Submitted By Number");
         } else if (!nullPointerValidator(createSafetyAuditRequest.getSubmitted_by_name())) {
             ErrorMsgDialog("Please Select Submitted By Name");
         } else if (!nullPointerValidator(createSafetyAuditRequest.getSubmitted_by_emp_code())) {
@@ -804,6 +808,10 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
             ErrorMsgDialog("Please Select Engineer Signature");
         } else if (!nullPointerValidator(createSafetyAuditRequest.getConducted_on())) {
             ErrorMsgDialog("Please Select Conducted On");
+        } else if (!nullPointerValidator(createSafetyAuditRequest.getBrcode())) {
+            ErrorMsgDialog("Please Select Branch Code");
+        } else if (!nullPointerValidator(createSafetyAuditRequest.getSite_name())) {
+            ErrorMsgDialog("Please Select Site Name");
         } else {
             Log.i(TAG, "validateCreateSafetyAuditRequest: createSafetyAuditRequest (2) -> " + new Gson().toJson(createSafetyAuditRequest));
             getSafetyAuditCreate();
@@ -857,8 +865,9 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
                 strDateType = "txt_conducted_on";
                 callDatePicker();
             }
+            break;
             case R.id.save_button: {
-                signatureBitmap = signaturePadMechanic.getSignatureBitmap();
+                signatureBitmap = signaturePad.getSignatureBitmap();
                 Log.i(TAG, "onClick: signatureBitmap" + signatureBitmap);
                 File file = new File(getFilesDir(), "Technician Signature" + ".jpg");
 
@@ -871,14 +880,14 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
                     os.flush();
                     os.close();
                 } catch (Exception e) {
-                    Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+                    Log.e(TAG, "onClick: save_button: error -> " + e.getMessage());
                 }
 
                 signaturePart = MultipartBody.Part.createFormData("sampleFile", se_user_id + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
 
                 networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-                Log.e("Network", "" + networkStatus);
+                Log.i(TAG, "onClick: save_button: Network -> " + networkStatus);
 
                 if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
                     NoInternetDialog();
@@ -888,7 +897,7 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
             }
             break;
             case R.id.clear_button: {
-                signaturePadMechanic.clear();
+                signaturePad.clear();
             }
             break;
             case R.id.btn_submit: {

@@ -142,6 +142,9 @@ public class JobListSafetyAuditResponse implements Parcelable {
         @Expose
         @SerializedName("tech_name")
         private String tech_name;
+        @Expose
+        @SerializedName("BRCODE")
+        private String BRCODE;
 
         public Data() {
         }
@@ -160,6 +163,7 @@ public class JobListSafetyAuditResponse implements Parcelable {
             insp_by = in.readString();
             tech_code = in.readString();
             tech_name = in.readString();
+            BRCODE = in.readString();
         }
 
         public String getImie_no() {
@@ -266,6 +270,14 @@ public class JobListSafetyAuditResponse implements Parcelable {
             this.tech_name = tech_name;
         }
 
+        public String getBRCODE() {
+            return BRCODE;
+        }
+
+        public void setBRCODE(String BRCODE) {
+            this.BRCODE = BRCODE;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -286,6 +298,7 @@ public class JobListSafetyAuditResponse implements Parcelable {
             parcel.writeString(insp_by);
             parcel.writeString(tech_code);
             parcel.writeString(tech_name);
+            parcel.writeString(BRCODE);
         }
     }
 }

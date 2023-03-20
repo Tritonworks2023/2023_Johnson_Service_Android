@@ -51,6 +51,7 @@ import com.triton.johnson_tap_app.requestpojo.Pasused_ListRequest;
 import com.triton.johnson_tap_app.requestpojo.Preventive_ChecklistRequest;
 import com.triton.johnson_tap_app.requestpojo.Preventive_Submit_Request;
 import com.triton.johnson_tap_app.requestpojo.RopeMaintenanceCheckDataRequest;
+import com.triton.johnson_tap_app.requestpojo.SafetyAuditCheckDataRequest;
 import com.triton.johnson_tap_app.requestpojo.ServiceRequest;
 import com.triton.johnson_tap_app.requestpojo.ServiceUserdetailsRequest;
 import com.triton.johnson_tap_app.requestpojo.ServiceUserdetailsRequestResponse;
@@ -604,6 +605,9 @@ public interface APIInterface {
 
     @POST("additional_forms/escalator_survey/fetch_data_job_id")
     Call<JobListSafetyAuditResponse> getSafetyAuditFetchDataJobId(@Header("Content-Type") String type, @Body JobIdRequest jobIdRequest);
+
+    @POST("additional_forms/safety_audit/check_data")
+    Call<SuccessResponse> getSafetyAuditCheckDate(@Header("Content-Type") String type, @Body SafetyAuditCheckDataRequest safetyAuditCheckDataRequest);
 
     @POST("additional_forms/safety_audit/create")
     Call<SuccessResponse> getSafetyAuditCreate(@Header("Content-Type") String type, @Body CreateSafetyAuditRequest createSafetyAuditRequest);

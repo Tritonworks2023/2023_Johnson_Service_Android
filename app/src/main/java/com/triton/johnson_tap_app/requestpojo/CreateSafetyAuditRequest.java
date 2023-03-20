@@ -164,6 +164,12 @@ public class CreateSafetyAuditRequest {
     @Expose
     @SerializedName("job_id")
     private String job_id;
+    @Expose
+    @SerializedName("brcode")
+    private String brcode;
+    @Expose
+    @SerializedName("site_name")
+    private String site_name;
 
     public String getSA40() {
         return SA40;
@@ -587,5 +593,21 @@ public class CreateSafetyAuditRequest {
 
     public void setJob_id(String job_id) {
         this.job_id = job_id;
+    }
+
+    public String getBrcode() {
+        return brcode;
+    }
+
+    public void setBrcode(String brcode) {
+        this.brcode = brcode;
+    }
+
+    public String getSite_name() {
+        return site_name;
+    }
+
+    public void setSite_name(String site_name) {
+        this.site_name = site_name;
     }
 }
