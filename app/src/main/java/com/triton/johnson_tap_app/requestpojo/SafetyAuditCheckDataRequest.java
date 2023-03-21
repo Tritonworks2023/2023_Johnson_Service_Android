@@ -11,8 +11,11 @@ public class SafetyAuditCheckDataRequest {
     @SerializedName("job_id")
     private String job_id;
     @Expose
-    @SerializedName("report_date")
-    private String report_date;
+    @SerializedName("conducted_on")
+    private String conducted_on;
+    /*@Expose
+    @SerializedName("submitted_by_on")
+    private String submitted_by_on;*/
 
     public String getSubmitted_by_num() {
         return submitted_by_num;
@@ -30,11 +33,19 @@ public class SafetyAuditCheckDataRequest {
         this.job_id = job_id;
     }
 
-    public String getReport_date() {
-        return report_date;
+    public String getConducted_on() {
+        return conducted_on;
     }
 
-    public void setReport_date(String report_date) {
-        this.report_date = report_date;
+    public void setConducted_on(String conducted_on) {
+        this.conducted_on = conducted_on;
     }
+
+    /*public String getSubmitted_by_on() {
+        return submitted_by_on;
+    }
+
+    public void setSubmitted_by_on(String submitted_by_on) {
+        this.submitted_by_on = submitted_by_on;
+    }*/
 }

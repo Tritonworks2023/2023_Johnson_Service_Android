@@ -150,6 +150,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
         additionalList.add(new ServiceResponse.DataBean("Elevator Survey Form", "0", "1", "0", "0", "0", "1"));
         additionalList.add(new ServiceResponse.DataBean("Service Visibility", "0", "1", "0", "0", "0", "1"));
         additionalList.add(new ServiceResponse.DataBean("Failure Report", "0", "1", "0", "0", "0", "1"));
+        additionalList.add(new ServiceResponse.DataBean("Failure Report2", "0", "1", "0", "0", "0", "1"));
         additionalList.add(new ServiceResponse.DataBean("Rope Maintenance", "0", "1", "0", "0", "0", "1"));
         additionalList.add(new ServiceResponse.DataBean("Repair Work Approval Request", "0", "1", "0", "0", "0", "1"));
         additionalList.add(new ServiceResponse.DataBean("Repair Work Approval", "0", "1", "0", "0", "0", "1"));

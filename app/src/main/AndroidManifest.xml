@@ -50,6 +50,12 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
+            android:name=".Service_Activity.failureReportRequestModule.FailureReportRequestFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.failureReportRequestModule.FailureReportRequestScannerActivity"
+            android:exported="false" />
+        <activity
             android:name=".Service_Activity.safetyAuditModule.SafetyAuditJobActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
@@ -100,7 +106,7 @@
         <activity
             android:name=".Service_Activity.serviceVisibilityModule.SmartServiceVisibilityFormActivity"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.DailyAttendanceActivity"
             android:configChanges="orientation|screenSize"

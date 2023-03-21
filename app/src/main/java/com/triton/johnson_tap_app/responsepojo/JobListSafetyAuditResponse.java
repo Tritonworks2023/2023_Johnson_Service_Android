@@ -145,6 +145,24 @@ public class JobListSafetyAuditResponse implements Parcelable {
         @Expose
         @SerializedName("BRCODE")
         private String BRCODE;
+        @Expose
+        @SerializedName("mech_code")
+        private String mech_code;
+        @Expose
+        @SerializedName("mech_name")
+        private String mech_name;
+        @Expose
+        @SerializedName("zone_code")
+        private String zone_code;
+        @Expose
+        @SerializedName("zone_name")
+        private String zone_name;
+        @Expose
+        @SerializedName("EPROUTECD")
+        private String EPROUTECD;
+        @Expose
+        @SerializedName("ZPROUTECD")
+        private String ZPROUTECD;
 
         public Data() {
         }
@@ -164,6 +182,12 @@ public class JobListSafetyAuditResponse implements Parcelable {
             tech_code = in.readString();
             tech_name = in.readString();
             BRCODE = in.readString();
+            mech_code = in.readString();
+            mech_name = in.readString();
+            zone_code = in.readString();
+            zone_name = in.readString();
+            EPROUTECD = in.readString();
+            ZPROUTECD = in.readString();
         }
 
         public String getImie_no() {
@@ -278,6 +302,54 @@ public class JobListSafetyAuditResponse implements Parcelable {
             this.BRCODE = BRCODE;
         }
 
+        public String getMech_code() {
+            return mech_code;
+        }
+
+        public void setMech_code(String mech_code) {
+            this.mech_code = mech_code;
+        }
+
+        public String getMech_name() {
+            return mech_name;
+        }
+
+        public void setMech_name(String mech_name) {
+            this.mech_name = mech_name;
+        }
+
+        public String getZone_code() {
+            return zone_code;
+        }
+
+        public void setZone_code(String zone_code) {
+            this.zone_code = zone_code;
+        }
+
+        public String getZone_name() {
+            return zone_name;
+        }
+
+        public void setZone_name(String zone_name) {
+            this.zone_name = zone_name;
+        }
+
+        public String getEPROUTECD() {
+            return EPROUTECD;
+        }
+
+        public void setEPROUTECD(String EPROUTECD) {
+            this.EPROUTECD = EPROUTECD;
+        }
+
+        public String getZPROUTECD() {
+            return ZPROUTECD;
+        }
+
+        public void setZPROUTECD(String ZPROUTECD) {
+            this.ZPROUTECD = ZPROUTECD;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -299,6 +371,12 @@ public class JobListSafetyAuditResponse implements Parcelable {
             parcel.writeString(tech_code);
             parcel.writeString(tech_name);
             parcel.writeString(BRCODE);
+            parcel.writeString(mech_code);
+            parcel.writeString(mech_name);
+            parcel.writeString(zone_code);
+            parcel.writeString(zone_name);
+            parcel.writeString(EPROUTECD);
+            parcel.writeString(ZPROUTECD);
         }
     }
 }

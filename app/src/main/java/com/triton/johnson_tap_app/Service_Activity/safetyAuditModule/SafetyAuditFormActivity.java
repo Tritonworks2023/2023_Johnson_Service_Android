@@ -479,9 +479,13 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
         createSafetyAuditRequest.setSubmitted_by_num(se_user_mobile_no);
         createSafetyAuditRequest.setSubmitted_by_name(se_user_name);
         createSafetyAuditRequest.setSubmitted_by_emp_code(se_user_id);
+        createSafetyAuditRequest.setEngineer_name(se_user_name);
         createSafetyAuditRequest.setJob_id(jobListSafetyAuditDateResponse.getJOBNO());
         createSafetyAuditRequest.setBrcode(jobListSafetyAuditDateResponse.getBRCODE());
         createSafetyAuditRequest.setSite_name(jobListSafetyAuditDateResponse.getCUST_NAME());
+        createSafetyAuditRequest.setTech_code(jobListSafetyAuditDateResponse.getTech_code());
+        createSafetyAuditRequest.setMech_code(jobListSafetyAuditDateResponse.getMech_code());
+        createSafetyAuditRequest.setZonal_code(jobListSafetyAuditDateResponse.getZone_code());
 
         safetyAuditCheckDataRequest.setJob_id(jobListSafetyAuditDateResponse.getJOBNO());
         safetyAuditCheckDataRequest.setSubmitted_by_num(se_user_mobile_no);
@@ -550,13 +554,13 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
             Log.i(TAG, "setDate: formattedDate-> " + formattedDate);
             if (strDateType.equalsIgnoreCase("txt_conducted_on")) {
                 createSafetyAuditRequest.setConducted_on(formattedDate);
-                safetyAuditCheckDataRequest.setReport_date(formattedDate);
+                safetyAuditCheckDataRequest.setConducted_on(formattedDate);
 
                 getSafetyAuditCheckDate();
             } else if (strDateType.equalsIgnoreCase("txt_both")) {
                 createSafetyAuditRequest.setSubmitted_by_on(formattedDate);
                 createSafetyAuditRequest.setConducted_on(formattedDate);
-                safetyAuditCheckDataRequest.setReport_date(formattedDate);
+                safetyAuditCheckDataRequest.setConducted_on(formattedDate);
 
                 getSafetyAuditCheckDate();
             }
@@ -699,10 +703,9 @@ public class SafetyAuditFormActivity extends AppCompatActivity implements View.O
         createSafetyAuditRequest.setObservation_d(nullPointer(edt_comments_d.getText().toString().trim()));
         createSafetyAuditRequest.setGeneral_comment(nullPointer(edt_general.getText().toString().trim()));
 
-        /*if (!checkDate) {
+        if (!checkDate) {
             ErrorMsgDialog("Already you have submitted for this Date.\nKindly select another Date.");
-        } else*/
-        if (!nullPointerValidator(createSafetyAuditRequest.getSA01())) {
+        } else if (!nullPointerValidator(createSafetyAuditRequest.getSA01())) {
             ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
         } else if (!nullPointerValidator(createSafetyAuditRequest.getSA02())) {
             ErrorMsgDialog("Please Select 2. Capacity plate and safety instructions provided and clearly visible.");

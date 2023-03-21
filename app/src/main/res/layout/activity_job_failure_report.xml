@@ -20,7 +20,8 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:src="@drawable/ic_back_arrow" />
-//7338678399
+            //7338678399
+
             <TextView
                 android:id="@+id/txt_menu_name"
                 android:layout_width="match_parent"

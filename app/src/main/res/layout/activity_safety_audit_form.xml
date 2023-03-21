@@ -166,6 +166,46 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="Conducted On"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_conducted_on"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Date"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -3871,46 +3911,6 @@
                     android:maxLines="2"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/sourcesanspro_regular"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:text="Conducted On"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:orientation="horizontal"
-                android:padding="0dp"
-                android:visibility="visible"
-                tools:ignore="UselessParent">
-
-                <TextView
-                    android:id="@+id/txt_conducted_on"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:gravity="center|start"
-                    android:hint="Select Date"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="2"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
 
             </LinearLayout>
 

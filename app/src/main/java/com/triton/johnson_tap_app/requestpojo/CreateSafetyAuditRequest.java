@@ -170,6 +170,15 @@ public class CreateSafetyAuditRequest {
     @Expose
     @SerializedName("site_name")
     private String site_name;
+    @Expose
+    @SerializedName("mech_code")
+    private String mech_code;
+    @Expose
+    @SerializedName("tech_code")
+    private String tech_code;
+    @Expose
+    @SerializedName("zonal_code")
+    private String zonal_code;
 
     public String getSA40() {
         return SA40;
@@ -609,5 +618,29 @@ public class CreateSafetyAuditRequest {
 
     public void setSite_name(String site_name) {
         this.site_name = site_name;
+    }
+
+    public String getMech_code() {
+        return mech_code;
+    }
+
+    public void setMech_code(String mech_code) {
+        this.mech_code = mech_code;
+    }
+
+    public String getTech_code() {
+        return tech_code;
+    }
+
+    public void setTech_code(String tech_code) {
+        this.tech_code = tech_code;
+    }
+
+    public String getZonal_code() {
+        return zonal_code;
+    }
+
+    public void setZonal_code(String zonal_code) {
+        this.zonal_code = zonal_code;
     }
 }
