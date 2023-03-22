@@ -19,6 +19,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_failure_report_request_form);
 
         context = this;

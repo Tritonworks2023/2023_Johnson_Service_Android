@@ -23,7 +23,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -387,24 +387,17 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
                             String Image = response.body().getData().getImage_path();
                             String _id = response.body().getData().get_id();
 
-//                            rel_Main.setVisibility(View.GONE);
-//                            con_PopImage.setVisibility(View.VISIBLE);
-
                             AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-                            View mView = getLayoutInflater().inflate(R.layout.remarks_popup, null);
-
-                            EditText edt_Remarks = mView.findViewById(R.id.edt_remarks);
+                            View mView = getLayoutInflater().inflate(R.layout.announcement_popup, null);
                             Button btn_Submit = mView.findViewById(R.id.btn_submit);
                             btn_Submit.setText("Ok I have Readed");
-                            edt_Remarks.setVisibility(View.GONE);
                             @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-                            PhotoView img_Pop = mView.findViewById(R.id.img_pop);
+                            ImageView img_Pop = mView.findViewById(R.id.img_pop);
                             img_Pop.setVisibility(View.VISIBLE);
                             mBuilder.setView(mView);
                             alertDialog = mBuilder.create();
                             alertDialog.show();
                             alertDialog.setCanceledOnTouchOutside(false);
-
 
                             Glide.with(context)
                                     .load(Image)
@@ -413,7 +406,6 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
                             btn_Submit.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
                                     updatePopupImage(_id);
                                 }
                             });

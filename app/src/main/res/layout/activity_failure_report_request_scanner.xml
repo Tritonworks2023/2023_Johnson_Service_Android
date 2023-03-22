@@ -43,36 +43,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_qr_scan"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginHorizontal="@dimen/_30dp"
-                android:layout_marginVertical="@dimen/_20dp"
-                android:background="@drawable/blue_button_background_with_radius"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="QR SCAN"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edt_qr_scan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_30dp"
-                android:layout_marginVertical="@dimen/_5dp"
-                android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter QR Number"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
+                <EditText
+                    android:id="@+id/edt_qr_scan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30dp"
+                    android:layout_marginVertical="@dimen/_20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter QR Number"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
 
+                <Button
+                    android:id="@+id/btn_qr_scan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30dp"
+                    android:layout_marginVertical="@dimen/_20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/blue_button_background_with_radius"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="QR SCAN"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,35 +89,43 @@
                 android:text="OR"
                 android:textColor="@color/black" />
 
-            <Button
-                android:id="@+id/btn_barcode_scan"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginHorizontal="@dimen/_30dp"
-                android:layout_marginVertical="@dimen/_20dp"
-                android:background="@drawable/blue_button_background_with_radius"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="BARCODE SCAN"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edt_barcode_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_30dp"
-                android:layout_marginVertical="@dimen/_5dp"
-                android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Barcode Number"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
+                <EditText
+                    android:id="@+id/edt_barcode_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30dp"
+                    android:layout_marginVertical="@dimen/_20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Barcode Number"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btn_barcode_scan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30dp"
+                    android:layout_marginVertical="@dimen/_20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/blue_button_background_with_radius"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="BARCODE SCAN"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -120,35 +135,42 @@
                 android:text="OR"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/edt_job_num"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_30dp"
-                android:layout_marginVertical="@dimen/_20dp"
-                android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Job Number"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_30dp"
-                android:layout_marginVertical="@dimen/_30dp"
-                android:background="@drawable/blue_button_background_with_radius"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="SUBMIT"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                <EditText
+                    android:id="@+id/edt_job_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30dp"
+                    android:layout_marginVertical="@dimen/_20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/child_back_ground"
+                    android:ellipsize="end"
+                    android:hint="Enter Job Number"
+                    android:imeOptions=""
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
 
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30dp"
+                    android:layout_marginVertical="@dimen/_20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/blue_button_background_with_radius"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="SUBMIT"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
