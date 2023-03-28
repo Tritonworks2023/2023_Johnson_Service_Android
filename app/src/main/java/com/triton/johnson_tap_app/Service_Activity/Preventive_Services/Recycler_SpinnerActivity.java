@@ -677,8 +677,10 @@ public class Recycler_SpinnerActivity extends AppCompatActivity implements GetSp
                 progressDialog.dismiss();
                 Log.i(TAG, "retriveLocalvalue: onResponse: RetriveResponsePR - " + new Gson().toJson(response.body()));
 
-                if (statustype != null && !statustype.isEmpty() && response.body().getData().getJob_status_type() != null && !response.body().getData().getJob_status_type().isEmpty()) {
-                    statustype = response.body().getData().getJob_status_type();
+                if (statustype == null || statustype.isEmpty()) {
+                    if (response.body().getData().getJob_status_type() != null && !response.body().getData().getJob_status_type().isEmpty()) {
+                        statustype = response.body().getData().getJob_status_type();
+                    }
                 }
 
                 Log.i(TAG, "retriveLocalvalue: onResponse: statustype- " + statustype);
