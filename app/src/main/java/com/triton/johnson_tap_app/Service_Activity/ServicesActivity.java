@@ -91,11 +91,11 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
 
         Log.i(TAG, "onCreate: emp_Type --> " + emp_Type);
 
-        if (emp_Type.equalsIgnoreCase("engineer")) {
+        /*if (emp_Type.equalsIgnoreCase("engineer")) {
             rv_add_list.setVisibility(View.VISIBLE);
         } else {
             rv_add_list.setVisibility(View.GONE);
-        }
+        }*/
 
         ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.e("deviceid", ID);
@@ -146,15 +146,20 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             }
         });
 
-        additionalList.add(new ServiceResponse.DataBean("Escalator Survey Form", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Elevator Survey Form", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Service Visibility", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Failure Report", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Failure Report2", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Rope Maintenance", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Repair Work Approval Request", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Repair Work Approval", "0", "1", "0", "0", "0", "1"));
-        additionalList.add(new ServiceResponse.DataBean("Safety Audit", "0", "1", "0", "0", "0", "1"));
+
+        if (emp_Type.equalsIgnoreCase("engineer")) {
+            additionalList.add(new ServiceResponse.DataBean("Escalator Survey Form", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Elevator Survey Form", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Service Visibility", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Failure Report", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Repair Work Request", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Repair Work Approval", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Safety Audit", "0", "1", "0", "0", "0", "1"));
+        } else {
+            additionalList.add(new ServiceResponse.DataBean("Rope Maintenance", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Failure Report2", "0", "1", "0", "0", "0", "1"));
+        }
+
         setAdditionalList(additionalList);
     }
 

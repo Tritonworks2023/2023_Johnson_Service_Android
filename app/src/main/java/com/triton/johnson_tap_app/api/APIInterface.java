@@ -139,7 +139,8 @@ import retrofit2.http.Part;
 
 public interface APIInterface {
 
-    @GET("activity/tab_getlatest_version")
+    //    @GET("activity/tab_getlatest_version")
+    @GET("activity/service_getlatest_version")
     Call<GetFetchLatestVersionResponse> getlatestversionrequestcall();
 
 //    /*login*/

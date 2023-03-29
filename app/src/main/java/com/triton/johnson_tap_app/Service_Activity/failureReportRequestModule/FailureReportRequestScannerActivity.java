@@ -1,10 +1,13 @@
 package com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
@@ -43,6 +47,12 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
     private EditText edt_qr_scan, edt_barcode_number, edt_job_num;
     private Dialog dialog;
     private FailureReportFetchDetailsByJobCodeResponse failureReportFetchDetailsByJobCodeResponse = new FailureReportFetchDetailsByJobCodeResponse();
+    private String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+    private int PERMISSION_CLINIC = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +99,17 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                 startActivity(getIntent());
             }
         });
+    }
+
+    private boolean hasPermissions(Context context, String... permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void ErrorMsgDialog(String strMsg) {
@@ -281,7 +302,17 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
             }
             break;
             case R.id.btn_qr_scan: {
-                networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
+
+                if (!hasPermissions(this, PERMISSIONS)) {
+                    ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
+                } else {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(android.R.id.content, new QRCodeScannerFragment(), "QRCodeScannerFragment")
+                            .commit();
+                }
+
+                /*networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
                 Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);
 
@@ -293,7 +324,7 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                     } else {
                         Toast.makeText(context, "Enter valid QR Code", Toast.LENGTH_SHORT).show();
                     }
-                }
+                }*/
 
             }
             break;

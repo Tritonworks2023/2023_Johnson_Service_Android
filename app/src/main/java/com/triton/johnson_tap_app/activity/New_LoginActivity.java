@@ -103,7 +103,7 @@ public class New_LoginActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         buildDateTime = df.format(buildDate);
 
-        txt_version.setText(String.format("Test Build Version - %s V%s", buildDateTime, versionName));
+        txt_version.setText(String.format("Device Lock V - %s V%s", buildDateTime, versionName));
 
         Log.i(TAG, "onCreate: display DateTimeVer -> " + String.format("%s V%s", buildDateTime, versionName));
 
@@ -133,7 +133,7 @@ public class New_LoginActivity extends AppCompatActivity {
 
         ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         device_id.setText(ID);
-        Log.e("deviceid", ID);
+        Log.i(TAG, "onCreate: ID -> " + ID);
 
         userNameMaterialEditText.setOnTouchListener((view, motionEvent) -> {
 
@@ -148,7 +148,6 @@ public class New_LoginActivity extends AppCompatActivity {
             passwordMaterialEditText.setFocusableInTouchMode(true);
             return false;
         });
-
 
         // check whether internet is on or not
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());

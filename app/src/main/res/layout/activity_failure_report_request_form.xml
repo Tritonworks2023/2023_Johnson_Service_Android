@@ -63,7 +63,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_jobid"
+                android:id="@+id/txt_job_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -1569,26 +1569,20 @@
                     android:textStyle="bold"
                     android:visibility="visible" />
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/edt_electric_volt"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <Spinner
-                        android:id="@+id/spinner_electric_volt"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
+                    android:digits="0123456789"
+                    android:ellipsize="end"
+                    android:hint="Enter Electric Volt"
+                    android:imeOptions=""
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"

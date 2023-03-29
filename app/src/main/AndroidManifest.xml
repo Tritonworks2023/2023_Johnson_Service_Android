@@ -507,7 +507,7 @@
 
         </activity>
         <activity
-            android:name=".activity.DownloadapkfileActivity"
+            android:name=".activity.DownloadApkFileActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity

@@ -1,14 +1,11 @@
 package com.triton.johnson_tap_app.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,45 +13,46 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.triton.johnson_tap_app.R;
+import com.triton.johnson_tap_app.utils.CommonFunction;
 
 import java.util.Objects;
 
-public class DownloadapkfileActivity extends AppCompatActivity {
+public class DownloadApkFileActivity extends AppCompatActivity {
 
-    private String TAG ="DownloadapkfileActivity";
     Button btn_download;
     ProgressDialog progressDialog;
     Dialog submittedSuccessfulalertdialog;
-
     DownloadManager manager;
-    String apk_link,apk_version;
+    String apk_link = "", apk_version = "";
+    private String TAG = DownloadApkFileActivity.class.getSimpleName();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_downloadapkfile);
+        setContentView(R.layout.activity_download_apk_file);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            apk_link = extras.getString("apk_link");
-
-            Log.w(TAG,"activity_id -->"+apk_link);
-
+            if (extras.containsKey("apk_link")) {
+                apk_link = extras.getString("apk_link");
+            }
+            if (extras.containsKey("apk_version")) {
+                apk_version = extras.getString("apk_version");
+            }
+            Log.i(TAG, "onCreate: apk_link -> " + apk_link + "apk_version -> " + apk_version);
         }
 
-        if (extras != null) {
-            apk_version = extras.getString("apk_version");
-
-            Log.w(TAG,"activity_version -->"+apk_version);
-        }
         //checkPermission();
-       // requestPermission();
+        // requestPermission();
         isStoragePermissionGranted();
 
         btn_download = findViewById(R.id.btn_download);
@@ -86,7 +84,7 @@ public class DownloadapkfileActivity extends AppCompatActivity {
 //              //  request.setMimeType("*/*");
 //                downloadManager.enqueue(request);
 
-                progressDialog = new ProgressDialog(DownloadapkfileActivity.this);
+                progressDialog = new ProgressDialog(DownloadApkFileActivity.this);
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Jlsmart APK Download Please Wait...");
                 progressDialog.setCanceledOnTouchOutside(false);
@@ -99,15 +97,13 @@ public class DownloadapkfileActivity extends AppCompatActivity {
                     public void run() {
 
                         showSubmittedSuccessful();
-
                         progressDialog.dismiss();
 
                     }
                 }, 15000);
 
-
                 String urlString = apk_link;
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(urlString));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setPackage("com.android.chrome");
                 try {
@@ -118,15 +114,14 @@ public class DownloadapkfileActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-
             }
         });
     }
 
     private void showSubmittedSuccessful() {
 
-        Log.w(TAG, "showSubmittedSuccessful -->+");
-        submittedSuccessfulalertdialog = new Dialog(DownloadapkfileActivity.this);
+        Log.i(TAG, "showSubmittedSuccessful");
+        submittedSuccessfulalertdialog = new Dialog(DownloadApkFileActivity.this);
         submittedSuccessfulalertdialog.setCancelable(false);
         submittedSuccessfulalertdialog.setContentView(R.layout.pop);
         Button btn_goback = submittedSuccessfulalertdialog.findViewById(R.id.btn_goback);
@@ -151,22 +146,48 @@ public class DownloadapkfileActivity extends AppCompatActivity {
 //    private void requestPermission() {
 //        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, 200);
 //    }
-    public  boolean isStoragePermissionGranted() {
+
+    public void isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
-                return true;
+                Log.i(TAG, "isStoragePermissionGranted: -> Permission is granted");
             } else {
-
-                Log.v(TAG,"Permission is revoked");
+                Log.i(TAG, "isStoragePermissionGranted: -> Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
             }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.i(TAG, "isStoragePermissionGranted: -> Permission is granted");
         }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
-            return true;
+    }
+
+    private void ErrorMsgDialog(String strMsg) {
+
+        AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.popup_tryagain, null);
+
+        TextView txt_Message = mView.findViewById(R.id.txt_message);
+        Button btn_Ok = mView.findViewById(R.id.btn_ok);
+
+        if (CommonFunction.nullPointerValidator(strMsg)) {
+            txt_Message.setText(strMsg);
         }
+
+        mBuilder.setView(mView);
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.show();
+
+        btn_Ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        ErrorMsgDialog("Download the new version APK and Install.");
     }
 }

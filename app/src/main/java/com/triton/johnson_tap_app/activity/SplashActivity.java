@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -97,20 +98,13 @@ public class SplashActivity extends AppCompatActivity {
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-        Log.e("Network", "" + networkStatus);
+        Log.i(TAG, "onCreate: networkStatus -> " + networkStatus);
+
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
-
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show();
-
         } else {
-            getlatestversion();
+            getLatestVersion();
         }
-
-//        Intent intent = new Intent(SplashActivity.this, Dashbaord_MainActivity.class);
-//        startActivity(intent);
-//        overridePendingTransition(R.anim.new_right, R.anim.new_left);
-//        finish();
-
 
     }
 
@@ -127,23 +121,22 @@ public class SplashActivity extends AppCompatActivity {
         Log.e("Mobile Number", "" + telephonyManager.getLine1Number());
     }
 
-    private void getlatestversion() {
+    private void getLatestVersion() {
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<GetFetchLatestVersionResponse> call = apiInterface.getlatestversionrequestcall();
-        Log.w(TAG, "url  :%s" + call.request().url().toString());
+
+        Log.i(TAG, "getLatestVersion: URL -> " + call.request().url().toString());
         call.enqueue(new Callback<GetFetchLatestVersionResponse>() {
             @Override
-            public void onResponse(Call<GetFetchLatestVersionResponse> call, Response<GetFetchLatestVersionResponse> response) {
-                Log.e(TAG, "Submitted_status ---" + new Gson().toJson(response.body()));
+            public void onResponse(@NonNull Call<GetFetchLatestVersionResponse> call, @NonNull Response<GetFetchLatestVersionResponse> response) {
+
+                Log.i(TAG, "getLatestVersion: onResponse: GetFetchLatestVersionResponse -> " + new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    Log.e(TAG, "Submitted_status ---" + response.body().getMessage());
                     String Submitted_status = response.body().getStatus();
-                    Log.e(TAG, "dATARE-000000--" + response.body().getData().getVersion());
 
                     if (Submitted_status != null && Submitted_status.equalsIgnoreCase("Success")) {
-                        Log.e(TAG, "dATA" + response.body().getData().getVersion());
 
-                        if (response.body().getData().getVersion().equals("25.08.2022.1")) {
+                        if (response.body().getData().getVersion().equals(BuildConfig.APP_VERSION_DATE)) {
                             Thread timerThread = new Thread() {
                                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                                 public void run() {
@@ -152,9 +145,6 @@ public class SplashActivity extends AppCompatActivity {
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     } finally {
-
-                                        Log.w(TAG, "ELSE" + sessionManager.isLoggedIn());
-
 
                                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
                                         String login = sharedPreferences.getString("login_execute", "false");
@@ -169,16 +159,14 @@ public class SplashActivity extends AppCompatActivity {
                                             overridePendingTransition(R.anim.new_right, R.anim.new_left);
                                             finish();
                                         }
-
                                     }
                                 }
                             };
                             timerThread.start();
                         } else {
-                            Log.e(TAG, "dATA-0000--" + response.body().getData().getVersion());
                             String apk_link = response.body().getData().getApk_link();
                             String apk_version = response.body().getData().getVersion();
-                            Intent intent = new Intent(SplashActivity.this, DownloadapkfileActivity.class);
+                            Intent intent = new Intent(SplashActivity.this, DownloadApkFileActivity.class);
                             intent.putExtra("apk_link", apk_link);
                             intent.putExtra("apk_version", apk_version);
                             startActivity(intent);
@@ -191,10 +179,8 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetFetchLatestVersionResponse> call, Throwable t) {
-
-                Log.e("Hi", "On Failure");
-                Log.e(TAG, "Submitted_status 1111---" + t.getLocalizedMessage());
+            public void onFailure(@NonNull Call<GetFetchLatestVersionResponse> call, @NonNull Throwable t) {
+                Log.e(TAG, "getLatestVersion: onFailure: error -> " + t.getMessage());
             }
         });
     }

@@ -48,6 +48,7 @@ import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.requestpojo.CreateRequest;
 import com.triton.johnson_tap_app.requestpojo.LogoutRequest;
 import com.triton.johnson_tap_app.responsepojo.CreateResponse;
+import com.triton.johnson_tap_app.responsepojo.GetFetchLatestVersionResponse;
 import com.triton.johnson_tap_app.responsepojo.GetPopUpImageRequest;
 import com.triton.johnson_tap_app.responsepojo.GetPopupImageResponse;
 import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
@@ -148,8 +149,10 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
 
         if (emp_Type.equalsIgnoreCase("engineer")) {
             attendance.setVisibility(View.VISIBLE);
+            dashboard.setVisibility(View.VISIBLE);
         } else {
             attendance.setVisibility(View.GONE);
+            dashboard.setVisibility(View.GONE);
         }
         /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // if permissions are not provided we are requesting for permissions.
@@ -190,8 +193,7 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
             NoInternetDialog();
 
         } else {
-
-            getPopupImage();
+            getLatestVersion();
         }
 
         general.setOnClickListener(new View.OnClickListener() {
@@ -289,6 +291,49 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
         getTeleDetails();
     }
 
+    private void getLatestVersion() {
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<GetFetchLatestVersionResponse> call = apiInterface.getlatestversionrequestcall();
+
+        Log.i(TAG, "getLatestVersion: URL -> " + call.request().url().toString());
+        call.enqueue(new Callback<GetFetchLatestVersionResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetFetchLatestVersionResponse> call, @NonNull Response<GetFetchLatestVersionResponse> response) {
+
+                Log.i(TAG, "getLatestVersion: onResponse: GetFetchLatestVersionResponse -> " + new Gson().toJson(response.body()));
+
+                if (response.isSuccessful() && response.body() != null) {
+                    String Submitted_status = response.body().getStatus();
+                    if (Submitted_status != null && Submitted_status.equalsIgnoreCase("Success")) {
+                        if (response.body().getData().getVersion().equals(BuildConfig.APP_VERSION_DATE)) {
+                            getPopupImage();
+                        } else {
+                            String apk_link = response.body().getData().getApk_link();
+                            String apk_version = response.body().getData().getVersion();
+                            Intent intent = new Intent(Dashbaord_MainActivity.this, DownloadApkFileActivity.class);
+                            intent.putExtra("apk_link", apk_link);
+                            intent.putExtra("apk_version", apk_version);
+                            startActivity(intent);
+                        }
+
+                    } else {
+                        getPopupImage();
+                    }
+                } else {
+                    getPopupImage();
+                    ErrorMyLocationAlert("");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetFetchLatestVersionResponse> call, @NonNull Throwable t) {
+                Log.e(TAG, "getLatestVersion: onFailure: error -> " + t.getMessage());
+                ErrorMyLocationAlert(t.getMessage());
+                getPopupImage();
+            }
+        });
+    }
+
     private void getTeleDetails() {
         String uniqueID = "";
         try {
@@ -342,7 +387,6 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
         View mView = inflater.inflate(R.layout.dialog_nointernet, null);
         Button btn_Retry = mView.findViewById(R.id.btn_retry);
 
-
         mBuilder.setView(mView);
         final Dialog dialog = mBuilder.create();
         dialog.show();
@@ -369,7 +413,7 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<GetPopupImageResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<GetPopupImageResponse> call, Response<GetPopupImageResponse> response) {
+            public void onResponse(@NonNull Call<GetPopupImageResponse> call, @NonNull Response<GetPopupImageResponse> response) {
 
                 Log.i(TAG, "Get PopUp Image Response -> " + new Gson().toJson(response.body()));
 
@@ -418,10 +462,9 @@ public class Dashbaord_MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetPopupImageResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetPopupImageResponse> call, @NonNull Throwable t) {
                 Log.e("On Failure", "--->" + t.getMessage());
                 ErrorMyLocationAlert(t.getMessage());
-//                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
