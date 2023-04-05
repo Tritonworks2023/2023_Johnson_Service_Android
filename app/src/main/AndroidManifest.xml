@@ -12,7 +12,6 @@
         android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
@@ -38,7 +37,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
@@ -52,10 +50,22 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
+            android:name=".Service_Activity.failureReportRequestModule.FailureReportPendingRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.failureReportRequestModule.FailureReportRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.failureReportApprovalModule.FailureReportApprovalFormActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
             android:name=".Service_Activity.failureReportRequestModule.FailureReportRequestFormActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.failureReportRequestModule.FailureReportRequestScannerActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Service_Activity.safetyAuditModule.SafetyAuditJobActivity"
@@ -95,6 +105,10 @@
             android:exported="false" />
         <activity
             android:name=".Service_Activity.failureReportModule.JobFailureReportActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.failureReportApprovalModule.FailureReportApprovalJobActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity

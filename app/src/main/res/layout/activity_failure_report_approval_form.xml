@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Service_Activity.failureReportRequestModule.FailureReportRequestFormActivity">
+    tools:context=".Service_Activity.failureReportApprovalModule.FailureReportApprovalFormActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_bar"
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Failure Report Create Form"
+                android:text="Failure Report Approval Form"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />

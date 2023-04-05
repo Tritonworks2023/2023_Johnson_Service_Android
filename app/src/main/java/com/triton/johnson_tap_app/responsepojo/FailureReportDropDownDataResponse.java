@@ -92,6 +92,9 @@ public class FailureReportDropDownDataResponse {
         @Expose
         @SerializedName("matl_reture_type")
         private List<Matl_reture_type> matl_reture_type;
+        @Expose
+        @SerializedName("reasoncode")
+        private List<ReasonCode> reasoncode;
 
         public List<Ld_inside_lift> getLd_inside_lift() {
             return ld_inside_lift;
@@ -195,6 +198,14 @@ public class FailureReportDropDownDataResponse {
 
         public void setMatl_reture_type(List<Matl_reture_type> matl_reture_type) {
             this.matl_reture_type = matl_reture_type;
+        }
+
+        public List<ReasonCode> getReasoncode() {
+            return reasoncode;
+        }
+
+        public void setReasoncode(List<ReasonCode> reasoncode) {
+            this.reasoncode = reasoncode;
         }
     }
 
@@ -499,6 +510,31 @@ public class FailureReportDropDownDataResponse {
     }
 
     public static class Matl_reture_type {
+        @Expose
+        @SerializedName("value")
+        private String value;
+        @Expose
+        @SerializedName("display_name")
+        private String display_name;
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getDisplay_name() {
+            return display_name;
+        }
+
+        public void setDisplay_name(String display_name) {
+            this.display_name = display_name;
+        }
+    }
+
+    public static class ReasonCode {
         @Expose
         @SerializedName("value")
         private String value;

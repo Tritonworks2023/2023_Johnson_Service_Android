@@ -82,7 +82,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
     ImageView image, iv_back, iv_pause, img_Siganture;
     String TAG = TechnicianSignature_PreventiveMRActivity.class.getSimpleName(), value = "", job_id, feedback_group, feedback_details, bd_dta, feedback_remark, mr1, mr2, mr3, mr4, mr5, mr6, mr7, mr8, mr9, mr10, breakdown_servies, str_tech_signature = "";
     ProgressDialog progressDialog;
-    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, str_job_status, message;
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, str_job_status;
     String str_Partid, str_Partno, str_Partname, str_Quantity;
     List<ServiceUserdetailsRequestResponse.MrDatum> servicedetailsrequestbean;
     Bitmap signatureBitmap;
@@ -561,7 +561,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
 
                 Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    message = response.body().getMessage();
+                    String message = response.body().getMessage();
 
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
@@ -572,7 +572,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
 
                                 Log.e("Hi", "inside");
 
-                                alert();
+                                alert(message);
                             } else {
                                 Log.e("Hi", "outside");
                             }
@@ -596,7 +596,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
 
     }
 
-    private void alert() {
+    private void alert(String message) {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TechnicianSignature_PreventiveMRActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.startjob_popup_layout, null);
@@ -700,7 +700,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
                 Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
 
                 if (response.body() != null) {
-                    message = response.body().getMessage();
+                    String message = response.body().getMessage();
 
                     if (response.body().getCode() == 200) {
 
@@ -798,7 +798,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
                 Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
 
                 if (response.body() != null) {
-                    message = response.body().getMessage();
+                    String message = response.body().getMessage();
 
                     if (response.body().getCode() == 200) {
 
@@ -935,7 +935,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
 
                 Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    message = response.body().getMessage();
+                    String message = response.body().getMessage();
 
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
@@ -994,9 +994,9 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
                     dialog.dismiss();
 
                     if (response.body() != null) {
-                        message = response.body().getMessage();
-                        Log.e("Message", "" + message);
                         String message = response.body().getMessage();
+                        Log.e("Message", "" + message);
+
                         if (response.body().getCode() == 200) {
 //                        servicedetailsrequestbean = response.body().getData();
 
@@ -1028,14 +1028,14 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
                             showErrorAlert(message);
                         }
                     } else {
-                        ErrorMyLocationAlert(message);
+                        ErrorMyLocationAlert("");
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
                     dialog.dismiss();
-                    showErrorAlert(message);
+                    showErrorAlert(t.getMessage());
                     Log.e(TAG, "serviceUserDetailsRequestResponse: onFailure: error --> " + t.getMessage());
                 }
             });
@@ -1207,7 +1207,7 @@ public class TechnicianSignature_PreventiveMRActivity extends AppCompatActivity 
                         }, delayInMillis);
                     }
 
-                }else {
+                } else {
                     ErrorAlert();
                 }
 

@@ -1,5 +1,8 @@
 package com.triton.johnson_tap_app.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CommonFunction {
 
     public static String nullPointer(String value) {
@@ -18,5 +21,15 @@ public class CommonFunction {
         } else {
             return false;
         }
+    }
+
+    public static Boolean isValidQRCode(String qrCode) {
+        Pattern pattern;
+        /** both pattens are works fine */
+//        String qrCodePatten = "^[a-zA-Z0-9]+$";
+        String qrCodePatten = "\\p{Alnum}*";
+        pattern = Pattern.compile(qrCodePatten);
+        Matcher matcher = pattern.matcher(qrCode);
+        return matcher.matches();
     }
 }

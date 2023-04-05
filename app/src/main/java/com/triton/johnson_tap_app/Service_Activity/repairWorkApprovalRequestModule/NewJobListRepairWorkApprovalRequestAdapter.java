@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.triton.johnson_tap_app.PetBreedTypeSelectListener;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.responsepojo.NewJobListEscalatorSurveyResponse;
 import com.triton.johnson_tap_app.responsepojo.NewJobListRepairWorkApprovalResponse;
 
 import java.util.ArrayList;

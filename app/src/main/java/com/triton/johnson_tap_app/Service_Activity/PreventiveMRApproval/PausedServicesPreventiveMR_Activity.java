@@ -2,12 +2,6 @@ package com.triton.johnson_tap_app.Service_Activity.PreventiveMRApproval;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,7 +16,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.PetBreedTypeSelectListener;
@@ -37,23 +36,22 @@ import com.triton.johnson_tap_app.utils.ConnectionDetector;
 
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity implements PetBreedTypeSelectListener {
+public class PausedServicesPreventiveMR_Activity extends AppCompatActivity implements PetBreedTypeSelectListener {
 
     ImageView iv_back;
-    String value="";
-    String se_user_mobile_no, se_user_name, se_id,check_id,service_title;
+    String value = "";
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title;
     RecyclerView recyclerView;
-    private List<Pasused_ListResponse.DataBean> breedTypedataBeanList;
     String message, status;
     PasusedListAdapter_PreventiveMR petBreedTypesListAdapter;
     TextView txt_no_records;
-    private String PetBreedType = "",networkStatus="";
     Context context;
+    private List<Pasused_ListResponse.DataBean> breedTypedataBeanList;
+    private String PetBreedType = "", networkStatus = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +64,7 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "default value");
-        Log.e("Name",""+ service_title);
+        Log.e("Name", "" + service_title);
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -77,38 +75,38 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
             value = extras.getString("value");
         }
         if (extras != null) {
-           // service_title = extras.getString("service_title");
+            // service_title = extras.getString("service_title");
             status = extras.getString("status");
-            Log.e("Status" , ""+ status);
+            Log.e("Status", "" + status);
 
         }
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-             //   if(value.equals("pasused")){
+                //   if(value.equals("pasused")){
 
-                    Intent send = new Intent(PausedServicesPreventiveMR_Activity.this, PreventiveMR_Activity.class);
+                Intent send = new Intent(PausedServicesPreventiveMR_Activity.this, PreventiveMR_Activity.class);
                 send.putExtra("status", "pause");
-                send.putExtra("service_title",service_title);
-                    startActivity(send);
-              //  }
-             //   else {
-                  //  Intent send = new Intent(PausedServicesPreventiveMR_Activity.this, CustomerDetailsPreventiveMR_Activity.class);
-                  //  startActivity(send);
-            //    }
+                send.putExtra("service_title", service_title);
+                startActivity(send);
+                //  }
+                //   else {
+                //  Intent send = new Intent(PausedServicesPreventiveMR_Activity.this, CustomerDetailsPreventiveMR_Activity.class);
+                //  startActivity(send);
+                //    }
 
             }
         });
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-        Log.e("Network",""+networkStatus);
+        Log.e("Network", "" + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
 
-          NoInternetDialog();
+            NoInternetDialog();
 
-        }else {
+        } else {
 
             jobFindResponseCall(se_user_mobile_no, service_title);
         }
@@ -117,7 +115,7 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
 
     private void jobFindResponseCall(String job_no, String title) {
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<Pasused_ListResponse> call = apiInterface.Pasused_listResponsePMRCall(RestUtils.getContentType(), serviceRequest(job_no,title));
+        Call<Pasused_ListResponse> call = apiInterface.Pasused_listResponsePMRCall(RestUtils.getContentType(), serviceRequest(job_no, title));
         Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
         call.enqueue(new Callback<Pasused_ListResponse>() {
             @SuppressLint("LogNotTimber")
@@ -134,7 +132,7 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
                         if (response.body().getData() != null) {
                             breedTypedataBeanList = response.body().getData();
 
-                            if (breedTypedataBeanList.size() == 0){
+                            if (breedTypedataBeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
@@ -159,7 +157,7 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
                         recyclerView.setVisibility(View.GONE);
                         txt_no_records.setVisibility(View.VISIBLE);
                         txt_no_records.setText("Error 404 Found");
-                       // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                        // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
                     }
                 }
 
@@ -189,7 +187,7 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
     private void setBreedTypeView(List<Pasused_ListResponse.DataBean> breedTypedataBeanList) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        petBreedTypesListAdapter = new PasusedListAdapter_PreventiveMR(getApplicationContext(), breedTypedataBeanList,this,status);
+        petBreedTypesListAdapter = new PasusedListAdapter_PreventiveMR(getApplicationContext(), breedTypedataBeanList, this, status);
         recyclerView.setAdapter(petBreedTypesListAdapter);
     }
 
@@ -201,7 +199,7 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
     public void onBackPressed() {
         Intent send = new Intent(PausedServicesPreventiveMR_Activity.this, PreventiveMR_Activity.class);
         send.putExtra("status", "pause");
-        send.putExtra("service_title",service_title);
+        send.putExtra("service_title", service_title);
         startActivity(send);
     }
 
@@ -214,7 +212,7 @@ public class  PausedServicesPreventiveMR_Activity extends AppCompatActivity impl
 
 
         mBuilder.setView(mView);
-        final Dialog dialog= mBuilder.create();
+        final Dialog dialog = mBuilder.create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
 

@@ -11,6 +11,17 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class EmployeeDetailsListResponse implements Parcelable {
+    public static final Creator<EmployeeDetailsListResponse> CREATOR = new Creator<EmployeeDetailsListResponse>() {
+        @Override
+        public EmployeeDetailsListResponse createFromParcel(Parcel in) {
+            return new EmployeeDetailsListResponse(in);
+        }
+
+        @Override
+        public EmployeeDetailsListResponse[] newArray(int size) {
+            return new EmployeeDetailsListResponse[size];
+        }
+    };
     @Expose
     @SerializedName("Code")
     private int Code;
@@ -30,18 +41,6 @@ public class EmployeeDetailsListResponse implements Parcelable {
         Message = in.readString();
         Status = in.readString();
     }
-
-    public static final Creator<EmployeeDetailsListResponse> CREATOR = new Creator<EmployeeDetailsListResponse>() {
-        @Override
-        public EmployeeDetailsListResponse createFromParcel(Parcel in) {
-            return new EmployeeDetailsListResponse(in);
-        }
-
-        @Override
-        public EmployeeDetailsListResponse[] newArray(int size) {
-            return new EmployeeDetailsListResponse[size];
-        }
-    };
 
     public int getCode() {
         return Code;
@@ -89,6 +88,17 @@ public class EmployeeDetailsListResponse implements Parcelable {
     }
 
     public static class Data implements Parcelable {
+        public static final Creator<Data> CREATOR = new Creator<Data>() {
+            @Override
+            public Data createFromParcel(Parcel in) {
+                return new Data(in);
+            }
+
+            @Override
+            public Data[] newArray(int size) {
+                return new Data[size];
+            }
+        };
         @Expose
         @SerializedName("OM_SM_EMPNAME")
         private String OM_SM_EMPNAME;
@@ -115,18 +125,6 @@ public class EmployeeDetailsListResponse implements Parcelable {
             OM_SEN_BRCODE = in.readString();
             OM_SM_IMEI = in.readString();
         }
-
-        public static final Creator<Data> CREATOR = new Creator<Data>() {
-            @Override
-            public Data createFromParcel(Parcel in) {
-                return new Data(in);
-            }
-
-            @Override
-            public Data[] newArray(int size) {
-                return new Data[size];
-            }
-        };
 
         public String getOM_SM_EMPNAME() {
             return OM_SM_EMPNAME;

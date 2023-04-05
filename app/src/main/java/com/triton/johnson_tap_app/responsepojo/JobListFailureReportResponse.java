@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class JobListFailureReportResponse implements Parcelable {
     public static final Creator<JobListFailureReportResponse> CREATOR = new Creator<JobListFailureReportResponse>() {
@@ -27,7 +27,7 @@ public class JobListFailureReportResponse implements Parcelable {
     private int Code;
     @Expose
     @SerializedName("Data")
-    private ArrayList<JobListFailureReportResponse.Data> Data;
+    private List<Data> Data;
     @Expose
     @SerializedName("Message")
     private String Message;
@@ -35,26 +35,10 @@ public class JobListFailureReportResponse implements Parcelable {
     @SerializedName("Status")
     private String Status;
 
-    public JobListFailureReportResponse() {
-    }
-
     protected JobListFailureReportResponse(Parcel in) {
         Code = in.readInt();
-        Data = in.readParcelable(JobListFailureReportResponse.Data.class.getClassLoader());
         Message = in.readString();
         Status = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(Code);
-        dest.writeString(Message);
-        dest.writeString(Status);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public int getCode() {
@@ -65,11 +49,11 @@ public class JobListFailureReportResponse implements Parcelable {
         this.Code = Code;
     }
 
-    public ArrayList<JobListFailureReportResponse.Data> getData() {
+    public List<Data> getData() {
         return Data;
     }
 
-    public void setData(ArrayList<JobListFailureReportResponse.Data> Data) {
+    public void setData(List<Data> Data) {
         this.Data = Data;
     }
 
@@ -89,20 +73,63 @@ public class JobListFailureReportResponse implements Parcelable {
         this.Status = Status;
     }
 
-    public static class Data implements Parcelable {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-        public static final Creator<JobListFailureReportResponse.Data> CREATOR = new Creator<JobListFailureReportResponse.Data>() {
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(Code);
+        parcel.writeString(Message);
+        parcel.writeString(Status);
+    }
+
+    public static class Data implements Parcelable {
+        public static final Creator<Data> CREATOR = new Creator<Data>() {
             @Override
-            public JobListFailureReportResponse.Data createFromParcel(Parcel in) {
-                return new JobListFailureReportResponse.Data(in);
+            public Data createFromParcel(Parcel in) {
+                return new Data(in);
             }
 
             @Override
-            public JobListFailureReportResponse.Data[] newArray(int size) {
-                return new JobListFailureReportResponse.Data[size];
+            public Data[] newArray(int size) {
+                return new Data[size];
             }
         };
-
+        @Expose
+        @SerializedName("ZPROUTECD")
+        private String ZPROUTECD;
+        @Expose
+        @SerializedName("EPROUTECD")
+        private String EPROUTECD;
+        @Expose
+        @SerializedName("zone_name")
+        private String zone_name;
+        @Expose
+        @SerializedName("zone_code")
+        private String zone_code;
+        @Expose
+        @SerializedName("mech_name")
+        private String mech_name;
+        @Expose
+        @SerializedName("mech_code")
+        private String mech_code;
+        @Expose
+        @SerializedName("tech_name")
+        private String tech_name;
+        @Expose
+        @SerializedName("tech_code")
+        private String tech_code;
+        @Expose
+        @SerializedName("insp_by")
+        private String insp_by;
+        @Expose
+        @SerializedName("imie_no")
+        private String imie_no;
+        @Expose
+        @SerializedName("SROUTE")
+        private String SROUTE;
         @Expose
         @SerializedName("OM_SED_SLNO")
         private int OM_SED_SLNO;
@@ -110,48 +137,127 @@ public class JobListFailureReportResponse implements Parcelable {
         @SerializedName("INST_ON")
         private String INST_ON;
         @Expose
-        @SerializedName("PINCODE")
-        private String PINCODE = "";
-        @Expose
         @SerializedName("LANDMARK")
-        private String LANDMARK = "";
+        private String LANDMARK;
+        @Expose
+        @SerializedName("PINCODE")
+        private String PINCODE;
         @Expose
         @SerializedName("INST_ADD3")
-        private String INST_ADD3 = "";
+        private String INST_ADD3;
         @Expose
         @SerializedName("INST_ADD")
-        private String INST_ADD = "";
+        private String INST_ADD;
         @Expose
         @SerializedName("INST_ADD1")
-        private String INST_ADD1 = "";
+        private String INST_ADD1;
         @Expose
         @SerializedName("CUST_NAME")
         private String CUST_NAME;
         @Expose
+        @SerializedName("BRCODE")
+        private String BRCODE;
+        @Expose
         @SerializedName("JOBNO")
         private String JOBNO;
-        @Expose
-        @SerializedName("imie_no")
-        private String imie_no;
-        @Expose
-        @SerializedName("insp_by")
-        private String insp_by;
 
         public Data() {
         }
 
-        protected Data(Parcel in) {
+        public Data(Parcel in) {
+            ZPROUTECD = in.readString();
+            EPROUTECD = in.readString();
+            zone_name = in.readString();
+            zone_code = in.readString();
+            mech_name = in.readString();
+            mech_code = in.readString();
+            tech_name = in.readString();
+            tech_code = in.readString();
+            insp_by = in.readString();
+            imie_no = in.readString();
+            SROUTE = in.readString();
             OM_SED_SLNO = in.readInt();
             INST_ON = in.readString();
-            PINCODE = in.readString();
             LANDMARK = in.readString();
+            PINCODE = in.readString();
             INST_ADD3 = in.readString();
             INST_ADD = in.readString();
             INST_ADD1 = in.readString();
             CUST_NAME = in.readString();
+            BRCODE = in.readString();
             JOBNO = in.readString();
-            imie_no = in.readString();
-            insp_by = in.readString();
+        }
+
+        public String getZPROUTECD() {
+            return ZPROUTECD;
+        }
+
+        public void setZPROUTECD(String ZPROUTECD) {
+            this.ZPROUTECD = ZPROUTECD;
+        }
+
+        public String getEPROUTECD() {
+            return EPROUTECD;
+        }
+
+        public void setEPROUTECD(String EPROUTECD) {
+            this.EPROUTECD = EPROUTECD;
+        }
+
+        public String getZone_name() {
+            return zone_name;
+        }
+
+        public void setZone_name(String zone_name) {
+            this.zone_name = zone_name;
+        }
+
+        public String getZone_code() {
+            return zone_code;
+        }
+
+        public void setZone_code(String zone_code) {
+            this.zone_code = zone_code;
+        }
+
+        public String getMech_name() {
+            return mech_name;
+        }
+
+        public void setMech_name(String mech_name) {
+            this.mech_name = mech_name;
+        }
+
+        public String getMech_code() {
+            return mech_code;
+        }
+
+        public void setMech_code(String mech_code) {
+            this.mech_code = mech_code;
+        }
+
+        public String getTech_name() {
+            return tech_name;
+        }
+
+        public void setTech_name(String tech_name) {
+            this.tech_name = tech_name;
+        }
+
+        public String getTech_code() {
+            return tech_code;
+        }
+
+        public void setTech_code(String tech_code) {
+            this.tech_code = tech_code;
+        }
+
+        public String getInsp_by() {
+            return insp_by;
+        }
+
+        public void setInsp_by(String insp_by) {
+            this.insp_by = insp_by;
         }
 
         public String getImie_no() {
@@ -162,12 +268,12 @@ public class JobListFailureReportResponse implements Parcelable {
             this.imie_no = imie_no;
         }
 
-        public String getInsp_by() {
-            return insp_by;
+        public String getSROUTE() {
+            return SROUTE;
         }
 
-        public void setInsp_by(String insp_by) {
-            this.insp_by = insp_by;
+        public void setSROUTE(String SROUTE) {
+            this.SROUTE = SROUTE;
         }
 
         public int getOM_SED_SLNO() {
@@ -186,20 +292,20 @@ public class JobListFailureReportResponse implements Parcelable {
             this.INST_ON = INST_ON;
         }
 
-        public String getPINCODE() {
-            return PINCODE;
-        }
-
-        public void setPINCODE(String PINCODE) {
-            this.PINCODE = PINCODE;
-        }
-
         public String getLANDMARK() {
             return LANDMARK;
         }
 
         public void setLANDMARK(String LANDMARK) {
             this.LANDMARK = LANDMARK;
+        }
+
+        public String getPINCODE() {
+            return PINCODE;
+        }
+
+        public void setPINCODE(String PINCODE) {
+            this.PINCODE = PINCODE;
         }
 
         public String getINST_ADD3() {
@@ -234,6 +340,14 @@ public class JobListFailureReportResponse implements Parcelable {
             this.CUST_NAME = CUST_NAME;
         }
 
+        public String getBRCODE() {
+            return BRCODE;
+        }
+
+        public void setBRCODE(String BRCODE) {
+            this.BRCODE = BRCODE;
+        }
+
         public String getJOBNO() {
             return JOBNO;
         }
@@ -249,17 +363,27 @@ public class JobListFailureReportResponse implements Parcelable {
 
         @Override
         public void writeToParcel(@NonNull Parcel parcel, int i) {
+            parcel.writeString(ZPROUTECD);
+            parcel.writeString(EPROUTECD);
+            parcel.writeString(zone_name);
+            parcel.writeString(zone_code);
+            parcel.writeString(mech_name);
+            parcel.writeString(mech_code);
+            parcel.writeString(tech_name);
+            parcel.writeString(tech_code);
+            parcel.writeString(insp_by);
+            parcel.writeString(imie_no);
+            parcel.writeString(SROUTE);
             parcel.writeInt(OM_SED_SLNO);
             parcel.writeString(INST_ON);
-            parcel.writeString(PINCODE);
             parcel.writeString(LANDMARK);
+            parcel.writeString(PINCODE);
             parcel.writeString(INST_ADD3);
             parcel.writeString(INST_ADD);
             parcel.writeString(INST_ADD1);
             parcel.writeString(CUST_NAME);
+            parcel.writeString(BRCODE);
             parcel.writeString(JOBNO);
-            parcel.writeString(imie_no);
-            parcel.writeString(insp_by);
         }
     }
 }

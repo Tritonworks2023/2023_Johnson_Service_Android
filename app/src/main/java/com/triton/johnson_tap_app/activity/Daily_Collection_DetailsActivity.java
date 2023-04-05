@@ -15443,12 +15443,16 @@ public class Daily_Collection_DetailsActivity extends AppCompatActivity implemen
     }
 
     private boolean hasPermissions(Context context, String... permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Log.i(TAG, "hasPermissions: SDK version1 -> " + Build.VERSION.SDK_INT);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                     return false;
                 }
             }
+        } else {
+            Log.i(TAG, "hasPermissions: SDK version2 -> " + Build.VERSION.SDK_INT);
         }
         return true;
     }

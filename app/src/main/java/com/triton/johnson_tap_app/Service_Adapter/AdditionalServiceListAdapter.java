@@ -18,15 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.PetBreedTypeSelectListener;
 import com.triton.johnson_tap_app.R;
-import com.triton.johnson_tap_app.Service_Activity.elevatorSurveyModule.NewJobElevatorSurveyActivity;
-import com.triton.johnson_tap_app.Service_Activity.escalatorSurveyModule.NewJobEscalatorSurveyActivity;
-import com.triton.johnson_tap_app.Service_Activity.failureReportModule.JobFailureReportActivity;
-import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.FailureReportRequestScannerActivity;
 import com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalRequestModule.NewJobRepairWorkApprovalRequestActivity;
 import com.triton.johnson_tap_app.Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity;
-import com.triton.johnson_tap_app.Service_Activity.ropeMaintenanceModule.JobRopeMaintenanceActivity;
-import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.SafetyAuditJobActivity;
-import com.triton.johnson_tap_app.Service_Activity.serviceVisibilityModule.ServiceVisibilityJobActivity;
 import com.triton.johnson_tap_app.responsepojo.ServiceResponse;
 
 import java.util.List;
@@ -88,7 +81,7 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<RecyclerV
 
                 Log.i(TAG, "onClick: Service Title -> " + s);
 
-                if (s.equals("Escalator Survey Form")) {
+                /*if (s.equals("Escalator Survey Form")) {
                     Intent n_act = new Intent(context, NewJobEscalatorSurveyActivity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     // n_act.putExtra("service_title", s);
@@ -104,24 +97,8 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<RecyclerV
                     // n_act.putExtra("service_title", s);
                     context.startActivity(n_act);
                 } else if (s.equals("Failure Report")) {
-                    /*Intent n_act = new Intent(context, FailureReportFormActivity.class);*/
+                    *//*Intent n_act = new Intent(context, FailureReportFormActivity.class);*//*
                     Intent n_act = new Intent(context, JobFailureReportActivity.class);
-                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // n_act.putExtra("service_title", s);
-                    context.startActivity(n_act);
-                } else if (s.equals("Failure Report2")) {
-                    /*Intent n_act = new Intent(context, FailureReportFormActivity.class);*/
-                    Intent n_act = new Intent(context, FailureReportRequestScannerActivity.class);
-                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // n_act.putExtra("service_title", s);
-                    context.startActivity(n_act);
-                } else if (s.equals("Repair Work Approval Request")) {
-                    Intent n_act = new Intent(context, NewJobRepairWorkApprovalRequestActivity.class);
-                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // n_act.putExtra("service_title", s);
-                    context.startActivity(n_act);
-                } else if (s.equals("Repair Work Approval")) {
-                    Intent n_act = new Intent(context, JobHazardAnalysisFormActivity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     // n_act.putExtra("service_title", s);
                     context.startActivity(n_act);
@@ -135,9 +112,23 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<RecyclerV
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     // n_act.putExtra("service_title", s);
                     context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Failure Report2")) {
+                    Intent n_act = new Intent(context, FailureReportRequestScannerActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else*/
+                if (s.equalsIgnoreCase("Repair Work Approval Request")) {
+                    Intent n_act = new Intent(context, NewJobRepairWorkApprovalRequestActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Repair Work Approval")) {
+                    Intent n_act = new Intent(context, JobHazardAnalysisFormActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
                 } else {
 
                 }
+
             }
         });
     }

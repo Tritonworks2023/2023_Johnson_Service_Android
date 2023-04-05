@@ -1,16 +1,10 @@
-package com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule;
-
-import static com.triton.johnson_tap_app.RestUtils.getContentType;
-import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointer;
-import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointerValidator;
+package com.triton.johnson_tap_app.Service_Activity.failureReportApprovalModule;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -32,7 +26,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -43,22 +36,13 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IO
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.Adapter.PetCurrentImageList2Adapter;
 import com.triton.johnson_tap_app.R;
-import com.triton.johnson_tap_app.api.APIInterface;
-import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.requestpojo.FailureReportCreateTechRequest;
-import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByComIdRequest;
-import com.triton.johnson_tap_app.requestpojo.JobIdRequest;
 import com.triton.johnson_tap_app.requestpojo.PetAppointmentCreateRequest;
-import com.triton.johnson_tap_app.responsepojo.FailureReportDropDownDataResponse;
-import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByComIdResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByJobCodeResponse;
-import com.triton.johnson_tap_app.responsepojo.FileUploadResponse;
+import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByEngCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListFailureReportResponse;
-import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
 import com.triton.johnson_tap_app.utils.CommonFunction;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
-import com.triton.johnson_tap_app.utils.RestUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -71,18 +55,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class FailureReportRequestFormActivity extends AppCompatActivity implements View.OnClickListener,
+public class FailureReportApprovalFormActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
 
     private static String formattedDate = "", formattedDate2 = "", formattedDate3 = "";
@@ -92,6 +69,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
+    private FailureReportRequestListByEngCodeResponse.Data failureReportRequestListByEngCodeDateResponse = new FailureReportRequestListByEngCodeResponse.Data();
     private Context context;
     private LinearLayout ll_eng_privilege;
     private ImageView img_back, img_search_comp_device;
@@ -109,21 +87,13 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             spinner_current_status, spinner_nature_of_failure, spinner_vvvf_trip_while, spinner_vvvf_trip_type,
             spinner_encoder_checked, spinner_load_inside_life, spinner_electric_supply, spinner_battery_check_status,
             spinner_battery_warranty_status, spinner_reason_code;
-    private List<JobListFailureReportResponse.Data> jobListFailureReportDataResponse = new ArrayList<>();
-    private FailureReportFetchDetailsByJobCodeResponse.Data failureReportFetchDetailsByJobCodeDataResponse = new FailureReportFetchDetailsByJobCodeResponse.Data();
-    private FailureReportDropDownDataResponse failureReportDropDownDataResponse = new FailureReportDropDownDataResponse();
-    private FailureReportFetchDetailsByComIdRequest failureReportFetchDetailsByComIdRequest = new FailureReportFetchDetailsByComIdRequest();
-    private FailureReportFetchDetailsByComIdResponse failureReportFetchDetailsByComIdResponse = new FailureReportFetchDetailsByComIdResponse();
-    private FailureReportCreateTechRequest failureReportCreateTechRequest = new FailureReportCreateTechRequest();
-    private ArrayList<FailureReportCreateTechRequest.File_image> failureReportCreateTechFileImageRequestList = new ArrayList<>();
     private SharedPreferences sharedPreferences;
     private Dialog dialog;
-    private String TAG = FailureReportRequestFormActivity.class.getSimpleName(), strDateType = "", se_user_id = "",
+    private String TAG = FailureReportApprovalFormActivity.class.getSimpleName(), strDateType = "", se_user_id = "",
             se_user_name = "", se_user_mobile_no = "", se_user_location = "", emp_Type = "", networkStatus = "", uploadImagePath = "",
             strScanType = "", strScanData = "", message = "", userid = "";
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
-    private boolean checkDate = false;
     private ArrayList<String> matlReturnTypeList = new ArrayList<>(), departmentList = new ArrayList<>(),
             serviceTypeList = new ArrayList<>(), physicalCondList = new ArrayList<>(), currentStatusList = new ArrayList<>(),
             natureOfFailureList = new ArrayList<>(), vvvfTripWhileList = new ArrayList<>(), vvvfTripTypeList = new ArrayList<>(),
@@ -136,7 +106,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_failure_report_request_form);
+        setContentView(R.layout.activity_failure_report_approval_form);
 
         context = this;
 
@@ -210,18 +180,18 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         Bundle extra = getIntent().getExtras();
 
         if (extra != null) {
-            if (extra.containsKey("failureReportFetchDetailsByJobCodeDataResponse")) {
-                failureReportFetchDetailsByJobCodeDataResponse = extra.getParcelable("failureReportFetchDetailsByJobCodeDataResponse");
+            if (extra.containsKey("failureReportRequestListByEngCodeDateResponse")) {
+                failureReportRequestListByEngCodeDateResponse = extra.getParcelable("failureReportRequestListByEngCodeDateResponse");
             }
-            if (extra.containsKey("strScanType")) {
+            /*if (extra.containsKey("strScanType")) {
                 strScanType = extra.getString("strScanType");
             }
             if (extra.containsKey("strScanData")) {
                 strScanData = extra.getString("strScanData");
-            }
+            }*/
         }
 
-        Log.i(TAG, "onCreate: failureReportFetchDetailsByJobCodeDataResponse -> " + new Gson().toJson(failureReportFetchDetailsByJobCodeDataResponse));
+        Log.i(TAG, "onCreate: failureReportRequestListByEngCodeDateResponse -> " + new Gson().toJson(failureReportRequestListByEngCodeDateResponse));
 
         if (emp_Type.equalsIgnoreCase("engineer")) {
             ll_eng_privilege.setVisibility(View.VISIBLE);
@@ -332,16 +302,16 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             NoInternetDialog();
         } else {
 
-            getFailureReportDropDownData();
+            /*getFailureReportDropDownData();
 
             if (CommonFunction.nullPointerValidator(failureReportFetchDetailsByJobCodeDataResponse.getJob_id())) {
                 getFetchDataJobId(failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
             } else {
                 Toast.makeText(context, "Enter valid Job Id", Toast.LENGTH_SHORT).show();
-            }
+            }*/
         }
 
-        String[] separated = failureReportFetchDetailsByJobCodeDataResponse.getCustomer_address().split(",");
+        /*String[] separated = failureReportFetchDetailsByJobCodeDataResponse.getCustomer_address().split(",");
 
         Log.i(TAG, "onCreate: Job_id -> " + failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
 
@@ -359,9 +329,10 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         failureReportCreateTechRequest.setJob_id(failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
         failureReportCreateTechRequest.setSubmitted_by_emp_code(se_user_id);
         failureReportCreateTechRequest.setSubmitted_by_num(se_user_mobile_no);
-        failureReportCreateTechRequest.setSubmitted_by_name(se_user_name);
+        failureReportCreateTechRequest.setSubmitted_by_name(se_user_name);*/
 
         getTodayDate();
+
     }
 
     private void initLoadingDialog() {
@@ -501,7 +472,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                 ropeMaintenanceCheckDataRequest.setSubmitted_by_on(formattedDate);
                 getFailureReportCheckDate();
             } else*/
-            if (strDateType.equalsIgnoreCase("txt_failure_date")) {
+            /*if (strDateType.equalsIgnoreCase("txt_failure_date")) {
 
                 failureReportCreateTechRequest.setFailure_date(formattedDate);
 
@@ -510,7 +481,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                 failureReportCreateTechRequest.setFailure_date(formattedDate);
                 failureReportCreateTechRequest.setSubmitted_by_on(formattedDate);
 
-            }
+            }*/
 
         } catch (ParseException e) {
             Log.e(TAG, "setDate: ParseException-> " + e.getMessage());
@@ -539,7 +510,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             formattedDate2 = str2;/*.replace("AM", "am").replace("PM", "pm")*/
 
             txt_installed_date.setText(formattedDate3);
-            failureReportCreateTechRequest.setInst_date(formattedDate2);
+//            failureReportCreateTechRequest.setInst_date(formattedDate2);
 
             Log.i(TAG, "setDate: formattedDate3-> " + formattedDate3);
             Log.i(TAG, "setDate: formattedDate2-> " + formattedDate2);
@@ -574,7 +545,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         txt_ser_mast_cust_name_add.setText(failureReportFetchDetailsByJobCodeDataResponse.getCustomer_address());
         txt_install_address.setText(failureReportFetchDetailsByJobCodeDataResponse.getInstall_address());
 
-        failureReportCreateTechRequest.setStatus(failureReportFetchDetailsByJobCodeDataResponse.getStatus());
+        /*failureReportCreateTechRequest.setStatus(failureReportFetchDetailsByJobCodeDataResponse.getStatus());
         failureReportCreateTechRequest.setMatl_id(failureReportFetchDetailsByJobCodeDataResponse.getMalt_id());
         failureReportCreateTechRequest.setBr_code(jobListFailureReportDataResponse.get(0).getBRCODE());
         failureReportCreateTechRequest.setComp_device_no(failureReportFetchDetailsByJobCodeDataResponse.getComp_device());
@@ -590,7 +561,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
 //        failureReportCreateTechRequest.setComp_device_no(edt_comp_device_id.getText().toString().trim());
 
-        Log.i(TAG, "setView: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
+        Log.i(TAG, "setView: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));*/
     }
 
     private void setImageListView() {
@@ -650,480 +621,6 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         }
     }
 
-    private void validateFailureReportCreateTech() {
-
-        Log.i(TAG, "validateFailureReportCreateTech: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
-
-        failureReportCreateTechRequest.setComp_device_no(nullPointer(edt_comp_device_id.getText().toString().trim()));
-        failureReportCreateTechRequest.setModel_make(nullPointer(edt_model_make.getText().toString().trim()));
-        failureReportCreateTechRequest.setRating(nullPointer(edt_rating.getText().toString().trim()));
-        failureReportCreateTechRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));
-        failureReportCreateTechRequest.setObservation(nullPointer(edt_observation.getText().toString().trim()));
-        failureReportCreateTechRequest.setSupply_vol(nullPointer(edt_supply_vol.getText().toString().trim()));
-        failureReportCreateTechRequest.setTech_comment(nullPointer(edt_tech_exp_comment.getText().toString().trim()));
-        failureReportCreateTechRequest.setCurlss_no(nullPointer(edt_curlss_no.getText().toString().trim()));
-        failureReportCreateTechRequest.setPrvlss_no(nullPointer(edt_prvlss_no.getText().toString().trim()));
-
-        if (!nullPointerValidator(failureReportCreateTechRequest.getJob_id())) {
-            ErrorMsgDialog("Please Select Job ID");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getFailure_date())) {
-            ErrorMsgDialog("Please Select Failure Date");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getMatl_return_type())) {
-            ErrorMsgDialog("Please Select Material Return Type");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getStatus())) {
-            ErrorMsgDialog("Please Select Status");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getBr_code())) {
-            ErrorMsgDialog("Please Select Branch Code");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getComp_device_no()) || failureReportCreateTechRequest.getComp_device_no().equalsIgnoreCase("No NUM")) {
-            ErrorMsgDialog("Please Select Comp/Device ID");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getMatl_id()) || failureReportCreateTechRequest.getMatl_id().equalsIgnoreCase("NA")) {
-            ErrorMsgDialog("Please Select Material ID");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getComp_device_name()) || failureReportCreateTechRequest.getComp_device_name().equalsIgnoreCase("NO NAME")) {
-            ErrorMsgDialog("Please Select Comp/Device Name");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getDepart_name())) {
-            ErrorMsgDialog("Please Select Department Name");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getServ_type())) {
-            ErrorMsgDialog("Please Select Service Type");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getModel_make())) {
-            ErrorMsgDialog("Please Enter Model & Make");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getRating())) {
-            ErrorMsgDialog("Please Enter Rating");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSerial_no())) {
-            ErrorMsgDialog("Please Enter Serial No.");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getObservation())) {
-            ErrorMsgDialog("Please Enter Observation");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSupply_vol())) {
-            ErrorMsgDialog("Please Enter Supply Vol");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getInst_date())) {
-            ErrorMsgDialog("Please Select Installed Date");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getPhys_cond())) {
-            ErrorMsgDialog("Please Select Physical Cond");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getCurr_status())) {
-            ErrorMsgDialog("Please Select Current Status");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getTech_comment())) {
-            ErrorMsgDialog("Please Enter Technician Expect comment");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getMech_code())) {
-            ErrorMsgDialog("Please Enter Mechanic ID");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getMech_name())) {
-            ErrorMsgDialog("Please Enter Mechanic Name");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getEng_code())) {
-            ErrorMsgDialog("Please Enter Engineer ID");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getEng_name())) {
-            ErrorMsgDialog("Please Enter Engineer Name");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getReason_code())) {
-            ErrorMsgDialog("Please Select Reason Code");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getReason_name())) {
-            ErrorMsgDialog("Please Select Reason Code");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getRoute_code())) {
-            ErrorMsgDialog("Please Enter Route Code");
-        } /*else if (!nullPointerValidator(failureReportCreateTechRequest.getCurlss_no())) {
-            ErrorMsgDialog("Please Enter Curlss No.");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getPrvlss_no())) {
-            ErrorMsgDialog("Please Enter Prvlss No.");
-        }*/ else if (!nullPointerValidator(failureReportCreateTechRequest.getCustomer_address())) {
-            ErrorMsgDialog("Please Enter Customer Address");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getIns_address())) {
-            ErrorMsgDialog("Please Enter Installation Address");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSubmitted_by_emp_code())) {
-            ErrorMsgDialog("Please Enter Submitted By Emp Code");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSubmitted_by_name())) {
-            ErrorMsgDialog("Please Enter Submitted By Name");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSubmitted_by_num())) {
-            ErrorMsgDialog("Please Enter Submitted By Num");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSubmitted_by_on())) {
-            ErrorMsgDialog("Please Enter Submitted By On");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSubmitted_by_on())) {
-            ErrorMsgDialog("Please Enter Submitted By On");
-        } /*else if (pet_imgList == null || pet_imgList.isEmpty()) {
-            ErrorMsgDialog("Please Upload At Least One Image");
-        }*/ else {
-
-            if (pet_imgList != null && !pet_imgList.isEmpty()) {
-                Log.i(TAG, "validateCreateFailureReportRequest: count -> " + pet_imgList.size() + " pet_imgList -> " + new Gson().toJson(pet_imgList));
-
-                failureReportCreateTechFileImageRequestList = new ArrayList<>();
-
-                for (PetAppointmentCreateRequest.PetImgBean image : pet_imgList) {
-                    failureReportCreateTechFileImageRequestList.add(new FailureReportCreateTechRequest.File_image(image.getPet_img()));
-                }
-
-                if (!failureReportCreateTechFileImageRequestList.isEmpty()) {
-                    failureReportCreateTechRequest.setFile_image(failureReportCreateTechFileImageRequestList);
-                }
-            }
-
-            getFailureReportCreateTech(failureReportCreateTechRequest);
-        }
-        Log.i(TAG, "validateCreateFailureReportRequest: failureReportCreateTechRequest (2) -> " + new Gson().toJson(failureReportCreateTechRequest));
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        try {
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == RESULT_OK) {
-                    Uri resultUri = null;
-                    if (result != null) {
-                        resultUri = result.getUriContent();
-                    }
-
-                    if (resultUri != null) {
-                        Log.i(TAG, "onActivityResult: resultUri -> " + resultUri);
-
-                        String filename = getFileName(resultUri);
-                        Log.i(TAG, "onActivityResult: filename -> " + filename);
-
-                        String filePath = getFilePathFromURI(this, resultUri);
-
-                        assert filePath != null;
-
-                        File file = new File(filePath); // initialize file here
-
-                        long length = file.length() / 1024; // Size in KB
-
-                        Log.i(TAG, "onActivityResult: length -> " + length);
-
-                        if (length > 2000) {
-
-                            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                                    .setTitleText("File Size")
-                                    .setContentText("Please choose file size less than 2 MB ")
-                                    .setConfirmText("Ok")
-                                    .show();
-                        } else {
-
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                            String currentDateandTime = sdf.format(new Date());
-
-                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + filename, RequestBody.create(MediaType.parse("image/*"), file));
-                            getServiceVisibilityUpload();
-                        }
-                    } else {
-                        Toasty.warning(this, "Image Error!!Please upload Some other image", Toasty.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            Log.e(TAG, "onActivityResult: error -> " + e.getMessage());
-        }
-    }
-
-    private JobIdRequest jobListRequest(String strSearch) {
-
-        JobIdRequest job = new JobIdRequest();
-
-        if (strSearch != null && !strSearch.isEmpty()) {
-            job.setJob_id(strSearch);
-            Log.i(TAG, "jobListRequest: JobIdRequest --> " + new Gson().toJson(job));
-            return job;
-        } else {
-            return null;
-        }
-    }
-
-    private void getFetchDataJobId(String strSearch) {
-
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-
-        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        JobIdRequest jobIdRequest = jobListRequest(strSearch);
-
-        if (jobIdRequest != null) {
-
-            Call<JobListFailureReportResponse> call = apiInterface.getFailureReportFetchDataJobId(RestUtils.getContentType(), jobIdRequest);
-            Log.i(TAG, "getFetchDataJobId: URL -> " + call.request().url().toString());
-
-            call.enqueue(new Callback<JobListFailureReportResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<JobListFailureReportResponse> call, @NonNull Response<JobListFailureReportResponse> response) {
-                    dialog.dismiss();
-                    Log.i(TAG, "getFetchDataJobId: onResponse: JobListFailureReportDataResponse -> " + new Gson().toJson(response.body()));
-                    jobListFailureReportDataResponse = new ArrayList<>();
-                    if (response.body() != null) {
-                        message = response.body().getMessage();
-                        if (200 == response.body().getCode()) {
-                            if (response.body().getData() != null) {
-                                jobListFailureReportDataResponse = response.body().getData();
-                                if (jobListFailureReportDataResponse.isEmpty()) {
-                                    ErrorMsgDialog("No Records Found");
-                                } else {
-                                    setView(failureReportFetchDetailsByJobCodeDataResponse, jobListFailureReportDataResponse);
-                                }
-                            }
-                        } else {
-                            ErrorMsgDialog(message);
-                        }
-                    } else {
-                        ErrorMsgDialog("");
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<JobListFailureReportResponse> call, @NonNull Throwable t) {
-                    dialog.dismiss();
-                    Log.e(TAG, "getFetchDataJobId: onFailure: error --> " + t.getMessage());
-                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            dialog.dismiss();
-        }
-    }
-
-    private void getFailureReportFetchDetailsByComId(FailureReportFetchDetailsByComIdRequest failureReportFetchDetailsByComIdRequest) {
-
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-        Log.i(TAG, "getFailureReportFetchDetailsByComId: failureReportFetchDetailsByComIdRequest -> " + new Gson().toJson(failureReportFetchDetailsByComIdRequest));
-        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-
-        Call<FailureReportFetchDetailsByComIdResponse> call = apiInterface.getFailureReportFetchDetailsByComId(RestUtils.getContentType(), failureReportFetchDetailsByComIdRequest);
-        Log.i(TAG, "getFailureReportFetchDetailsByComId: URL -> " + call.request().url().toString());
-
-        call.enqueue(new Callback<FailureReportFetchDetailsByComIdResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<FailureReportFetchDetailsByComIdResponse> call, @NonNull Response<FailureReportFetchDetailsByComIdResponse> response) {
-                dialog.dismiss();
-                Log.i(TAG, "getFailureReportFetchDetailsByComId: onResponse: FailureReportFetchDetailsByComIdResponse -> " + new Gson().toJson(response.body()));
-                failureReportFetchDetailsByComIdResponse.setData(new ArrayList<>());
-                if (response.body() != null) {
-                    message = response.body().getMessage();
-                    if (200 == response.body().getCode()) {
-                        if (response.body().getData() != null) {
-                            failureReportFetchDetailsByComIdResponse.setData(response.body().getData());
-                            if (failureReportFetchDetailsByComIdResponse.getData().isEmpty()) {
-                                ErrorMsgDialog("No Records Found");
-                            } else {
-                                txt_comp_device_name.setText(failureReportFetchDetailsByComIdResponse.getData().get(0).getComp_device_name());
-                                txt_material_id.setText(failureReportFetchDetailsByComIdResponse.getData().get(0).getMalt_id());
-                                failureReportCreateTechRequest.setComp_device_name(failureReportFetchDetailsByComIdResponse.getData().get(0).getComp_device_name());
-                                failureReportCreateTechRequest.setMatl_id("" + failureReportFetchDetailsByComIdResponse.getData().get(0).getMalt_id());
-                            }
-                        }
-                    } else {
-                        ErrorMsgDialog(message);
-                    }
-                } else {
-                    ErrorMsgDialog("");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<FailureReportFetchDetailsByComIdResponse> call, @NonNull Throwable t) {
-                dialog.dismiss();
-                Log.e(TAG, "getFailureReportFetchDetailsByComId: onFailure: error --> " + t.getMessage());
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void getFailureReportDropDownData() {
-
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-
-        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-
-        Call<FailureReportDropDownDataResponse> call = apiInterface.getFailureReportDropDownData(getContentType());
-        Log.i(TAG, "getFailureReportDropDownData: URL -> " + call.request().url().toString());
-
-        call.enqueue(new Callback<FailureReportDropDownDataResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<FailureReportDropDownDataResponse> call, @NonNull Response<FailureReportDropDownDataResponse> response) {
-                dialog.dismiss();
-                Log.i(TAG, "getFailureReportDropDownData: onResponse: FailureReportDropDownDataResponse -> " + new Gson().toJson(response.body()));
-                if (response.body() != null) {
-                    failureReportDropDownDataResponse = new FailureReportDropDownDataResponse();
-
-                    failureReportDropDownDataResponse = response.body();
-                    if (response.body().getCode() == 200) {
-
-                        if (failureReportDropDownDataResponse.getData() != null) {
-                            if (failureReportDropDownDataResponse.getData().getMatl_reture_type() != null
-                                    && !failureReportDropDownDataResponse.getData().getMatl_reture_type().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Matl_reture_type matlReturnType : failureReportDropDownDataResponse.getData().getMatl_reture_type()) {
-                                    matlReturnTypeList.add(matlReturnType.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getDepart() != null
-                                    && !failureReportDropDownDataResponse.getData().getDepart().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Depart depart : failureReportDropDownDataResponse.getData().getDepart()) {
-                                    departmentList.add(depart.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getServ_type() != null
-                                    && !failureReportDropDownDataResponse.getData().getServ_type().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Serv_type servType : failureReportDropDownDataResponse.getData().getServ_type()) {
-                                    serviceTypeList.add(servType.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getPys_condition() != null
-                                    && !failureReportDropDownDataResponse.getData().getPys_condition().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Pys_condition pysCondition : failureReportDropDownDataResponse.getData().getPys_condition()) {
-                                    physicalCondList.add(pysCondition.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getCuur_status() != null
-                                    && !failureReportDropDownDataResponse.getData().getCuur_status().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Cuur_status cuurStatus : failureReportDropDownDataResponse.getData().getCuur_status()) {
-                                    currentStatusList.add(cuurStatus.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getNatu_failure() != null
-                                    && !failureReportDropDownDataResponse.getData().getNatu_failure().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Natu_failure natuFailure : failureReportDropDownDataResponse.getData().getNatu_failure()) {
-                                    natureOfFailureList.add(natuFailure.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getVvvf_trip_while() != null
-                                    && !failureReportDropDownDataResponse.getData().getVvvf_trip_while().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Vvvf_trip_while vvvfTripWhile : failureReportDropDownDataResponse.getData().getVvvf_trip_while()) {
-                                    vvvfTripWhileList.add(vvvfTripWhile.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getVvvf_trip_type() != null
-                                    && !failureReportDropDownDataResponse.getData().getVvvf_trip_type().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Vvvf_trip_type vvvfTripType : failureReportDropDownDataResponse.getData().getVvvf_trip_type()) {
-                                    vvvfTripTypeList.add(vvvfTripType.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getEncoder_checked() != null
-                                    && !failureReportDropDownDataResponse.getData().getEncoder_checked().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Encoder_checked encoderChecked : failureReportDropDownDataResponse.getData().getEncoder_checked()) {
-                                    encoderCheckedList.add(encoderChecked.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getLd_inside_lift() != null
-                                    && !failureReportDropDownDataResponse.getData().getLd_inside_lift().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Ld_inside_lift ldInsideLift : failureReportDropDownDataResponse.getData().getLd_inside_lift()) {
-                                    loadInsideLifeList.add(ldInsideLift.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getElectric_supply() != null
-                                    && !failureReportDropDownDataResponse.getData().getElectric_supply().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Electric_supply electricSupply : failureReportDropDownDataResponse.getData().getElectric_supply()) {
-                                    electricSupplyList.add(electricSupply.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getBat_check_status() != null
-                                    && !failureReportDropDownDataResponse.getData().getBat_check_status().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Bat_check_status batCheckStatus : failureReportDropDownDataResponse.getData().getBat_check_status()) {
-                                    batteryCheckStatusList.add(batCheckStatus.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getBat_warr_status() != null
-                                    && !failureReportDropDownDataResponse.getData().getBat_warr_status().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.Bat_warr_status batWarrStatus : failureReportDropDownDataResponse.getData().getBat_warr_status()) {
-                                    batteryWarrantyStatusList.add(batWarrStatus.getDisplay_name());
-                                }
-                            }
-                            if (failureReportDropDownDataResponse.getData().getReasoncode() != null
-                                    && !failureReportDropDownDataResponse.getData().getReasoncode().isEmpty()) {
-                                for (FailureReportDropDownDataResponse.ReasonCode reasonCode : failureReportDropDownDataResponse.getData().getReasoncode()) {
-                                    reasonCodeList.add(reasonCode.getDisplay_name());
-                                }
-                            }
-                        }
-
-                    } else {
-                        ErrorMsgDialog(response.body().getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<FailureReportDropDownDataResponse> call, @NonNull Throwable t) {
-                dialog.dismiss();
-                Log.e(TAG, "getFailureReportDropDownData: onFailure: error --> " + t.getMessage());
-                ErrorMsgDialog(t.getMessage());
-            }
-        });
-    }
-
-    private void getServiceVisibilityUpload() {
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-        APIInterface apiInterface = RetrofitClient.getImageClient().create(APIInterface.class);
-        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
-
-        Log.i(TAG, "getServiceVisibilityUpload: URL -> " + call.request().url().toString());
-
-        call.enqueue(new Callback<FileUploadResponse>() {
-            @SuppressLint("LogNotTimber")
-            @Override
-            public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {
-                Log.i(TAG, "getServiceVisibilityUpload: onResponse: FileUploadResponse -> " + new Gson().toJson(response.body()));
-
-                dialog.dismiss();
-                if (response.body() != null) {
-                    if (200 == response.body().getCode()) {
-                        uploadImagePath = response.body().getData();
-                        PetAppointmentCreateRequest.PetImgBean petImgBean = new PetAppointmentCreateRequest.PetImgBean();
-                        petImgBean.setPet_img(uploadImagePath);
-                        pet_imgList.add(petImgBean);
-                        if (uploadImagePath != null) {
-                            setImageListView();
-                        }
-                    } else {
-                        ErrorMsgDialog(response.body().getMessage());
-                    }
-                } else {
-                    ErrorMsgDialog("");
-                }
-            }
-
-            @SuppressLint("LogNotTimber")
-            @Override
-            public void onFailure(@NonNull Call<FileUploadResponse> call, @NonNull Throwable t) {
-                dialog.dismiss();
-                Log.i(TAG, "getServiceVisibilityUpload: onFailure: error -> " + t.getMessage());
-                ErrorMsgDialog(t.getMessage());
-            }
-        });
-    }
-
-    private void getFailureReportCreateTech(FailureReportCreateTechRequest failureReportCreateTechRequest) {
-
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-        Log.i(TAG, "getFailureReportCreateTech: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
-        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-
-        Call<SuccessResponse> call = apiInterface.getFailureReportCreateTech(RestUtils.getContentType(), failureReportCreateTechRequest);
-        Log.i(TAG, "getFailureReportCreateTech: URL -> " + call.request().url().toString());
-
-        call.enqueue(new Callback<SuccessResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
-                dialog.dismiss();
-                Log.i(TAG, "getFailureReportCreateTech: onResponse: SuccessResponse -> " + new Gson().toJson(response.body()));
-                if (response.body() != null) {
-                    if (response.body().getCode() == 200) {
-                        Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        onBackPressed();
-                    } else {
-                        ErrorMsgDialog(response.body().getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
-                dialog.dismiss();
-                Log.e(TAG, "getFailureReportCreateTech: onFailure: error --> " + t.getMessage());
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1133,7 +630,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
         Log.i(TAG, "onItemSelected: selPos -> " + selPos);
 
-        if (item.equalsIgnoreCase("select")) {
+        /*if (item.equalsIgnoreCase("select")) {
             switch (adapterView.getId()) {
                 case R.id.spinner_matl_return_type:
                     failureReportCreateTechRequest.setMatl_return_type("");
@@ -1244,7 +741,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                     break;
             }
         }
-        Log.i(TAG, "onItemSelected: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
+        Log.i(TAG, "onItemSelected: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));*/
     }
 
     @Override
@@ -1261,10 +758,10 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             break;
             case R.id.img_search_comp_device: {
 
-                if (CommonFunction.nullPointerValidator(edt_comp_device_id.getText().toString().toUpperCase().trim())) {
+                /*if (CommonFunction.nullPointerValidator(edt_comp_device_id.getText().toString().toUpperCase().trim())) {
                     failureReportFetchDetailsByComIdRequest.setComp_device_no(edt_comp_device_id.getText().toString().toUpperCase().trim());
                     getFailureReportFetchDetailsByComId(failureReportFetchDetailsByComIdRequest);
-                }
+                }*/
             }
             break;
             /*case R.id.txt_date: {
@@ -1283,7 +780,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             break;
             case R.id.btn_submit: {
 
-                validateFailureReportCreateTech();
+//                validateFailureReportCreateTech();
 //                Toasty.success(this, "Failure Report Submitted Successfully", Toasty.LENGTH_LONG).show();
             }
             break;

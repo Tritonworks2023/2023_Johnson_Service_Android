@@ -25,6 +25,14 @@ import com.triton.johnson_tap_app.Service_Activity.PartsReplacementACK.ACK_Activ
 import com.triton.johnson_tap_app.Service_Activity.PreventiveMRApproval.PreventiveMR_Activity;
 import com.triton.johnson_tap_app.Service_Activity.Preventive_Services.PreventiveMaintance_Activity;
 import com.triton.johnson_tap_app.Service_Activity.SiteAudit.SiteAudit_Activity;
+import com.triton.johnson_tap_app.Service_Activity.elevatorSurveyModule.NewJobElevatorSurveyActivity;
+import com.triton.johnson_tap_app.Service_Activity.escalatorSurveyModule.NewJobEscalatorSurveyActivity;
+import com.triton.johnson_tap_app.Service_Activity.failureReportApprovalModule.FailureReportApprovalJobActivity;
+import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.FailureReportRequestActivity;
+import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.FailureReportRequestScannerActivity;
+import com.triton.johnson_tap_app.Service_Activity.ropeMaintenanceModule.JobRopeMaintenanceActivity;
+import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.SafetyAuditJobActivity;
+import com.triton.johnson_tap_app.Service_Activity.serviceVisibilityModule.ServiceVisibilityJobActivity;
 import com.triton.johnson_tap_app.responsepojo.ServiceResponse;
 
 import java.util.List;
@@ -116,17 +124,42 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 } else if (s.equals("LR SERVICE")) {
                     Intent n_act = new Intent(context, LR_Service_Activity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // n_act.putExtra("service_title", s);
                     context.startActivity(n_act);
                 } else if (s.equals("Parts Replacement ACK")) {
                     Intent n_act = new Intent(context, ACK_Activity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // n_act.putExtra("service_title", s);
                     context.startActivity(n_act);
                 } else if (s.equals("Site Audit")) {
                     Intent n_act = new Intent(context, SiteAudit_Activity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // n_act.putExtra("service_title", s);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Escalator Survey Form")) {
+                    Intent n_act = new Intent(context, NewJobEscalatorSurveyActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Elevator Survey Form")) {
+                    Intent n_act = new Intent(context, NewJobElevatorSurveyActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Service Visibility")) {
+                    Intent n_act = new Intent(context, ServiceVisibilityJobActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Failure Report Approval")) {
+                    Intent n_act = new Intent(context, FailureReportApprovalJobActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Rope Maintenance")) {
+                    Intent n_act = new Intent(context, JobRopeMaintenanceActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Safety Audit")) {
+                    Intent n_act = new Intent(context, SafetyAuditJobActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("FAILURE REPORT REQUEST")) {
+                    Intent n_act = new Intent(context, FailureReportRequestActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
                 } else {
 

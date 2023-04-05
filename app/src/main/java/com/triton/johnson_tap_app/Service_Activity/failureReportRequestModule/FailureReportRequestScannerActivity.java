@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
+import com.triton.johnson_tap_app.interfaces.OnScannerDataListener;
 import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByJobCodeRequest;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByJobCodeResponse;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
@@ -36,15 +37,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FailureReportRequestScannerActivity extends AppCompatActivity implements View.OnClickListener {
+public class FailureReportRequestScannerActivity extends AppCompatActivity implements View.OnClickListener, OnScannerDataListener {
 
     private String TAG = FailureReportRequestScannerActivity.class.getSimpleName(), se_user_mobile_no,
-            se_user_name, se_id, check_id, service_title, message, networkStatus = "";
+            se_user_name, se_id, check_id, service_title, message, networkStatus = "", strScanType = "",
+            strScanData = "";
     private SharedPreferences sharedPreferences;
     private Context context;
-    private ImageView img_back;
-    private Button btn_qr_scan, btn_barcode_scan, btn_submit;
-    private EditText edt_qr_scan, edt_barcode_number, edt_job_num;
+    private ImageView img_back, img_search_qr_code, img_scan_qr_code, img_search_bar_code, img_scan_bar_code, img_search_job_num;
+    private EditText edt_qr_code_number, edt_bar_code_number, edt_job_num;
     private Dialog dialog;
     private FailureReportFetchDetailsByJobCodeResponse failureReportFetchDetailsByJobCodeResponse = new FailureReportFetchDetailsByJobCodeResponse();
     private String[] PERMISSIONS = {
@@ -63,19 +64,32 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
         context = this;
 
         img_back = findViewById(R.id.img_back);
+        img_search_qr_code = findViewById(R.id.img_search_qr_code);
+        img_search_bar_code = findViewById(R.id.img_search_bar_code);
 
-        btn_qr_scan = findViewById(R.id.btn_qr_scan);
-        btn_barcode_scan = findViewById(R.id.btn_barcode_scan);
-        btn_submit = findViewById(R.id.btn_submit);
+        img_scan_qr_code = findViewById(R.id.img_scan_qr_code);
+        img_scan_bar_code = findViewById(R.id.img_scan_bar_code);
+        img_search_job_num = findViewById(R.id.img_search_job_num);
 
-        edt_qr_scan = findViewById(R.id.edt_qr_scan);
-        edt_barcode_number = findViewById(R.id.edt_barcode_number);
+        edt_qr_code_number = findViewById(R.id.edt_qr_code_number);
+        edt_bar_code_number = findViewById(R.id.edt_bar_code_number);
         edt_job_num = findViewById(R.id.edt_job_num);
 
         img_back.setOnClickListener(this);
-        btn_qr_scan.setOnClickListener(this);
-        btn_barcode_scan.setOnClickListener(this);
-        btn_submit.setOnClickListener(this);
+        img_search_qr_code.setOnClickListener(this);
+        img_search_bar_code.setOnClickListener(this);
+        img_scan_qr_code.setOnClickListener(this);
+        img_scan_bar_code.setOnClickListener(this);
+        img_search_job_num.setOnClickListener(this);
+
+        initLoadingDialog();
+    }
+
+    private void initLoadingDialog() {
+        dialog = new Dialog(context, R.style.NewProgressDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.progroess_popup);
+        dialog.setCancelable(false);
     }
 
     public void NoInternetDialog() {
@@ -102,12 +116,16 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
     }
 
     private boolean hasPermissions(Context context, String... permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Log.i(TAG, "hasPermissions: SDK version1 -> " + Build.VERSION.SDK_INT);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                     return false;
                 }
             }
+        } else {
+            Log.i(TAG, "hasPermissions: SDK version2 -> " + Build.VERSION.SDK_INT);
         }
         return true;
     }
@@ -163,10 +181,9 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
 
     private void getFetchDataJobId(String strSearch) {
 
-        dialog = new Dialog(context, R.style.NewProgressDialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.progroess_popup);
-        dialog.show();
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         FailureReportFetchDetailsByJobCodeRequest failureReportFetchDetailsByJobCodeRequest = jobListRequest(strSearch);
@@ -198,6 +215,7 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                                     txt_no_records.setText("No Records Found");
                                     edtSearch.setEnabled(false);*/
                                 } else {
+                                    strScanData = strSearch;
                                     moveToNext(failureReportFetchDetailsByJobCodeResponse);
                                 }
                             }
@@ -223,10 +241,9 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
 
     private void getFetchDataJobCode(String strSearch) {
 
-        dialog = new Dialog(context, R.style.NewProgressDialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.progroess_popup);
-        dialog.show();
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         FailureReportFetchDetailsByJobCodeRequest failureReportFetchDetailsByJobCodeRequest = jobListCodeRequest(strSearch);
@@ -258,6 +275,7 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                                     txt_no_records.setText("No Records Found");
                                     edtSearch.setEnabled(false);*/
                                 } else {
+                                    strScanData = strSearch;
                                     moveToNext(failureReportFetchDetailsByJobCodeResponse);
                                 }
                             }
@@ -287,11 +305,27 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
         failureReportFetchDetailsByJobCodeDataResponse = failureReportFetchDetailsByJobCodeResponse.getData().get(0);
 
         Intent intent = new Intent(context, FailureReportRequestFormActivity.class);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("failureReportFetchDetailsByJobCodeDataResponse", failureReportFetchDetailsByJobCodeDataResponse);
+        intent.putExtra("strScanType", strScanType);
+        intent.putExtra("strScanData", strScanData);
+
         context.startActivity(intent);
 
         Log.i(TAG, "moveToNext: failureReportFetchDetailsByJobCodeDataResponse --> " + new Gson().toJson(failureReportFetchDetailsByJobCodeDataResponse));
+    }
+
+    @Override
+    public void scannerDataListener(String scannerType, String scannerData) {
+        Log.i(TAG, "scannerDataListener: scannerType -> " + scannerType + " scannerData -> " + scannerData);
+        if (scannerType.equalsIgnoreCase("qr_scanner")) {
+            edt_qr_code_number.setText(scannerData);
+            img_search_qr_code.performClick();
+        } else if (scannerType.equalsIgnoreCase("bar_scanner")) {
+            edt_bar_code_number.setText(scannerData);
+            img_search_bar_code.performClick();
+        }
     }
 
     @Override
@@ -301,17 +335,56 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                 onBackPressed();
             }
             break;
-            case R.id.btn_qr_scan: {
+            case R.id.img_search_qr_code: {
+                Log.i(TAG, "onClick: img_search_qr_code");
+                networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
+
+                Log.i(TAG, "onClick: img_search_qr_code ->" + networkStatus);
+
+                if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
+                    NoInternetDialog();
+                } else {
+                    if (edt_qr_code_number.getText().toString().toUpperCase().trim() != null && !edt_qr_code_number.getText().toString().toUpperCase().trim().isEmpty()) {
+                        strScanType = "qr_code_scan";
+                        getFetchDataJobCode(edt_qr_code_number.getText().toString().toUpperCase().trim());
+                    } else {
+                        Toast.makeText(context, "Enter valid QR Code", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            break;
+            case R.id.img_search_bar_code: {
+                networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
+
+                Log.i(TAG, "onClick: img_search_bar_code ->" + networkStatus);
+
+                if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
+                    NoInternetDialog();
+                } else {
+                    if (edt_bar_code_number.getText().toString().toUpperCase().trim() != null && !edt_bar_code_number.getText().toString().toUpperCase().trim().isEmpty()) {
+                        strScanType = "bar_code_scan";
+                        getFetchDataJobCode(edt_bar_code_number.getText().toString().toUpperCase().trim());
+                    } else {
+                        Toast.makeText(context, "Enter valid BAR Code", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            break;
+            case R.id.img_scan_qr_code: {
 
                 if (!hasPermissions(this, PERMISSIONS)) {
                     ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
                 } else {
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .add(android.R.id.content, new QRCodeScannerFragment(), "QRCodeScannerFragment")
+                            .add(android.R.id.content, new QRCodeScannerFragment(this), "QRCodeScannerFragment")
                             .commit();
                 }
 
+            }
+            break;
+            case R.id.img_scan_bar_code: {
                 /*networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
                 Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);
@@ -319,32 +392,27 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                 if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
                     NoInternetDialog();
                 } else {
-                    if (edt_qr_scan.getText().toString().toUpperCase().trim() != null && !edt_qr_scan.getText().toString().toUpperCase().trim().isEmpty()) {
-                        getFetchDataJobCode(edt_qr_scan.getText().toString().toUpperCase().trim());
-                    } else {
-                        Toast.makeText(context, "Enter valid QR Code", Toast.LENGTH_SHORT).show();
-                    }
-                }*/
+                    if (edt_bar_code_number.getText().toString().toUpperCase().trim() != null && !edt_bar_code_number.getText().toString().toUpperCase().trim().isEmpty()) {
 
-            }
-            break;
-            case R.id.btn_barcode_scan: {
-                networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
-
-                Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);
-
-                if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
-                    NoInternetDialog();
-                } else {
-                    if (edt_barcode_number.getText().toString().toUpperCase().trim() != null && !edt_barcode_number.getText().toString().toUpperCase().trim().isEmpty()) {
-                        getFetchDataJobCode(edt_barcode_number.getText().toString().toUpperCase().trim());
+                       strScanType="bar_code_scan";
+                        getFetchDataJobCode(edt_bar_code_number.getText().toString().toUpperCase().trim());
                     } else {
                         Toast.makeText(context, "Enter valid Barcode", Toast.LENGTH_SHORT).show();
                     }
+                }*/
+
+                if (!hasPermissions(this, PERMISSIONS)) {
+                    ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
+                } else {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+//                            .add(android.R.id.content, new BarCodeScannerFragment(this), "BarCodeScannerFragment")
+                            .add(android.R.id.content, new SimpleBarCodeScannerFragment(this), "BarCodeScannerFragment")
+                            .commit();
                 }
             }
             break;
-            case R.id.btn_submit: {
+            case R.id.img_search_job_num: {
                 networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
                 Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);
@@ -353,6 +421,7 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                     NoInternetDialog();
                 } else {
                     if (edt_job_num.getText().toString().toUpperCase().trim() != null && !edt_job_num.getText().toString().toUpperCase().trim().isEmpty()) {
+                        strScanType = "job_id";
                         getFetchDataJobId(edt_job_num.getText().toString().toUpperCase().trim());
                     } else {
                         Toast.makeText(context, "Enter valid Job Id", Toast.LENGTH_SHORT).show();

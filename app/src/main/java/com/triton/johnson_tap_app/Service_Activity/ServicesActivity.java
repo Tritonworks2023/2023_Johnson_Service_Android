@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,6 +12,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,7 +52,8 @@ import retrofit2.Response;
 public class ServicesActivity extends AppCompatActivity implements PetBreedTypeSelectListener {
 
     ImageView iv_back;
-    String se_user_mobile_no, se_user_name, se_user_password, se_id, check_id, service_title;
+    String TAG = ServicesActivity.class.getSimpleName(), se_user_mobile_no, se_user_name, se_user_password,
+            se_id, check_id, service_title;
     RecyclerView recyclerView, rv_add_list;
     String message, ID, emp_Type;
     TextView txt_NoRecords;
@@ -112,6 +112,10 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             }
         });
 
+        dialog = new Dialog(ServicesActivity.this, R.style.NewProgressDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.progroess_popup);
+
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
         Log.e("Network", "" + networkStatus);
@@ -146,29 +150,24 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             }
         });
 
-
+//        additionalList.add(new ServiceResponse.DataBean("Failure Report2", "0", "1", "0", "0", "0", "1"));
         if (emp_Type.equalsIgnoreCase("engineer")) {
-            additionalList.add(new ServiceResponse.DataBean("Escalator Survey Form", "0", "1", "0", "0", "0", "1"));
+            /*additionalList.add(new ServiceResponse.DataBean("Escalator Survey Form", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Failure Report", "0", "1", "0", "0", "0", "1"));
             additionalList.add(new ServiceResponse.DataBean("Elevator Survey Form", "0", "1", "0", "0", "0", "1"));
             additionalList.add(new ServiceResponse.DataBean("Service Visibility", "0", "1", "0", "0", "0", "1"));
-            additionalList.add(new ServiceResponse.DataBean("Failure Report", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Safety Audit", "0", "1", "0", "0", "0", "1"));*/
             additionalList.add(new ServiceResponse.DataBean("Repair Work Request", "0", "1", "0", "0", "0", "1"));
             additionalList.add(new ServiceResponse.DataBean("Repair Work Approval", "0", "1", "0", "0", "0", "1"));
-            additionalList.add(new ServiceResponse.DataBean("Safety Audit", "0", "1", "0", "0", "0", "1"));
         } else {
-            additionalList.add(new ServiceResponse.DataBean("Rope Maintenance", "0", "1", "0", "0", "0", "1"));
-            additionalList.add(new ServiceResponse.DataBean("Failure Report2", "0", "1", "0", "0", "0", "1"));
+//            additionalList.add(new ServiceResponse.DataBean("Rope Maintenance", "0", "1", "0", "0", "0", "1"));
         }
 
         setAdditionalList(additionalList);
     }
 
     private void LoginResponseCall() {
-//        dialog = new Dialog(ServicesActivity.this, R.style.NewProgressDialog);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.progroess_popup);
-//        dialog.show();
-
+        dialog.show();
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<LoginResponse1> call = apiInterface.LoginResponseCall(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), loginRequest());
         Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
@@ -177,7 +176,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<LoginResponse1> call, @NonNull Response<LoginResponse1> response) {
-
+                dialog.dismiss();
                 Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
@@ -194,11 +193,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
                             jobFindResponseCall(se_user_mobile_no);
                         }
 
-
                     } else {
-                        // dialog.dismiss();
-//                        Toasty.warning(getApplicationContext(),""+message,Toasty.LENGTH_LONG).show();
-
                         ErrorMyLocationAlert(message);
                     }
                 }
@@ -207,8 +202,8 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
 
             @Override
             public void onFailure(@NonNull Call<LoginResponse1> call, @NonNull Throwable t) {
-                //  dialog.dismiss();
-                Log.e("OTP", "--->" + t.getMessage());
+                dialog.dismiss();
+                Log.i(TAG, "LoginResponseCall: onFailure: error -> " + t.getMessage());
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 ErrorMyLocationAlert(t.getMessage());
             }
@@ -253,6 +248,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
     }
 
     private void jobFindResponseCall(String job_no) {
+        dialog.show();
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<ServiceResponse> call = apiInterface.ServiceResponseCall(RestUtils.getContentType(), serviceRequest(job_no));
         Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
@@ -261,7 +257,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             @Override
             public void onResponse(@NonNull Call<ServiceResponse> call, @NonNull Response<ServiceResponse> response) {
                 Log.w(TAG, "Jobno Find Response" + new Gson().toJson(response.body()));
-
+                dialog.dismiss();
                 if (response.body() != null) {
 
                     message = response.body().getMessage();
@@ -291,14 +287,13 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
 //                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
                     }
                 }
-
-
             }
 
             @Override
             public void onFailure(@NonNull Call<ServiceResponse> call, @NonNull Throwable t) {
                 Log.e("Jobno Find ", "--->" + t.getMessage());
                 ErrorMyLocationAlert(t.getMessage());
+                dialog.dismiss();
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

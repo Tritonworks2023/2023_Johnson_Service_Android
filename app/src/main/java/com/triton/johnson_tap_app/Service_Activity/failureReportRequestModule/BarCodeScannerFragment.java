@@ -1,12 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule;
 
-import static com.triton.johnson_tap_app.utils.CommonFunction.isValidQRCode;
-import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointerValidator;
-
 import android.app.AlertDialog;
-import android.graphics.PointF;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,23 +11,21 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.interfaces.OnScannerDataListener;
 
-public class QRCodeScannerFragment extends Fragment implements QRCodeReaderView.OnQRCodeReadListener, View.OnClickListener {
+public class BarCodeScannerFragment extends Fragment implements View.OnClickListener {
 
-    private QRCodeReaderView qrCoderView;
-    private String TAG = QRCodeScannerFragment.class.getSimpleName();
-    private TextView txt_qr_code;
+    private String TAG = BarCodeScannerFragment.class.getSimpleName();
+    private TextView txt_bar_code;
     private ImageView img_back;
     private OnScannerDataListener onScannerDataListener;
 
-    public QRCodeScannerFragment() {
+    public BarCodeScannerFragment() {
         // Required empty public constructor
     }
 
-    public QRCodeScannerFragment(OnScannerDataListener onScannerDataListener) {
+    public BarCodeScannerFragment(OnScannerDataListener onScannerDataListener) {
         this.onScannerDataListener = onScannerDataListener;
     }
 
@@ -44,21 +37,12 @@ public class QRCodeScannerFragment extends Fragment implements QRCodeReaderView.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_qr_code_scanner, container, false);
+        View view = inflater.inflate(R.layout.fragment_bar_code_scanner, container, false);
 
         img_back = view.findViewById(R.id.img_back);
 
-        txt_qr_code = view.findViewById(R.id.txt_qr_code);
-
-        qrCoderView = view.findViewById(R.id.qrCoderView);
-
+        txt_bar_code = view.findViewById(R.id.txt_bar_code);
         img_back.setOnClickListener(this);
-
-        qrCoderView.setOnQRCodeReadListener(this);
-        qrCoderView.setQRDecodingEnabled(true);
-        qrCoderView.setAutofocusInterval(2000L);
-        qrCoderView.setTorchEnabled(true);
-        qrCoderView.setBackCamera();
 
         return view;
     }
@@ -85,23 +69,8 @@ public class QRCodeScannerFragment extends Fragment implements QRCodeReaderView.
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                qrCoderView.startCamera();
             }
         });
-    }
-
-    @Override
-    public void onQRCodeRead(String text, PointF[] points) {
-        Log.i(TAG, "onQRCodeRead: text -> " + text);
-
-        qrCoderView.stopCamera();
-        if (nullPointerValidator(text) && isValidQRCode(text)) {
-            txt_qr_code.setText(text);
-            onScannerDataListener.scannerDataListener("qr_scanner", text);
-            img_back.performClick();
-        } else {
-            ErrorMsgDialog("Invalid QR Code.\nTry Again");
-        }
     }
 
     @Override

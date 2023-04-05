@@ -28,7 +28,12 @@ import com.triton.johnson_tap_app.requestpojo.ElevatorSurveyFormRequest;
 import com.triton.johnson_tap_app.requestpojo.EscalatorCheckDateRequest;
 import com.triton.johnson_tap_app.requestpojo.EscalatorSurveyFormRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportCheckDataRequest;
+import com.triton.johnson_tap_app.requestpojo.FailureReportCreateTechRequest;
+import com.triton.johnson_tap_app.requestpojo.FailureReportEditEngRequest;
+import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByComIdRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByJobCodeRequest;
+import com.triton.johnson_tap_app.requestpojo.FailureReportRequestListByEngCodeRequest;
+import com.triton.johnson_tap_app.requestpojo.FailureReportRequestListByMechCodeRequest;
 import com.triton.johnson_tap_app.requestpojo.FbTokenRequest;
 import com.triton.johnson_tap_app.requestpojo.Feedback_DetailsRequest;
 import com.triton.johnson_tap_app.requestpojo.Feedback_GroupRequest;
@@ -80,7 +85,10 @@ import com.triton.johnson_tap_app.responsepojo.Custom_nameResponse;
 import com.triton.johnson_tap_app.responsepojo.CustomerDetails_EngineerResponse;
 import com.triton.johnson_tap_app.responsepojo.EmployeeDetailsListResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportDropDownDataResponse;
+import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByComIdResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByJobCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByEngCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByMechCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.Feedback_DetailsResponse;
 import com.triton.johnson_tap_app.responsepojo.Feedback_GroupResponse;
 import com.triton.johnson_tap_app.responsepojo.Fetch_MrList_Response;
@@ -622,7 +630,22 @@ public interface APIInterface {
     @POST("additional_forms/failure_report/fetch_details_by_code")
     Call<FailureReportFetchDetailsByJobCodeResponse> getFailureReportFetchDetailsByCode(@Header("Content-Type") String type, @Body FailureReportFetchDetailsByJobCodeRequest failureReportFetchDetailsByJobCodeRequest);
 
+    @POST("additional_forms/failure_report/fetch_details_by_com_id")
+    Call<FailureReportFetchDetailsByComIdResponse> getFailureReportFetchDetailsByComId(@Header("Content-Type") String type, @Body FailureReportFetchDetailsByComIdRequest failureReportFetchDetailsByComIdRequest);
+
     @GET("additional_forms/failure_report/drop_down")
     Call<FailureReportDropDownDataResponse> getFailureReportDropDownData(@Header("Content-Type") String type);
+
+    @POST("additional_forms/temp/failure_report/create")
+    Call<SuccessResponse> getFailureReportCreateTech(@Header("Content-Type") String type, @Body FailureReportCreateTechRequest failureReportCreateTechRequest);
+
+    @POST("additional_forms/temp/failure_report/getlist_by_eng_code")
+    Call<FailureReportRequestListByEngCodeResponse> getListByEngCode(@Header("Content-Type") String type, @Body FailureReportRequestListByEngCodeRequest failureReportRequestListByEngCodeRequest);
+
+    @POST("additional_forms/temp/failure_report/getlist_by_mech_code")
+    Call<FailureReportRequestListByMechCodeResponse> getListByMechCode(@Header("Content-Type") String type, @Body FailureReportRequestListByMechCodeRequest failureReportRequestListByMechCodeRequest);
+
+    @POST("additional_forms/temp/failure_report/edit")
+    Call<SuccessResponse> getFailureReportEditEng(@Header("Content-Type") String type, @Body FailureReportEditEngRequest failureReportEditEngRequest);
 
 }
