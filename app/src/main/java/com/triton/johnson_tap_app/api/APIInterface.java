@@ -28,6 +28,7 @@ import com.triton.johnson_tap_app.requestpojo.ElevatorSurveyFormRequest;
 import com.triton.johnson_tap_app.requestpojo.EscalatorCheckDateRequest;
 import com.triton.johnson_tap_app.requestpojo.EscalatorSurveyFormRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportCheckDataRequest;
+import com.triton.johnson_tap_app.requestpojo.FailureReportCompDeviceListRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportCreateTechRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportEditEngRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByComIdRequest;
@@ -56,6 +57,8 @@ import com.triton.johnson_tap_app.requestpojo.NotificationListRequest;
 import com.triton.johnson_tap_app.requestpojo.Pasused_ListRequest;
 import com.triton.johnson_tap_app.requestpojo.Preventive_ChecklistRequest;
 import com.triton.johnson_tap_app.requestpojo.Preventive_Submit_Request;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestCreateTechRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestFetchListTechIdRequest;
 import com.triton.johnson_tap_app.requestpojo.RopeMaintenanceCheckDataRequest;
 import com.triton.johnson_tap_app.requestpojo.SafetyAuditCheckDataRequest;
 import com.triton.johnson_tap_app.requestpojo.ServiceRequest;
@@ -84,6 +87,7 @@ import com.triton.johnson_tap_app.responsepojo.Custom_detailsResponse;
 import com.triton.johnson_tap_app.responsepojo.Custom_nameResponse;
 import com.triton.johnson_tap_app.responsepojo.CustomerDetails_EngineerResponse;
 import com.triton.johnson_tap_app.responsepojo.EmployeeDetailsListResponse;
+import com.triton.johnson_tap_app.responsepojo.FailureReportCompDeviceListResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportDropDownDataResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByComIdResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByJobCodeResponse;
@@ -98,6 +102,7 @@ import com.triton.johnson_tap_app.responsepojo.GetFetchLatestVersionResponse;
 import com.triton.johnson_tap_app.responsepojo.GetPopUpImageRequest;
 import com.triton.johnson_tap_app.responsepojo.GetPopupImageResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListFailureReportResponse;
+import com.triton.johnson_tap_app.responsepojo.JobListRepairWorkRequestResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListRopeMaintenanceResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListSafetyAuditResponse;
@@ -120,6 +125,7 @@ import com.triton.johnson_tap_app.responsepojo.Pasused_ListResponse;
 import com.triton.johnson_tap_app.responsepojo.PauseJobListAuditResponse;
 import com.triton.johnson_tap_app.responsepojo.Preventive_ChecklistResponse;
 import com.triton.johnson_tap_app.responsepojo.RTGS_PopResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestFetchListTechIdResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveLocalValueBRResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveResponseAudit;
 import com.triton.johnson_tap_app.responsepojo.RetriveResponsePR;
@@ -633,6 +639,9 @@ public interface APIInterface {
     @POST("additional_forms/failure_report/fetch_details_by_com_id")
     Call<FailureReportFetchDetailsByComIdResponse> getFailureReportFetchDetailsByComId(@Header("Content-Type") String type, @Body FailureReportFetchDetailsByComIdRequest failureReportFetchDetailsByComIdRequest);
 
+    @POST("additional_forms/failure_report/comp_device_list")
+    Call<FailureReportCompDeviceListResponse> getFailureReportCompDeviceList(@Header("Content-Type") String type, @Body FailureReportCompDeviceListRequest failureReportCompDeviceListRequest);
+
     @GET("additional_forms/failure_report/drop_down")
     Call<FailureReportDropDownDataResponse> getFailureReportDropDownData(@Header("Content-Type") String type);
 
@@ -647,5 +656,14 @@ public interface APIInterface {
 
     @POST("additional_forms/temp/failure_report/edit")
     Call<SuccessResponse> getFailureReportEditEng(@Header("Content-Type") String type, @Body FailureReportEditEngRequest failureReportEditEngRequest);
+
+    @POST("additional_forms/escalator_survey/fetch_data_job_id")
+    Call<JobListRepairWorkRequestResponse> getRepairWorkRequestFetchDataJobId(@Header("Content-Type") String type, @Body JobIdRequest jobIdRequest);
+
+    @POST("additional_forms/repair_work_request_temp/create")
+    Call<SuccessResponse> getRepairWorkRequestCreateTech(@Header("Content-Type") String type, @Body RepairWorkRequestCreateTechRequest repairWorkRequestCreateTechRequest);
+
+    @POST("additional_forms/repair_work_request_temp/fetch_list_tech_id")
+    Call<RepairWorkRequestFetchListTechIdResponse> getRepairWorkRequestFetchListTechId(@Header("Content-Type") String type, @Body RepairWorkRequestFetchListTechIdRequest repairWorkRequestFetchListTechIdRequest);
 
 }

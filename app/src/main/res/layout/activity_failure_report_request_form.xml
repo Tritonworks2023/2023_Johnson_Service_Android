@@ -442,7 +442,7 @@
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="3"
-                    android:text="Comp/Device ID"
+                    android:text="Comp/Device Name"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -454,7 +454,7 @@
                     android:layout_marginTop="10dp">
 
                     <ImageView
-                        android:id="@+id/img_search_comp_device"
+                        android:id="@+id/img_search_comp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_alignParentStart="true"
@@ -468,102 +468,34 @@
                         android:src="@drawable/ic_search"
                         app:tint="@color/blue_btn_bg_pressed_color" />
 
-                    <EditText
-                        android:id="@+id/edt_comp_device_id"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/img_search_comp_device"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/img_search_comp"
                         android:background="@drawable/child_back_ground"
-                        android:ellipsize="end"
-                        android:hint="Enter Comp Device ID"
-                        android:imeOptions=""
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:padding="15dp"
-                        android:visibility="visible" />
+                        android:orientation="horizontal"
+                        android:padding="0dp"
+                        android:visibility="visible"
+                        tools:ignore="UselessParent">
 
+                        <TextView
+                            android:id="@+id/txt_comp_device_name"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:gravity="center|start"
+                            android:hint="Select Comp/Device Name"
+                            android:lineSpacingExtra="2dp"
+                            android:maxLines="2"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
                 </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="3"
-                    android:text="Material ID"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_material_id"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Status"
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="3"
-                    android:text="Comp/Device Name"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_comp_device_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Comp Device Name"
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -691,7 +623,7 @@
                     android:padding="15dp"
                     android:visibility="visible" />
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -719,7 +651,7 @@
                     android:padding="15dp"
                     android:visibility="visible" />
 
-                <!--<TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -936,7 +868,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/edt_tech_exp_comment"
@@ -953,7 +885,8 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="5dp"
                     android:singleLine="true"
-                    android:text="" />
+                    android:text=""
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -1155,7 +1088,7 @@
 
                 </LinearLayout>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -1193,7 +1126,7 @@
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -1270,7 +1203,7 @@
 
                 </LinearLayout>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -1324,7 +1257,7 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:padding="15dp"
-                    android:visibility="visible" />
+                    android:visibility="visible" />-->
 
                 <LinearLayout
                     android:id="@+id/ll_eng_privilege"

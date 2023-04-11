@@ -39,14 +39,15 @@ import retrofit2.Response;
 
 public class FailureReportRequestScannerActivity extends AppCompatActivity implements View.OnClickListener, OnScannerDataListener {
 
-    private String TAG = FailureReportRequestScannerActivity.class.getSimpleName(), se_user_mobile_no,
-            se_user_name, se_id, check_id, service_title, message, networkStatus = "", strScanType = "",
-            strScanData = "";
+    private String TAG = FailureReportRequestScannerActivity.class.getSimpleName(), se_user_mobile_no = "",
+            se_user_name = "", se_id = "", check_id = "", service_title = "", message = "", networkStatus = "",
+            strScanType = "", strScanData = "", str_title = "";
     private SharedPreferences sharedPreferences;
     private Context context;
     private ImageView img_back, img_search_qr_code, img_scan_qr_code, img_search_bar_code, img_scan_bar_code, img_search_job_num;
     private EditText edt_qr_code_number, edt_bar_code_number, edt_job_num;
     private Dialog dialog;
+    private TextView txt_menu_name;
     private FailureReportFetchDetailsByJobCodeResponse failureReportFetchDetailsByJobCodeResponse = new FailureReportFetchDetailsByJobCodeResponse();
     private String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -74,6 +75,17 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
         edt_qr_code_number = findViewById(R.id.edt_qr_code_number);
         edt_bar_code_number = findViewById(R.id.edt_bar_code_number);
         edt_job_num = findViewById(R.id.edt_job_num);
+
+        txt_menu_name = findViewById(R.id.txt_menu_name);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("str_title")) {
+                str_title = extras.getString("str_title");
+            }
+        }
+
+        txt_menu_name.setText(str_title);
 
         img_back.setOnClickListener(this);
         img_search_qr_code.setOnClickListener(this);
@@ -309,6 +321,7 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("failureReportFetchDetailsByJobCodeDataResponse", failureReportFetchDetailsByJobCodeDataResponse);
         intent.putExtra("strScanType", strScanType);
+        intent.putExtra("str_title", str_title);
         intent.putExtra("strScanData", strScanData);
 
         context.startActivity(intent);
@@ -378,10 +391,10 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                 } else {
                     getSupportFragmentManager()
                             .beginTransaction()
+                            .addToBackStack("QRCodeScannerFragment")
                             .add(android.R.id.content, new QRCodeScannerFragment(this), "QRCodeScannerFragment")
                             .commit();
                 }
-
             }
             break;
             case R.id.img_scan_bar_code: {
@@ -434,7 +447,17 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
+        /*super.onBackPressed();
+        finish();*/
     }
 }

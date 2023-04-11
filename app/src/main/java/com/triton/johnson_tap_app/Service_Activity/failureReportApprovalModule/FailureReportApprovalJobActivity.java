@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.failureReportApprovalModule;
 
+import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointerValidator;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -277,12 +279,40 @@ public class FailureReportApprovalJobActivity extends AppCompatActivity
         FailureReportRequestListByEngCodeResponse.Data failureReportRequestListByEngCodeDateResponse = new FailureReportRequestListByEngCodeResponse.Data();
         failureReportRequestListByEngCodeDateResponse = failureReportRequestListByEngCodeResponseList.get(position);
 
-        Intent intent = new Intent(context, FailureReportApprovalFormActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("failureReportRequestListByEngCodeDateResponse", failureReportRequestListByEngCodeDateResponse);
-        context.startActivity(intent);
-
+        if (!failureReportRequestListByEngCodeDateResponse.getApp_status().equalsIgnoreCase("submitted")) {
+            Intent intent = new Intent(context, FailureReportApprovalFormActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("failureReportRequestListByEngCodeDateResponse", failureReportRequestListByEngCodeDateResponse);
+            context.startActivity(intent);
+        } else {
+            ErrorMsgDialog("Job already Submitted");
+        }
         Log.i(TAG, "itemClickDataChangeListener: failureReportRequestListByEngCodeDateResponse --> " + new Gson().toJson(failureReportRequestListByEngCodeDateResponse));
+    }
+
+    private void ErrorMsgDialog(String strMsg) {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        View mView = getLayoutInflater().inflate(R.layout.popup_tryagain, null);
+
+        TextView txt_Message = mView.findViewById(R.id.txt_message);
+        Button btn_Ok = mView.findViewById(R.id.btn_ok);
+
+        if (nullPointerValidator(strMsg)) {
+            txt_Message.setText(strMsg);
+        }
+
+        alertDialogBuilder.setView(mView);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+
+        btn_Ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     @Override

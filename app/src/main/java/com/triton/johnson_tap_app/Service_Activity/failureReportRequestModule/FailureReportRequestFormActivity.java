@@ -46,10 +46,12 @@ import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
+import com.triton.johnson_tap_app.interfaces.OnItemClickFailureReportFetchDetailsByComIdResponseListener;
 import com.triton.johnson_tap_app.requestpojo.FailureReportCreateTechRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByComIdRequest;
 import com.triton.johnson_tap_app.requestpojo.JobIdRequest;
 import com.triton.johnson_tap_app.requestpojo.PetAppointmentCreateRequest;
+import com.triton.johnson_tap_app.responsepojo.FailureReportCompDeviceListResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportDropDownDataResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByComIdResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByJobCodeResponse;
@@ -83,7 +85,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FailureReportRequestFormActivity extends AppCompatActivity implements View.OnClickListener,
-        AdapterView.OnItemSelectedListener {
+        AdapterView.OnItemSelectedListener, OnItemClickFailureReportFetchDetailsByComIdResponseListener {
 
     private static String formattedDate = "", formattedDate2 = "", formattedDate3 = "";
     int PERMISSION_CLINIC = 1;
@@ -94,16 +96,19 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
     };
     private Context context;
     private LinearLayout ll_eng_privilege;
-    private ImageView img_back, img_search_comp_device;
+    private ImageView img_back, img_search_comp;
     private Button btn_upload_image, btn_submit;
     private RecyclerView rv_upload_images_list;
     private TextView txt_job_id, txt_building_name, /*txt_date,*/
             txt_failure_date, txt_installed_date, txt_bc_qr_code,
-            txt_status, txt_material_id, txt_branch, txt_comp_device_name, txt_mechanic_id,
-            txt_mechanic_name, txt_mechanic_phone, txt_engineer_id, txt_engineer_name, txt_engineer_phone,
-            txt_ser_mast_cust_name_add, txt_install_address, txt_route;
-    private EditText edt_comp_device_id, edt_model_make, edt_rating, edt_serial_no, edt_observation, edt_supply_vol,
-            edt_tech_exp_comment, edt_curlss_no, edt_prvlss_no, edt_vvf_remark,
+            txt_status, txt_branch, txt_comp_device_name, txt_mechanic_id,
+            txt_mechanic_name, /*txt_mechanic_phone,*/
+            txt_engineer_id, txt_engineer_name, /*txt_engineer_phone,*/
+            txt_ser_mast_cust_name_add, txt_install_address, txt_route, txt_menu_name;
+    private EditText edt_model_make, edt_rating, /*edt_serial_no,*/
+            edt_observation, edt_supply_vol,
+            edt_tech_exp_comment, /*edt_curlss_no, edt_prvlss_no,*/
+            edt_vvf_remark,
             edt_vvf_item, edt_electric_volt;
     private Spinner spinner_matl_return_type, spinner_department, spinner_service_type, spinner_physical_cond,
             spinner_current_status, spinner_nature_of_failure, spinner_vvvf_trip_while, spinner_vvvf_trip_type,
@@ -120,7 +125,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
     private Dialog dialog;
     private String TAG = FailureReportRequestFormActivity.class.getSimpleName(), strDateType = "", se_user_id = "",
             se_user_name = "", se_user_mobile_no = "", se_user_location = "", emp_Type = "", networkStatus = "", uploadImagePath = "",
-            strScanType = "", strScanData = "", message = "", userid = "";
+            strScanType = "", strScanData = "", message = "", userid = "", str_title = "";
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
     private boolean checkDate = false;
@@ -152,7 +157,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         ll_eng_privilege = findViewById(R.id.ll_eng_privilege);
 
         img_back = findViewById(R.id.img_back);
-        img_search_comp_device = findViewById(R.id.img_search_comp_device);
+        img_search_comp = findViewById(R.id.img_search_comp);
 
         btn_upload_image = findViewById(R.id.btn_upload_image);
         btn_submit = findViewById(R.id.btn_submit);
@@ -160,34 +165,33 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         rv_upload_images_list = findViewById(R.id.rv_upload_images_list);
 
         txt_job_id = findViewById(R.id.txt_job_id);
+        txt_menu_name = findViewById(R.id.txt_menu_name);
         txt_building_name = findViewById(R.id.txt_building_name);
         /*txt_date = findViewById(R.id.txt_date);*/
         txt_failure_date = findViewById(R.id.txt_failure_date);
         txt_installed_date = findViewById(R.id.txt_installed_date);
         txt_bc_qr_code = findViewById(R.id.txt_bc_qr_code);
         txt_status = findViewById(R.id.txt_status);
-        txt_material_id = findViewById(R.id.txt_material_id);
         txt_branch = findViewById(R.id.txt_branch);
         txt_comp_device_name = findViewById(R.id.txt_comp_device_name);
         txt_mechanic_id = findViewById(R.id.txt_mechanic_id);
         txt_mechanic_name = findViewById(R.id.txt_mechanic_name);
-        txt_mechanic_phone = findViewById(R.id.txt_mechanic_phone);
+        /*txt_mechanic_phone = findViewById(R.id.txt_mechanic_phone);*/
         txt_engineer_id = findViewById(R.id.txt_engineer_id);
         txt_engineer_name = findViewById(R.id.txt_engineer_name);
-        txt_engineer_phone = findViewById(R.id.txt_engineer_phone);
+        /*txt_engineer_phone = findViewById(R.id.txt_engineer_phone);*/
         txt_ser_mast_cust_name_add = findViewById(R.id.txt_ser_mast_cust_name_add);
         txt_install_address = findViewById(R.id.txt_install_address);
         txt_route = findViewById(R.id.txt_route);
 
-        edt_comp_device_id = findViewById(R.id.edt_comp_device_id);
         edt_model_make = findViewById(R.id.edt_model_make);
         edt_rating = findViewById(R.id.edt_rating);
-        edt_serial_no = findViewById(R.id.edt_serial_no);
+        /*edt_serial_no = findViewById(R.id.edt_serial_no);*/
         edt_observation = findViewById(R.id.edt_observation);
         edt_supply_vol = findViewById(R.id.edt_supply_vol);
         edt_tech_exp_comment = findViewById(R.id.edt_tech_exp_comment);
-        edt_curlss_no = findViewById(R.id.edt_curlss_no);
-        edt_prvlss_no = findViewById(R.id.edt_prvlss_no);
+        /*edt_curlss_no = findViewById(R.id.edt_curlss_no);
+        edt_prvlss_no = findViewById(R.id.edt_prvlss_no);*/
         edt_vvf_remark = findViewById(R.id.edt_vvf_remark);
         edt_vvf_item = findViewById(R.id.edt_vvf_item);
         edt_electric_volt = findViewById(R.id.edt_electric_volt);
@@ -218,6 +222,9 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             }
             if (extra.containsKey("strScanData")) {
                 strScanData = extra.getString("strScanData");
+            }
+            if (extra.containsKey("str_title")) {
+                str_title = extra.getString("str_title");
             }
         }
 
@@ -317,7 +324,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         spinner_reason_code.setOnItemSelectedListener(this);
 
         img_back.setOnClickListener(this);
-        img_search_comp_device.setOnClickListener(this);
+        img_search_comp.setOnClickListener(this);
         btn_upload_image.setOnClickListener(this);
         /*txt_date.setOnClickListener(this);*/
         txt_failure_date.setOnClickListener(this);
@@ -345,6 +352,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
         Log.i(TAG, "onCreate: Job_id -> " + failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
 
+        txt_menu_name.setText(str_title);
         txt_job_id.setText(CommonFunction.nullPointer(failureReportFetchDetailsByJobCodeDataResponse.getJob_id()));
         txt_building_name.setText(CommonFunction.nullPointer(separated[0]));
 
@@ -560,16 +568,18 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             }
         }
 
-        txt_material_id.setText(failureReportFetchDetailsByJobCodeDataResponse.getMalt_id());
         txt_branch.setText(jobListFailureReportDataResponse.get(0).getBRCODE());
-        edt_comp_device_id.setText(failureReportFetchDetailsByJobCodeDataResponse.getComp_device());
-        txt_comp_device_name.setText(failureReportFetchDetailsByJobCodeDataResponse.getComp_device_name());
+        if (nullPointerValidator(failureReportFetchDetailsByJobCodeDataResponse.getMalt_id())) {
+            txt_comp_device_name.setText(String.format("%s - %s - %s", failureReportFetchDetailsByJobCodeDataResponse.getComp_device(), failureReportFetchDetailsByJobCodeDataResponse.getComp_device_name(), failureReportFetchDetailsByJobCodeDataResponse.getMalt_id()));
+        } else {
+            txt_comp_device_name.setText(String.format("%s - %s", failureReportFetchDetailsByJobCodeDataResponse.getComp_device(), failureReportFetchDetailsByJobCodeDataResponse.getComp_device_name()));
+        }
         txt_mechanic_id.setText(se_user_id);
         txt_mechanic_name.setText(se_user_name);
-        txt_mechanic_phone.setText(se_user_mobile_no);
+        /*txt_mechanic_phone.setText(se_user_mobile_no);*/
         txt_engineer_id.setText(jobListFailureReportDataResponse.get(0).getTech_code());
         txt_engineer_name.setText(jobListFailureReportDataResponse.get(0).getTech_name());
-        txt_engineer_phone.setText(jobListFailureReportDataResponse.get(0).getTech_code());
+        /*txt_engineer_phone.setText(jobListFailureReportDataResponse.get(0).getTech_code());*/
         txt_route.setText(jobListFailureReportDataResponse.get(0).getSROUTE());
         txt_ser_mast_cust_name_add.setText(failureReportFetchDetailsByJobCodeDataResponse.getCustomer_address());
         txt_install_address.setText(failureReportFetchDetailsByJobCodeDataResponse.getInstall_address());
@@ -587,8 +597,6 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         failureReportCreateTechRequest.setIns_address(failureReportFetchDetailsByJobCodeDataResponse.getInstall_address());
         failureReportCreateTechRequest.setIns_address(failureReportFetchDetailsByJobCodeDataResponse.getInstall_address());
         failureReportCreateTechRequest.setRoute_code(jobListFailureReportDataResponse.get(0).getSROUTE());
-
-//        failureReportCreateTechRequest.setComp_device_no(edt_comp_device_id.getText().toString().trim());
 
         Log.i(TAG, "setView: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
     }
@@ -654,15 +662,14 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
         Log.i(TAG, "validateFailureReportCreateTech: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
 
-        failureReportCreateTechRequest.setComp_device_no(nullPointer(edt_comp_device_id.getText().toString().trim()));
         failureReportCreateTechRequest.setModel_make(nullPointer(edt_model_make.getText().toString().trim()));
         failureReportCreateTechRequest.setRating(nullPointer(edt_rating.getText().toString().trim()));
-        failureReportCreateTechRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));
+        /*failureReportCreateTechRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));*/
         failureReportCreateTechRequest.setObservation(nullPointer(edt_observation.getText().toString().trim()));
         failureReportCreateTechRequest.setSupply_vol(nullPointer(edt_supply_vol.getText().toString().trim()));
         failureReportCreateTechRequest.setTech_comment(nullPointer(edt_tech_exp_comment.getText().toString().trim()));
-        failureReportCreateTechRequest.setCurlss_no(nullPointer(edt_curlss_no.getText().toString().trim()));
-        failureReportCreateTechRequest.setPrvlss_no(nullPointer(edt_prvlss_no.getText().toString().trim()));
+        /*failureReportCreateTechRequest.setCurlss_no(nullPointer(edt_curlss_no.getText().toString().trim()));
+        failureReportCreateTechRequest.setPrvlss_no(nullPointer(edt_prvlss_no.getText().toString().trim()));*/
 
         if (!nullPointerValidator(failureReportCreateTechRequest.getJob_id())) {
             ErrorMsgDialog("Please Select Job ID");
@@ -676,9 +683,9 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             ErrorMsgDialog("Please Select Branch Code");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getComp_device_no()) || failureReportCreateTechRequest.getComp_device_no().equalsIgnoreCase("No NUM")) {
             ErrorMsgDialog("Please Select Comp/Device ID");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getMatl_id()) || failureReportCreateTechRequest.getMatl_id().equalsIgnoreCase("NA")) {
+        } else /*if (!nullPointerValidator(failureReportCreateTechRequest.getMatl_id()) || failureReportCreateTechRequest.getMatl_id().equalsIgnoreCase("NA")) {
             ErrorMsgDialog("Please Select Material ID");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getComp_device_name()) || failureReportCreateTechRequest.getComp_device_name().equalsIgnoreCase("NO NAME")) {
+        } else */if (!nullPointerValidator(failureReportCreateTechRequest.getComp_device_name()) || failureReportCreateTechRequest.getComp_device_name().equalsIgnoreCase("NO NAME")) {
             ErrorMsgDialog("Please Select Comp/Device Name");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getDepart_name())) {
             ErrorMsgDialog("Please Select Department Name");
@@ -688,21 +695,23 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             ErrorMsgDialog("Please Enter Model & Make");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getRating())) {
             ErrorMsgDialog("Please Enter Rating");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSerial_no())) {
+        } else /*if (!nullPointerValidator(failureReportCreateTechRequest.getSerial_no())) {
             ErrorMsgDialog("Please Enter Serial No.");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getObservation())) {
+        } else */if (!nullPointerValidator(failureReportCreateTechRequest.getObservation())) {
             ErrorMsgDialog("Please Enter Observation");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getSupply_vol())) {
             ErrorMsgDialog("Please Enter Supply Vol");
+        } else if (failureReportCreateTechRequest.getSupply_vol().length() > 1) {
+            ErrorMsgDialog("Please Enter Valid Supply Vol.\n(Note: Accepts Only Two Digit value)");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getInst_date())) {
             ErrorMsgDialog("Please Select Installed Date");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getPhys_cond())) {
             ErrorMsgDialog("Please Select Physical Cond");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getCurr_status())) {
             ErrorMsgDialog("Please Select Current Status");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getTech_comment())) {
+        } else /*if (!nullPointerValidator(failureReportCreateTechRequest.getTech_comment())) {
             ErrorMsgDialog("Please Enter Technician Expect comment");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getMech_code())) {
+        } else */if (!nullPointerValidator(failureReportCreateTechRequest.getMech_code())) {
             ErrorMsgDialog("Please Enter Mechanic ID");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getMech_name())) {
             ErrorMsgDialog("Please Enter Mechanic Name");
@@ -710,13 +719,13 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             ErrorMsgDialog("Please Enter Engineer ID");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getEng_name())) {
             ErrorMsgDialog("Please Enter Engineer Name");
-        } else if (!nullPointerValidator(failureReportCreateTechRequest.getReason_code())) {
+        } /*else if (!nullPointerValidator(failureReportCreateTechRequest.getReason_code())) {
             ErrorMsgDialog("Please Select Reason Code");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getReason_name())) {
             ErrorMsgDialog("Please Select Reason Code");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getRoute_code())) {
             ErrorMsgDialog("Please Enter Route Code");
-        } /*else if (!nullPointerValidator(failureReportCreateTechRequest.getCurlss_no())) {
+        } else if (!nullPointerValidator(failureReportCreateTechRequest.getCurlss_no())) {
             ErrorMsgDialog("Please Enter Curlss No.");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getPrvlss_no())) {
             ErrorMsgDialog("Please Enter Prvlss No.");
@@ -892,7 +901,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                 dialog.dismiss();
                 Log.i(TAG, "getFailureReportFetchDetailsByComId: onResponse: FailureReportFetchDetailsByComIdResponse -> " + new Gson().toJson(response.body()));
                 failureReportFetchDetailsByComIdResponse.setData(new ArrayList<>());
-                if (response.body() != null) {
+                /*if (response.body() != null) {
                     message = response.body().getMessage();
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
@@ -911,7 +920,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                     }
                 } else {
                     ErrorMsgDialog("");
-                }
+                }*/
             }
 
             @Override
@@ -1032,6 +1041,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                             }
                         }
 
+
                     } else {
                         ErrorMsgDialog(response.body().getMessage());
                     }
@@ -1123,6 +1133,22 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void itemClickFailureReportFetchDetailsByComIdResponseListener(FailureReportCompDeviceListResponse.Data failureReportCompDeviceListDataResponse) {
+        Log.i(TAG, "itemClickFailureReportFetchDetailsByComIdResponseListener: failureReportCompDeviceListDataResponse -> " + new Gson().toJson(failureReportCompDeviceListDataResponse));
+
+        if (nullPointerValidator(failureReportCompDeviceListDataResponse.getST_PMH_BARCODEID())) {
+            txt_comp_device_name.setText(String.format("%s - %s - %s", failureReportCompDeviceListDataResponse.getST_PMH_PARTNO(), failureReportCompDeviceListDataResponse.getST_PMH_PARTNAME(), failureReportCompDeviceListDataResponse.getST_PMH_BARCODEID()));
+        } else {
+            txt_comp_device_name.setText(String.format("%s - %s", failureReportCompDeviceListDataResponse.getST_PMH_PARTNO(), failureReportCompDeviceListDataResponse.getST_PMH_PARTNAME()));
+        }
+        failureReportCreateTechRequest.setComp_device_no(failureReportCompDeviceListDataResponse.getST_PMH_PARTNO());
+        failureReportCreateTechRequest.setComp_device_name(failureReportCompDeviceListDataResponse.getST_PMH_PARTNAME());
+        failureReportCreateTechRequest.setMatl_id(failureReportCompDeviceListDataResponse.getST_PMH_BARCODEID());
+
+        onBackPressed();
     }
 
     @Override
@@ -1259,12 +1285,12 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                 onBackPressed();
             }
             break;
-            case R.id.img_search_comp_device: {
-
-                if (CommonFunction.nullPointerValidator(edt_comp_device_id.getText().toString().toUpperCase().trim())) {
-                    failureReportFetchDetailsByComIdRequest.setComp_device_no(edt_comp_device_id.getText().toString().toUpperCase().trim());
-                    getFailureReportFetchDetailsByComId(failureReportFetchDetailsByComIdRequest);
-                }
+            case R.id.img_search_comp: {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack("ComponentDeviceListFragment")
+                        .add(android.R.id.content, new ComponentDeviceListFragment(failureReportFetchDetailsByJobCodeDataResponse.getJob_id(), this), "ComponentDeviceListFragment")
+                        .commit();
             }
             break;
             /*case R.id.txt_date: {
@@ -1292,7 +1318,16 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+        /*super.onBackPressed();
+        finish();*/
     }
 }

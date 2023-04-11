@@ -194,10 +194,10 @@ public class SchSafServiceVisibilityFormActivity extends AppCompatActivity imple
         serviceVisibilityCheckDateRequest.setCat_type(strSelectedCatCode);
         serviceVisibilityCheckDateRequest.setSubmitted_by_num(se_user_mobile_no);
 
-        /*rbJobId = RequestBody.create(MediaType.parse("multipart/form-data"), newJobListServiceVisibilityDataResponse.getJOBNO());*/
+        rbJobId = RequestBody.create(MediaType.parse("multipart/form-data"), se_id);
         ebCatType = RequestBody.create(MediaType.parse("multipart/form-data"), strSelectedCatCode);
 
-        /*serviceVisibilityRequest.setJob_id(CommonFunction.nullPointer(newJobListServiceVisibilityDataResponse.getJOBNO()));*/
+        serviceVisibilityRequest.setJob_id(se_id);
         /*serviceVisibilityRequest.setCus_name(CommonFunction.nullPointer(newJobListServiceVisibilityDataResponse.getCUST_NAME()));*/
         serviceVisibilityRequest.setCat_type(strSelectedCatCode);
         serviceVisibilityRequest.setSubmitted_by_emp_code(se_id);

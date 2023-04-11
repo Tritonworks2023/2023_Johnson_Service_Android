@@ -29,7 +29,7 @@ import com.triton.johnson_tap_app.Service_Activity.elevatorSurveyModule.NewJobEl
 import com.triton.johnson_tap_app.Service_Activity.escalatorSurveyModule.NewJobEscalatorSurveyActivity;
 import com.triton.johnson_tap_app.Service_Activity.failureReportApprovalModule.FailureReportApprovalJobActivity;
 import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.FailureReportRequestActivity;
-import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.FailureReportRequestScannerActivity;
+import com.triton.johnson_tap_app.Service_Activity.repairWorkRequestModule.JobListRepairWorkRequestActivity;
 import com.triton.johnson_tap_app.Service_Activity.ropeMaintenanceModule.JobRopeMaintenanceActivity;
 import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.SafetyAuditJobActivity;
 import com.triton.johnson_tap_app.Service_Activity.serviceVisibilityModule.ServiceVisibilityJobActivity;
@@ -159,6 +159,12 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     context.startActivity(n_act);
                 } else if (s.equalsIgnoreCase("FAILURE REPORT REQUEST")) {
                     Intent n_act = new Intent(context, FailureReportRequestActivity.class);
+                    n_act.putExtra("str_title","FAILURE REPORT REQUEST");
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("SITE REPAIR WORK REQUEST - (TECH)")) {
+                    Intent n_act = new Intent(context, JobListRepairWorkRequestActivity.class);
+                    n_act.putExtra("str_title","SITE REPAIR WORK REQUEST - (TECH)");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
                 } else {

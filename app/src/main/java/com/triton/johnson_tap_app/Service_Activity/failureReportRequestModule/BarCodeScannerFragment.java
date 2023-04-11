@@ -77,7 +77,8 @@ public class BarCodeScannerFragment extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back: {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+                getActivity().onBackPressed();
+//                getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
             }
             break;
         }

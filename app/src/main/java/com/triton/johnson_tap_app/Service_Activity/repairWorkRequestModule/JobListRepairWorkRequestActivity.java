@@ -1,11 +1,13 @@
-package com.triton.johnson_tap_app.Service_Activity.escalatorSurveyModule;
+package com.triton.johnson_tap_app.Service_Activity.repairWorkRequestModule;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,11 +27,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
+import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.SafetyAuditJobActivity;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
 import com.triton.johnson_tap_app.requestpojo.JobIdRequest;
-import com.triton.johnson_tap_app.responsepojo.NewJobListEscalatorSurveyResponse;
+import com.triton.johnson_tap_app.responsepojo.JobListRepairWorkRequestResponse;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
 import com.triton.johnson_tap_app.utils.RestUtils;
 
@@ -41,90 +43,62 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewJobEscalatorSurveyActivity extends AppCompatActivity implements OnItemClickDataChangeListener, View.OnClickListener {
+public class JobListRepairWorkRequestActivity extends AppCompatActivity implements OnItemClickDataChangeListener,
+        View.OnClickListener {
 
-    ImageView img_back, img_clearsearch;
-    RecyclerView rv_new_job_escalator_survey;
+    ImageView img_back;
+    RecyclerView rv_job_repair_work_request;
     EditText edtSearch;
     TextView txt_no_records, txt_menu_name;
     RelativeLayout Job;
-    NewJobListEscalatorSurveyAdapter newJobListEscalatorSurveyAdapter;
+    JobListRepairWorkRequestAdapter jobListRepairWorkRequestAdapter;
     Context context;
     Button btn_search;
-    String TAG = NewJobEscalatorSurveyActivity.class.getSimpleName(), networkStatus = "";
-    List<NewJobListEscalatorSurveyResponse.Data> newJobListEscalatorSurveyDataResponseList = new ArrayList<>();
+    String TAG = SafetyAuditJobActivity.class.getSimpleName(), se_user_mobile_no = "", se_user_location = "",
+            se_user_name = "", se_id = "", check_id = "", service_title = "", message = "", networkStatus = "",
+            str_title = "";
+    SharedPreferences sharedPreferences;
+    List<JobListRepairWorkRequestResponse.Data> jobListRepairWorkRequestResponseList = new ArrayList<>();
     private Dialog dialog;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_new_job_escalator_survey);
+        setContentView(R.layout.activity_job_list_repair_work_request);
+
         context = this;
 
         img_back = findViewById(R.id.img_back);
         edtSearch = findViewById(R.id.edt_search);
-        img_clearsearch = findViewById(R.id.img_clearsearch);
         txt_no_records = findViewById(R.id.txt_no_records);
-        rv_new_job_escalator_survey = findViewById(R.id.rv_new_job_escalator_survey);
+        rv_job_repair_work_request = findViewById(R.id.rv_job_repair_work_request);
         Job = findViewById(R.id.rel_job);
         txt_menu_name = findViewById(R.id.txt_menu_name);
         btn_search = findViewById(R.id.btn_search);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("str_title")) {
+                str_title = extras.getString("str_title");
+            }
+        }
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        se_id = sharedPreferences.getString("_id", "");
+        se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "");
+        se_user_name = sharedPreferences.getString("user_name", "");
+        service_title = sharedPreferences.getString("service_title", "");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
+
+        Log.i(TAG, "onCreate: service_title --> " + service_title);
+        Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
+
+        txt_menu_name.setText(str_title);
+
         img_back.setOnClickListener(this);
         btn_search.setOnClickListener(this);
-
-        /*edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String Search = edtSearch.getText().toString();
-                if (Search.equals("")) {
-                    rv_new_job_escalator_survey.setVisibility(View.VISIBLE);
-                    img_clearsearch.setVisibility(View.INVISIBLE);
-                } else {
-                    filter(Search);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String Search = edtSearch.getText().toString();
-                rv_new_job_escalator_survey.setVisibility(View.VISIBLE);
-                txt_no_records.setVisibility(View.GONE);
-                filter(Search);
-            }
-        });*/
     }
-
-    /*private void filter(String search) {
-        List<NewJobListEscalatorSurveyResponse.Data> filterlist = new ArrayList<>();
-
-        try {
-            for (NewJobListEscalatorSurveyResponse.Data item : breedTypedataBeanList) {
-                if (item.getJOBNO().toLowerCase().contains(search.toLowerCase()) ||
-                        item.getCUST_NAME().toLowerCase().contains(search.toLowerCase())) {
-                    Log.i(TAG, "filter: " + item.getJOBNO().toLowerCase().contains(search.toLowerCase()));
-                    filterlist.add(item);
-                }
-            }
-        } catch (NullPointerException e) {
-
-            Log.e(TAG, "filter: error --> " + e.getMessage());
-        }
-
-        if (filterlist.isEmpty()) {
-            // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
-            rv_new_job_escalator_survey.setVisibility(View.GONE);
-            txt_no_records.setVisibility(View.VISIBLE);
-            txt_no_records.setText("No Data Found");
-        } else {
-            newJobListEscalatorSurveyAdapter.filterrList(filterlist);
-        }
-    }*/
 
     public void NoInternetDialog() {
 
@@ -149,6 +123,35 @@ public class NewJobEscalatorSurveyActivity extends AppCompatActivity implements 
         });
     }
 
+    private void showErrorAlert(String message) {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+        View mView = getLayoutInflater().inflate(R.layout.remarks_popup, null);
+
+        EditText edt_Remarks = mView.findViewById(R.id.edt_remarks);
+        Button btn_Submit = mView.findViewById(R.id.btn_submit);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        TextView txt_Message = mView.findViewById(R.id.txt_message);
+        btn_Submit.setText("OK");
+        edt_Remarks.setVisibility(View.GONE);
+        txt_Message.setVisibility(View.VISIBLE);
+
+        mBuilder.setView(mView);
+        AlertDialog alertDialog = mBuilder.create();
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(false);
+
+        txt_Message.setText(message);
+
+        btn_Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog.dismiss();
+            }
+        });
+    }
+
     private void getFetchDataJobId(String strSearch) {
 
         dialog = new Dialog(context, R.style.NewProgressDialog);
@@ -161,30 +164,30 @@ public class NewJobEscalatorSurveyActivity extends AppCompatActivity implements 
 
         if (jobIdRequest != null) {
 
-            Call<NewJobListEscalatorSurveyResponse> call = apiInterface.getEscalatorFetchDataJobId(RestUtils.getContentType(), jobIdRequest);
+            Call<JobListRepairWorkRequestResponse> call = apiInterface.getRepairWorkRequestFetchDataJobId(RestUtils.getContentType(), jobIdRequest);
             Log.i(TAG, "getFetchDataJobId: URL -> " + call.request().url().toString());
 
-            call.enqueue(new Callback<NewJobListEscalatorSurveyResponse>() {
-                @SuppressLint("LogNotTimber")
+            call.enqueue(new Callback<JobListRepairWorkRequestResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<NewJobListEscalatorSurveyResponse> call, @NonNull Response<NewJobListEscalatorSurveyResponse> response) {
+                public void onResponse(@NonNull Call<JobListRepairWorkRequestResponse> call, @NonNull Response<JobListRepairWorkRequestResponse> response) {
                     dialog.dismiss();
-                    Log.i(TAG, "getFetchDataJobId: onResponse: NewJobListEscalatorSurveyResponse -> " + new Gson().toJson(response.body()));
-                    newJobListEscalatorSurveyDataResponseList = new ArrayList<>();
+                    Log.i(TAG, "getFetchDataJobId: onResponse: JobListRopeMaintenanceResponse -> " + new Gson().toJson(response.body()));
+                    jobListRepairWorkRequestResponseList = new ArrayList<>();
                     if (response.body() != null) {
+                        message = response.body().getMessage();
 
                         if (200 == response.body().getCode()) {
                             if (response.body().getData() != null) {
-                                newJobListEscalatorSurveyDataResponseList = response.body().getData();
+                                jobListRepairWorkRequestResponseList = response.body().getData();
 
-                                if (newJobListEscalatorSurveyDataResponseList.isEmpty()) {
+                                if (jobListRepairWorkRequestResponseList.isEmpty()) {
 
-                                    rv_new_job_escalator_survey.setVisibility(View.GONE);
+                                    rv_job_repair_work_request.setVisibility(View.GONE);
                                     txt_no_records.setVisibility(View.VISIBLE);
                                     txt_no_records.setText("No Records Found");
 //                                edtSearch.setEnabled(false);
                                 } else {
-                                    setView(newJobListEscalatorSurveyDataResponseList);
+                                    setView(jobListRepairWorkRequestResponseList);
                                 }
                             }
                         }
@@ -192,10 +195,10 @@ public class NewJobEscalatorSurveyActivity extends AppCompatActivity implements 
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<NewJobListEscalatorSurveyResponse> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<JobListRepairWorkRequestResponse> call, @NonNull Throwable t) {
                     dialog.dismiss();
                     Log.e(TAG, "getFetchDataJobId: onFailure: error --> " + t.getMessage());
-                    rv_new_job_escalator_survey.setVisibility(View.GONE);
+                    rv_job_repair_work_request.setVisibility(View.GONE);
                     txt_no_records.setVisibility(View.VISIBLE);
                     txt_no_records.setText("Something Went Wrong.. Try Again Later");
 //                edtSearch.setEnabled(false);
@@ -207,13 +210,13 @@ public class NewJobEscalatorSurveyActivity extends AppCompatActivity implements 
         }
     }
 
-    private void setView(List<NewJobListEscalatorSurveyResponse.Data> newJobListEscalatorSurveyDataResponseList) {
-        rv_new_job_escalator_survey.setVisibility(View.VISIBLE);
+    private void setView(List<JobListRepairWorkRequestResponse.Data> jobListRepairWorkRequestResponseList) {
+        rv_job_repair_work_request.setVisibility(View.VISIBLE);
         txt_no_records.setVisibility(View.GONE);
-        rv_new_job_escalator_survey.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rv_new_job_escalator_survey.setItemAnimator(new DefaultItemAnimator());
-        newJobListEscalatorSurveyAdapter = new NewJobListEscalatorSurveyAdapter(newJobListEscalatorSurveyDataResponseList, this);
-        rv_new_job_escalator_survey.setAdapter(newJobListEscalatorSurveyAdapter);
+        rv_job_repair_work_request.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_job_repair_work_request.setItemAnimator(new DefaultItemAnimator());
+        jobListRepairWorkRequestAdapter = new JobListRepairWorkRequestAdapter(jobListRepairWorkRequestResponseList, this);
+        rv_job_repair_work_request.setAdapter(jobListRepairWorkRequestAdapter);
     }
 
     private JobIdRequest jobListRequest(String strSearch) {
@@ -231,21 +234,27 @@ public class NewJobEscalatorSurveyActivity extends AppCompatActivity implements 
 
     @Override
     public void itemClickDataChangeListener(int position, String strParam, String strData) {
-        NewJobListEscalatorSurveyResponse.Data newJobListEscalatorSurveyDataResponse = new NewJobListEscalatorSurveyResponse.Data();
-        newJobListEscalatorSurveyDataResponse = newJobListEscalatorSurveyDataResponseList.get(position);
+        JobListRepairWorkRequestResponse.Data jobListRepairWorkRequestResponse = new JobListRepairWorkRequestResponse.Data();
+        jobListRepairWorkRequestResponse = jobListRepairWorkRequestResponseList.get(position);
 
-        Intent intent = new Intent(context, EscalatorSurveyFormActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("newJobListEscalatorSurveyDataResponse", newJobListEscalatorSurveyDataResponse);
-        // n_act.putExtra("service_title", s);
-        context.startActivity(intent);
+        Log.i(TAG, "itemClickDataChangeListener: se_user_location -> " + se_user_location + " getBRCODE -> " + jobListRepairWorkRequestResponse.getBRCODE());
 
-        Log.i(TAG, "itemClickDataChangeListener: newJobListEscalatorSurveyDataResponse --> " + new Gson().toJson(newJobListEscalatorSurveyDataResponse));
+        if (jobListRepairWorkRequestResponse.getBRCODE().equalsIgnoreCase(se_user_location)) {
+            Intent intent = new Intent(context, RepairWorkRequestFormActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("jobListRepairWorkRequestResponse", jobListRepairWorkRequestResponse);
+            context.startActivity(intent);
+        } else {
+            showErrorAlert("This Job is Not Belongs to your Branch");
+        }
+
+        Log.i(TAG, "itemClickDataChangeListener: jobListRepairWorkRequestResponse --> " + new Gson().toJson(jobListRepairWorkRequestResponse));
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
 
     @Override

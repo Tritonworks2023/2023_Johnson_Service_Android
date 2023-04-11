@@ -497,6 +497,10 @@ public class FailureReportEditEngRequest {
         @SerializedName("image")
         private String image;
 
+        public File_image(String image) {
+            this.image = image;
+        }
+
         public String getImage() {
             return image;
         }

@@ -116,6 +116,11 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<RecyclerV
                     Intent n_act = new Intent(context, FailureReportRequestScannerActivity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("Repair Work Request")) {
+                    Intent n_act = new Intent(context, JobListRepairWorkRequestActivity.class);
+//                    Intent n_act = new Intent(context, RepairWorkRequestFormActivity.class);
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
                 } else*/
                 if (s.equalsIgnoreCase("Repair Work Approval Request")) {
                     Intent n_act = new Intent(context, NewJobRepairWorkApprovalRequestActivity.class);

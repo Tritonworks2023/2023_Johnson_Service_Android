@@ -37,8 +37,9 @@ public class FailureReportRequestActivity extends AppCompatActivity {
 
     ImageView iv_back;
     CardView cv_new_job, cv_pasused_job;
-    String TAG = FailureReportRequestActivity.class.getSimpleName(), service_title, se_user_mobile_no, se_user_name,
-            se_id, check_id, message, paused_count, networkStatus = "";
+    String TAG = FailureReportRequestActivity.class.getSimpleName(), service_title = "", se_user_mobile_no = "",
+            se_user_name = "", se_id = "", check_id = "", message = "", paused_count = "", networkStatus = "",
+            str_title = "";
     Context context;
     TextView pasused_count, title_name;
 
@@ -56,18 +57,21 @@ public class FailureReportRequestActivity extends AppCompatActivity {
         pasused_count = findViewById(R.id.paused_count);
         title_name = findViewById(R.id.title_name);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("str_title")) {
+                str_title = extras.getString("str_title");
+            }
+        }
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "default value");
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "default");
         Log.e("Name", "" + service_title);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            //   service_title = extras.getString("service_title");
-            // Log.d("title",service_title);
-            //title_name.setText(service_title);
-        }
+
+        title_name.setText(str_title);
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
@@ -92,6 +96,7 @@ public class FailureReportRequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent send = new Intent(context, FailureReportRequestScannerActivity.class);
+                send.putExtra("str_title", str_title);
                 send.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(send);
             }
@@ -101,6 +106,7 @@ public class FailureReportRequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent send = new Intent(context, FailureReportPendingRequestActivity.class);
+                send.putExtra("str_title", str_title);
                 send.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(send);
             }

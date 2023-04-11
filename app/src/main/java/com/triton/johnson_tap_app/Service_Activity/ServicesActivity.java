@@ -133,7 +133,6 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
 
                 networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
@@ -145,6 +144,8 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
                     NoInternetDialog();
 
                 } else {
+                    swipeRefreshLayout.setRefreshing(true);
+                    swipeRefreshLayout.setEnabled(false);
                     LoginResponseCall();
                 }
             }
@@ -156,9 +157,13 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             additionalList.add(new ServiceResponse.DataBean("Failure Report", "0", "1", "0", "0", "0", "1"));
             additionalList.add(new ServiceResponse.DataBean("Elevator Survey Form", "0", "1", "0", "0", "0", "1"));
             additionalList.add(new ServiceResponse.DataBean("Service Visibility", "0", "1", "0", "0", "0", "1"));
-            additionalList.add(new ServiceResponse.DataBean("Safety Audit", "0", "1", "0", "0", "0", "1"));*/
+            additionalList.add(new ServiceResponse.DataBean("Safety Audit", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Repair Work Approval Request", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Repair Work Approval", "0", "1", "0", "0", "0", "1") );
             additionalList.add(new ServiceResponse.DataBean("Repair Work Request", "0", "1", "0", "0", "0", "1"));
-            additionalList.add(new ServiceResponse.DataBean("Repair Work Approval", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Repair Work Approval Request", "0", "1", "0", "0", "0", "1"));
+            additionalList.add(new ServiceResponse.DataBean("Repair Work Approval", "0", "1", "0", "0", "0", "1"));*/
+
         } else {
 //            additionalList.add(new ServiceResponse.DataBean("Rope Maintenance", "0", "1", "0", "0", "0", "1"));
         }
@@ -177,6 +182,8 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             @Override
             public void onResponse(@NonNull Call<LoginResponse1> call, @NonNull Response<LoginResponse1> response) {
                 dialog.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setEnabled(true);
                 Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
@@ -197,12 +204,13 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
                         ErrorMyLocationAlert(message);
                     }
                 }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<LoginResponse1> call, @NonNull Throwable t) {
                 dialog.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setEnabled(true);
                 Log.i(TAG, "LoginResponseCall: onFailure: error -> " + t.getMessage());
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 ErrorMyLocationAlert(t.getMessage());
