@@ -15,8 +15,8 @@ import com.triton.johnson_tap_app.requestpojo.Change_PasswordRequest;
 import com.triton.johnson_tap_app.requestpojo.CheckAttenRequest;
 import com.triton.johnson_tap_app.requestpojo.CheckOutstandingJobRequest;
 import com.triton.johnson_tap_app.requestpojo.Check_Pod_StatusRequest;
+import com.triton.johnson_tap_app.requestpojo.CountPausedRequest;
 import com.triton.johnson_tap_app.requestpojo.CountRequest;
-import com.triton.johnson_tap_app.requestpojo.Count_pasusedRequest;
 import com.triton.johnson_tap_app.requestpojo.CreateFailureReportRequest;
 import com.triton.johnson_tap_app.requestpojo.CreateRequest;
 import com.triton.johnson_tap_app.requestpojo.CreateRopeMaintenanceRequest;
@@ -57,8 +57,14 @@ import com.triton.johnson_tap_app.requestpojo.NotificationListRequest;
 import com.triton.johnson_tap_app.requestpojo.Pasused_ListRequest;
 import com.triton.johnson_tap_app.requestpojo.Preventive_ChecklistRequest;
 import com.triton.johnson_tap_app.requestpojo.Preventive_Submit_Request;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkEngBrCodeRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkMechBrCodeRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestApprovalCreateRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestCreateTechRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestEditEngRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestFetchListEngIdRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestFetchListTechIdRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestMechRequest;
 import com.triton.johnson_tap_app.requestpojo.RopeMaintenanceCheckDataRequest;
 import com.triton.johnson_tap_app.requestpojo.SafetyAuditCheckDataRequest;
 import com.triton.johnson_tap_app.requestpojo.ServiceRequest;
@@ -125,7 +131,12 @@ import com.triton.johnson_tap_app.responsepojo.Pasused_ListResponse;
 import com.triton.johnson_tap_app.responsepojo.PauseJobListAuditResponse;
 import com.triton.johnson_tap_app.responsepojo.Preventive_ChecklistResponse;
 import com.triton.johnson_tap_app.responsepojo.RTGS_PopResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkEngBrCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkMechBrCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestEditEngResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestFetchListEngIdResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestFetchListTechIdResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestMechResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveLocalValueBRResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveResponseAudit;
 import com.triton.johnson_tap_app.responsepojo.RetriveResponsePR;
@@ -187,7 +198,7 @@ public interface APIInterface {
     Call<CountResponse> CountResponseCall(@Header("Content-Type") String type, @Body CountRequest countRequest);
 
     @POST("service_userdetails/job_status_count")
-    Call<Count_pasusedResponse> Count_pasusedResponseCall(@Header("Content-Type") String type, @Body Count_pasusedRequest countRequest);
+    Call<Count_pasusedResponse> Count_pasusedResponseCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
     @POST("service_userdetails/customer_details")
     Call<Custom_detailsResponse> Custom_detailsResponseCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
@@ -264,7 +275,7 @@ public interface APIInterface {
 //  2nd Form Services   //
 
     @POST("preventive_service_data_management/job_status_count")
-    Call<Count_pasusedResponse> Count_pasused_secondResponseCall(@Header("Content-Type") String type, @Body Count_pasusedRequest countRequest);
+    Call<Count_pasusedResponse> Count_pasused_secondResponseCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
     @POST("preventive_service_data_management/new_job_list")
     Call<JobListResponse> JobList_PreventiveResponseCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
@@ -312,7 +323,7 @@ public interface APIInterface {
     //  3 Form   ///
 
     @POST("breakdown_data_management/service_mr_job_status_count")
-    Call<Count_pasusedResponse> Count_JobstatuscountCall(@Header("Content-Type") String type, @Body Count_pasusedRequest countRequest);
+    Call<Count_pasusedResponse> Count_JobstatuscountCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
     @POST("breakdown_data_management/service_mr_customer_details")
     Call<Custom_detailsResponse> Customer_detailsResponseCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
@@ -344,7 +355,7 @@ public interface APIInterface {
     // 4 Form /////
 
     @POST("preventive_service_data_management/service_mr_job_status_count")
-    Call<Count_pasusedResponse> Count_JobstatuscountPrventiveMRCall(@Header("Content-Type") String type, @Body Count_pasusedRequest countRequest);
+    Call<Count_pasusedResponse> Count_JobstatuscountPrventiveMRCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
     @POST("preventive_service_data_management/service_mr_new_job_list")
     Call<JobListResponse> NewJobListPrventiveMRCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
@@ -381,7 +392,7 @@ public interface APIInterface {
     Call<JobListResponse> NewJobLRListCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
 
     @POST("lr_service_data_management/service_lr_job_status_count")
-    Call<Count_pasusedResponse> Count_JobstatuscountLRCall(@Header("Content-Type") String type, @Body Count_pasusedRequest countRequest);
+    Call<Count_pasusedResponse> Count_JobstatuscountLRCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
     @POST("lr_service_data_management/service_lr_new_job_list")
     Call<JobListResponse> NewJobListLRCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
@@ -413,7 +424,7 @@ public interface APIInterface {
     // Form 6
 
     @POST("part_replacement/service_prtrpmt_job_status_count")
-    Call<Count_pasusedResponse> Count_JobstatuscountACKCall(@Header("Content-Type") String type, @Body Count_pasusedRequest countRequest);
+    Call<Count_pasusedResponse> Count_JobstatuscountACKCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
     @POST("part_replacement/service_prtrpmt_new_job_list")
     Call<JobListResponse> NewJobListACKCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
@@ -448,7 +459,7 @@ public interface APIInterface {
     /// Form 7
 
     @POST("audit_data_management/service_audit_job_status_count")
-    Call<Count_pasusedResponse> Count_AuditstatuscountCall(@Header("Content-Type") String type, @Body Count_pasusedRequest countRequest);
+    Call<Count_pasusedResponse> Count_AuditstatuscountCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
     @POST("audit_data_management/service_audit_new_job_list")
     Call<JobListResponse> NewJobAuditListCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
@@ -652,7 +663,7 @@ public interface APIInterface {
     Call<FailureReportRequestListByEngCodeResponse> getListByEngCode(@Header("Content-Type") String type, @Body FailureReportRequestListByEngCodeRequest failureReportRequestListByEngCodeRequest);
 
     @POST("additional_forms/temp/failure_report/getlist_by_mech_code")
-    Call<FailureReportRequestListByMechCodeResponse> getListByMechCode(@Header("Content-Type") String type, @Body FailureReportRequestListByMechCodeRequest failureReportRequestListByMechCodeRequest);
+    Call<FailureReportRequestListByMechCodeResponse> getFailureReportListByMechCode(@Header("Content-Type") String type, @Body FailureReportRequestListByMechCodeRequest failureReportRequestListByMechCodeRequest);
 
     @POST("additional_forms/temp/failure_report/edit")
     Call<SuccessResponse> getFailureReportEditEng(@Header("Content-Type") String type, @Body FailureReportEditEngRequest failureReportEditEngRequest);
@@ -665,5 +676,23 @@ public interface APIInterface {
 
     @POST("additional_forms/repair_work_request_temp/fetch_list_tech_id")
     Call<RepairWorkRequestFetchListTechIdResponse> getRepairWorkRequestFetchListTechId(@Header("Content-Type") String type, @Body RepairWorkRequestFetchListTechIdRequest repairWorkRequestFetchListTechIdRequest);
+
+    @POST("additional_forms/repair_work_request_temp/fetch_list_eng_id")
+    Call<RepairWorkRequestFetchListEngIdResponse> getRepairWorkRequestFetchListEngId(@Header("Content-Type") String type, @Body RepairWorkRequestFetchListEngIdRequest repairWorkRequestFetchListEngIdRequest);
+
+    @POST("service_userdetails/list_repair_work_eng_brcode")
+    Call<RepairWorkEngBrCodeResponse> getListRepairWorkEngBrCode(@Header("Content-Type") String type, @Body RepairWorkEngBrCodeRequest repairWorkEngBrCodeRequest);
+
+    @POST("additional_forms/repair_work_request_temp/edit")
+    Call<RepairWorkRequestEditEngResponse> getRepairWorkRequestEditEng(@Header("Content-Type") String type, @Body RepairWorkRequestEditEngRequest repairWorkRequestEditEngRequest);
+
+    @POST("additional_forms/repair_work_request_temp/mech/request")
+    Call<RepairWorkRequestMechResponse> getRepairWorkRequestMechRequest(@Header("Content-Type") String type, @Body RepairWorkRequestMechRequest repairWorkRequestMechRequest);
+
+    @POST("service_userdetails/list_repair_work_mech_brcode")
+    Call<RepairWorkMechBrCodeResponse> getRepairWorkMechBrCode(@Header("Content-Type") String type, @Body RepairWorkMechBrCodeRequest repairWorkMechBrCodeRequest);
+
+    @POST("additional_forms/repair_work_request_temp/approval_request/create")
+    Call<SuccessResponse> getRepairWorkRequestApprovalCreate(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalCreateRequest repairWorkRequestApprovalCreateRequest);
 
 }

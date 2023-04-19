@@ -232,7 +232,11 @@ public class FailureReportApprovalJobActivity extends AppCompatActivity
                                     setView(failureReportRequestListByEngCodeResponseList);
                                 }
                             }
+                        } else {
+
                         }
+                    } else {
+
                     }
                 }
 

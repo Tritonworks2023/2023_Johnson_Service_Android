@@ -1,4 +1,4 @@
-package com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule;
+package com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalModule;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,35 +14,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByMechCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByEngCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestFetchListEngIdResponse;
 
 import java.util.List;
 
-public class JobListFailureReportPendingRequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JobListRepairWorkApprovalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    String service_title, TAG = JobListFailureReportPendingRequestAdapter.class.getSimpleName();
-    List<FailureReportRequestListByMechCodeResponse.Data> failureReportRequestListByMechCodeDataResponseList;
-    FailureReportRequestListByMechCodeResponse.Data currentItem;
+    String service_title, TAG = JobListRepairWorkApprovalAdapter.class.getSimpleName();
+    List<RepairWorkRequestFetchListEngIdResponse.Data> repairWorkRequestFetchListEngIdDataResponseList;
+    RepairWorkRequestFetchListEngIdResponse.Data currentItem;
     SharedPreferences sharedPreferences;
     OnItemClickDataChangeListener onItemClickDataChangeListener;
 
-    public JobListFailureReportPendingRequestAdapter(Context applicationContext, List<FailureReportRequestListByMechCodeResponse.Data> failureReportRequestListByMechCodeDataResponseList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
+    public JobListRepairWorkApprovalAdapter(Context applicationContext, List<RepairWorkRequestFetchListEngIdResponse.Data> repairWorkRequestFetchListEngIdDataResponseList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
 
         this.context = applicationContext;
-        this.failureReportRequestListByMechCodeDataResponseList = failureReportRequestListByMechCodeDataResponseList;
+        this.repairWorkRequestFetchListEngIdDataResponseList = repairWorkRequestFetchListEngIdDataResponseList;
         this.onItemClickDataChangeListener = onItemClickDataChangeListener;
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         service_title = sharedPreferences.getString("service_title", "Services");
 
-        Log.i(TAG, "JobListFailureReportPendingRequestAdapter: service_title --> " + service_title);
+        Log.i(TAG, "JobListRepairWorkApprovalAdapter: service_title --> " + service_title);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_job_list_failure_report_pending_request, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_job_list_repair_work_approvel, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -54,13 +55,13 @@ public class JobListFailureReportPendingRequestAdapter extends RecyclerView.Adap
 
     private void initLayoutOne(ViewHolderOne holder, int position) {
 
-        currentItem = failureReportRequestListByMechCodeDataResponseList.get(position);
+        currentItem = repairWorkRequestFetchListEngIdDataResponseList.get(position);
 
         holder.txt_jobid.setText(currentItem.getJob_id());
-        holder.txt_building_number.setText(currentItem.getCustomer_address());
+        holder.txt_building_number.setText(currentItem.getSite_name());
         holder.txt_submitted_by.setText(currentItem.getSubmitted_by_name());
-        holder.txt_submitted_on.setText(currentItem.getFailure_date());
-        holder.txt_status.setText(currentItem.getApp_status());
+        holder.txt_submitted_on.setText(currentItem.getSubmitted_by_on());
+        holder.txt_status.setText(currentItem.getStatus());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,11 +73,11 @@ public class JobListFailureReportPendingRequestAdapter extends RecyclerView.Adap
 
     @Override
     public int getItemCount() {
-        return failureReportRequestListByMechCodeDataResponseList.size();
+        return repairWorkRequestFetchListEngIdDataResponseList.size();
     }
 
-    public void filterList(List<FailureReportRequestListByMechCodeResponse.Data> filterlist) {
-        failureReportRequestListByMechCodeDataResponseList = filterlist;
+    public void filterList(List<RepairWorkRequestFetchListEngIdResponse.Data> filterlist) {
+        repairWorkRequestFetchListEngIdDataResponseList = filterlist;
         notifyDataSetChanged();
     }
 

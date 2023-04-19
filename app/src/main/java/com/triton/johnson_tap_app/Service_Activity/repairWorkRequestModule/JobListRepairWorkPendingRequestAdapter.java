@@ -1,4 +1,4 @@
-package com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule;
+package com.triton.johnson_tap_app.Service_Activity.repairWorkRequestModule;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,29 +14,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByMechCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestFetchListTechIdResponse;
 
 import java.util.List;
 
-public class JobListFailureReportPendingRequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JobListRepairWorkPendingRequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    String service_title, TAG = JobListFailureReportPendingRequestAdapter.class.getSimpleName();
-    List<FailureReportRequestListByMechCodeResponse.Data> failureReportRequestListByMechCodeDataResponseList;
-    FailureReportRequestListByMechCodeResponse.Data currentItem;
+    String service_title, TAG = JobListRepairWorkPendingRequestAdapter.class.getSimpleName();
+    List<RepairWorkRequestFetchListTechIdResponse.Data> repairWorkRequestFetchListTechIdResponseList;
+    RepairWorkRequestFetchListTechIdResponse.Data currentItem;
     SharedPreferences sharedPreferences;
     OnItemClickDataChangeListener onItemClickDataChangeListener;
 
-    public JobListFailureReportPendingRequestAdapter(Context applicationContext, List<FailureReportRequestListByMechCodeResponse.Data> failureReportRequestListByMechCodeDataResponseList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
+    public JobListRepairWorkPendingRequestAdapter(Context applicationContext, List<RepairWorkRequestFetchListTechIdResponse.Data> repairWorkRequestFetchListTechIdResponseList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
 
         this.context = applicationContext;
-        this.failureReportRequestListByMechCodeDataResponseList = failureReportRequestListByMechCodeDataResponseList;
+        this.repairWorkRequestFetchListTechIdResponseList = repairWorkRequestFetchListTechIdResponseList;
         this.onItemClickDataChangeListener = onItemClickDataChangeListener;
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         service_title = sharedPreferences.getString("service_title", "Services");
 
-        Log.i(TAG, "JobListFailureReportPendingRequestAdapter: service_title --> " + service_title);
+        Log.i(TAG, "JobListFailureReportApprovalAdapter: service_title --> " + service_title);
     }
 
     @NonNull
@@ -54,13 +54,13 @@ public class JobListFailureReportPendingRequestAdapter extends RecyclerView.Adap
 
     private void initLayoutOne(ViewHolderOne holder, int position) {
 
-        currentItem = failureReportRequestListByMechCodeDataResponseList.get(position);
+        currentItem = repairWorkRequestFetchListTechIdResponseList.get(position);
 
         holder.txt_jobid.setText(currentItem.getJob_id());
-        holder.txt_building_number.setText(currentItem.getCustomer_address());
+        holder.txt_building_number.setText(currentItem.getSite_name());
         holder.txt_submitted_by.setText(currentItem.getSubmitted_by_name());
-        holder.txt_submitted_on.setText(currentItem.getFailure_date());
-        holder.txt_status.setText(currentItem.getApp_status());
+        holder.txt_submitted_on.setText(currentItem.getRequest_on());
+        holder.txt_status.setText(currentItem.getStatus());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,11 +72,11 @@ public class JobListFailureReportPendingRequestAdapter extends RecyclerView.Adap
 
     @Override
     public int getItemCount() {
-        return failureReportRequestListByMechCodeDataResponseList.size();
+        return repairWorkRequestFetchListTechIdResponseList.size();
     }
 
-    public void filterList(List<FailureReportRequestListByMechCodeResponse.Data> filterlist) {
-        failureReportRequestListByMechCodeDataResponseList = filterlist;
+    public void filterList(List<RepairWorkRequestFetchListTechIdResponse.Data> filterlist) {
+        repairWorkRequestFetchListTechIdResponseList = filterlist;
         notifyDataSetChanged();
     }
 

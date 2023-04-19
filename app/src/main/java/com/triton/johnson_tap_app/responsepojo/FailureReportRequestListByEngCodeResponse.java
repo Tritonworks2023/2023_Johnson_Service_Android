@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FailureReportRequestListByEngCodeResponse implements Parcelable {
@@ -214,9 +215,9 @@ public class FailureReportRequestListByEngCodeResponse implements Parcelable {
         @Expose
         @SerializedName("_id")
         private String _id;
-        @Expose
+        /*@Expose
         @SerializedName("file_image")
-        private List<File_image> file_image;
+        private ArrayList<File_image> file_image;*/
 
         public Data() {
         }
@@ -260,7 +261,7 @@ public class FailureReportRequestListByEngCodeResponse implements Parcelable {
             qr_bar_code = in.readString();
             matl_return_type = in.readString();
             _id = in.readString();
-            file_image = in.createTypedArrayList(File_image.CREATOR);
+            /*file_image = in.createTypedArrayList(File_image.CREATOR);*/
         }
 
         public String getSubmitted_by_on() {
@@ -567,13 +568,13 @@ public class FailureReportRequestListByEngCodeResponse implements Parcelable {
             this._id = _id;
         }
 
-        public List<File_image> getFile_image() {
+        /*public ArrayList<File_image> getFile_image() {
             return file_image;
         }
 
-        public void setFile_image(List<File_image> file_image) {
+        public void setFile_image(ArrayList<File_image> file_image) {
             this.file_image = file_image;
-        }
+        }*/
 
         @Override
         public int describeContents() {
@@ -620,7 +621,7 @@ public class FailureReportRequestListByEngCodeResponse implements Parcelable {
             parcel.writeString(qr_bar_code);
             parcel.writeString(matl_return_type);
             parcel.writeString(_id);
-            parcel.writeTypedList(file_image);
+            /*parcel.writeTypedList(file_image);*/
         }
     }
 

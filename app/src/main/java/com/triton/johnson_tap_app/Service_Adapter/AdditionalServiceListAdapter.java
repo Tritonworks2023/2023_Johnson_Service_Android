@@ -2,7 +2,6 @@ package com.triton.johnson_tap_app.Service_Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.PetBreedTypeSelectListener;
 import com.triton.johnson_tap_app.R;
-import com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalRequestModule.NewJobRepairWorkApprovalRequestActivity;
-import com.triton.johnson_tap_app.Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity;
 import com.triton.johnson_tap_app.responsepojo.ServiceResponse;
 
 import java.util.List;
@@ -121,9 +118,9 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<RecyclerV
 //                    Intent n_act = new Intent(context, RepairWorkRequestFormActivity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
-                } else*/
+                } else
                 if (s.equalsIgnoreCase("Repair Work Approval Request")) {
-                    Intent n_act = new Intent(context, NewJobRepairWorkApprovalRequestActivity.class);
+                    Intent n_act = new Intent(context, RepairWorkOrderCreationJobActivity.class);
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
                 } else if (s.equalsIgnoreCase("Repair Work Approval")) {
@@ -132,7 +129,7 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<RecyclerV
                     context.startActivity(n_act);
                 } else {
 
-                }
+                }*/
 
             }
         });

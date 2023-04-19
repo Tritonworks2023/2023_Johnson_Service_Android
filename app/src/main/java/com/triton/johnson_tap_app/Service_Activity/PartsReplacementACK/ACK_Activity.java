@@ -29,7 +29,7 @@ import com.triton.johnson_tap_app.RestUtils;
 import com.triton.johnson_tap_app.Service_Activity.ServicesActivity;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
-import com.triton.johnson_tap_app.requestpojo.Count_pasusedRequest;
+import com.triton.johnson_tap_app.requestpojo.CountPausedRequest;
 import com.triton.johnson_tap_app.responsepojo.Count_pasusedResponse;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
 
@@ -177,8 +177,8 @@ public class ACK_Activity extends AppCompatActivity {
         });
     }
 
-    private Count_pasusedRequest count_pasuedRequest() {
-        Count_pasusedRequest count = new Count_pasusedRequest();
+    private CountPausedRequest count_pasuedRequest() {
+        CountPausedRequest count = new CountPausedRequest();
         count.setUser_mobile_no(se_user_mobile_no);
         count.setService_name(service_title);
         Log.w(TAG,"loginRequest "+ new Gson().toJson(count));

@@ -3,15 +3,14 @@ package com.triton.johnson_tap_app.responsepojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+public class RepairWorkRequestEditEngResponse {
 
-public class RepairWorkRequestFetchListTechIdResponse {
     @Expose
     @SerializedName("Code")
     private int Code;
     @Expose
     @SerializedName("Data")
-    private ArrayList<Data> Data;
+    private Data Data;
     @Expose
     @SerializedName("Message")
     private String Message;
@@ -27,11 +26,11 @@ public class RepairWorkRequestFetchListTechIdResponse {
         this.Code = Code;
     }
 
-    public ArrayList<Data> getData() {
+    public Data getData() {
         return Data;
     }
 
-    public void setData(ArrayList<Data> Data) {
+    public void setData(Data Data) {
         this.Data = Data;
     }
 
@@ -52,6 +51,15 @@ public class RepairWorkRequestFetchListTechIdResponse {
     }
 
     public static class Data {
+        @Expose
+        @SerializedName("repair_work_eng_phone")
+        private String repair_work_eng_phone;
+        @Expose
+        @SerializedName("repair_work_eng_name")
+        private String repair_work_eng_name;
+        @Expose
+        @SerializedName("repair_work_eng_id")
+        private String repair_work_eng_id;
         @Expose
         @SerializedName("__v")
         private int __v;
@@ -89,17 +97,41 @@ public class RepairWorkRequestFetchListTechIdResponse {
         @SerializedName("route")
         private String route;
         @Expose
-        @SerializedName("request_on")
-        private String request_on;
+        @SerializedName("site_name")
+        private String site_name;
         @Expose
         @SerializedName("job_id")
         private String job_id;
         @Expose
-        @SerializedName("site_name")
-        private String site_name;
+        @SerializedName("request_on")
+        private String request_on;
         @Expose
         @SerializedName("_id")
         private String _id;
+
+        public String getRepair_work_eng_phone() {
+            return repair_work_eng_phone;
+        }
+
+        public void setRepair_work_eng_phone(String repair_work_eng_phone) {
+            this.repair_work_eng_phone = repair_work_eng_phone;
+        }
+
+        public String getRepair_work_eng_name() {
+            return repair_work_eng_name;
+        }
+
+        public void setRepair_work_eng_name(String repair_work_eng_name) {
+            this.repair_work_eng_name = repair_work_eng_name;
+        }
+
+        public String getRepair_work_eng_id() {
+            return repair_work_eng_id;
+        }
+
+        public void setRepair_work_eng_id(String repair_work_eng_id) {
+            this.repair_work_eng_id = repair_work_eng_id;
+        }
 
         public int get__v() {
             return __v;
@@ -197,12 +229,12 @@ public class RepairWorkRequestFetchListTechIdResponse {
             this.route = route;
         }
 
-        public String getRequest_on() {
-            return request_on;
+        public String getSite_name() {
+            return site_name;
         }
 
-        public void setRequest_on(String request_on) {
-            this.request_on = request_on;
+        public void setSite_name(String site_name) {
+            this.site_name = site_name;
         }
 
         public String getJob_id() {
@@ -213,12 +245,12 @@ public class RepairWorkRequestFetchListTechIdResponse {
             this.job_id = job_id;
         }
 
-        public String getSite_name() {
-            return site_name;
+        public String getRequest_on() {
+            return request_on;
         }
 
-        public void setSite_name(String site_name) {
-            this.site_name = site_name;
+        public void setRequest_on(String request_on) {
+            this.request_on = request_on;
         }
 
         public String get_id() {

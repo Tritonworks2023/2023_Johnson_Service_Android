@@ -42,7 +42,6 @@ import com.canhub.cropper.CropImage;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.Adapter.PetCurrentImageList2Adapter;
-import com.triton.johnson_tap_app.FormDataStoreRequest;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.ComponentDeviceListFragment;
 import com.triton.johnson_tap_app.api.APIInterface;
@@ -55,7 +54,6 @@ import com.triton.johnson_tap_app.requestpojo.PetAppointmentCreateRequest;
 import com.triton.johnson_tap_app.responsepojo.FailureReportCompDeviceListResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportDropDownDataResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByComIdResponse;
-import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByJobCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByEngCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.FileUploadResponse;
 import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
@@ -103,10 +101,13 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
     private TextView txt_job_id, txt_building_name, /*txt_date,*/
             txt_failure_date, txt_installed_date, txt_bc_qr_code,
             txt_status, txt_branch, txt_mechanic_id, txt_comp_device_name,
-            txt_mechanic_name, /*txt_mechanic_phone,*/ txt_engineer_id, txt_engineer_name, /*txt_engineer_phone,*/
+            txt_mechanic_name, /*txt_mechanic_phone,*/
+            txt_engineer_id, txt_engineer_name, /*txt_engineer_phone,*/
             txt_ser_mast_cust_name_add, txt_install_address, txt_route;
-    private EditText edt_model_make, edt_rating, /*edt_serial_no,*/ edt_observation, edt_supply_vol,
-            edt_tech_exp_comment, /*edt_curlss_no, edt_prvlss_no,*/ edt_vvf_remark,
+    private EditText edt_model_make, edt_rating, /*edt_serial_no,*/
+            edt_observation, edt_supply_vol,
+            edt_tech_exp_comment, /*edt_curlss_no, edt_prvlss_no,*/
+            edt_vvf_remark,
             edt_vvf_item, edt_electric_volt;
     private Spinner spinner_matl_return_type, spinner_department, spinner_service_type, spinner_physical_cond,
             spinner_current_status, spinner_nature_of_failure, spinner_vvvf_trip_while, spinner_vvvf_trip_type,
@@ -259,13 +260,13 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         txt_install_address.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getIns_address()));
         /*txt_engineer_phone.setText(CommonFunction.nullPointer(se_user_mobile_no));*/
 
-        if (!failureReportRequestListByEngCodeDateResponse.getFile_image().isEmpty()) {
+        /*if (!failureReportRequestListByEngCodeDateResponse.getFile_image().isEmpty()) {
 
             for (FailureReportRequestListByEngCodeResponse.File_image img : failureReportRequestListByEngCodeDateResponse.getFile_image()) {
                 pet_imgList.add(new PetAppointmentCreateRequest.PetImgBean(img.getImage()));
             }
             setImageListView();
-        }
+        }*/
 
         failureReportEditEngRequest.setStatus(failureReportRequestListByEngCodeDateResponse.getStatus());
         failureReportEditEngRequest.setJob_id(failureReportRequestListByEngCodeDateResponse.getJob_id());
@@ -723,14 +724,16 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
             ErrorMsgDialog("Please Enter Model & Make");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getRating())) {
             ErrorMsgDialog("Please Enter Rating");
+        } else if (failureReportEditEngRequest.getRating().length() <= 1) {
+            ErrorMsgDialog("Please Enter Valid Rating.\n(Note: Accepts Only Above One Digit value)");
         } else /*if (!nullPointerValidator(failureReportEditEngRequest.getSerial_no())) {
             ErrorMsgDialog("Please Enter Serial No.");
         } else */if (!nullPointerValidator(failureReportEditEngRequest.getObservation())) {
             ErrorMsgDialog("Please Enter Observation");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getSupply_vol())) {
             ErrorMsgDialog("Please Enter Supply Vol");
-        } else if (failureReportEditEngRequest.getSupply_vol().length() > 1) {
-            ErrorMsgDialog("Please Enter Valid Supply Vol.\n(Note: Accepts Only Two Digit value)");
+        } else if (failureReportEditEngRequest.getSupply_vol().length() <= 1) {
+            ErrorMsgDialog("Please Enter Valid Supply Vol.\n(Note: Accepts Only Above One Digit value)");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getInst_date())) {
             ErrorMsgDialog("Please Select Installed Date");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getPhys_cond())) {
@@ -780,8 +783,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         } else if (!nullPointerValidator(failureReportEditEngRequest.getBat_warranty_status())) {
             ErrorMsgDialog("Please Select Battery Warranty Status");
         } else */if (nullPointerValidator(failureReportEditEngRequest.getElectric_volt())
-                && failureReportEditEngRequest.getElectric_volt().length() > 1) {
-            ErrorMsgDialog("Please Enter Valid Electric Vol.\n(Note: Accepts Only Two Digit value)");
+                && failureReportEditEngRequest.getElectric_volt().length() <= 1) {
+            ErrorMsgDialog("Please Enter Valid Electric Vol.\n(Note: Accepts Only Above One Digit value)");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getCustomer_address())) {
             ErrorMsgDialog("Please Enter Customer Address");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getIns_address())) {

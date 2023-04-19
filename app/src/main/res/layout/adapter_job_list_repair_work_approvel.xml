@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".Service_Activity.repairWorkApprovalModule.JobListRepairWorkApprovalAdapter">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_job"
@@ -19,9 +21,8 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -30,8 +31,9 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:text="JobID "
                         android:textColor="@color/colorPrimaryDark"
@@ -49,10 +51,11 @@
 
                     <TextView
                         android:id="@+id/txt_jobid"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="L9910"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -66,10 +69,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Building Name "
+                        android:text="Building Name"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -85,10 +89,11 @@
 
                     <TextView
                         android:id="@+id/txt_building_number"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="SAMUVEL JOHN ASHIRVATHAM"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -99,43 +104,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Machine Type "
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:text=":  "
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_machine_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="02-05-2022"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="100dp"
@@ -160,49 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="02-05-2022"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Controller Type "
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:text=":  "
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_controllerType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="L9910"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -216,10 +144,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Installed On "
+                        android:text="Submitted By "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -234,11 +163,12 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txt_installed_date"
-                        android:layout_width="match_parent"
+                        android:id="@+id/txt_submitted_by"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="SAMUVEL JOHN ASHIRVATHAM"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -252,10 +182,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Survey On "
+                        android:text="Submitted On "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -270,11 +201,12 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txt_survey_on"
-                        android:layout_width="match_parent"
+                        android:id="@+id/txt_submitted_on"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="02-05-2022"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -288,10 +220,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Date "
+                        android:text="Status "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -306,11 +239,12 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txt_date"
-                        android:layout_width="match_parent"
+                        android:id="@+id/txt_status"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="02-05-2022"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -319,5 +253,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </RelativeLayout>

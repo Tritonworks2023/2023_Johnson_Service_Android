@@ -29,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
-import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.SafetyAuditFormActivity;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestCreateTechRequest;
@@ -49,7 +48,7 @@ import retrofit2.Response;
 public class RepairWorkRequestFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private static String formattedDate = "";
-    private String TAG = SafetyAuditFormActivity.class.getSimpleName(), strDateType = "", se_user_id = "",
+    private String TAG = RepairWorkRequestFormActivity.class.getSimpleName(), strDateType = "", se_user_id = "",
             se_user_name = "", se_user_mobile_no = "", se_user_location = "", networkStatus = "", uploadImagePath = "";
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
@@ -129,8 +128,11 @@ public class RepairWorkRequestFormActivity extends AppCompatActivity implements 
         txt_mech_id.setText(se_user_id);
         txt_mech_name.setText(se_user_name);
 
-        repairWorkRequestCreateTechRequest.setRoute(se_user_location);
+        repairWorkRequestCreateTechRequest.setRoute(jobListRepairWorkRequestResponse.getSROUTE());
+        repairWorkRequestCreateTechRequest.setBr_code(se_user_location);
         repairWorkRequestCreateTechRequest.setStatus("REQUESTED");
+        repairWorkRequestCreateTechRequest.setJob_id(jobListRepairWorkRequestResponse.getJOBNO());
+        repairWorkRequestCreateTechRequest.setSite_name(jobListRepairWorkRequestResponse.getCUST_NAME());
         repairWorkRequestCreateTechRequest.setTech_code(jobListRepairWorkRequestResponse.getTech_code());
         repairWorkRequestCreateTechRequest.setTech_name(jobListRepairWorkRequestResponse.getTech_name());
         repairWorkRequestCreateTechRequest.setSubmitted_by_emp_code(se_user_id);
@@ -260,6 +262,8 @@ public class RepairWorkRequestFormActivity extends AppCompatActivity implements 
             ErrorMsgDialog("Please Select Request On");
         } else if (!nullPointerValidator(repairWorkRequestCreateTechRequest.getRoute())) {
             ErrorMsgDialog("Please Select Route");
+        } else if (!nullPointerValidator(repairWorkRequestCreateTechRequest.getBr_code())) {
+            ErrorMsgDialog("Please Select Br_code");
         } else if (!nullPointerValidator(repairWorkRequestCreateTechRequest.getStatus())) {
             ErrorMsgDialog("Please Select Status");
         } else if (!nullPointerValidator(repairWorkRequestCreateTechRequest.getMat_available_sts())) {
@@ -278,6 +282,10 @@ public class RepairWorkRequestFormActivity extends AppCompatActivity implements 
             ErrorMsgDialog("Please Select Submitted by Number");
         } else if (!nullPointerValidator(repairWorkRequestCreateTechRequest.getSubmitted_by_on())) {
             ErrorMsgDialog("Please Enter Submitted Date");
+        } else if (!nullPointerValidator(repairWorkRequestCreateTechRequest.getJob_id())) {
+            ErrorMsgDialog("Please Enter Job Id");
+        } else if (!nullPointerValidator(repairWorkRequestCreateTechRequest.getSite_name())) {
+            ErrorMsgDialog("Please Enter Site Name");
         } else {
             getRepairWorkRequestCreateTech(repairWorkRequestCreateTechRequest);
         }

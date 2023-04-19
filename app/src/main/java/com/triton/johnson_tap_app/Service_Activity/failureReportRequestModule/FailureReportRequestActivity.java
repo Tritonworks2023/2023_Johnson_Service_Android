@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
-import com.triton.johnson_tap_app.requestpojo.Count_pasusedRequest;
+import com.triton.johnson_tap_app.requestpojo.CountPausedRequest;
 import com.triton.johnson_tap_app.responsepojo.Count_pasusedResponse;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
 import com.triton.johnson_tap_app.utils.RestUtils;
@@ -163,7 +163,7 @@ public class FailureReportRequestActivity extends AppCompatActivity {
     private void Count_paused() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<Count_pasusedResponse> call = apiInterface.Count_JobstatuscountPrventiveMRCall(RestUtils.getContentType(), count_pasuedRequest());
+        Call<Count_pasusedResponse> call = apiInterface.Count_JobstatuscountPrventiveMRCall(RestUtils.getContentType(), countPausedRequest());
         Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<Count_pasusedResponse>() {
@@ -199,9 +199,9 @@ public class FailureReportRequestActivity extends AppCompatActivity {
         });
     }
 
-    private Count_pasusedRequest count_pasuedRequest() {
+    private CountPausedRequest countPausedRequest() {
 
-        Count_pasusedRequest count = new Count_pasusedRequest();
+        CountPausedRequest count = new CountPausedRequest();
         count.setUser_mobile_no(se_user_mobile_no);
         count.setService_name(service_title);
         Log.w(TAG, "loginRequest " + new Gson().toJson(count));

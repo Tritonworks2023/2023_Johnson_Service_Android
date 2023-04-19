@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Building Name &amp; Address"
+                        android:text="Building Name"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold" />

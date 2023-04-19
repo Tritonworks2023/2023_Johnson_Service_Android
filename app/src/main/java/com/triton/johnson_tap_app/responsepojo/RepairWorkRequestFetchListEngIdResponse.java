@@ -1,23 +1,46 @@
 package com.triton.johnson_tap_app.responsepojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class RepairWorkRequestFetchListTechIdResponse {
+public class RepairWorkRequestFetchListEngIdResponse implements Parcelable {
+    public static final Creator<RepairWorkRequestFetchListEngIdResponse> CREATOR = new Creator<RepairWorkRequestFetchListEngIdResponse>() {
+        @Override
+        public RepairWorkRequestFetchListEngIdResponse createFromParcel(Parcel in) {
+            return new RepairWorkRequestFetchListEngIdResponse(in);
+        }
+
+        @Override
+        public RepairWorkRequestFetchListEngIdResponse[] newArray(int size) {
+            return new RepairWorkRequestFetchListEngIdResponse[size];
+        }
+    };
     @Expose
     @SerializedName("Code")
     private int Code;
     @Expose
     @SerializedName("Data")
-    private ArrayList<Data> Data;
+    private List<Data> Data;
     @Expose
     @SerializedName("Message")
     private String Message;
     @Expose
     @SerializedName("Status")
     private String Status;
+
+    protected RepairWorkRequestFetchListEngIdResponse(Parcel in) {
+        Code = in.readInt();
+        Data = in.readParcelable(RepairWorkRequestFetchListEngIdResponse.Data.class.getClassLoader());
+        Message = in.readString();
+        Status = in.readString();
+    }
 
     public int getCode() {
         return Code;
@@ -27,11 +50,11 @@ public class RepairWorkRequestFetchListTechIdResponse {
         this.Code = Code;
     }
 
-    public ArrayList<Data> getData() {
+    public List<Data> getData() {
         return Data;
     }
 
-    public void setData(ArrayList<Data> Data) {
+    public void setData(List<Data> Data) {
         this.Data = Data;
     }
 
@@ -51,7 +74,31 @@ public class RepairWorkRequestFetchListTechIdResponse {
         this.Status = Status;
     }
 
-    public static class Data {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(Code);
+        parcel.writeTypedList(Data);
+        parcel.writeString(Message);
+        parcel.writeString(Status);
+    }
+
+    public static class Data implements Parcelable {
+        public static final Creator<Data> CREATOR = new Creator<Data>() {
+            @Override
+            public Data createFromParcel(Parcel in) {
+                return new Data(in);
+            }
+
+            @Override
+            public Data[] newArray(int size) {
+                return new Data[size];
+            }
+        };
         @Expose
         @SerializedName("__v")
         private int __v;
@@ -89,17 +136,39 @@ public class RepairWorkRequestFetchListTechIdResponse {
         @SerializedName("route")
         private String route;
         @Expose
-        @SerializedName("request_on")
-        private String request_on;
+        @SerializedName("site_name")
+        private String site_name;
         @Expose
         @SerializedName("job_id")
         private String job_id;
         @Expose
-        @SerializedName("site_name")
-        private String site_name;
+        @SerializedName("request_on")
+        private String request_on;
         @Expose
         @SerializedName("_id")
         private String _id;
+
+        public Data() {
+        }
+
+        protected Data(Parcel in) {
+            __v = in.readInt();
+            delete_status = in.readByte() != 0;
+            submitted_by_on = in.readString();
+            submitted_by_name = in.readString();
+            submitted_by_num = in.readString();
+            submitted_by_emp_code = in.readString();
+            tech_code = in.readString();
+            tech_name = in.readString();
+            remarks = in.readString();
+            mat_available_sts = in.readString();
+            status = in.readString();
+            route = in.readString();
+            site_name = in.readString();
+            job_id = in.readString();
+            request_on = in.readString();
+            _id = in.readString();
+        }
 
         public int get__v() {
             return __v;
@@ -197,12 +266,12 @@ public class RepairWorkRequestFetchListTechIdResponse {
             this.route = route;
         }
 
-        public String getRequest_on() {
-            return request_on;
+        public String getSite_name() {
+            return site_name;
         }
 
-        public void setRequest_on(String request_on) {
-            this.request_on = request_on;
+        public void setSite_name(String site_name) {
+            this.site_name = site_name;
         }
 
         public String getJob_id() {
@@ -213,12 +282,12 @@ public class RepairWorkRequestFetchListTechIdResponse {
             this.job_id = job_id;
         }
 
-        public String getSite_name() {
-            return site_name;
+        public String getRequest_on() {
+            return request_on;
         }
 
-        public void setSite_name(String site_name) {
-            this.site_name = site_name;
+        public void setRequest_on(String request_on) {
+            this.request_on = request_on;
         }
 
         public String get_id() {
@@ -227,6 +296,31 @@ public class RepairWorkRequestFetchListTechIdResponse {
 
         public void set_id(String _id) {
             this._id = _id;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(@NonNull Parcel parcel, int i) {
+            parcel.writeInt(__v);
+            parcel.writeByte((byte) (delete_status ? 1 : 0));
+            parcel.writeString(submitted_by_on);
+            parcel.writeString(submitted_by_name);
+            parcel.writeString(submitted_by_num);
+            parcel.writeString(submitted_by_emp_code);
+            parcel.writeString(tech_code);
+            parcel.writeString(tech_name);
+            parcel.writeString(remarks);
+            parcel.writeString(mat_available_sts);
+            parcel.writeString(status);
+            parcel.writeString(route);
+            parcel.writeString(site_name);
+            parcel.writeString(job_id);
+            parcel.writeString(request_on);
+            parcel.writeString(_id);
         }
     }
 }

@@ -214,9 +214,6 @@ public class FailureReportRequestListByMechCodeResponse implements Parcelable {
         @Expose
         @SerializedName("_id")
         private String _id;
-        @Expose
-        @SerializedName("file_image")
-        private List<File_image> file_image;
 
         public Data() {
         }
@@ -260,7 +257,6 @@ public class FailureReportRequestListByMechCodeResponse implements Parcelable {
             qr_bar_code = in.readString();
             matl_return_type = in.readString();
             _id = in.readString();
-            file_image = in.createTypedArrayList(File_image.CREATOR);
         }
 
         public String getSubmitted_by_on() {
@@ -567,14 +563,6 @@ public class FailureReportRequestListByMechCodeResponse implements Parcelable {
             this._id = _id;
         }
 
-        public List<File_image> getFile_image() {
-            return file_image;
-        }
-
-        public void setFile_image(List<File_image> file_image) {
-            this.file_image = file_image;
-        }
-
         @Override
         public int describeContents() {
             return 0;
@@ -620,46 +608,6 @@ public class FailureReportRequestListByMechCodeResponse implements Parcelable {
             parcel.writeString(qr_bar_code);
             parcel.writeString(matl_return_type);
             parcel.writeString(_id);
-            parcel.writeTypedList(file_image);
-        }
-    }
-
-    public static class File_image implements Parcelable {
-        public static final Creator<File_image> CREATOR = new Creator<File_image>() {
-            @Override
-            public File_image createFromParcel(Parcel in) {
-                return new File_image(in);
-            }
-
-            @Override
-            public File_image[] newArray(int size) {
-                return new File_image[size];
-            }
-        };
-        @Expose
-        @SerializedName("image")
-        private String image;
-
-        protected File_image(Parcel in) {
-            image = in.readString();
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(image);
         }
     }
 }

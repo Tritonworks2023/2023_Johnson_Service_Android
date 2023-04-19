@@ -33,10 +33,80 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <RelativeLayout
+        android:id="@+id/rel_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_bar"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp">
+
+        <LinearLayout
+            android:id="@+id/ll_jobid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_jobid_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="JobId:"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_jobid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_jobid"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_building_name_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Building Name: "
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_building_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="5"
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/main_bar">
+        android:layout_below="@id/rel_id">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,7 +149,7 @@
                     android:gravity="center|start"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="TNO1"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -97,7 +167,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,7 +176,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -119,7 +189,7 @@
                     android:gravity="center|start"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="CHENHAI"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -159,92 +229,11 @@
                     android:gravity="center|start"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="MRP1-SUB"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/sourcesanspro_regular"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:text="Job No."
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:orientation="horizontal"
-                android:padding="0dp"
-                android:visibility="visible"
-                tools:ignore="UselessParent">
-
-                <TextView
-                    android:id="@+id/txt_job_num"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:gravity="center|start"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="2"
-                    android:text="L-41010"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/sourcesanspro_regular"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:text="Customer Name"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:orientation="horizontal"
-                android:padding="0dp"
-                android:visibility="visible"
-                tools:ignore="UselessParent">
-
-                <TextView
-                    android:id="@+id/txt_cust_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:gravity="center|start"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="2"
-                    android:text="University Of Madras"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -294,6 +283,20 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
+            <EditText
+                android:id="@+id/edt_service_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:ellipsize="end"
+                android:hint="Enter Service Type"
+                android:imeOptions=""
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -301,7 +304,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -314,7 +317,7 @@
                     android:gravity="center|start"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="PSM"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -356,7 +359,7 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Mech/subcon Id"
+                android:text="Mech/subcon Name"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -384,21 +387,21 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Mech/subcon Mobile"
+                android:text="Zonal Eng ID"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
             <EditText
-                android:id="@+id/edt_mech_sub_mobile"
+                android:id="@+id/edt_zonal_eng_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/child_back_ground"
                 android:digits="0123456789"
                 android:ellipsize="end"
-                android:hint="Enter Mech/subcon Mobile"
+                android:hint="Enter Zonal Eng ID"
                 android:imeOptions=""
                 android:inputType="number"
                 android:maxLength="10"
@@ -430,36 +433,6 @@
                 android:hint="Enter Zonal Eng Name"
                 android:imeOptions=""
                 android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/sourcesanspro_regular"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:text="Zonal Eng Mobile"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-
-            <EditText
-                android:id="@+id/edt_zonal_eng_mobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:digits="0123456789"
-                android:ellipsize="end"
-                android:hint="Enter Zonal Eng Mobile"
-                android:imeOptions=""
-                android:inputType="number"
-                android:maxLength="10"
                 android:maxLines="1"
                 android:padding="15dp"
                 android:visibility="visible" />
@@ -562,6 +535,19 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
+            <EditText
+                android:id="@+id/edt_nature_work_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:ellipsize="end"
+                android:hint="Enter Nature Work ID"
+                android:imeOptions=""
+                android:maxLines="1"
+                android:padding="15dp"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -569,7 +555,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -602,6 +588,19 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
+            <EditText
+                android:id="@+id/edt_nature_work_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:ellipsize="end"
+                android:hint="Enter Nature Work Name"
+                android:imeOptions=""
+                android:maxLines="1"
+                android:padding="15dp"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -609,7 +608,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -636,10 +635,23 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Nature of Work Process Id"
+                android:text="Work Process Id"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edt_work_process_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:ellipsize="end"
+                android:hint="Enter Work Process Id"
+                android:imeOptions=""
+                android:maxLines="1"
+                android:padding="15dp"
                 android:visibility="visible" />
 
             <LinearLayout
@@ -649,11 +661,11 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UselessParent">
 
                 <TextView
-                    android:id="@+id/txt_nature_work_process_id"
+                    android:id="@+id/txt_work_process_id"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
@@ -662,7 +674,7 @@
                     android:gravity="center|start"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Nature of Work Process Id"
+                    android:text="Select Work Process Id"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -676,10 +688,23 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Nature of Work Process Name"
+                android:text="Work Process Name"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edt_work_process_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:ellipsize="end"
+                android:hint="Enter Work Process Name"
+                android:imeOptions=""
+                android:maxLines="1"
+                android:padding="15dp"
                 android:visibility="visible" />
 
             <LinearLayout
@@ -689,11 +714,11 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UselessParent">
 
                 <TextView
-                    android:id="@+id/txt_nature_work_process_name"
+                    android:id="@+id/txt_work_process_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
@@ -702,7 +727,7 @@
                     android:gravity="center|start"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Nature of Work Process Name"
+                    android:text="Select Work Process Name"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -1454,10 +1479,46 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="Repair Work Technician"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/child_back_ground"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <Spinner
+                    android:id="@+id/spinner_repair_work_tech"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/blue_button_background_with_radius"

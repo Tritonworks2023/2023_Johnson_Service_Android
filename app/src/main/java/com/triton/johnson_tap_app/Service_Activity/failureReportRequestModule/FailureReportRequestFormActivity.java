@@ -695,14 +695,16 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             ErrorMsgDialog("Please Enter Model & Make");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getRating())) {
             ErrorMsgDialog("Please Enter Rating");
+        } else if (failureReportCreateTechRequest.getRating().length() <= 1) {
+            ErrorMsgDialog("Please Enter Valid Rating.\n(Note: Accepts Only Above One Digit value)");
         } else /*if (!nullPointerValidator(failureReportCreateTechRequest.getSerial_no())) {
             ErrorMsgDialog("Please Enter Serial No.");
         } else */if (!nullPointerValidator(failureReportCreateTechRequest.getObservation())) {
             ErrorMsgDialog("Please Enter Observation");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getSupply_vol())) {
             ErrorMsgDialog("Please Enter Supply Vol");
-        } else if (failureReportCreateTechRequest.getSupply_vol().length() > 1) {
-            ErrorMsgDialog("Please Enter Valid Supply Vol.\n(Note: Accepts Only Two Digit value)");
+        } else if (failureReportCreateTechRequest.getSupply_vol().length() <= 1) {
+            ErrorMsgDialog("Please Enter Valid Supply Vol.\n(Note: Accepts Only Above One Digit value)");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getInst_date())) {
             ErrorMsgDialog("Please Select Installed Date");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getPhys_cond())) {

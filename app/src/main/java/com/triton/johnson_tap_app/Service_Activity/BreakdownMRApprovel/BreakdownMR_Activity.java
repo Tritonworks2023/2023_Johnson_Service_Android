@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,7 @@ import com.triton.johnson_tap_app.RestUtils;
 import com.triton.johnson_tap_app.Service_Activity.ServicesActivity;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
-import com.triton.johnson_tap_app.requestpojo.Count_pasusedRequest;
+import com.triton.johnson_tap_app.requestpojo.CountPausedRequest;
 import com.triton.johnson_tap_app.responsepojo.Count_pasusedResponse;
 import com.triton.johnson_tap_app.utils.CommonFunction;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
@@ -196,9 +195,9 @@ public class BreakdownMR_Activity extends AppCompatActivity {
         });
     }
 
-    private Count_pasusedRequest count_pasuedRequest() {
+    private CountPausedRequest count_pasuedRequest() {
 
-        Count_pasusedRequest count = new Count_pasusedRequest();
+        CountPausedRequest count = new CountPausedRequest();
         count.setUser_mobile_no(se_user_mobile_no);
         count.setService_name(service_title);
         Log.w(TAG, "loginRequest " + new Gson().toJson(count));

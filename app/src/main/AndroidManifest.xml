@@ -50,6 +50,21 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
+            android:name=".Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCreationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkApprovalModule.RepairWorkApprovalFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkApprovalModule.RepairWorkApprovalJobActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkRequestModule.RepairWorkPendingRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkRequestModule.RepairWorkRequestActivity"
+            android:exported="false" />
+        <activity
             android:name=".Service_Activity.repairWorkRequestModule.JobListRepairWorkRequestActivity"
             android:exported="false" />
         <activity
@@ -98,7 +113,7 @@
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".Service_Activity.repairWorkApprovalRequestModule.NewJobRepairWorkApprovalRequestActivity"
+            android:name=".Service_Activity.repairWorkApprovalRequestModule.RepairWorkOrderCreationJobActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity

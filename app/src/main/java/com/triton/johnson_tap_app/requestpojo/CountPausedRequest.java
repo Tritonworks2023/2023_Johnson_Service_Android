@@ -1,6 +1,6 @@
 package com.triton.johnson_tap_app.requestpojo;
 
-public class Count_pasusedRequest {
+public class CountPausedRequest {
 
     private String user_mobile_no;
     private String service_name;

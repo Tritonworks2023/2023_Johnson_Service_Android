@@ -29,7 +29,10 @@ import com.triton.johnson_tap_app.Service_Activity.elevatorSurveyModule.NewJobEl
 import com.triton.johnson_tap_app.Service_Activity.escalatorSurveyModule.NewJobEscalatorSurveyActivity;
 import com.triton.johnson_tap_app.Service_Activity.failureReportApprovalModule.FailureReportApprovalJobActivity;
 import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.FailureReportRequestActivity;
-import com.triton.johnson_tap_app.Service_Activity.repairWorkRequestModule.JobListRepairWorkRequestActivity;
+import com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalModule.RepairWorkApprovalJobActivity;
+import com.triton.johnson_tap_app.Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity;
+import com.triton.johnson_tap_app.Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCreationActivity;
+import com.triton.johnson_tap_app.Service_Activity.repairWorkRequestModule.RepairWorkRequestActivity;
 import com.triton.johnson_tap_app.Service_Activity.ropeMaintenanceModule.JobRopeMaintenanceActivity;
 import com.triton.johnson_tap_app.Service_Activity.safetyAuditModule.SafetyAuditJobActivity;
 import com.triton.johnson_tap_app.Service_Activity.serviceVisibilityModule.ServiceVisibilityJobActivity;
@@ -159,12 +162,27 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     context.startActivity(n_act);
                 } else if (s.equalsIgnoreCase("FAILURE REPORT REQUEST")) {
                     Intent n_act = new Intent(context, FailureReportRequestActivity.class);
-                    n_act.putExtra("str_title","FAILURE REPORT REQUEST");
+                    n_act.putExtra("str_title", "FAILURE REPORT REQUEST");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
                 } else if (s.equalsIgnoreCase("SITE REPAIR WORK REQUEST - (TECH)")) {
-                    Intent n_act = new Intent(context, JobListRepairWorkRequestActivity.class);
-                    n_act.putExtra("str_title","SITE REPAIR WORK REQUEST - (TECH)");
+                    Intent n_act = new Intent(context, RepairWorkRequestActivity.class);
+                    n_act.putExtra("str_title", "SITE REPAIR WORK REQUEST - (TECH)");
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("SITE REPAIR WORK APPROVAL- (ENG)")) {
+                    Intent n_act = new Intent(context, RepairWorkApprovalJobActivity.class);
+                    n_act.putExtra("str_title", "SITE REPAIR WORK APPROVAL- (ENG)");
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("REPAIR WORK ORDER CREATION")) {
+                    Intent n_act = new Intent(context, RepairWorkOrderCreationActivity.class);
+                    n_act.putExtra("str_title", "REPAIR WORK ORDER CREATION");
+                    n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(n_act);
+                } else if (s.equalsIgnoreCase("REPAIR WORK ORDER CREATION & COMPLETION")) {
+                    Intent n_act = new Intent(context, JobHazardAnalysisFormActivity.class);
+                    n_act.putExtra("str_title", "REPAIR WORK ORDER CREATION & COMPLETION");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
                 } else {
