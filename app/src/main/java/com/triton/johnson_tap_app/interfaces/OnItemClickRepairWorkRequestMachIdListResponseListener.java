@@ -1,0 +1,7 @@
+package com.triton.johnson_tap_app.interfaces;
+
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestMechIdListResponse;
+
+public interface OnItemClickRepairWorkRequestMachIdListResponseListener {
+    void itemClickRepairWorkRequestMachIdListResponseListener(RepairWorkRequestMechIdListResponse.Data repairWorkRequestMechIdListDataResponse);
+}

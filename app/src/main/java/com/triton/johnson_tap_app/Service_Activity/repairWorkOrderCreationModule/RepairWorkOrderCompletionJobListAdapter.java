@@ -1,4 +1,4 @@
-package com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalRequestModule;
+package com.triton.johnson_tap_app.Service_Activity.repairWorkOrderCreationModule;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,35 +14,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestMechResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestApprovalRequestListRpEngResponse;
 
 import java.util.List;
 
-public class RepairWorkOrderCreationJobListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RepairWorkOrderCompletionJobListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    String service_title, TAG = RepairWorkOrderCreationJobListAdapter.class.getSimpleName();
-    List<RepairWorkRequestMechResponse.Data> repairWorkRequestMechResponseList;
-    RepairWorkRequestMechResponse.Data currentItem;
+    String service_title, TAG = RepairWorkOrderCompletionJobListAdapter.class.getSimpleName();
+    List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> repairWorkRequestApprovalRequestListRpEngResponseList;
+    RepairWorkRequestApprovalRequestListRpEngResponse.Data currentItem;
     SharedPreferences sharedPreferences;
     OnItemClickDataChangeListener onItemClickDataChangeListener;
 
-    public RepairWorkOrderCreationJobListAdapter(Context applicationContext, List<RepairWorkRequestMechResponse.Data> repairWorkRequestMechResponseList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
+    public RepairWorkOrderCompletionJobListAdapter(Context applicationContext, List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> repairWorkRequestApprovalRequestListRpEngResponseList, OnItemClickDataChangeListener onItemClickDataChangeListener) {
 
         this.context = applicationContext;
-        this.repairWorkRequestMechResponseList = repairWorkRequestMechResponseList;
+        this.repairWorkRequestApprovalRequestListRpEngResponseList = repairWorkRequestApprovalRequestListRpEngResponseList;
         this.onItemClickDataChangeListener = onItemClickDataChangeListener;
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         service_title = sharedPreferences.getString("service_title", "Services");
 
-        Log.i(TAG, "RepairWorkOrderCreationJobListAdapter: service_title --> " + service_title);
+        Log.i(TAG, "RepairWorkOrderCompletionJobListAdapter: service_title --> " + service_title);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_repair_work_order_creation_job_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_repair_work_order_completion_job_list, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -54,20 +54,18 @@ public class RepairWorkOrderCreationJobListAdapter extends RecyclerView.Adapter<
 
     private void initLayoutOne(ViewHolderOne holder, int position) {
 
-        currentItem = repairWorkRequestMechResponseList.get(position);
+        currentItem = repairWorkRequestApprovalRequestListRpEngResponseList.get(position);
 
-        holder.txt_jobid.setText(currentItem.getJob_id());
-        holder.txt_building_number.setText(currentItem.getSite_name());
+        holder.txt_jobid.setText(currentItem.getJob_no());
+        holder.txt_building_number.setText(currentItem.getCustomer_name());
         holder.txt_machine_type.setText(currentItem.getSubmitted_by_on());
         holder.txt_date_of_app.setText(currentItem.getRequest_on());
         holder.txt_status.setText(currentItem.getStatus());
         holder.txt_controllerType.setText(currentItem.getSubmitted_by_emp_code());
         holder.txt_installed_date.setText(currentItem.getSubmitted_by_name());
-        holder.txt_survey_on.setText(currentItem.getTech_code());
-        holder.txt_date.setText(currentItem.getTech_name());
-        holder.txt_route.setText(currentItem.getRoute());
-        holder.txt_mat_ava_sts.setText(currentItem.getMat_available_sts());
-        holder.txt_remarks.setText(currentItem.getRemarks());
+        holder.txt_survey_on.setText(currentItem.getZonal_eng_id());
+        holder.txt_date.setText(currentItem.getZonal_eng_name());
+        holder.txt_route.setText(currentItem.getRoute_code());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,18 +77,18 @@ public class RepairWorkOrderCreationJobListAdapter extends RecyclerView.Adapter<
 
     @Override
     public int getItemCount() {
-        return repairWorkRequestMechResponseList.size();
+        return repairWorkRequestApprovalRequestListRpEngResponseList.size();
     }
 
-    public void filterList(List<RepairWorkRequestMechResponse.Data> filterlist) {
-        repairWorkRequestMechResponseList = filterlist;
+    public void filterList(List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> filterlist) {
+        repairWorkRequestApprovalRequestListRpEngResponseList = filterlist;
         notifyDataSetChanged();
     }
 
     private class ViewHolderOne extends RecyclerView.ViewHolder {
 
         TextView txt_jobid, txt_building_number, txt_machine_type, txt_date_of_app, txt_status, txt_controllerType,
-                txt_installed_date, txt_survey_on, txt_date, txt_route, txt_mat_ava_sts, txt_remarks;
+                txt_installed_date, txt_survey_on, txt_date, txt_route;
 
         public ViewHolderOne(View view) {
             super(view);
@@ -105,8 +103,6 @@ public class RepairWorkOrderCreationJobListAdapter extends RecyclerView.Adapter<
             txt_survey_on = view.findViewById(R.id.txt_survey_on);
             txt_date = view.findViewById(R.id.txt_date);
             txt_route = view.findViewById(R.id.txt_route);
-            txt_mat_ava_sts = view.findViewById(R.id.txt_mat_ava_sts);
-            txt_remarks = view.findViewById(R.id.txt_remarks);
         }
     }
 }

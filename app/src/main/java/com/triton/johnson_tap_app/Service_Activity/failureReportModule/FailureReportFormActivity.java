@@ -73,6 +73,7 @@ public class FailureReportFormActivity extends AppCompatActivity implements Comp
     private MultipartBody.Part signaturePart;
     private Button clear_button_mechanic, save_button_mechanic, btn_submit;
     private Bitmap signatureBitmap;
+    private SignaturePad signaturePadMechanic;
     private Context context;
     private CreateFailureReportRequest createFailureReportRequest;
     private FailureReportCheckDataRequest failureReportCheckDataRequest;
@@ -80,7 +81,6 @@ public class FailureReportFormActivity extends AppCompatActivity implements Comp
     private Dialog dialog;
     private SharedPreferences sharedPreferences;
     private boolean checkDate = false;
-    private SignaturePad signaturePadMechanic;
     private ProgressDialog progressDialog;
 
     @Override

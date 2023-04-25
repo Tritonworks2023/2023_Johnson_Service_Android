@@ -76,7 +76,7 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
     LinearLayout menu_service, menu_view_status, menu_change_password, menu_agent_profile, menu_Notifications;
     ImageView iv_back, profile_gray, profile_green, profile_red;
     AlertDialog alertDialog1;
-    String TAG = Main_Menu_ServicesActivity.class.getSimpleName(), str_value, message = "Not Present";
+    String TAG = Main_Menu_ServicesActivity.class.getSimpleName(), str_value, message = "", userStatus = "Not Present";
     TextView spinner_txt, txt_service_count, txt_view_count;
     LinearLayout logout, ll_Menu;
     Spinner spinner;
@@ -188,13 +188,13 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
             @Override
             public void onClick(View v) {
 
-                Log.e("Message", "" + message);
+                Log.i(TAG, "menu_service: onClick: message -> " + userStatus);
 
-                if (message.equals("Not Present")) {
+                if (userStatus.equals("Not Present")) {
 
                     alertDialog = new AlertDialog.Builder(context)
                             //.setTitle("Please Login to Continue!")
-                            .setMessage("Please Login to Continue!")
+                            .setMessage("Mark Present to Continue!")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();
@@ -216,11 +216,11 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
             @Override
             public void onClick(View v) {
 
-                if (message.equals("Not Present")) {
+                if (userStatus.equals("Not Present")) {
 
                     alertDialog = new AlertDialog.Builder(context)
                             //.setTitle("Please Login to Continue!")
-                            .setMessage("Please Login to Continue!")
+                            .setMessage("Mark Present to Continue!")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();
@@ -241,11 +241,11 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
             @Override
             public void onClick(View v) {
 
-                if (message.equals("Not Present")) {
+                if (userStatus.equals("Not Present")) {
 
                     alertDialog = new AlertDialog.Builder(context)
                             //.setTitle("Please Login to Continue!")
-                            .setMessage("Please Login to Continue!")
+                            .setMessage("Mark Present to Continue!")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();
@@ -266,11 +266,11 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
             @Override
             public void onClick(View v) {
 
-                if (message.equals("Not Present")) {
+                if (userStatus.equals("Not Present")) {
 
                     alertDialog = new AlertDialog.Builder(context)
                             //.setTitle("Please Login to Continue!")
-                            .setMessage("Please Login to Continue!")
+                            .setMessage("Mark Present to Continue!")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();
@@ -290,11 +290,11 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
             @Override
             public void onClick(View v) {
 
-                if (message.equals("Not Present")) {
+                if (userStatus.equals("Not Present")) {
 
                     alertDialog = new AlertDialog.Builder(context)
                             //.setTitle("Please Login to Continue!")
-                            .setMessage("Please Login to Continue!")
+                            .setMessage("Mark Present to Continue!")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();
@@ -416,14 +416,13 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<CheckAttenResponse> call, @NonNull retrofit2.Response<CheckAttenResponse> response) {
-
-                Log.e(TAG, "Attendance Response" + new Gson().toJson(response.body()));
+                Log.i(TAG, "CheckAttendanceResponseCall: onResponse: response -> " + new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    message = response.body().getMessage();
+                    userStatus = response.body().getMessage();
                     start = response.body().getData().getAtt_start_time();
                     check_id = response.body().getData().get_id();
 
-                    if (message.equals("Not Present")) {
+                    if (userStatus.equals("Not Present")) {
                         profile_gray.setVisibility(View.GONE);
                         profile_green.setVisibility(View.GONE);
                         profile_red.setVisibility(View.VISIBLE);
@@ -434,7 +433,7 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
 //                        menu_agent_profile.setEnabled(false);
 //                        menu_change_password.setEnabled(false);
 
-                    } else if (message.equals("Present")) {
+                    } else if (userStatus.equals("Present")) {
                         logout.setVisibility(View.VISIBLE);
                         profile_gray.setVisibility(View.GONE);
                         profile_red.setVisibility(View.GONE);
@@ -459,11 +458,8 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
                         ErrorMyLocationAlert(response.body().getMessage());
 //                        dialog.dismiss();
 //                        Toasty.warning(getApplicationContext(),""+message,Toasty.LENGTH_LONG).show();
-
                     }
                 }
-
-
             }
 
             @Override

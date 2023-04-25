@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Service_Activity.repairWorkOrderCreationCompletionModule.JobHazardAnalysisFormActivity">
+    tools:context=".Service_Activity.repairWorkOrderCreationCompletionModule.JobHazardAnalysisFormViewActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_bar"
@@ -162,9 +162,9 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:gravity="center|start"
+                        android:hint="Select Date"
                         android:lineSpacingExtra="2dp"
                         android:maxLines="2"
-                        android:text="Select Date"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -283,13 +283,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_team_aware_stand_repair"
+                    <TextView
+                        android:id="@+id/txt_team_aware_stand_repair"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -318,13 +323,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_comp_conduct"
+                    <TextView
+                        android:id="@+id/txt_comp_conduct"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -353,13 +363,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_rel_ppes"
+                    <TextView
+                        android:id="@+id/txt_rel_ppes"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -388,13 +403,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_prop_spec_tools"
+                    <TextView
+                        android:id="@+id/txt_prop_spec_tools"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -423,13 +443,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_mech_differ_level"
+                    <TextView
+                        android:id="@+id/txt_mech_differ_level"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -458,13 +483,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_barr_main_display"
+                    <TextView
+                        android:id="@+id/txt_barr_main_display"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -493,16 +523,22 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_discon_elect_cic"
+                    <TextView
+                        android:id="@+id/txt_discon_elect_cic"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -528,16 +564,22 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_cert_hoist_tool"
+                    <TextView
+                        android:id="@+id/txt_cert_hoist_tool"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -572,13 +614,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_access_mach_room"
+                    <TextView
+                        android:id="@+id/txt_access_mach_room"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -607,16 +654,22 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_light_adeq_machine_room"
+                    <TextView
+                        android:id="@+id/txt_light_adeq_machine_room"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -642,13 +695,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_floor_free_tripping"
+                    <TextView
+                        android:id="@+id/txt_floor_free_tripping"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -677,13 +735,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_oil_lub_closed"
+                    <TextView
+                        android:id="@+id/txt_oil_lub_closed"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -712,13 +775,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_speed_gov_func"
+                    <TextView
+                        android:id="@+id/txt_speed_gov_func"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -747,13 +815,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_host_available"
+                    <TextView
+                        android:id="@+id/txt_host_available"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -791,13 +864,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_stop_switch_easily_access_iden_car"
+                    <TextView
+                        android:id="@+id/txt_stop_switch_easily_access_iden_car"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -826,13 +904,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_stop_switch_func_ver_car"
+                    <TextView
+                        android:id="@+id/txt_stop_switch_func_ver_car"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -861,13 +944,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_car_top_insp_func_prop_verif"
+                    <TextView
+                        android:id="@+id/txt_car_top_insp_func_prop_verif"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -896,13 +984,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_light_adeq_car_top"
+                    <TextView
+                        android:id="@+id/txt_light_adeq_car_top"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -931,13 +1024,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_car_top_barri_angle_install"
+                    <TextView
+                        android:id="@+id/txt_car_top_barri_angle_install"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -966,13 +1064,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_car_top_phy_dam_cab_wire_work"
+                    <TextView
+                        android:id="@+id/txt_car_top_phy_dam_cab_wire_work"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1001,13 +1104,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_tools_mater_repair"
+                    <TextView
+                        android:id="@+id/txt_tools_mater_repair"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1036,13 +1144,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_mech_safety_gear"
+                    <TextView
+                        android:id="@+id/txt_mech_safety_gear"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1080,13 +1193,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_light_adeq_hoist_way"
+                    <TextView
+                        android:id="@+id/txt_light_adeq_hoist_way"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1115,13 +1233,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_covers_fascia_install"
+                    <TextView
+                        android:id="@+id/txt_covers_fascia_install"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1150,13 +1273,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_hoist_screen_protect_insta"
+                    <TextView
+                        android:id="@+id/txt_hoist_screen_protect_insta"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1194,13 +1322,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_stop_switch_easily_access_iden_pit"
+                    <TextView
+                        android:id="@+id/txt_stop_switch_easily_access_iden_pit"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1229,13 +1362,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_stop_switch_func_ver_pit"
+                    <TextView
+                        android:id="@+id/txt_stop_switch_func_ver_pit"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1264,13 +1402,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_light_adeq_pit"
+                    <TextView
+                        android:id="@+id/txt_light_adeq_pit"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1299,13 +1442,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_pit_lad_install_access"
+                    <TextView
+                        android:id="@+id/txt_pit_lad_install_access"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1334,13 +1482,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_cwt_scr_guard_blo_buf_top"
+                    <TextView
+                        android:id="@+id/txt_cwt_scr_guard_blo_buf_top"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1369,13 +1522,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_dup_shaft_pit_not_done"
+                    <TextView
+                        android:id="@+id/txt_dup_shaft_pit_not_done"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1404,13 +1562,18 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
-                    <Spinner
-                        android:id="@+id/spin_free_wat_oil_mat_trip_hazard"
+                    <TextView
+                        android:id="@+id/txt_free_wat_oil_mat_trip_hazard"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Enter Nature Of Work"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -1435,6 +1598,7 @@
                     android:layout_height="100dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/rectangle_border_square"
+                    android:focusable="false"
                     android:gravity="top|left"
                     android:inputType="textMultiLine"
                     android:lines="10"
@@ -1445,185 +1609,6 @@
                     android:paddingTop="5dp"
                     android:singleLine="true"
                     android:text="" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="3"
-                    android:text="Zonal/Route Engineer Name"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_eng_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Zonal/Route Engineer Name"
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="3"
-                    android:text="Zonal/Route Engineer EMP No."
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_eng_emp_num"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Zonal/Route Engineer EMP No."
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="3"
-                    android:text="Zonal/Route Engineer Signature Date"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="gone"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_eng_date"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Zonal/Route Engineer Signature Date"
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="3"
-                    android:text="Zonal/Route Engineer Signature"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/llEngineerSignature"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <com.github.gcacace.signaturepad.views.SignaturePad
-                        android:id="@+id/signaturePadEngineer"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
-
-                    <LinearLayout
-                        android:id="@+id/buttons_container_engineer"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="16dp">
-
-                        <Button
-                            android:id="@+id/clear_button_engineer"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:enabled="false"
-                            android:fontFamily="@font/sourcesanspro_regular"
-                            android:text="Clear"
-                            tools:ignore="HardcodedText" />
-
-                        <Button
-                            android:id="@+id/save_button_engineer"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:enabled="false"
-                            android:fontFamily="@font/sourcesanspro_regular"
-                            android:text="Save"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -1737,9 +1722,9 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:gravity="center|start"
+                        android:hint="Select Mechanic Signature Date"
                         android:lineSpacingExtra="2dp"
                         android:maxLines="2"
-                        android:text="Select Mechanic Signature Date"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -1764,25 +1749,172 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/img_mechanic_signature"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:src="@drawable/ic_back_arrow" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Zonal/Route Engineer Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_eng_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Select Zonal/Route Engineer Name"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Zonal/Route Engineer EMP No."
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_eng_emp_num"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Select Zonal/Route Engineer EMP No."
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Zonal/Route Engineer Signature Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_eng_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:text="Select Zonal/Route Engineer Signature Date"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Zonal/Route Engineer Signature"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/llEngineerSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/child_back_ground"
                     android:orientation="vertical"
                     android:visibility="visible">
 
                     <com.github.gcacace.signaturepad.views.SignaturePad
-                        android:id="@+id/signaturePadMechanic"
+                        android:id="@+id/signaturePadEngineer"
                         android:layout_width="match_parent"
                         android:layout_height="200dp" />
 
                     <LinearLayout
-                        android:id="@+id/buttons_container_mechanic"
+                        android:id="@+id/buttons_container_engineer"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingTop="16dp">
 
                         <Button
-                            android:id="@+id/clear_button_mechanic"
+                            android:id="@+id/clear_button_engineer"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -1792,7 +1924,7 @@
                             tools:ignore="HardcodedText" />
 
                         <Button
-                            android:id="@+id/save_button_mechanic"
+                            android:id="@+id/save_button_engineer"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -1801,6 +1933,47 @@
                             android:text="Save"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:text="Completed Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txt_comp_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Select Completed Date"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
                 </LinearLayout>
 
                 <Button
@@ -1818,5 +1991,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <!-- HDFC 18002026161-->
 </RelativeLayout>

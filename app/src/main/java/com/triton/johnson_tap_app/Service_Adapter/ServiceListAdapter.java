@@ -30,7 +30,7 @@ import com.triton.johnson_tap_app.Service_Activity.escalatorSurveyModule.NewJobE
 import com.triton.johnson_tap_app.Service_Activity.failureReportApprovalModule.FailureReportApprovalJobActivity;
 import com.triton.johnson_tap_app.Service_Activity.failureReportRequestModule.FailureReportRequestActivity;
 import com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalModule.RepairWorkApprovalJobActivity;
-import com.triton.johnson_tap_app.Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity;
+import com.triton.johnson_tap_app.Service_Activity.repairWorkOrderCreationCompletionModule.RepairWorkOrderCreationCompletionJobActivity;
 import com.triton.johnson_tap_app.Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCreationActivity;
 import com.triton.johnson_tap_app.Service_Activity.repairWorkRequestModule.RepairWorkRequestActivity;
 import com.triton.johnson_tap_app.Service_Activity.ropeMaintenanceModule.JobRopeMaintenanceActivity;
@@ -65,7 +65,6 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         initLayoutOne((ViewHolderOne) holder, position);
-
 
     }
 
@@ -181,7 +180,8 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
                 } else if (s.equalsIgnoreCase("REPAIR WORK ORDER CREATION & COMPLETION")) {
-                    Intent n_act = new Intent(context, JobHazardAnalysisFormActivity.class);
+//                    Intent n_act = new Intent(context, JobHazardAnalysisFormActivity.class);
+                    Intent n_act = new Intent(context, RepairWorkOrderCreationCompletionJobActivity.class);
                     n_act.putExtra("str_title", "REPAIR WORK ORDER CREATION & COMPLETION");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);

@@ -1,4 +1,4 @@
-package com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalRequestModule;
+package com.triton.johnson_tap_app.Service_Activity.repairWorkOrderCreationModule;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,11 +28,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
+import com.triton.johnson_tap_app.Service_Activity.repairWorkOrderCreationCompletionModule.RepairWorkApprovalRequestFormViewEngActivity;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
-import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestMechRequest;
-import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestMechResponse;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestApprovalRequestListRpEngRequest;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestApprovalRequestListRpEngResponse;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
 import com.triton.johnson_tap_app.utils.RestUtils;
 
@@ -44,32 +44,32 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implements OnItemClickDataChangeListener, View.OnClickListener {
+public class RepairWorkOrderCompletionJobActivity extends AppCompatActivity implements OnItemClickDataChangeListener, View.OnClickListener {
 
     ImageView img_back;
-    RecyclerView rv_job_failure_report_pending_request;
+    RecyclerView rv_job_repair_work_order_completion_job;
     EditText edtSearch;
     TextView txt_no_records, txt_menu_name;
     RelativeLayout Job;
-    RepairWorkOrderCreationJobListAdapter repairWorkOrderCreationJobListAdapter;
+    RepairWorkOrderCompletionJobListAdapter repairWorkOrderCompletionJobListAdapter;
     Context context;
-    String TAG = RepairWorkOrderCreationJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name,
+    String TAG = RepairWorkOrderCompletionJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name,
             se_user_id, check_id, service_title, message, networkStatus = "", str_title = "", se_user_location = "";
     SharedPreferences sharedPreferences;
-    List<RepairWorkRequestMechResponse.Data> repairWorkRequestMechResponseList = new ArrayList<>();
+    List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> repairWorkRequestApprovalRequestListRpEngResponseList = new ArrayList<>();
     private Dialog dialog;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_repair_work_order_creation_job);
+        setContentView(R.layout.activity_repair_work_order_completion_job);
         context = this;
 
         img_back = findViewById(R.id.img_back);
         edtSearch = findViewById(R.id.edt_search);
         txt_no_records = findViewById(R.id.txt_no_records);
-        rv_job_failure_report_pending_request = findViewById(R.id.rv_job_failure_report_pending_request);
+        rv_job_repair_work_order_completion_job = findViewById(R.id.rv_job_repair_work_order_completion_job);
         Job = findViewById(R.id.rel_job);
         txt_menu_name = findViewById(R.id.txt_menu_name);
 
@@ -131,9 +131,9 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
                 Log.i(TAG, "onTextChanged: edtSearch -> " + Search);
 
                 if (Search.equals("")) {
-                    rv_job_failure_report_pending_request.setVisibility(View.VISIBLE);
+                    rv_job_repair_work_order_completion_job.setVisibility(View.VISIBLE);
                 } else {
-                    filter(Search, repairWorkRequestMechResponseList);
+                    filter(Search, repairWorkRequestApprovalRequestListRpEngResponseList);
                 }
             }
 
@@ -142,10 +142,10 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
 
                 String Search = edtSearch.getText().toString();
 
-                rv_job_failure_report_pending_request.setVisibility(View.VISIBLE);
+                rv_job_repair_work_order_completion_job.setVisibility(View.VISIBLE);
                 txt_no_records.setVisibility(View.GONE);
 
-                filter(Search, repairWorkRequestMechResponseList);
+                filter(Search, repairWorkRequestApprovalRequestListRpEngResponseList);
             }
         });
     }
@@ -173,20 +173,20 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
         });
     }
 
-    private void filter(String search, List<RepairWorkRequestMechResponse.Data> repairWorkRequestMechResponseList) {
+    private void filter(String search, List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> repairWorkRequestMechResponseList) {
 
-        List<RepairWorkRequestMechResponse.Data> filterlist = new ArrayList<>();
+        List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> filterlist = new ArrayList<>();
         try {
-            for (RepairWorkRequestMechResponse.Data item : repairWorkRequestMechResponseList) {
+            for (RepairWorkRequestApprovalRequestListRpEngResponse.Data item : repairWorkRequestMechResponseList) {
                 Log.i(TAG, "filter: item -> " + new Gson().toJson(item));
-                if (item.getSite_name().contains(search) ||
-                        item.getSite_name().toLowerCase().contains(search.toLowerCase())) {
-                    Log.i(TAG, "filter: JobID -> " + item.getSite_name().contains(search.toLowerCase()));
+                if (item.getCustomer_name().contains(search) ||
+                        item.getCustomer_name().toLowerCase().contains(search.toLowerCase())) {
+                    Log.i(TAG, "filter: JobID -> " + item.getCustomer_name().contains(search.toLowerCase()));
                     filterlist.add(item);
                 }
-                if (item.getJob_id().contains(search) ||
-                        item.getJob_id().toLowerCase().contains(search.toLowerCase())) {
-                    Log.i(TAG, "filter: JobID -> " + item.getJob_id().contains(search.toLowerCase()));
+                if (item.getJob_no().contains(search) ||
+                        item.getJob_no().toLowerCase().contains(search.toLowerCase())) {
+                    Log.i(TAG, "filter: JobID -> " + item.getJob_no().contains(search.toLowerCase()));
                     filterlist.add(item);
                 }
             }
@@ -196,11 +196,11 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
 
         if (filterlist.isEmpty()) {
             //Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
-            rv_job_failure_report_pending_request.setVisibility(View.GONE);
+            rv_job_repair_work_order_completion_job.setVisibility(View.GONE);
             txt_no_records.setVisibility(View.VISIBLE);
             txt_no_records.setText("No Data Found");
         } else {
-            repairWorkOrderCreationJobListAdapter.filterList(filterlist);
+            repairWorkOrderCompletionJobListAdapter.filterList(filterlist);
         }
     }
 
@@ -213,48 +213,48 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
             NoInternetDialog();
         } else {
             if (se_user_id != null && !se_user_id.isEmpty()) {
-                getFailureReportListByMechCode(se_user_id);
+                getRepairWorkRequestApprovalRequestListRpEng(se_user_id);
             } else {
                 Toast.makeText(context, "Enter valid Engineer Id", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void getFailureReportListByMechCode(String se_user_id) {
+    private void getRepairWorkRequestApprovalRequestListRpEng(String se_user_id) {
 
         if (!dialog.isShowing()) {
             dialog.show();
         }
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        RepairWorkRequestMechRequest jobIdRequest = jobListRequest(se_user_id);
+        RepairWorkRequestApprovalRequestListRpEngRequest jobIdRequest = jobListRequest(se_user_id);
 
         if (jobIdRequest != null) {
 
-            Call<RepairWorkRequestMechResponse> call = apiInterface.getRepairWorkRequestMechRequest(RestUtils.getContentType(), jobIdRequest);
-            Log.i(TAG, "getFailureReportListByMechCode: URL -> " + call.request().url().toString());
+            Call<RepairWorkRequestApprovalRequestListRpEngResponse> call = apiInterface.getRepairWorkRequestApprovalRequestListRpEng(RestUtils.getContentType(), jobIdRequest);
+            Log.i(TAG, "getRepairWorkRequestApprovalRequestListRpEng: URL -> " + call.request().url().toString());
 
-            call.enqueue(new Callback<RepairWorkRequestMechResponse>() {
+            call.enqueue(new Callback<RepairWorkRequestApprovalRequestListRpEngResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<RepairWorkRequestMechResponse> call, @NonNull Response<RepairWorkRequestMechResponse> response) {
+                public void onResponse(@NonNull Call<RepairWorkRequestApprovalRequestListRpEngResponse> call, @NonNull Response<RepairWorkRequestApprovalRequestListRpEngResponse> response) {
                     dialog.dismiss();
-                    Log.i(TAG, "getFailureReportListByMechCode: onResponse: FailureReportRequestListByMechCodeResponse -> " + new Gson().toJson(response.body()));
-                    repairWorkRequestMechResponseList = new ArrayList<>();
+                    Log.i(TAG, "getRepairWorkRequestApprovalRequestListRpEng: onResponse: RepairWorkRequestApprovalRequestListRpEngResponse -> " + new Gson().toJson(response.body()));
+                    repairWorkRequestApprovalRequestListRpEngResponseList = new ArrayList<>();
                     if (response.body() != null) {
                         message = response.body().getMessage();
 
                         if (200 == response.body().getCode()) {
                             if (response.body().getData() != null) {
-                                repairWorkRequestMechResponseList = response.body().getData();
+                                repairWorkRequestApprovalRequestListRpEngResponseList = response.body().getData();
 
-                                if (repairWorkRequestMechResponseList.isEmpty()) {
+                                if (repairWorkRequestApprovalRequestListRpEngResponseList.isEmpty()) {
 
-                                    rv_job_failure_report_pending_request.setVisibility(View.GONE);
+                                    rv_job_repair_work_order_completion_job.setVisibility(View.GONE);
                                     txt_no_records.setVisibility(View.VISIBLE);
                                     txt_no_records.setText("No Records Found");
 //                                edtSearch.setEnabled(false);
                                 } else {
-                                    setView(repairWorkRequestMechResponseList);
+                                    setView(repairWorkRequestApprovalRequestListRpEngResponseList);
                                 }
                             }
                         }
@@ -262,10 +262,10 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<RepairWorkRequestMechResponse> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<RepairWorkRequestApprovalRequestListRpEngResponse> call, @NonNull Throwable t) {
                     dialog.dismiss();
-                    Log.e(TAG, "getFailureReportListByMechCode: onFailure: error --> " + t.getMessage());
-                    rv_job_failure_report_pending_request.setVisibility(View.GONE);
+                    Log.e(TAG, "getRepairWorkRequestApprovalRequestListRpEng: onFailure: error --> " + t.getMessage());
+                    rv_job_repair_work_order_completion_job.setVisibility(View.GONE);
                     txt_no_records.setVisibility(View.VISIBLE);
                     txt_no_records.setText("Something Went Wrong.. Try Again Later");
 //                edtSearch.setEnabled(false);
@@ -277,22 +277,22 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
         }
     }
 
-    private void setView(List<RepairWorkRequestMechResponse.Data> repairWorkRequestMechResponseList) {
-        rv_job_failure_report_pending_request.setVisibility(View.VISIBLE);
+    private void setView(List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> repairWorkRequestApprovalRequestListRpEngResponseList) {
+        rv_job_repair_work_order_completion_job.setVisibility(View.VISIBLE);
         txt_no_records.setVisibility(View.GONE);
-        rv_job_failure_report_pending_request.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rv_job_failure_report_pending_request.setItemAnimator(new DefaultItemAnimator());
-        repairWorkOrderCreationJobListAdapter = new RepairWorkOrderCreationJobListAdapter(getApplicationContext(), repairWorkRequestMechResponseList, this);
-        rv_job_failure_report_pending_request.setAdapter(repairWorkOrderCreationJobListAdapter);
+        rv_job_repair_work_order_completion_job.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_job_repair_work_order_completion_job.setItemAnimator(new DefaultItemAnimator());
+        repairWorkOrderCompletionJobListAdapter = new RepairWorkOrderCompletionJobListAdapter(getApplicationContext(), repairWorkRequestApprovalRequestListRpEngResponseList, this);
+        rv_job_repair_work_order_completion_job.setAdapter(repairWorkOrderCompletionJobListAdapter);
     }
 
-    private RepairWorkRequestMechRequest jobListRequest(String strSearch) {
+    private RepairWorkRequestApprovalRequestListRpEngRequest jobListRequest(String strSearch) {
 
-        RepairWorkRequestMechRequest job = new RepairWorkRequestMechRequest();
+        RepairWorkRequestApprovalRequestListRpEngRequest job = new RepairWorkRequestApprovalRequestListRpEngRequest();
 
         if (strSearch != null && !strSearch.isEmpty()) {
-            job.setRep_eng_code(strSearch);
-            Log.i(TAG, "jobListRequest: RepairWorkRequestMechRequest --> " + new Gson().toJson(job));
+            job.setRepair_work_eng_id(strSearch);
+            Log.i(TAG, "jobListRequest: RepairWorkRequestApprovalRequestListRpEngRequest --> " + new Gson().toJson(job));
             return job;
         } else {
             return null;
@@ -301,21 +301,15 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
 
     @Override
     public void itemClickDataChangeListener(int position, String strParam, String strData) {
-        RepairWorkRequestMechResponse.Data repairWorkRequestMechDataResponse = new RepairWorkRequestMechResponse.Data();
-        repairWorkRequestMechDataResponse = repairWorkRequestMechResponseList.get(position);
+        RepairWorkRequestApprovalRequestListRpEngResponse.Data repairWorkRequestApprovalRequestListRpEngDataResponse = new RepairWorkRequestApprovalRequestListRpEngResponse.Data();
+        repairWorkRequestApprovalRequestListRpEngDataResponse = repairWorkRequestApprovalRequestListRpEngResponseList.get(position);
 
-        Intent intent = new Intent(context, RepairWorkApprovalRequestFormActivity.class);
+        Intent intent = new Intent(context, RepairWorkApprovalRequestFormViewEngActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("repairWorkRequestMechDataResponse", repairWorkRequestMechDataResponse);
+        intent.putExtra("repairWorkRequestApprovalRequestListRpEngDataResponse", repairWorkRequestApprovalRequestListRpEngDataResponse);
         context.startActivity(intent);
 
-        Log.i(TAG, "itemClickDataChangeListener: repairWorkRequestMechDataResponse --> " + new Gson().toJson(repairWorkRequestMechDataResponse));
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        Log.i(TAG, "itemClickDataChangeListener: repairWorkRequestApprovalRequestListRpEngDataResponse --> " + new Gson().toJson(repairWorkRequestApprovalRequestListRpEngDataResponse));
     }
 
     @Override
@@ -326,5 +320,17 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
             }
             break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callGetListByEngCode(se_user_id);
     }
 }

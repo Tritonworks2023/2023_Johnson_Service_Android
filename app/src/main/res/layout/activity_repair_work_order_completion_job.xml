@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCreationJobActivity">
+    tools:context=".Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCompletionJobActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_bar"
@@ -88,7 +88,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_job_failure_report_pending_request"
+                android:id="@+id/rv_job_repair_work_order_completion_job"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"

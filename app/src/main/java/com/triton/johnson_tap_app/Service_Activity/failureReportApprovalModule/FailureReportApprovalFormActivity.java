@@ -102,17 +102,19 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
             txt_failure_date, txt_installed_date, txt_bc_qr_code,
             txt_status, txt_branch, txt_mechanic_id, txt_comp_device_name,
             txt_mechanic_name, /*txt_mechanic_phone,*/
+            txt_department, txt_service_type,
             txt_engineer_id, txt_engineer_name, /*txt_engineer_phone,*/
             txt_ser_mast_cust_name_add, txt_install_address, txt_route;
-    private EditText edt_model_make, edt_rating, /*edt_serial_no,*/
+    private EditText edt_model_make, edt_rating, edt_serial_no,
             edt_observation, edt_supply_vol,
             edt_tech_exp_comment, /*edt_curlss_no, edt_prvlss_no,*/
             edt_vvf_remark,
             edt_vvf_item, edt_electric_volt;
-    private Spinner spinner_matl_return_type, spinner_department, spinner_service_type, spinner_physical_cond,
+    private Spinner spinner_matl_return_type, /*spinner_department, spinner_service_type,*/
+            spinner_physical_cond,
             spinner_current_status, spinner_nature_of_failure, spinner_vvvf_trip_while, spinner_vvvf_trip_type,
             spinner_encoder_checked, spinner_load_inside_life, spinner_electric_supply, spinner_battery_check_status,
-            spinner_battery_warranty_status, spinner_reason_code;
+            spinner_battery_warranty_status/*, spinner_reason_code*/;
     private SharedPreferences sharedPreferences;
     private Dialog dialog;
     private String TAG = FailureReportApprovalFormActivity.class.getSimpleName(), strDateType = "", se_user_id = "",
@@ -165,6 +167,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         txt_building_name = findViewById(R.id.txt_building_name);
         /*txt_date = findViewById(R.id.txt_date);*/
         txt_failure_date = findViewById(R.id.txt_failure_date);
+        txt_department = findViewById(R.id.txt_department);
+        txt_service_type = findViewById(R.id.txt_service_type);
         txt_installed_date = findViewById(R.id.txt_installed_date);
         txt_bc_qr_code = findViewById(R.id.txt_bc_qr_code);
         txt_status = findViewById(R.id.txt_status);
@@ -182,7 +186,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
 
         edt_model_make = findViewById(R.id.edt_model_make);
         edt_rating = findViewById(R.id.edt_rating);
-        /*edt_serial_no = findViewById(R.id.edt_serial_no);*/
+        edt_serial_no = findViewById(R.id.edt_serial_no);
         edt_observation = findViewById(R.id.edt_observation);
         edt_supply_vol = findViewById(R.id.edt_supply_vol);
         edt_tech_exp_comment = findViewById(R.id.edt_tech_exp_comment);
@@ -193,8 +197,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         edt_electric_volt = findViewById(R.id.edt_electric_volt);
 
         spinner_matl_return_type = findViewById(R.id.spinner_matl_return_type);
-        spinner_department = findViewById(R.id.spinner_department);
-        spinner_service_type = findViewById(R.id.spinner_service_type);
+        /*spinner_department = findViewById(R.id.spinner_department);
+        spinner_service_type = findViewById(R.id.spinner_service_type);*/
         spinner_physical_cond = findViewById(R.id.spinner_physical_cond);
         spinner_current_status = findViewById(R.id.spinner_current_status);
         spinner_nature_of_failure = findViewById(R.id.spinner_nature_of_failure);
@@ -205,7 +209,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         spinner_electric_supply = findViewById(R.id.spinner_electric_supply);
         spinner_battery_check_status = findViewById(R.id.spinner_battery_check_status);
         spinner_battery_warranty_status = findViewById(R.id.spinner_battery_warranty_status);
-        spinner_reason_code = findViewById(R.id.spinner_reason_code);
+        /*spinner_reason_code = findViewById(R.id.spinner_reason_code);*/
 
         Bundle extra = getIntent().getExtras();
 
@@ -223,12 +227,15 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
 
         Log.i(TAG, "onCreate: failureReportRequestListByEngCodeDateResponse -> " + new Gson().toJson(failureReportRequestListByEngCodeDateResponse));
 
-
         String[] separated = failureReportRequestListByEngCodeDateResponse.getCustomer_address().split(",");
 
         txt_job_id.setText(CommonFunction.nullPointer(failureReportRequestListByEngCodeDateResponse.getJob_id()));
         txt_building_name.setText(CommonFunction.nullPointer(separated[0]));
-        txt_bc_qr_code.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getQr_bar_code()));
+        if (nullPointerValidator(failureReportRequestListByEngCodeDateResponse.getQr_bar_code())) {
+            txt_bc_qr_code.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getQr_bar_code()));
+        } else {
+            txt_bc_qr_code.setText(nullPointer("NO CODE"));
+        }
         strDateType = "txt_failure_date";
         setDateForDate(nullPointer(failureReportRequestListByEngCodeDateResponse.getFailure_date()));
         if (failureReportRequestListByEngCodeDateResponse.getStatus().equalsIgnoreCase("a")) {
@@ -242,7 +249,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         }
         edt_model_make.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getModel_make()));
         edt_rating.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getRating()));
-        /*edt_serial_no.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getSerial_no()));*/
+        edt_serial_no.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getSerial_no()));
         edt_observation.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getObservation()));
         edt_supply_vol.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getSupply_vol()));
         txt_installed_date.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getInst_date()));
@@ -285,6 +292,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         failureReportEditEngRequest.setCustomer_address(failureReportRequestListByEngCodeDateResponse.getCustomer_address());
         failureReportEditEngRequest.setIns_address(failureReportRequestListByEngCodeDateResponse.getIns_address());
         failureReportEditEngRequest.setApp_status(failureReportRequestListByEngCodeDateResponse.getApp_status());
+        failureReportEditEngRequest.setDepart_name(failureReportRequestListByEngCodeDateResponse.getDepart_name());
+        failureReportEditEngRequest.setServ_type(failureReportRequestListByEngCodeDateResponse.getServ_type());
 
         if (emp_Type.equalsIgnoreCase("engineer")) {
             ll_eng_privilege.setVisibility(View.VISIBLE);
@@ -350,8 +359,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         reasonCodeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_matl_return_type.setAdapter(matlReturnTypeAdapter);
-        spinner_department.setAdapter(departmentAdapter);
-        spinner_service_type.setAdapter(serviceTypeAdapter);
+        /*spinner_department.setAdapter(departmentAdapter);
+        spinner_service_type.setAdapter(serviceTypeAdapter);*/
         spinner_physical_cond.setAdapter(physicalCondAdapter);
         spinner_current_status.setAdapter(currentStatusAdapter);
         spinner_nature_of_failure.setAdapter(natureOfFailureAdapter);
@@ -362,11 +371,11 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         spinner_electric_supply.setAdapter(electricSupplyAdapter);
         spinner_battery_check_status.setAdapter(batteryCheckStatusAdapter);
         spinner_battery_warranty_status.setAdapter(batteryWarrantyStatusAdapter);
-        spinner_reason_code.setAdapter(reasonCodeAdapter);
+        /*spinner_reason_code.setAdapter(reasonCodeAdapter);*/
 
         spinner_matl_return_type.setOnItemSelectedListener(this);
-        spinner_department.setOnItemSelectedListener(this);
-        spinner_service_type.setOnItemSelectedListener(this);
+        /*spinner_department.setOnItemSelectedListener(this);
+        spinner_service_type.setOnItemSelectedListener(this);*/
         spinner_physical_cond.setOnItemSelectedListener(this);
         spinner_current_status.setOnItemSelectedListener(this);
         spinner_nature_of_failure.setOnItemSelectedListener(this);
@@ -377,7 +386,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         spinner_electric_supply.setOnItemSelectedListener(this);
         spinner_battery_check_status.setOnItemSelectedListener(this);
         spinner_battery_warranty_status.setOnItemSelectedListener(this);
-        spinner_reason_code.setOnItemSelectedListener(this);
+        /*spinner_reason_code.setOnItemSelectedListener(this);*/
 
         img_back.setOnClickListener(this);
         img_search_comp.setOnClickListener(this);
@@ -688,7 +697,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
 
         failureReportEditEngRequest.setModel_make(nullPointer(edt_model_make.getText().toString().trim()));
         failureReportEditEngRequest.setRating(nullPointer(edt_rating.getText().toString().trim()));
-        /*failureReportEditEngRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));*/
+        failureReportEditEngRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));
         failureReportEditEngRequest.setObservation(nullPointer(edt_observation.getText().toString().trim()));
         failureReportEditEngRequest.setSupply_vol(nullPointer(edt_supply_vol.getText().toString().trim()));
         failureReportEditEngRequest.setTech_comment(nullPointer(edt_tech_exp_comment.getText().toString().trim()));
@@ -782,8 +791,9 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
             ErrorMsgDialog("Please Select Battery Check Status");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getBat_warranty_status())) {
             ErrorMsgDialog("Please Select Battery Warranty Status");
-        } else */if (nullPointerValidator(failureReportEditEngRequest.getElectric_volt())
-                && failureReportEditEngRequest.getElectric_volt().length() <= 1) {
+        } else */if (!nullPointerValidator(failureReportEditEngRequest.getElectric_volt())) {
+            ErrorMsgDialog("Please Enter Electric Vol.");
+        } else if (failureReportEditEngRequest.getElectric_volt().length() <= 1) {
             ErrorMsgDialog("Please Enter Valid Electric Vol.\n(Note: Accepts Only Above One Digit value)");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getCustomer_address())) {
             ErrorMsgDialog("Please Enter Customer Address");
@@ -1045,15 +1055,19 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
 
                             if (!departmentList.isEmpty()) {
                                 for (int i = 0; i < failureReportDropDownDataResponse.getData().getDepart().size(); i++) {
-                                    if (failureReportDropDownDataResponse.getData().getDepart().get(i).getValue().equalsIgnoreCase(failureReportRequestListByEngCodeDateResponse.getDepart_name()))
-                                        spinner_department.setSelection(i + 1);
+                                    if (failureReportDropDownDataResponse.getData().getDepart().get(i).getValue().equalsIgnoreCase(failureReportRequestListByEngCodeDateResponse.getDepart_name())) {
+                                        /*spinner_department.setSelection(i + 1);*/
+                                        txt_department.setText(failureReportDropDownDataResponse.getData().getDepart().get(i).getDisplay_name());
+                                    }
                                 }
                             }
 
                             if (!serviceTypeList.isEmpty()) {
                                 for (int i = 0; i < failureReportDropDownDataResponse.getData().getServ_type().size(); i++) {
-                                    if (failureReportDropDownDataResponse.getData().getServ_type().get(i).getValue().equalsIgnoreCase(failureReportRequestListByEngCodeDateResponse.getServ_type()))
-                                        spinner_service_type.setSelection(i + 1);
+                                    if (failureReportDropDownDataResponse.getData().getServ_type().get(i).getValue().equalsIgnoreCase(failureReportRequestListByEngCodeDateResponse.getServ_type())) {
+                                        /*spinner_service_type.setSelection(i + 1);*/
+                                        txt_service_type.setText(failureReportDropDownDataResponse.getData().getServ_type().get(i).getDisplay_name());
+                                    }
                                 }
                             }
 
@@ -1071,12 +1085,12 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
                                 }
                             }
 
-                            if (!reasonCodeList.isEmpty()) {
+                            /*if (!reasonCodeList.isEmpty()) {
                                 for (int i = 0; i < failureReportDropDownDataResponse.getData().getReasoncode().size(); i++) {
                                     if (failureReportDropDownDataResponse.getData().getReasoncode().get(i).getValue().equalsIgnoreCase(failureReportRequestListByEngCodeDateResponse.getReason_code()))
                                         spinner_reason_code.setSelection(i + 1);
                                 }
-                            }
+                            }*/
 
                         }
 
@@ -1187,22 +1201,22 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
                 case R.id.spinner_matl_return_type:
                     failureReportEditEngRequest.setMatl_return_type("");
                     break;
-                case R.id.spinner_department:
+                /*case R.id.spinner_department:
                     failureReportEditEngRequest.setDepart_name("");
                     break;
                 case R.id.spinner_service_type:
                     failureReportEditEngRequest.setServ_type("");
-                    break;
+                    break;*/
                 case R.id.spinner_physical_cond:
                     failureReportEditEngRequest.setPhys_cond("");
                     break;
                 case R.id.spinner_current_status:
                     failureReportEditEngRequest.setCurr_status("");
                     break;
-                case R.id.spinner_reason_code:
+                /*case R.id.spinner_reason_code:
                     failureReportEditEngRequest.setReason_code("");
 //                    failureReportEditEngRequest.setReason_name("");
-                    break;
+                    break;*/
                 case R.id.spinner_nature_of_failure:
                     failureReportEditEngRequest.setNature_failure("");
                     break;
@@ -1236,14 +1250,14 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
                     Log.i(TAG, "onItemSelected: spinner_matl_return_type: Matl_reture_type -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getMatl_reture_type().get(selPos)));
                     failureReportEditEngRequest.setMatl_return_type(failureReportDropDownDataResponse.getData().getMatl_reture_type().get(selPos).getValue());
                     break;
-                case R.id.spinner_department:
+                /*case R.id.spinner_department:
                     Log.i(TAG, "onItemSelected: spinner_department: Depart_name -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getDepart().get(selPos)));
                     failureReportEditEngRequest.setDepart_name(failureReportDropDownDataResponse.getData().getDepart().get(selPos).getValue());
                     break;
                 case R.id.spinner_service_type:
                     Log.i(TAG, "onItemSelected: spinner_service_type: Serv_type -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getServ_type().get(selPos)));
                     failureReportEditEngRequest.setServ_type(failureReportDropDownDataResponse.getData().getServ_type().get(selPos).getValue());
-                    break;
+                    break;*/
                 case R.id.spinner_physical_cond:
                     Log.i(TAG, "onItemSelected: spinner_physical_cond: Phys_cond -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getPys_condition().get(selPos)));
                     failureReportEditEngRequest.setPhys_cond(failureReportDropDownDataResponse.getData().getPys_condition().get(selPos).getValue());
@@ -1252,11 +1266,11 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
                     Log.i(TAG, "onItemSelected: spinner_current_status: Curr_status -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getCuur_status().get(selPos)));
                     failureReportEditEngRequest.setCurr_status(failureReportDropDownDataResponse.getData().getCuur_status().get(selPos).getValue());
                     break;
-                case R.id.spinner_reason_code:
+                /*case R.id.spinner_reason_code:
                     Log.i(TAG, "onItemSelected: spinner_reason_code: Reason_code - Reason_name -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getReasoncode().get(selPos)));
                     failureReportEditEngRequest.setReason_code(failureReportDropDownDataResponse.getData().getReasoncode().get(selPos).getValue());
 //                    failureReportEditEngRequest.setReason_name(failureReportDropDownDataResponse.getData().getReasoncode().get(selPos).getDisplay_name());
-                    break;
+                    break;*/
                 case R.id.spinner_nature_of_failure:
                     Log.i(TAG, "onItemSelected: spinner_nature_of_failure: Nature_failure -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getNatu_failure().get(selPos)));
                     failureReportEditEngRequest.setNature_failure(failureReportDropDownDataResponse.getData().getNatu_failure().get(selPos).getValue());

@@ -521,6 +521,32 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
+                    <TextView
+                        android:id="@+id/txt_department"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Select Department"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
                     <Spinner
                         android:id="@+id/spinner_department"
                         android:layout_width="0dp"
@@ -530,7 +556,7 @@
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:textSize="16sp" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -556,6 +582,32 @@
                     android:visibility="visible"
                     tools:ignore="UselessParent">
 
+                    <TextView
+                        android:id="@+id/txt_service_type"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:gravity="center|start"
+                        android:hint="Select Service Type"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/child_back_ground"
+                    android:orientation="horizontal"
+                    android:padding="0dp"
+                    android:visibility="visible"
+                    tools:ignore="UselessParent">
+
                     <Spinner
                         android:id="@+id/spinner_service_type"
                         android:layout_width="0dp"
@@ -565,7 +617,7 @@
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:textSize="16sp" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -623,7 +675,7 @@
                     android:padding="15dp"
                     android:visibility="visible" />
 
-                <!--<TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -651,7 +703,7 @@
                     android:padding="15dp"
                     android:visibility="visible" />
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -1140,7 +1192,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1149,7 +1201,7 @@
                     android:background="@drawable/child_back_ground"
                     android:orientation="horizontal"
                     android:padding="0dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     tools:ignore="UselessParent">
 
                     <Spinner
@@ -1555,11 +1607,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/child_back_ground"
-                        android:digits="0123456789"
                         android:ellipsize="end"
                         android:hint="Enter Electric Volt"
                         android:imeOptions=""
-                        android:inputType="number"
+                        android:inputType="text"
                         android:maxLines="1"
                         android:padding="15dp"
                         android:visibility="visible" />

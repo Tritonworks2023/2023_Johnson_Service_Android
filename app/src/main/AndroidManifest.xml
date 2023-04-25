@@ -50,6 +50,21 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
+            android:name=".Service_Activity.repairWorkOrderCreationCompletionModule.JobHazardAnalysisFormViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkOrderCreationCompletionModule.RepairWorkApprovalRequestFormViewEngActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkOrderCreationCompletionModule.RepairWorkApprovalRequestFormViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkOrderCreationCompletionModule.RepairWorkOrderCreationCompletionJobActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCompletionJobActivity"
+            android:exported="false" />
+        <activity
             android:name=".Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCreationActivity"
             android:exported="false" />
         <activity
@@ -105,19 +120,15 @@
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".Service_Activity.repairWorkModule.RepairWorkApprovalActivity"
+            android:name=".Service_Activity.repairWorkOrderCreationCompletionModule.JobHazardAnalysisFormActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".Service_Activity.repairWorkModule.JobHazardAnalysisFormActivity"
+            android:name=".Service_Activity.repairWorkOrderCreationModule.RepairWorkOrderCreationJobActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".Service_Activity.repairWorkApprovalRequestModule.RepairWorkOrderCreationJobActivity"
-            android:configChanges="orientation|screenSize"
-            android:exported="false" />
-        <activity
-            android:name=".Service_Activity.repairWorkApprovalRequestModule.RepairWorkApprovalRequestFormActivity"
+            android:name=".Service_Activity.repairWorkOrderCreationModule.RepairWorkApprovalRequestFormActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity

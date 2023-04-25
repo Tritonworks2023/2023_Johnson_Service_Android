@@ -22,7 +22,6 @@ import androidx.cardview.widget.CardView;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
-import com.triton.johnson_tap_app.Service_Activity.repairWorkApprovalRequestModule.RepairWorkOrderCreationJobActivity;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.requestpojo.CountPausedRequest;
@@ -107,10 +106,10 @@ public class RepairWorkOrderCreationActivity extends AppCompatActivity {
         cv_paused_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent send = new Intent(context, RepairWorkPendingRequestActivity.class);
+                Intent send = new Intent(context, RepairWorkOrderCompletionJobActivity.class);
                 send.putExtra("str_title", str_title);
                 send.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(send);*/
+                startActivity(send);
             }
         });
     }

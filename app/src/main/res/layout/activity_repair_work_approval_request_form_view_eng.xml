@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Service_Activity.repairWorkOrderCreationModule.RepairWorkApprovalRequestFormActivity">
+    tools:context=".Service_Activity.repairWorkOrderCreationCompletionModule.RepairWorkApprovalRequestFormViewEngActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_bar"
@@ -27,9 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Repair Work Approval Request Form"
+                android:text="Repair Work Approval Request Form View Engineer"
                 android:textColor="#ffffff"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -164,46 +163,6 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Branch Name"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:orientation="horizontal"
-                android:padding="0dp"
-                android:visibility="gone"
-                tools:ignore="UselessParent">
-
-                <TextView
-                    android:id="@+id/txt_branch_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/sourcesanspro_regular"
-                    android:gravity="center|start"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="2"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/sourcesanspro_regular"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
                 android:text="Route"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -234,6 +193,46 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="Execution By"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/child_back_ground"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_ext_by"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
@@ -284,7 +283,7 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Execution By"
+                android:text="Mech/subcon Id"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -300,14 +299,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_ext_by"
+                <TextView
+                    android:id="@+id/txt_mech_sub_id"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -318,60 +323,11 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Mech/subcon ID &amp; Name"
+                android:text="Mech/subcon Name"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/img_search_mech_sub_id_name"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/rectangle_border_square"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_search"
-                    app:tint="@color/blue_btn_bg_pressed_color" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/img_search_mech_sub_id_name"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_mech_sub_id_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Mech/subcon ID &amp; Name"
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -380,11 +336,11 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UselessParent">
 
                 <TextView
-                    android:id="@+id/txt_ser_type"
+                    android:id="@+id/txt_mech_sub_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
@@ -493,19 +449,31 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
-            <EditText
-                android:id="@+id/edt_assistant_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Assistant Name"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_assistant_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -521,21 +489,31 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/edt_branch_office_no"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/child_back_ground"
-                android:digits="0123456789"
-                android:ellipsize="end"
-                android:hint="Enter Branch Office Number"
-                android:imeOptions=""
-                android:inputType="number"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="gone" />
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="gone"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_branch_office_no"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -574,6 +552,7 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -590,133 +569,6 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/img_search_nat_work_pro_id_name"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/rectangle_border_square"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_search"
-                    app:tint="@color/blue_btn_bg_pressed_color" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/img_search_nat_work_pro_id_name"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_nat_work_id_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Nature of Work Id &amp; Name"
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/img_search_work_pro_id_name"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/rectangle_border_square"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_search"
-                    android:visibility="invisible"
-                    app:tint="@color/blue_btn_bg_pressed_color" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/img_search_work_pro_id_name"
-                    android:background="@drawable/child_back_ground"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:visibility="visible"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_work_pro_id_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/sourcesanspro_regular"
-                        android:gravity="center|start"
-                        android:hint="Select Work Progress Id &amp; Name"
-                        android:lineSpacingExtra="2dp"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/sourcesanspro_regular"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:text="Nature of Work Id"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/edt_nature_work_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Nature Work ID"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="gone" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -724,7 +576,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -735,9 +587,9 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:gravity="center|start"
+                    android:hint="Select Nature of Work Id"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Nature of Work Id"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -755,21 +607,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/edt_nature_work_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Nature Work Name"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -778,7 +616,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -789,9 +627,9 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:gravity="center|start"
+                    android:hint="Select Nature of Work Name"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Nature of Work Name"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -809,21 +647,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/edt_work_process_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Work Process Id"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -832,7 +656,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -843,9 +667,9 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:gravity="center|start"
+                    android:hint="Select Work Process Id"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Work Process Id"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -863,21 +687,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/edt_work_process_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Work Process Name"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -886,7 +696,7 @@
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UselessParent">
 
                 <TextView
@@ -897,9 +707,9 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:gravity="center|start"
+                    android:hint="Select Work Process Name"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Work Process Name"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -919,19 +729,31 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
-            <EditText
-                android:id="@+id/edt_other_process"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter Other Process"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_other_process"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Work Process Name"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -965,9 +787,9 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:gravity="center|start"
+                    android:hint="Select Work Start Date"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Work Start Date"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -1005,9 +827,9 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:gravity="center|start"
+                    android:hint="Select Work Expected Date"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Work Expected Date"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -1037,13 +859,18 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_tech_trained"
+                <TextView
+                    android:id="@+id/txt_tech_trained"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Tech Trained"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -1061,20 +888,31 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
-            <EditText
-                android:id="@+id/edt_man_power"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/child_back_ground"
-                android:digits="0123456789"
-                android:ellipsize="end"
-                android:hint="Enter Man Power"
-                android:imeOptions=""
-                android:inputType="number"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_man_power"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Tech Trained"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -1090,19 +928,30 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
-            <EditText
-                android:id="@+id/edt_mr_no"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/child_back_ground"
-                android:ellipsize="end"
-                android:hint="Enter MR Number"
-                android:imeOptions=""
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:visibility="visible" />
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="visible"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/txt_mr_no"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select MR Number"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -1128,15 +977,22 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_mat_ava_site"
+                <TextView
+                    android:id="@+id/txt_mat_ava_site"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Material Available at Site"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -1162,13 +1018,18 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_repair_toolkit"
+                <TextView
+                    android:id="@+id/txt_repair_toolkit"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Repair Toolkit"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -1196,13 +1057,18 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_first_aid_kit"
+                <TextView
+                    android:id="@+id/txt_first_aid_kit"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select First Aid Kit"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -1230,13 +1096,18 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_full_body_harness"
+                <TextView
+                    android:id="@+id/txt_full_body_harness"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Full Body Harness"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -1264,13 +1135,18 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_hard_hat"
+                <TextView
+                    android:id="@+id/txt_hard_hat"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Hard Hat"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -1298,14 +1174,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_safety_shoes"
+                <TextView
+                    android:id="@+id/txt_safety_shoes"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Safety Shoes"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1332,14 +1214,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_hand_gloves"
+                <TextView
+                    android:id="@+id/txt_hand_gloves"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Hand Gloves"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1366,14 +1254,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_chain_block_status"
+                <TextView
+                    android:id="@+id/txt_chain_block_status"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Chain Block Status"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1400,14 +1294,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_chain_block_capacity"
+                <TextView
+                    android:id="@+id/txt_chain_block_capacity"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Chain Block Capacity"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1434,14 +1334,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_webbing_belt"
+                <TextView
+                    android:id="@+id/txt_webbing_belt"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Webbing Belt"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1468,13 +1374,18 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_ladder_required"
+                <TextView
+                    android:id="@+id/txt_ladder_required"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Ladder Required"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -1502,13 +1413,18 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_ms_pipe_required"
+                <TextView
+                    android:id="@+id/txt_ms_pipe_required"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select MS Pipe Required"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -1536,14 +1452,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_rebelling_clamp_required"
+                <TextView
+                    android:id="@+id/txt_rebelling_clamp_required"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Rebelling Clamp Required"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1570,14 +1492,20 @@
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_dShackle_required"
+                <TextView
+                    android:id="@+id/txt_dShackle_required"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select DShackle Required"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1612,9 +1540,9 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:gravity="center|start"
+                    android:hint="Select Completed Date"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
-                    android:text="Select Completed Date"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -1638,21 +1566,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_bar_maint_dis_req"
+                <TextView
+                    android:id="@+id/txt_bar_maint_dis_req"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Barricade &amp; Maint Display Required"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -1673,25 +1606,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/child_back_ground"
                 android:orientation="horizontal"
                 android:padding="0dp"
                 android:visibility="visible"
                 tools:ignore="UselessParent">
 
-                <Spinner
-                    android:id="@+id/spinner_repair_work_tech"
+                <TextView
+                    android:id="@+id/txt_repair_work_tech"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center|start"
+                    android:hint="Select Repair Work Technician"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_submit"
+                android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -1700,7 +1639,7 @@
                 android:background="@drawable/blue_button_background_with_radius"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="submit"
+                android:text="next"
                 android:textAlignment="center"
                 android:textColor="@color/white" />
 

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class JobListFailureReportResponse implements Parcelable {
     public static final Creator<JobListFailureReportResponse> CREATOR = new Creator<JobListFailureReportResponse>() {
@@ -27,7 +27,7 @@ public class JobListFailureReportResponse implements Parcelable {
     private int Code;
     @Expose
     @SerializedName("Data")
-    private List<Data> Data;
+    private ArrayList<Data> Data;
     @Expose
     @SerializedName("Message")
     private String Message;
@@ -37,6 +37,7 @@ public class JobListFailureReportResponse implements Parcelable {
 
     protected JobListFailureReportResponse(Parcel in) {
         Code = in.readInt();
+        Data = in.readParcelable(JobListFailureReportResponse.Data.class.getClassLoader());
         Message = in.readString();
         Status = in.readString();
     }
@@ -49,11 +50,11 @@ public class JobListFailureReportResponse implements Parcelable {
         this.Code = Code;
     }
 
-    public List<Data> getData() {
+    public ArrayList<Data> getData() {
         return Data;
     }
 
-    public void setData(List<Data> Data) {
+    public void setData(ArrayList<Data> Data) {
         this.Data = Data;
     }
 
@@ -81,6 +82,7 @@ public class JobListFailureReportResponse implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
         parcel.writeInt(Code);
+        parcel.writeTypedList(Data);
         parcel.writeString(Message);
         parcel.writeString(Status);
     }
@@ -97,6 +99,12 @@ public class JobListFailureReportResponse implements Parcelable {
                 return new Data[size];
             }
         };
+        @Expose
+        @SerializedName("DEPRT")
+        private String DEPRT;
+        @Expose
+        @SerializedName("SERV_TYPE")
+        private String SERV_TYPE;
         @Expose
         @SerializedName("ZPROUTECD")
         private String ZPROUTECD;
@@ -137,11 +145,11 @@ public class JobListFailureReportResponse implements Parcelable {
         @SerializedName("INST_ON")
         private String INST_ON;
         @Expose
-        @SerializedName("LANDMARK")
-        private String LANDMARK;
-        @Expose
         @SerializedName("PINCODE")
         private String PINCODE;
+        @Expose
+        @SerializedName("LANDMARK")
+        private String LANDMARK;
         @Expose
         @SerializedName("INST_ADD3")
         private String INST_ADD3;
@@ -164,7 +172,9 @@ public class JobListFailureReportResponse implements Parcelable {
         public Data() {
         }
 
-        public Data(Parcel in) {
+        protected Data(Parcel in) {
+            DEPRT = in.readString();
+            SERV_TYPE = in.readString();
             ZPROUTECD = in.readString();
             EPROUTECD = in.readString();
             zone_name = in.readString();
@@ -178,14 +188,30 @@ public class JobListFailureReportResponse implements Parcelable {
             SROUTE = in.readString();
             OM_SED_SLNO = in.readInt();
             INST_ON = in.readString();
-            LANDMARK = in.readString();
             PINCODE = in.readString();
+            LANDMARK = in.readString();
             INST_ADD3 = in.readString();
             INST_ADD = in.readString();
             INST_ADD1 = in.readString();
             CUST_NAME = in.readString();
             BRCODE = in.readString();
             JOBNO = in.readString();
+        }
+
+        public String getDEPRT() {
+            return DEPRT;
+        }
+
+        public void setDEPRT(String DEPRT) {
+            this.DEPRT = DEPRT;
+        }
+
+        public String getSERV_TYPE() {
+            return SERV_TYPE;
+        }
+
+        public void setSERV_TYPE(String SERV_TYPE) {
+            this.SERV_TYPE = SERV_TYPE;
         }
 
         public String getZPROUTECD() {
@@ -292,20 +318,20 @@ public class JobListFailureReportResponse implements Parcelable {
             this.INST_ON = INST_ON;
         }
 
-        public String getLANDMARK() {
-            return LANDMARK;
-        }
-
-        public void setLANDMARK(String LANDMARK) {
-            this.LANDMARK = LANDMARK;
-        }
-
         public String getPINCODE() {
             return PINCODE;
         }
 
         public void setPINCODE(String PINCODE) {
             this.PINCODE = PINCODE;
+        }
+
+        public String getLANDMARK() {
+            return LANDMARK;
+        }
+
+        public void setLANDMARK(String LANDMARK) {
+            this.LANDMARK = LANDMARK;
         }
 
         public String getINST_ADD3() {
@@ -363,6 +389,8 @@ public class JobListFailureReportResponse implements Parcelable {
 
         @Override
         public void writeToParcel(@NonNull Parcel parcel, int i) {
+            parcel.writeString(DEPRT);
+            parcel.writeString(SERV_TYPE);
             parcel.writeString(ZPROUTECD);
             parcel.writeString(EPROUTECD);
             parcel.writeString(zone_name);
@@ -376,8 +404,8 @@ public class JobListFailureReportResponse implements Parcelable {
             parcel.writeString(SROUTE);
             parcel.writeInt(OM_SED_SLNO);
             parcel.writeString(INST_ON);
-            parcel.writeString(LANDMARK);
             parcel.writeString(PINCODE);
+            parcel.writeString(LANDMARK);
             parcel.writeString(INST_ADD3);
             parcel.writeString(INST_ADD);
             parcel.writeString(INST_ADD1);

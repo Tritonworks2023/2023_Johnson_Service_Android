@@ -8,11 +8,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
-
     public static final Creator<FailureReportFetchDetailsByJobCodeResponse> CREATOR = new Creator<FailureReportFetchDetailsByJobCodeResponse>() {
         @Override
         public FailureReportFetchDetailsByJobCodeResponse createFromParcel(Parcel in) {
@@ -32,7 +30,7 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
     private Dropdown Dropdown;
     @Expose
     @SerializedName("Data")
-    private ArrayList<FailureReportFetchDetailsByJobCodeResponse.Data> Data;
+    private List<Data> Data;
     @Expose
     @SerializedName("Message")
     private String Message;
@@ -45,26 +43,9 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
 
     protected FailureReportFetchDetailsByJobCodeResponse(Parcel in) {
         Code = in.readInt();
+        Data = in.readParcelable(FailureReportFetchDetailsByJobCodeResponse.Data.class.getClassLoader());
         Message = in.readString();
         Status = in.readString();
-        Data = in.readParcelable(FailureReportFetchDetailsByJobCodeResponse.Data.class.getClassLoader());
-        Dropdown = in.readParcelable(FailureReportFetchDetailsByJobCodeResponse.Dropdown.class.getClassLoader());
-//        Data = in.createTypedArrayList(FailureReportFetchDetailsByJobCodeResponse.Data.CREATOR);
-//        Data = in.readParcelable(FailureReportFetchDetailsByJobCodeResponse.Data.class.getClassLoader());
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeInt(Code);
-        parcel.writeString(Message);
-        parcel.writeString(Status);
-        parcel.writeTypedList(Data);
-        parcel.writeParcelable(Dropdown, i);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public int getCode() {
@@ -83,11 +64,11 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         this.Dropdown = Dropdown;
     }
 
-    public ArrayList<FailureReportFetchDetailsByJobCodeResponse.Data> getData() {
+    public List<Data> getData() {
         return Data;
     }
 
-    public void setData(ArrayList<FailureReportFetchDetailsByJobCodeResponse.Data> Data) {
+    public void setData(List<Data> Data) {
         this.Data = Data;
     }
 
@@ -107,18 +88,23 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         this.Status = Status;
     }
 
-    public static class Dropdown implements Parcelable {
-        public static final Creator<FailureReportFetchDetailsByJobCodeResponse.Dropdown> CREATOR = new Creator<FailureReportFetchDetailsByJobCodeResponse.Dropdown>() {
-            @Override
-            public FailureReportFetchDetailsByJobCodeResponse.Dropdown createFromParcel(Parcel in) {
-                return new Dropdown(in);
-            }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-            @Override
-            public FailureReportFetchDetailsByJobCodeResponse.Dropdown[] newArray(int size) {
-                return new Dropdown[size];
-            }
-        };
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(Code);
+        parcel.writeTypedList(Data);
+        parcel.writeString(Message);
+        parcel.writeString(Status);
+    }
+
+    public static class Dropdown {
+        @Expose
+        @SerializedName("reasoncode")
+        private List<Reasoncode> reasoncode;
         @Expose
         @SerializedName("ld_inside_lift")
         private List<Ld_inside_lift> ld_inside_lift;
@@ -159,20 +145,12 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         @SerializedName("matl_reture_type")
         private List<Matl_reture_type> matl_reture_type;
 
-        protected Dropdown(Parcel in) {
-            ld_inside_lift = in.createTypedArrayList(Ld_inside_lift.CREATOR);
-            encoder_checked = in.createTypedArrayList(Encoder_checked.CREATOR);
-            serv_type = in.createTypedArrayList(Serv_type.CREATOR);
-            depart = in.createTypedArrayList(Depart.CREATOR);
-            bat_warr_status = in.createTypedArrayList(Bat_warr_status.CREATOR);
-            bat_check_status = in.createTypedArrayList(Bat_check_status.CREATOR);
-            vvvf_trip_type = in.createTypedArrayList(Vvvf_trip_type.CREATOR);
-            electric_supply = in.createTypedArrayList(Electric_supply.CREATOR);
-            vvvf_trip_while = in.createTypedArrayList(Vvvf_trip_while.CREATOR);
-            natu_failure = in.createTypedArrayList(Natu_failure.CREATOR);
-            cuur_status = in.createTypedArrayList(Cuur_status.CREATOR);
-            pys_condition = in.createTypedArrayList(Pys_condition.CREATOR);
-            matl_reture_type = in.createTypedArrayList(Matl_reture_type.CREATOR);
+        public List<Reasoncode> getReasoncode() {
+            return reasoncode;
+        }
+
+        public void setReasoncode(List<Reasoncode> reasoncode) {
+            this.reasoncode = reasoncode;
         }
 
         public List<Ld_inside_lift> getLd_inside_lift() {
@@ -278,53 +256,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setMatl_reture_type(List<Matl_reture_type> matl_reture_type) {
             this.matl_reture_type = matl_reture_type;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeTypedList(ld_inside_lift);
-            parcel.writeTypedList(encoder_checked);
-            parcel.writeTypedList(serv_type);
-            parcel.writeTypedList(depart);
-            parcel.writeTypedList(bat_warr_status);
-            parcel.writeTypedList(bat_check_status);
-            parcel.writeTypedList(vvvf_trip_type);
-            parcel.writeTypedList(electric_supply);
-            parcel.writeTypedList(vvvf_trip_while);
-            parcel.writeTypedList(natu_failure);
-            parcel.writeTypedList(cuur_status);
-            parcel.writeTypedList(pys_condition);
-            parcel.writeTypedList(matl_reture_type);
-        }
     }
 
-    public static class Ld_inside_lift implements Parcelable {
-        public static final Creator<Ld_inside_lift> CREATOR = new Creator<Ld_inside_lift>() {
-            @Override
-            public Ld_inside_lift createFromParcel(Parcel in) {
-                return new Ld_inside_lift(in);
-            }
-
-            @Override
-            public Ld_inside_lift[] newArray(int size) {
-                return new Ld_inside_lift[size];
-            }
-        };
+    public static class Reasoncode {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Ld_inside_lift(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -341,42 +281,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Encoder_checked implements Parcelable {
-        public static final Creator<Encoder_checked> CREATOR = new Creator<Encoder_checked>() {
-            @Override
-            public Encoder_checked createFromParcel(Parcel in) {
-                return new Encoder_checked(in);
-            }
-
-            @Override
-            public Encoder_checked[] newArray(int size) {
-                return new Encoder_checked[size];
-            }
-        };
+    public static class Ld_inside_lift {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Encoder_checked(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -393,42 +306,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Serv_type implements Parcelable {
-        public static final Creator<Serv_type> CREATOR = new Creator<Serv_type>() {
-            @Override
-            public Serv_type createFromParcel(Parcel in) {
-                return new Serv_type(in);
-            }
-
-            @Override
-            public Serv_type[] newArray(int size) {
-                return new Serv_type[size];
-            }
-        };
+    public static class Encoder_checked {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Serv_type(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -445,42 +331,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Depart implements Parcelable {
-        public static final Creator<Depart> CREATOR = new Creator<Depart>() {
-            @Override
-            public Depart createFromParcel(Parcel in) {
-                return new Depart(in);
-            }
-
-            @Override
-            public Depart[] newArray(int size) {
-                return new Depart[size];
-            }
-        };
+    public static class Serv_type {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Depart(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -497,42 +356,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Bat_warr_status implements Parcelable {
-        public static final Creator<Bat_warr_status> CREATOR = new Creator<Bat_warr_status>() {
-            @Override
-            public Bat_warr_status createFromParcel(Parcel in) {
-                return new Bat_warr_status(in);
-            }
-
-            @Override
-            public Bat_warr_status[] newArray(int size) {
-                return new Bat_warr_status[size];
-            }
-        };
+    public static class Depart {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Bat_warr_status(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -549,42 +381,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Bat_check_status implements Parcelable {
-        public static final Creator<Bat_check_status> CREATOR = new Creator<Bat_check_status>() {
-            @Override
-            public Bat_check_status createFromParcel(Parcel in) {
-                return new Bat_check_status(in);
-            }
-
-            @Override
-            public Bat_check_status[] newArray(int size) {
-                return new Bat_check_status[size];
-            }
-        };
+    public static class Bat_warr_status {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Bat_check_status(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -601,42 +406,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Vvvf_trip_type implements Parcelable {
-        public static final Creator<Vvvf_trip_type> CREATOR = new Creator<Vvvf_trip_type>() {
-            @Override
-            public Vvvf_trip_type createFromParcel(Parcel in) {
-                return new Vvvf_trip_type(in);
-            }
-
-            @Override
-            public Vvvf_trip_type[] newArray(int size) {
-                return new Vvvf_trip_type[size];
-            }
-        };
+    public static class Bat_check_status {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Vvvf_trip_type(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -653,42 +431,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Electric_supply implements Parcelable {
-        public static final Creator<Electric_supply> CREATOR = new Creator<Electric_supply>() {
-            @Override
-            public Electric_supply createFromParcel(Parcel in) {
-                return new Electric_supply(in);
-            }
-
-            @Override
-            public Electric_supply[] newArray(int size) {
-                return new Electric_supply[size];
-            }
-        };
+    public static class Vvvf_trip_type {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Electric_supply(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -705,42 +456,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Vvvf_trip_while implements Parcelable {
-        public static final Creator<Vvvf_trip_while> CREATOR = new Creator<Vvvf_trip_while>() {
-            @Override
-            public Vvvf_trip_while createFromParcel(Parcel in) {
-                return new Vvvf_trip_while(in);
-            }
-
-            @Override
-            public Vvvf_trip_while[] newArray(int size) {
-                return new Vvvf_trip_while[size];
-            }
-        };
+    public static class Electric_supply {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Vvvf_trip_while(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -757,42 +481,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Natu_failure implements Parcelable {
-        public static final Creator<Natu_failure> CREATOR = new Creator<Natu_failure>() {
-            @Override
-            public Natu_failure createFromParcel(Parcel in) {
-                return new Natu_failure(in);
-            }
-
-            @Override
-            public Natu_failure[] newArray(int size) {
-                return new Natu_failure[size];
-            }
-        };
+    public static class Vvvf_trip_while {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Natu_failure(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -809,42 +506,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Cuur_status implements Parcelable {
-        public static final Creator<Cuur_status> CREATOR = new Creator<Cuur_status>() {
-            @Override
-            public Cuur_status createFromParcel(Parcel in) {
-                return new Cuur_status(in);
-            }
-
-            @Override
-            public Cuur_status[] newArray(int size) {
-                return new Cuur_status[size];
-            }
-        };
+    public static class Natu_failure {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Cuur_status(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -861,42 +531,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Pys_condition implements Parcelable {
-        public static final Creator<Pys_condition> CREATOR = new Creator<Pys_condition>() {
-            @Override
-            public Pys_condition createFromParcel(Parcel in) {
-                return new Pys_condition(in);
-            }
-
-            @Override
-            public Pys_condition[] newArray(int size) {
-                return new Pys_condition[size];
-            }
-        };
+    public static class Cuur_status {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Pys_condition(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -913,42 +556,15 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
-        }
     }
 
-    public static class Matl_reture_type implements Parcelable {
-        public static final Creator<Matl_reture_type> CREATOR = new Creator<Matl_reture_type>() {
-            @Override
-            public Matl_reture_type createFromParcel(Parcel in) {
-                return new Matl_reture_type(in);
-            }
-
-            @Override
-            public Matl_reture_type[] newArray(int size) {
-                return new Matl_reture_type[size];
-            }
-        };
+    public static class Pys_condition {
         @Expose
         @SerializedName("value")
         private String value;
         @Expose
         @SerializedName("display_name")
         private String display_name;
-
-        protected Matl_reture_type(Parcel in) {
-            value = in.readString();
-            display_name = in.readString();
-        }
 
         public String getValue() {
             return value;
@@ -965,30 +581,43 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
+    }
 
-        @Override
-        public int describeContents() {
-            return 0;
+    public static class Matl_reture_type {
+        @Expose
+        @SerializedName("value")
+        private String value;
+        @Expose
+        @SerializedName("display_name")
+        private String display_name;
+
+        public String getValue() {
+            return value;
         }
 
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(value);
-            parcel.writeString(display_name);
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getDisplay_name() {
+            return display_name;
+        }
+
+        public void setDisplay_name(String display_name) {
+            this.display_name = display_name;
         }
     }
 
     public static class Data implements Parcelable {
-
-        public static final Creator<FailureReportFetchDetailsByJobCodeResponse.Data> CREATOR = new Creator<FailureReportFetchDetailsByJobCodeResponse.Data>() {
+        public static final Creator<Data> CREATOR = new Creator<Data>() {
             @Override
-            public FailureReportFetchDetailsByJobCodeResponse.Data createFromParcel(Parcel in) {
-                return new FailureReportFetchDetailsByJobCodeResponse.Data(in);
+            public Data createFromParcel(Parcel in) {
+                return new Data(in);
             }
 
             @Override
-            public FailureReportFetchDetailsByJobCodeResponse.Data[] newArray(int size) {
-                return new FailureReportFetchDetailsByJobCodeResponse.Data[size];
+            public Data[] newArray(int size) {
+                return new Data[size];
             }
         };
         @Expose
@@ -1036,25 +665,6 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
             job_id = in.readString();
             customer_address = in.readString();
             install_address = in.readString();
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel parcel, int i) {
-            parcel.writeString(serv_type);
-            parcel.writeString(department);
-            parcel.writeString(malt_id);
-            parcel.writeString(comp_device_name);
-            parcel.writeString(comp_device);
-            parcel.writeString(bar_code_job_no);
-            parcel.writeString(status);
-            parcel.writeString(job_id);
-            parcel.writeString(customer_address);
-            parcel.writeString(install_address);
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
         }
 
         public String getServ_type() {
@@ -1135,6 +745,25 @@ public class FailureReportFetchDetailsByJobCodeResponse implements Parcelable {
 
         public void setInstall_address(String install_address) {
             this.install_address = install_address;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(@NonNull Parcel parcel, int i) {
+            parcel.writeString(serv_type);
+            parcel.writeString(department);
+            parcel.writeString(malt_id);
+            parcel.writeString(comp_device_name);
+            parcel.writeString(comp_device);
+            parcel.writeString(bar_code_job_no);
+            parcel.writeString(status);
+            parcel.writeString(job_id);
+            parcel.writeString(customer_address);
+            parcel.writeString(install_address);
         }
     }
 }

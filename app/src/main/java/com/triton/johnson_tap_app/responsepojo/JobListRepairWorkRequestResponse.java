@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class JobListRepairWorkRequestResponse implements Parcelable {
 
@@ -28,7 +28,7 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
     private int Code;
     @Expose
     @SerializedName("Data")
-    private List<Data> Data;
+    private ArrayList<Data> Data;
     @Expose
     @SerializedName("Message")
     private String Message;
@@ -51,11 +51,11 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
         this.Code = Code;
     }
 
-    public List<Data> getData() {
+    public ArrayList<Data> getData() {
         return Data;
     }
 
-    public void setData(List<Data> Data) {
+    public void setData(ArrayList<Data> Data) {
         this.Data = Data;
     }
 
@@ -101,6 +101,12 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
             }
         };
         @Expose
+        @SerializedName("DEPRT")
+        private String DEPRT;
+        @Expose
+        @SerializedName("SERV_TYPE")
+        private String SERV_TYPE;
+        @Expose
         @SerializedName("ZPROUTECD")
         private String ZPROUTECD;
         @Expose
@@ -131,11 +137,14 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
         @SerializedName("imie_no")
         private String imie_no;
         @Expose
+        @SerializedName("SERTYPE")
+        private String SERTYPE;
+        @Expose
         @SerializedName("SROUTE")
         private String SROUTE;
         @Expose
         @SerializedName("OM_SED_SLNO")
-        private String OM_SED_SLNO;
+        private int OM_SED_SLNO;
         @Expose
         @SerializedName("INST_ON")
         private String INST_ON;
@@ -168,6 +177,8 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
         }
 
         protected Data(Parcel in) {
+            DEPRT = in.readString();
+            SERV_TYPE = in.readString();
             ZPROUTECD = in.readString();
             EPROUTECD = in.readString();
             zone_name = in.readString();
@@ -178,8 +189,9 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
             tech_code = in.readString();
             insp_by = in.readString();
             imie_no = in.readString();
+            SERTYPE = in.readString();
             SROUTE = in.readString();
-            OM_SED_SLNO = in.readString();
+            OM_SED_SLNO = in.readInt();
             INST_ON = in.readString();
             PINCODE = in.readString();
             LANDMARK = in.readString();
@@ -189,6 +201,22 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
             CUST_NAME = in.readString();
             BRCODE = in.readString();
             JOBNO = in.readString();
+        }
+
+        public String getDEPRT() {
+            return DEPRT;
+        }
+
+        public void setDEPRT(String DEPRT) {
+            this.DEPRT = DEPRT;
+        }
+
+        public String getSERV_TYPE() {
+            return SERV_TYPE;
+        }
+
+        public void setSERV_TYPE(String SERV_TYPE) {
+            this.SERV_TYPE = SERV_TYPE;
         }
 
         public String getZPROUTECD() {
@@ -271,6 +299,14 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
             this.imie_no = imie_no;
         }
 
+        public String getSERTYPE() {
+            return SERTYPE;
+        }
+
+        public void setSERTYPE(String SERTYPE) {
+            this.SERTYPE = SERTYPE;
+        }
+
         public String getSROUTE() {
             return SROUTE;
         }
@@ -279,11 +315,11 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
             this.SROUTE = SROUTE;
         }
 
-        public String getOM_SED_SLNO() {
+        public int getOM_SED_SLNO() {
             return OM_SED_SLNO;
         }
 
-        public void setOM_SED_SLNO(String OM_SED_SLNO) {
+        public void setOM_SED_SLNO(int OM_SED_SLNO) {
             this.OM_SED_SLNO = OM_SED_SLNO;
         }
 
@@ -366,6 +402,8 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
 
         @Override
         public void writeToParcel(@NonNull Parcel parcel, int i) {
+            parcel.writeString(DEPRT);
+            parcel.writeString(SERV_TYPE);
             parcel.writeString(ZPROUTECD);
             parcel.writeString(EPROUTECD);
             parcel.writeString(zone_name);
@@ -376,8 +414,9 @@ public class JobListRepairWorkRequestResponse implements Parcelable {
             parcel.writeString(tech_code);
             parcel.writeString(insp_by);
             parcel.writeString(imie_no);
+            parcel.writeString(SERTYPE);
             parcel.writeString(SROUTE);
-            parcel.writeString(OM_SED_SLNO);
+            parcel.writeInt(OM_SED_SLNO);
             parcel.writeString(INST_ON);
             parcel.writeString(PINCODE);
             parcel.writeString(LANDMARK);

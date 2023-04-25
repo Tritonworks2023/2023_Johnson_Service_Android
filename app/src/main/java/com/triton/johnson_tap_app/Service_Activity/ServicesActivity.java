@@ -56,7 +56,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             se_id, check_id, service_title;
     RecyclerView recyclerView, rv_add_list;
     String message, ID, emp_Type;
-    TextView txt_NoRecords;
+    TextView txt_NoRecords, txt_refresh;
     ServiceListAdapter petBreedTypesListAdapter;
     AdditionalServiceListAdapter additionalServiceListAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -77,6 +77,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
         recyclerView = findViewById(R.id.recyclerView);
         rv_add_list = findViewById(R.id.rv_add_list);
         txt_NoRecords = findViewById(R.id.txt_no_records);
+        txt_refresh = findViewById(R.id.txt_refresh);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -97,6 +98,10 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             rv_add_list.setVisibility(View.GONE);
         }*/
 
+        dialog = new Dialog(ServicesActivity.this, R.style.NewProgressDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.progroess_popup);
+
         ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.e("deviceid", ID);
 
@@ -112,9 +117,12 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             }
         });
 
-        dialog = new Dialog(ServicesActivity.this, R.style.NewProgressDialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.progroess_popup);
+        txt_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginResponseCall();
+            }
+        });
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 

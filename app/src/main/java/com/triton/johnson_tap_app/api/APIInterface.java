@@ -60,10 +60,16 @@ import com.triton.johnson_tap_app.requestpojo.Preventive_Submit_Request;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkEngBrCodeRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkMechBrCodeRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestApprovalCreateRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestApprovalRequestListRpEngRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestApprovalRequestListRpMechRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestCreateTechRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestEditEngRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestFetchListEngIdRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestFetchListTechIdRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestFinalCompletionEditRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestJobHazardByPrefIdRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestJobHazardCreateRequest;
+import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestMechIdListRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestMechRequest;
 import com.triton.johnson_tap_app.requestpojo.RopeMaintenanceCheckDataRequest;
 import com.triton.johnson_tap_app.requestpojo.SafetyAuditCheckDataRequest;
@@ -133,10 +139,15 @@ import com.triton.johnson_tap_app.responsepojo.Preventive_ChecklistResponse;
 import com.triton.johnson_tap_app.responsepojo.RTGS_PopResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkEngBrCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkMechBrCodeResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestApprovalRequestListRpEngResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestApprovalRequestListRpMechResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestEditEngResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestFetchListEngIdResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestFetchListTechIdResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestJobHazardByPrefIdResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestMechIdListResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestMechResponse;
+import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestNatureOfWorkResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveLocalValueBRResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveResponseAudit;
 import com.triton.johnson_tap_app.responsepojo.RetriveResponsePR;
@@ -694,5 +705,26 @@ public interface APIInterface {
 
     @POST("additional_forms/repair_work_request_temp/approval_request/create")
     Call<SuccessResponse> getRepairWorkRequestApprovalCreate(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalCreateRequest repairWorkRequestApprovalCreateRequest);
+
+    @POST("additional_forms/repair_work_request_temp/approval_request/getlist_by_rp_eng")
+    Call<RepairWorkRequestApprovalRequestListRpEngResponse> getRepairWorkRequestApprovalRequestListRpEng(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalRequestListRpEngRequest repairWorkRequestApprovalRequestListRpEngRequest);
+
+    @POST("additional_forms/repair_work_request_temp/approval_request/getlist_by_rp_mech")
+    Call<RepairWorkRequestApprovalRequestListRpMechResponse> getRepairWorkRequestApprovalRequestListRpMech(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalRequestListRpMechRequest repairWorkRequestApprovalRequestListRpMechRequest);
+
+    @GET("additional_forms/repair_work_request_temp/nature_of_work")
+    Call<RepairWorkRequestNatureOfWorkResponse> getRepairWorkRequestNatureOfWork(@Header("Content-Type") String type);
+
+    @POST("additional_forms/repair_work_request_temp/mech_id_list")
+    Call<RepairWorkRequestMechIdListResponse> getRepairWorkRequestMechIdList(@Header("Content-Type") String type, @Body RepairWorkRequestMechIdListRequest repairWorkRequestMechIdListRequest);
+
+    @POST("additional_forms/repair_work_request_temp/job_hazad/create")
+    Call<SuccessResponse> getRepairWorkRequestJobHazardCreate(@Header("Content-Type") String type, @Body RepairWorkRequestJobHazardCreateRequest repairWorkRequestJobHazardCreateRequest);
+
+    @POST("additional_forms/repair_work_request_temp/job_hazad/getlist_by_pref_id")
+    Call<RepairWorkRequestJobHazardByPrefIdResponse> getRepairWorkRequestJobHazardByPrefId(@Header("Content-Type") String type, @Body RepairWorkRequestJobHazardByPrefIdRequest repairWorkRequestJobHazardByPrefIdRequest);
+
+    @POST("additional_forms/repair_work_request_temp/final_completion/edit")
+    Call<SuccessResponse> getRepairWorkRequestFinalCompletionEdit(@Header("Content-Type") String type, @Body RepairWorkRequestFinalCompletionEditRequest repairWorkRequestFinalCompletionEditRequest);
 
 }

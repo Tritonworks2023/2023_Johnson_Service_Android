@@ -100,20 +100,22 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
     private Button btn_upload_image, btn_submit;
     private RecyclerView rv_upload_images_list;
     private TextView txt_job_id, txt_building_name, /*txt_date,*/
+            txt_department, txt_service_type,
             txt_failure_date, txt_installed_date, txt_bc_qr_code,
             txt_status, txt_branch, txt_comp_device_name, txt_mechanic_id,
             txt_mechanic_name, /*txt_mechanic_phone,*/
             txt_engineer_id, txt_engineer_name, /*txt_engineer_phone,*/
             txt_ser_mast_cust_name_add, txt_install_address, txt_route, txt_menu_name;
-    private EditText edt_model_make, edt_rating, /*edt_serial_no,*/
+    private EditText edt_model_make, edt_rating, edt_serial_no,
             edt_observation, edt_supply_vol,
             edt_tech_exp_comment, /*edt_curlss_no, edt_prvlss_no,*/
             edt_vvf_remark,
             edt_vvf_item, edt_electric_volt;
-    private Spinner spinner_matl_return_type, spinner_department, spinner_service_type, spinner_physical_cond,
+    private Spinner spinner_matl_return_type, /*spinner_department, spinner_service_type,*/
+            spinner_physical_cond,
             spinner_current_status, spinner_nature_of_failure, spinner_vvvf_trip_while, spinner_vvvf_trip_type,
             spinner_encoder_checked, spinner_load_inside_life, spinner_electric_supply, spinner_battery_check_status,
-            spinner_battery_warranty_status, spinner_reason_code;
+            spinner_battery_warranty_status/*, spinner_reason_code*/;
     private List<JobListFailureReportResponse.Data> jobListFailureReportDataResponse = new ArrayList<>();
     private FailureReportFetchDetailsByJobCodeResponse.Data failureReportFetchDetailsByJobCodeDataResponse = new FailureReportFetchDetailsByJobCodeResponse.Data();
     private FailureReportDropDownDataResponse failureReportDropDownDataResponse = new FailureReportDropDownDataResponse();
@@ -167,6 +169,8 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         txt_job_id = findViewById(R.id.txt_job_id);
         txt_menu_name = findViewById(R.id.txt_menu_name);
         txt_building_name = findViewById(R.id.txt_building_name);
+        txt_department = findViewById(R.id.txt_department);
+        txt_service_type = findViewById(R.id.txt_service_type);
         /*txt_date = findViewById(R.id.txt_date);*/
         txt_failure_date = findViewById(R.id.txt_failure_date);
         txt_installed_date = findViewById(R.id.txt_installed_date);
@@ -186,7 +190,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
         edt_model_make = findViewById(R.id.edt_model_make);
         edt_rating = findViewById(R.id.edt_rating);
-        /*edt_serial_no = findViewById(R.id.edt_serial_no);*/
+        edt_serial_no = findViewById(R.id.edt_serial_no);
         edt_observation = findViewById(R.id.edt_observation);
         edt_supply_vol = findViewById(R.id.edt_supply_vol);
         edt_tech_exp_comment = findViewById(R.id.edt_tech_exp_comment);
@@ -197,8 +201,8 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         edt_electric_volt = findViewById(R.id.edt_electric_volt);
 
         spinner_matl_return_type = findViewById(R.id.spinner_matl_return_type);
-        spinner_department = findViewById(R.id.spinner_department);
-        spinner_service_type = findViewById(R.id.spinner_service_type);
+        /*spinner_department = findViewById(R.id.spinner_department);
+        spinner_service_type = findViewById(R.id.spinner_service_type);*/
         spinner_physical_cond = findViewById(R.id.spinner_physical_cond);
         spinner_current_status = findViewById(R.id.spinner_current_status);
         spinner_nature_of_failure = findViewById(R.id.spinner_nature_of_failure);
@@ -209,7 +213,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         spinner_electric_supply = findViewById(R.id.spinner_electric_supply);
         spinner_battery_check_status = findViewById(R.id.spinner_battery_check_status);
         spinner_battery_warranty_status = findViewById(R.id.spinner_battery_warranty_status);
-        spinner_reason_code = findViewById(R.id.spinner_reason_code);
+        /*spinner_reason_code = findViewById(R.id.spinner_reason_code);*/
 
         Bundle extra = getIntent().getExtras();
 
@@ -294,8 +298,8 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         reasonCodeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_matl_return_type.setAdapter(matlReturnTypeAdapter);
-        spinner_department.setAdapter(departmentAdapter);
-        spinner_service_type.setAdapter(serviceTypeAdapter);
+        /*spinner_department.setAdapter(departmentAdapter);
+        spinner_service_type.setAdapter(serviceTypeAdapter);*/
         spinner_physical_cond.setAdapter(physicalCondAdapter);
         spinner_current_status.setAdapter(currentStatusAdapter);
         spinner_nature_of_failure.setAdapter(natureOfFailureAdapter);
@@ -306,11 +310,11 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         spinner_electric_supply.setAdapter(electricSupplyAdapter);
         spinner_battery_check_status.setAdapter(batteryCheckStatusAdapter);
         spinner_battery_warranty_status.setAdapter(batteryWarrantyStatusAdapter);
-        spinner_reason_code.setAdapter(reasonCodeAdapter);
+        /*spinner_reason_code.setAdapter(reasonCodeAdapter);*/
 
         spinner_matl_return_type.setOnItemSelectedListener(this);
-        spinner_department.setOnItemSelectedListener(this);
-        spinner_service_type.setOnItemSelectedListener(this);
+        /*spinner_department.setOnItemSelectedListener(this);
+        spinner_service_type.setOnItemSelectedListener(this);*/
         spinner_physical_cond.setOnItemSelectedListener(this);
         spinner_current_status.setOnItemSelectedListener(this);
         spinner_nature_of_failure.setOnItemSelectedListener(this);
@@ -321,7 +325,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         spinner_electric_supply.setOnItemSelectedListener(this);
         spinner_battery_check_status.setOnItemSelectedListener(this);
         spinner_battery_warranty_status.setOnItemSelectedListener(this);
-        spinner_reason_code.setOnItemSelectedListener(this);
+        /*spinner_reason_code.setOnItemSelectedListener(this);*/
 
         img_back.setOnClickListener(this);
         img_search_comp.setOnClickListener(this);
@@ -340,12 +344,6 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         } else {
 
             getFailureReportDropDownData();
-
-            if (CommonFunction.nullPointerValidator(failureReportFetchDetailsByJobCodeDataResponse.getJob_id())) {
-                getFetchDataJobId(failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
-            } else {
-                Toast.makeText(context, "Enter valid Job Id", Toast.LENGTH_SHORT).show();
-            }
         }
 
         String[] separated = failureReportFetchDetailsByJobCodeDataResponse.getCustomer_address().split(",");
@@ -362,12 +360,17 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         } else if (CommonFunction.nullPointer(strScanType).equalsIgnoreCase("bar_code_scan")) {
             txt_bc_qr_code.setText(CommonFunction.nullPointer(strScanData));
             failureReportCreateTechRequest.setBar_code_job_no(strScanData);
+        } else {
+            txt_bc_qr_code.setText("NO CODE");
+            failureReportCreateTechRequest.setBar_code_job_no("NO CODE");
         }
 
         failureReportCreateTechRequest.setJob_id(failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
         failureReportCreateTechRequest.setSubmitted_by_emp_code(se_user_id);
         failureReportCreateTechRequest.setSubmitted_by_num(se_user_mobile_no);
         failureReportCreateTechRequest.setSubmitted_by_name(se_user_name);
+        failureReportCreateTechRequest.setDepart_name(failureReportFetchDetailsByJobCodeDataResponse.getDepartment());
+        failureReportCreateTechRequest.setServ_type(failureReportFetchDetailsByJobCodeDataResponse.getServ_type());
 
         getTodayDate();
     }
@@ -598,6 +601,29 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         failureReportCreateTechRequest.setIns_address(failureReportFetchDetailsByJobCodeDataResponse.getInstall_address());
         failureReportCreateTechRequest.setRoute_code(jobListFailureReportDataResponse.get(0).getSROUTE());
 
+        failureReportCreateTechRequest.setDepart_name(jobListFailureReportDataResponse.get(0).getDEPRT());
+        failureReportCreateTechRequest.setServ_type(jobListFailureReportDataResponse.get(0).getSERV_TYPE());
+
+        if (!departmentList.isEmpty() && failureReportDropDownDataResponse != null
+                && !failureReportDropDownDataResponse.getData().getDepart().isEmpty()) {
+            for (int i = 0; i < failureReportDropDownDataResponse.getData().getDepart().size(); i++) {
+                if (failureReportDropDownDataResponse.getData().getDepart().get(i).getValue().equalsIgnoreCase(jobListFailureReportDataResponse.get(0).getDEPRT())) {
+                    txt_department.setText(failureReportDropDownDataResponse.getData().getDepart().get(i).getDisplay_name());
+                    /*spinner_department.setSelection(i + 1);*/
+                }
+            }
+        }
+
+        if (!serviceTypeList.isEmpty() && failureReportDropDownDataResponse != null
+                && !failureReportDropDownDataResponse.getData().getServ_type().isEmpty()) {
+            for (int i = 0; i < failureReportDropDownDataResponse.getData().getServ_type().size(); i++) {
+                if (failureReportDropDownDataResponse.getData().getServ_type().get(i).getValue().equalsIgnoreCase(jobListFailureReportDataResponse.get(0).getSERV_TYPE())) {
+                    txt_service_type.setText(failureReportDropDownDataResponse.getData().getServ_type().get(i).getDisplay_name());
+                    /*spinner_service_type.setSelection(i + 1);*/
+                }
+            }
+        }
+
         Log.i(TAG, "setView: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
     }
 
@@ -664,7 +690,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
         failureReportCreateTechRequest.setModel_make(nullPointer(edt_model_make.getText().toString().trim()));
         failureReportCreateTechRequest.setRating(nullPointer(edt_rating.getText().toString().trim()));
-        /*failureReportCreateTechRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));*/
+        failureReportCreateTechRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));
         failureReportCreateTechRequest.setObservation(nullPointer(edt_observation.getText().toString().trim()));
         failureReportCreateTechRequest.setSupply_vol(nullPointer(edt_supply_vol.getText().toString().trim()));
         failureReportCreateTechRequest.setTech_comment(nullPointer(edt_tech_exp_comment.getText().toString().trim()));
@@ -957,36 +983,84 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                     if (response.body().getCode() == 200) {
 
                         if (failureReportDropDownDataResponse.getData() != null) {
+
                             if (failureReportDropDownDataResponse.getData().getMatl_reture_type() != null
                                     && !failureReportDropDownDataResponse.getData().getMatl_reture_type().isEmpty()) {
                                 for (FailureReportDropDownDataResponse.Matl_reture_type matlReturnType : failureReportDropDownDataResponse.getData().getMatl_reture_type()) {
                                     matlReturnTypeList.add(matlReturnType.getDisplay_name());
                                 }
+
+                                if (!matlReturnTypeList.isEmpty()) {
+                                    for (int i = 0; i < failureReportDropDownDataResponse.getData().getMatl_reture_type().size(); i++) {
+                                        if (failureReportDropDownDataResponse.getData().getMatl_reture_type().get(i).getValue().equalsIgnoreCase("P")) {
+                                            spinner_matl_return_type.setSelection(i + 1);
+                                        }
+                                    }
+                                }
                             }
+
                             if (failureReportDropDownDataResponse.getData().getDepart() != null
                                     && !failureReportDropDownDataResponse.getData().getDepart().isEmpty()) {
                                 for (FailureReportDropDownDataResponse.Depart depart : failureReportDropDownDataResponse.getData().getDepart()) {
                                     departmentList.add(depart.getDisplay_name());
                                 }
+
+                                if (!departmentList.isEmpty()) {
+                                    for (int i = 0; i < failureReportDropDownDataResponse.getData().getDepart().size(); i++) {
+                                        if (failureReportDropDownDataResponse.getData().getDepart().get(i).getValue().equalsIgnoreCase(failureReportFetchDetailsByJobCodeDataResponse.getDepartment())) {
+                                            txt_department.setText(failureReportDropDownDataResponse.getData().getDepart().get(i).getDisplay_name());
+                                            /*spinner_department.setSelection(i + 1);*/
+                                        }
+                                    }
+                                }
                             }
+
                             if (failureReportDropDownDataResponse.getData().getServ_type() != null
                                     && !failureReportDropDownDataResponse.getData().getServ_type().isEmpty()) {
                                 for (FailureReportDropDownDataResponse.Serv_type servType : failureReportDropDownDataResponse.getData().getServ_type()) {
                                     serviceTypeList.add(servType.getDisplay_name());
                                 }
+
+                                if (!serviceTypeList.isEmpty()) {
+                                    for (int i = 0; i < failureReportDropDownDataResponse.getData().getServ_type().size(); i++) {
+                                        if (failureReportDropDownDataResponse.getData().getServ_type().get(i).getValue().equalsIgnoreCase(failureReportFetchDetailsByJobCodeDataResponse.getServ_type())) {
+                                            txt_service_type.setText(failureReportDropDownDataResponse.getData().getServ_type().get(i).getDisplay_name());
+                                            /*spinner_service_type.setSelection(i + 1);*/
+                                        }
+                                    }
+                                }
                             }
+
                             if (failureReportDropDownDataResponse.getData().getPys_condition() != null
                                     && !failureReportDropDownDataResponse.getData().getPys_condition().isEmpty()) {
                                 for (FailureReportDropDownDataResponse.Pys_condition pysCondition : failureReportDropDownDataResponse.getData().getPys_condition()) {
                                     physicalCondList.add(pysCondition.getDisplay_name());
                                 }
+
+                                if (!physicalCondList.isEmpty()) {
+                                    for (int i = 0; i < failureReportDropDownDataResponse.getData().getPys_condition().size(); i++) {
+                                        if (failureReportDropDownDataResponse.getData().getPys_condition().get(i).getValue().equalsIgnoreCase("O")) {
+                                            spinner_physical_cond.setSelection(i + 1);
+                                        }
+                                    }
+                                }
                             }
+
                             if (failureReportDropDownDataResponse.getData().getCuur_status() != null
                                     && !failureReportDropDownDataResponse.getData().getCuur_status().isEmpty()) {
                                 for (FailureReportDropDownDataResponse.Cuur_status cuurStatus : failureReportDropDownDataResponse.getData().getCuur_status()) {
                                     currentStatusList.add(cuurStatus.getDisplay_name());
                                 }
+
+                                if (!currentStatusList.isEmpty()) {
+                                    for (int i = 0; i < failureReportDropDownDataResponse.getData().getCuur_status().size(); i++) {
+                                        if (failureReportDropDownDataResponse.getData().getCuur_status().get(i).getValue().equalsIgnoreCase("S")) {
+                                            spinner_current_status.setSelection(i + 1);
+                                        }
+                                    }
+                                }
                             }
+
                             if (failureReportDropDownDataResponse.getData().getNatu_failure() != null
                                     && !failureReportDropDownDataResponse.getData().getNatu_failure().isEmpty()) {
                                 for (FailureReportDropDownDataResponse.Natu_failure natuFailure : failureReportDropDownDataResponse.getData().getNatu_failure()) {
@@ -1041,8 +1115,13 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                                     reasonCodeList.add(reasonCode.getDisplay_name());
                                 }
                             }
-                        }
 
+                            if (CommonFunction.nullPointerValidator(failureReportFetchDetailsByJobCodeDataResponse.getJob_id())) {
+                                getFetchDataJobId(failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
+                            } else {
+                                Toast.makeText(context, "Enter valid Job Id", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
                     } else {
                         ErrorMsgDialog(response.body().getMessage());
@@ -1166,22 +1245,22 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                 case R.id.spinner_matl_return_type:
                     failureReportCreateTechRequest.setMatl_return_type("");
                     break;
-                case R.id.spinner_department:
+                /*case R.id.spinner_department:
                     failureReportCreateTechRequest.setDepart_name("");
                     break;
                 case R.id.spinner_service_type:
                     failureReportCreateTechRequest.setServ_type("");
-                    break;
+                    break;*/
                 case R.id.spinner_physical_cond:
                     failureReportCreateTechRequest.setPhys_cond("");
                     break;
                 case R.id.spinner_current_status:
                     failureReportCreateTechRequest.setCurr_status("");
                     break;
-                case R.id.spinner_reason_code:
+                /*case R.id.spinner_reason_code:
                     failureReportCreateTechRequest.setReason_code("");
                     failureReportCreateTechRequest.setReason_name("");
-                    break;
+                    break;*/
                 case R.id.spinner_nature_of_failure:
                     failureReportCreateTechRequest.setNature_failure("");
                     break;
@@ -1215,14 +1294,14 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                     Log.i(TAG, "onItemSelected: spinner_matl_return_type: Matl_reture_type -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getMatl_reture_type().get(selPos)));
                     failureReportCreateTechRequest.setMatl_return_type(failureReportDropDownDataResponse.getData().getMatl_reture_type().get(selPos).getValue());
                     break;
-                case R.id.spinner_department:
+                /*case R.id.spinner_department:
                     Log.i(TAG, "onItemSelected: spinner_department: Depart_name -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getDepart().get(selPos)));
                     failureReportCreateTechRequest.setDepart_name(failureReportDropDownDataResponse.getData().getDepart().get(selPos).getValue());
                     break;
                 case R.id.spinner_service_type:
                     Log.i(TAG, "onItemSelected: spinner_service_type: Serv_type -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getServ_type().get(selPos)));
                     failureReportCreateTechRequest.setServ_type(failureReportDropDownDataResponse.getData().getServ_type().get(selPos).getValue());
-                    break;
+                    break;*/
                 case R.id.spinner_physical_cond:
                     Log.i(TAG, "onItemSelected: spinner_physical_cond: Phys_cond -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getPys_condition().get(selPos)));
                     failureReportCreateTechRequest.setPhys_cond(failureReportDropDownDataResponse.getData().getPys_condition().get(selPos).getValue());
@@ -1231,11 +1310,11 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                     Log.i(TAG, "onItemSelected: spinner_current_status: Curr_status -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getCuur_status().get(selPos)));
                     failureReportCreateTechRequest.setCurr_status(failureReportDropDownDataResponse.getData().getCuur_status().get(selPos).getValue());
                     break;
-                case R.id.spinner_reason_code:
+                /*case R.id.spinner_reason_code:
                     Log.i(TAG, "onItemSelected: spinner_reason_code: Reason_code - Reason_name -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getReasoncode().get(selPos)));
                     failureReportCreateTechRequest.setReason_code(failureReportDropDownDataResponse.getData().getReasoncode().get(selPos).getValue());
                     failureReportCreateTechRequest.setReason_name(failureReportDropDownDataResponse.getData().getReasoncode().get(selPos).getDisplay_name());
-                    break;
+                    break;*/
                 case R.id.spinner_nature_of_failure:
                     Log.i(TAG, "onItemSelected: spinner_nature_of_failure: Nature_failure -> " + new Gson().toJson(failureReportDropDownDataResponse.getData().getNatu_failure().get(selPos)));
                     failureReportCreateTechRequest.setNature_failure(failureReportDropDownDataResponse.getData().getNatu_failure().get(selPos).getValue());
