@@ -94,6 +94,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
+    private RequestBody rbJobId, ebCatType, rbProgramDate;
     private Context context;
     private LinearLayout ll_eng_privilege;
     private ImageView img_back, img_search_comp;
@@ -350,6 +351,9 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
         Log.i(TAG, "onCreate: Job_id -> " + failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
 
+        rbJobId = RequestBody.create(MediaType.parse("multipart/form-data"), failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
+        ebCatType = RequestBody.create(MediaType.parse("multipart/form-data"), "FR");
+
         txt_menu_name.setText(str_title);
         txt_job_id.setText(CommonFunction.nullPointer(failureReportFetchDetailsByJobCodeDataResponse.getJob_id()));
         txt_building_name.setText(CommonFunction.nullPointer(separated[0]));
@@ -520,7 +524,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
                 failureReportCreateTechRequest.setFailure_date(formattedDate);
                 failureReportCreateTechRequest.setSubmitted_by_on(formattedDate);
-
+                rbProgramDate = RequestBody.create(MediaType.parse("multipart/form-data"), formattedDate);
             }
 
         } catch (ParseException e) {
@@ -1143,7 +1147,8 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             dialog.show();
         }
         APIInterface apiInterface = RetrofitClient.getImageClient().create(APIInterface.class);
-        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
+//        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
+        Call<FileUploadResponse> call = apiInterface.getServiceVisibilityUpload(rbJobId, ebCatType, rbProgramDate, filePart);
 
         Log.i(TAG, "getServiceVisibilityUpload: URL -> " + call.request().url().toString());
 

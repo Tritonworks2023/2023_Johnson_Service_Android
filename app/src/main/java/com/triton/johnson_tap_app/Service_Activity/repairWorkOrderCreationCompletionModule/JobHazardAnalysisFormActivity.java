@@ -279,7 +279,6 @@ public class JobHazardAnalysisFormActivity extends AppCompatActivity implements 
         repairWorkRequestJobHazardCreateRequest.setMech_name(se_user_name);
         repairWorkRequestJobHazardCreateRequest.setBr_code(repairWorkRequestApprovalRequestListRpMechDataResponse.getBr_code());
         repairWorkRequestJobHazardCreateRequest.setNature_of_work(repairWorkRequestApprovalRequestListRpMechDataResponse.getNature_of_work_name());
-
         repairWorkRequestJobHazardCreateRequest.setSubmitted_by_name(se_user_name);
         repairWorkRequestJobHazardCreateRequest.setSubmitted_by_emp_code(se_user_id);
         repairWorkRequestJobHazardCreateRequest.setSubmitted_by_num(se_user_mobile_no);
@@ -406,8 +405,108 @@ public class JobHazardAnalysisFormActivity extends AppCompatActivity implements 
 
     private void validateRepairWorkRequestJobHazardCreateRequest() {
         repairWorkRequestJobHazardCreateRequest.setRemarks(nullPointer(edt_remark.getText().toString().trim()));
-        Log.i(TAG, "validateRepairWorkRequestJobHazardCreateRequest: repairWorkRequestJobHazardCreateRequest -> " + new Gson().toJson(repairWorkRequestJobHazardCreateRequest));
-        getRepairWorkRequestJobHazardCreate(repairWorkRequestJobHazardCreateRequest);
+        Log.i(TAG, "validateRepairWorkRequestJobHazardCreateRequest: repairWorkRequestJobHazardCreateRequest (1) -> " + new Gson().toJson(repairWorkRequestJobHazardCreateRequest));
+
+        if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getSubmitted_by_emp_code())) {
+            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getSubmitted_by_name())) {
+            ErrorMsgDialog("Please Select Submitted By Name.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getSubmitted_by_num())) {
+            ErrorMsgDialog("Please Select Submitted By Number.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getSubmitted_by_on())) {
+            ErrorMsgDialog("Please Select Submitted By On.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getJob_no())) {
+            ErrorMsgDialog("Please Select Job ID.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getSite_name())) {
+            ErrorMsgDialog("Please Select Customer Name.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getDate_of_sub())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getBr_code())) {
+            ErrorMsgDialog("Please Select Branch Code.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getNature_of_work())) {
+            ErrorMsgDialog("Please Select Nature Of Work.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW01())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW02())) {
+            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW03())) {
+            ErrorMsgDialog("Please Select Submitted By Name.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW04())) {
+            ErrorMsgDialog("Please Select Submitted By Number.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW05())) {
+            ErrorMsgDialog("Please Select Submitted By On.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW06())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW07())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW08())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW01())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW02())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW03())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW04())) {
+            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW05())) {
+            ErrorMsgDialog("Please Select Submitted By Name.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW06())) {
+            ErrorMsgDialog("Please Select Submitted By Number.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW01())) {
+            ErrorMsgDialog("Please Select Submitted By On.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW02())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW03())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW04())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW05())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW06())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW07())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW08())) {
+            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getHRW01())) {
+            ErrorMsgDialog("Please Select Submitted By Name.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getHRW02())) {
+            ErrorMsgDialog("Please Select Submitted By Number.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getHRW03())) {
+            ErrorMsgDialog("Please Select Submitted By On.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW01())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW02())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW03())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW04())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW05())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW06())) {
+            ErrorMsgDialog("Please Select Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW07())) {
+            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getRemarks())) {
+            ErrorMsgDialog("Please Enter Remark.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMech_name())) {
+            ErrorMsgDialog("Please Select Mechanic EMP No.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMech_emp_id())) {
+            ErrorMsgDialog("Please Select Mechanic Name.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMech_signature())) {
+            ErrorMsgDialog("Please Select Mechanic Signature.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getReport_date())) {
+            ErrorMsgDialog("Please Select Report Date.");
+        } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPref_id())) {
+            ErrorMsgDialog("Please Select Preference ID.");
+        } else {
+            getRepairWorkRequestJobHazardCreate(repairWorkRequestJobHazardCreateRequest);
+        }
+//        getRepairWorkRequestJobHazardCreate(repairWorkRequestJobHazardCreateRequest);
+        Log.i(TAG, "validateRepairWorkRequestJobHazardCreateRequest: repairWorkRequestJobHazardCreateRequest (2) -> " + new Gson().toJson(repairWorkRequestJobHazardCreateRequest));
+
     }
 
     private void uploadDigitalSignatureImageRequest(File file) {
@@ -830,8 +929,6 @@ public class JobHazardAnalysisFormActivity extends AppCompatActivity implements 
                 validateRepairWorkRequestJobHazardCreateRequest();
                 break;
         }
-
-
     }
 
     @Override

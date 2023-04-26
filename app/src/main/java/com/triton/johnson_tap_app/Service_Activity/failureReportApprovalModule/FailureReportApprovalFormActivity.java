@@ -93,6 +93,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
+    private RequestBody rbJobId, ebCatType, rbProgramDate;
     private Context context;
     private LinearLayout ll_eng_privilege;
     private ImageView img_back, img_search_comp;
@@ -395,6 +396,9 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         txt_failure_date.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
 
+        rbJobId = RequestBody.create(MediaType.parse("multipart/form-data"), failureReportRequestListByEngCodeDateResponse.getJob_id());
+        ebCatType = RequestBody.create(MediaType.parse("multipart/form-data"), "FR");
+
         initLoadingDialog();
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
@@ -567,6 +571,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
 
             } else if (strDateType.equalsIgnoreCase("txt_both")) {
 
+                rbProgramDate = RequestBody.create(MediaType.parse("multipart/form-data"), formattedDate);
                 /*failureReportEditEngRequest.setFailure_date(formattedDate);
                 failureReportEditEngRequest.setSubmitted_by_on(formattedDate);*/
             }
@@ -1114,7 +1119,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
             dialog.show();
         }
         APIInterface apiInterface = RetrofitClient.getImageClient().create(APIInterface.class);
-        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
+//        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
+        Call<FileUploadResponse> call = apiInterface.getServiceVisibilityUpload(rbJobId, ebCatType, rbProgramDate, filePart);
 
         Log.i(TAG, "getServiceVisibilityUpload: URL -> " + call.request().url().toString());
 

@@ -309,6 +309,18 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
         datePickerDialog.show();
     }
 
+    private void callFutureDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 30);
+
+        datePickerDialog = new DatePickerDialog(this,
+                (view, year1, monthOfYear, dayOfMonth) ->
+                        setDate(dayOfMonth, monthOfYear, year1), year, month, day);
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
+    }
+
     private void setDate(int dayOfMonth, int monthOfYear, int year1) {
 
         String dateTime = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1;
@@ -650,27 +662,15 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
     }
 
     private void validateRepairWorkRequestApprovalCreate(RepairWorkRequestApprovalCreateRequest repairWorkRequestApprovalCreateRequest) {
-        Log.i(TAG, "validateRepairWorkRequestApprovalCreate: RepairWorkRequestApprovalCreateRequest(1) -> " + new Gson().toJson(repairWorkRequestApprovalCreateRequest));
+        Log.i(TAG, "validateRepairWorkRequestApprovalCreate: RepairWorkRequestApprovalCreateRequest (1) -> " + new Gson().toJson(repairWorkRequestApprovalCreateRequest));
 
-        /*repairWorkRequestApprovalCreateRequest.setRepair_work_mech_id(nullPointer(edt_mech_sub_id.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setRepair_work_mech_name(nullPointer(edt_mech_sub_name.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setRepair_work_mech_no();
-        repairWorkRequestApprovalCreateRequest.setZonal_eng_id(nullPointer(edt_zonal_eng_id.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setZonal_eng_name(nullPointer(txt_zonal_eng_name.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setBranch_office_no(nullPointer(edt_branch_office_no.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setNature_of_work_id(nullPointer(edt_nature_work_id.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setNature_of_work_name(nullPointer(edt_nature_work_name.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setNature_of_work_process_id(nullPointer(edt_work_process_id.getText().toString().trim()));
-        repairWorkRequestApprovalCreateRequest.setNature_of_work_process_name(nullPointer(edt_work_process_name.getText().toString().trim()));*/
         repairWorkRequestApprovalCreateRequest.setAssistant_name(nullPointer(edt_assistant_name.getText().toString().trim()));
         repairWorkRequestApprovalCreateRequest.setOther_process(nullPointer(edt_other_process.getText().toString().trim()));
         repairWorkRequestApprovalCreateRequest.setMan_power(nullPointer(edt_man_power.getText().toString().trim()));
         repairWorkRequestApprovalCreateRequest.setMr_no(nullPointer(edt_mr_no.getText().toString().trim()));
         repairWorkRequestApprovalCreateRequest.setMr_no(nullPointer(edt_mr_no.getText().toString().trim()));
 
-        Log.i(TAG, "validateRepairWorkRequestApprovalCreate: RepairWorkRequestApprovalCreateRequest(2) -> " + new Gson().toJson(repairWorkRequestApprovalCreateRequest));
-
-        /*if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
+        if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
             ErrorMsgDialog("Please Select Job ID.");
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getCustomer_name())) {
             ErrorMsgDialog("Please Select Building Name.");
@@ -692,10 +692,10 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getAssistant_name())) {
             ErrorMsgDialog("Please Enter Assistant Name.");
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getNature_of_work_id())
-                ||!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getNature_of_work_name())) {
+                || !nullPointerValidator(repairWorkRequestApprovalCreateRequest.getNature_of_work_name())) {
             ErrorMsgDialog("Please Select Nature Of Work ID and Name.");
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getNature_of_work_process_id())
-                ||!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getNature_of_work_process_name())) {
+                || !nullPointerValidator(repairWorkRequestApprovalCreateRequest.getNature_of_work_process_name())) {
             ErrorMsgDialog("Please Select Work Progress ID and Name.");
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getOther_process())) {
             ErrorMsgDialog("Please Enter Other Process.");
@@ -707,9 +707,9 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
             ErrorMsgDialog("Please Select Tech Trained.");
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getMan_power())) {
             ErrorMsgDialog("Please Enter Man Power.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getMr_no())) {
+        } else /*if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getMr_no())) {
             ErrorMsgDialog("Please Enter MR No.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getMaterial_available_site())) {
+        } else*/ if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getMaterial_available_site())) {
             ErrorMsgDialog("Please Select Material Available at Site.");
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getRepair_toolkit())) {
             ErrorMsgDialog("Please Select Repair Tool Kit.");
@@ -717,63 +717,49 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
             ErrorMsgDialog("Please Select First Aid Kit.");
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getFull_body_harness())) {
             ErrorMsgDialog("Please Select Full Body Harness.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
-        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getJob_no())) {
-            ErrorMsgDialog("Please Select 1. Emergency and Safety equipment are functional.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getHard_hat())) {
+            ErrorMsgDialog("Please Select Hard Hat.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getSafety_shoes())) {
+            ErrorMsgDialog("Please Select Safety Shoes.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getHand_gloves())) {
+            ErrorMsgDialog("Please Select Hand Gloves.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getChain_block_status())) {
+            ErrorMsgDialog("Please Select Chain Block Status.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getChain_block_capacity())) {
+            ErrorMsgDialog("Please Select Chain Block Capacity.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getWebbing_belt())) {
+            ErrorMsgDialog("Please Select Webbing Belt.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getLadder_req())) {
+            ErrorMsgDialog("Please Select Ladder Required.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getMs_pipe_req())) {
+            ErrorMsgDialog("Please Select MS Pipe Required.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getRebelling_clamp())) {
+            ErrorMsgDialog("Please Select Rebelling Clamp Required.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getDshackle_req())) {
+            ErrorMsgDialog("Please Select Dshackle Required.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getBarricate_main_req())) {
+            ErrorMsgDialog("Please Select Barricade & Maintenance Display Required.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getRepair_work_mech_id())
+                || !nullPointerValidator(repairWorkRequestApprovalCreateRequest.getRepair_work_mech_no())
+                || !nullPointerValidator(repairWorkRequestApprovalCreateRequest.getRepair_work_mech_name())) {
+            ErrorMsgDialog("Please Select Repair Work Technician.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getSubmitted_by_emp_code())) {
+            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getSubmitted_by_name())) {
+            ErrorMsgDialog("Please Select Submitted By Name.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getSubmitted_by_num())) {
+            ErrorMsgDialog("Please Select Submitted By Number.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getSubmitted_by_on())) {
+            ErrorMsgDialog("Please Select Submitted By On.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getInstall_address())) {
+            ErrorMsgDialog("Please Select Installed Address.");
+        } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getRequest_on())) {
+            ErrorMsgDialog("Please Select Request On.");
         } else {
             getRepairWorkRequestApprovalCreate(repairWorkRequestApprovalCreateRequest);
-        }*/
+        }
 
-        getRepairWorkRequestApprovalCreate(repairWorkRequestApprovalCreateRequest);
+        Log.i(TAG, "validateRepairWorkRequestApprovalCreate: RepairWorkRequestApprovalCreateRequest (2) -> " + new Gson().toJson(repairWorkRequestApprovalCreateRequest));
     }
 
     @Override
@@ -994,7 +980,7 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
             break;
             case R.id.txt_work_expected_date: {
                 strDateType = "txt_work_expected_date";
-                callDatePicker();
+                callFutureDatePicker();
             }
             break;
             /*case R.id.txt_comp_date: {

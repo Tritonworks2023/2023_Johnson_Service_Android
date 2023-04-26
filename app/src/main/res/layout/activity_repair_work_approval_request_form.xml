@@ -584,7 +584,7 @@
                 android:fontFamily="@font/sourcesanspro_regular"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text="Nature of Work Id"
+                android:text="Nature of Work Id &amp; Name"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -638,6 +638,20 @@
 
                 </LinearLayout>
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="3"
+                android:text="Work Progress Id &amp; Name"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

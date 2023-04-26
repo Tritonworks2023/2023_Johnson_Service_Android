@@ -139,7 +139,7 @@ public class RopeMaintenanceFormActivity extends AppCompatActivity implements Vi
 
         txt_job_id.setText(jobListRopeMaintenanceDataResponse.getJOBNO());
         txt_building_name.setText(jobListRopeMaintenanceDataResponse.getCUST_NAME());
-        txt_technician_name.setText(jobListRopeMaintenanceDataResponse.getTech_name());
+        txt_technician_name.setText(se_user_name);
 
         ropeMaintenanceCheckDataRequest.setJob_id(jobListRopeMaintenanceDataResponse.getJOBNO());
         ropeMaintenanceCheckDataRequest.setSubmitted_by_num(se_user_mobile_no);
