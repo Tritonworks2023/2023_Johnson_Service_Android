@@ -49,6 +49,7 @@ import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
 import com.triton.johnson_tap_app.interfaces.OnItemClickFailureReportFetchDetailsByComIdResponseListener;
 import com.triton.johnson_tap_app.requestpojo.FailureReportCreateTechRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByComIdRequest;
+import com.triton.johnson_tap_app.requestpojo.FindFlrRbwNumberRequest;
 import com.triton.johnson_tap_app.requestpojo.JobIdRequest;
 import com.triton.johnson_tap_app.requestpojo.PetAppointmentCreateRequest;
 import com.triton.johnson_tap_app.responsepojo.FailureReportCompDeviceListResponse;
@@ -57,6 +58,7 @@ import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByComIdR
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByJobCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.FileUploadResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListFailureReportResponse;
+import com.triton.johnson_tap_app.responsepojo.NextSeqNoResponse;
 import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
 import com.triton.johnson_tap_app.utils.CommonFunction;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
@@ -94,7 +96,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
-    private RequestBody rbJobId, ebCatType, rbProgramDate;
+    private RequestBody rbJobId, rbSeqNo;
     private Context context;
     private LinearLayout ll_eng_privilege;
     private ImageView img_back, img_search_comp;
@@ -123,12 +125,13 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
     private FailureReportFetchDetailsByComIdRequest failureReportFetchDetailsByComIdRequest = new FailureReportFetchDetailsByComIdRequest();
     private FailureReportFetchDetailsByComIdResponse failureReportFetchDetailsByComIdResponse = new FailureReportFetchDetailsByComIdResponse();
     private FailureReportCreateTechRequest failureReportCreateTechRequest = new FailureReportCreateTechRequest();
+    private FindFlrRbwNumberRequest findFlrRbwNumberRequest = new FindFlrRbwNumberRequest();
     private ArrayList<FailureReportCreateTechRequest.File_image> failureReportCreateTechFileImageRequestList = new ArrayList<>();
     private SharedPreferences sharedPreferences;
     private Dialog dialog;
     private String TAG = FailureReportRequestFormActivity.class.getSimpleName(), strDateType = "", se_user_id = "",
             se_user_name = "", se_user_mobile_no = "", se_user_location = "", emp_Type = "", networkStatus = "", uploadImagePath = "",
-            strScanType = "", strScanData = "", message = "", userid = "", str_title = "";
+            strScanType = "", strScanData = "", message = "", userid = "", str_title = "", strSeqNo = "";
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
     private boolean checkDate = false;
@@ -343,7 +346,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
             NoInternetDialog();
         } else {
-
+            getNextSeqNo();
             getFailureReportDropDownData();
         }
 
@@ -352,7 +355,6 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         Log.i(TAG, "onCreate: Job_id -> " + failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
 
         rbJobId = RequestBody.create(MediaType.parse("multipart/form-data"), failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
-        ebCatType = RequestBody.create(MediaType.parse("multipart/form-data"), "FR");
 
         txt_menu_name.setText(str_title);
         txt_job_id.setText(CommonFunction.nullPointer(failureReportFetchDetailsByJobCodeDataResponse.getJob_id()));
@@ -368,6 +370,8 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             txt_bc_qr_code.setText("NO CODE");
             failureReportCreateTechRequest.setBar_code_job_no("NO CODE");
         }
+
+        findFlrRbwNumberRequest.setBr_code(se_user_location);
 
         failureReportCreateTechRequest.setJob_id(failureReportFetchDetailsByJobCodeDataResponse.getJob_id());
         failureReportCreateTechRequest.setSubmitted_by_emp_code(se_user_id);
@@ -524,7 +528,6 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
                 failureReportCreateTechRequest.setFailure_date(formattedDate);
                 failureReportCreateTechRequest.setSubmitted_by_on(formattedDate);
-                rbProgramDate = RequestBody.create(MediaType.parse("multipart/form-data"), formattedDate);
             }
 
         } catch (ParseException e) {
@@ -692,6 +695,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
 
         Log.i(TAG, "validateFailureReportCreateTech: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
 
+        failureReportCreateTechRequest.setSeq_no(nullPointer(strSeqNo));
         failureReportCreateTechRequest.setModel_make(nullPointer(edt_model_make.getText().toString().trim()));
         failureReportCreateTechRequest.setRating(nullPointer(edt_rating.getText().toString().trim()));
         failureReportCreateTechRequest.setSerial_no(nullPointer(edt_serial_no.getText().toString().trim()));
@@ -705,6 +709,8 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             ErrorMsgDialog("Please Select Job ID");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getFailure_date())) {
             ErrorMsgDialog("Please Select Failure Date");
+        } else if (!nullPointerValidator(failureReportCreateTechRequest.getSeq_no())) {
+            ErrorMsgDialog("Please Select Seq No");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getMatl_return_type())) {
             ErrorMsgDialog("Please Select Material Return Type");
         } else if (!nullPointerValidator(failureReportCreateTechRequest.getStatus())) {
@@ -839,7 +845,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
                             String currentDateandTime = sdf.format(new Date());
 
                             filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + filename, RequestBody.create(MediaType.parse("image/*"), file));
-                            getServiceVisibilityUpload();
+                            getFailureReportUpload();
                         }
                     } else {
                         Toasty.warning(this, "Image Error!!Please upload Some other image", Toasty.LENGTH_LONG).show();
@@ -1142,21 +1148,57 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         });
     }
 
-    private void getServiceVisibilityUpload() {
+    private void getNextSeqNo() {
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+
+        Call<NextSeqNoResponse> call = apiInterface.getNextSeqNo(RestUtils.getContentType());
+        Log.i(TAG, "getNextSeqNo: URL -> " + call.request().url().toString());
+
+        call.enqueue(new Callback<NextSeqNoResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NextSeqNoResponse> call, @NonNull Response<NextSeqNoResponse> response) {
+                dialog.dismiss();
+                Log.i(TAG, "getNextSeqNo: onResponse: NextSeqNoResponse -> " + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (response.body().getCode() == 200) {
+
+                        rbSeqNo = RequestBody.create(MediaType.parse("multipart/form-data"), response.body().getData().get(0).getNEXTVAL());
+                        strSeqNo = response.body().getData().get(0).getNEXTVAL();
+                    } else {
+                        ErrorMsgDialog(response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NextSeqNoResponse> call, @NonNull Throwable t) {
+                dialog.dismiss();
+                Log.e(TAG, "getNextSeqNo: onFailure: error --> " + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getFailureReportUpload() {
         if (!dialog.isShowing()) {
             dialog.show();
         }
         APIInterface apiInterface = RetrofitClient.getImageClient().create(APIInterface.class);
 //        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
-        Call<FileUploadResponse> call = apiInterface.getServiceVisibilityUpload(rbJobId, ebCatType, rbProgramDate, filePart);
+        Call<FileUploadResponse> call = apiInterface.getFailureReportUpload(rbJobId, rbSeqNo, filePart);
 
-        Log.i(TAG, "getServiceVisibilityUpload: URL -> " + call.request().url().toString());
+        Log.i(TAG, "getFailureReportUpload: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<FileUploadResponse>() {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {
-                Log.i(TAG, "getServiceVisibilityUpload: onResponse: FileUploadResponse -> " + new Gson().toJson(response.body()));
+                Log.i(TAG, "getFailureReportUpload: onResponse: FileUploadResponse -> " + new Gson().toJson(response.body()));
 
                 dialog.dismiss();
                 if (response.body() != null) {
@@ -1180,7 +1222,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
             @Override
             public void onFailure(@NonNull Call<FileUploadResponse> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                Log.i(TAG, "getServiceVisibilityUpload: onFailure: error -> " + t.getMessage());
+                Log.i(TAG, "getFailureReportUpload: onFailure: error -> " + t.getMessage());
                 ErrorMsgDialog(t.getMessage());
             }
         });
@@ -1191,6 +1233,7 @@ public class FailureReportRequestFormActivity extends AppCompatActivity implemen
         if (!dialog.isShowing()) {
             dialog.show();
         }
+
         Log.i(TAG, "getFailureReportCreateTech: failureReportCreateTechRequest -> " + new Gson().toJson(failureReportCreateTechRequest));
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
 

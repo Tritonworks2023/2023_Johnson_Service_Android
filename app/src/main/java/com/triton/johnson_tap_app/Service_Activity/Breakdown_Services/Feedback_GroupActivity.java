@@ -83,7 +83,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
     ArrayList<String> outputList = null;
     TextView txt_Jobid, txt_Starttime;
     String str_StartTime, str_BDDetails = "", feedback_group = "";
-    String networkStatus = "";
+    String networkStatus = "", str_but_type = "";
     double Latitude, Logitude;
     String address = "";
     int PageNumber = 2;
@@ -188,57 +188,11 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                String data = "";
-//                for (int i = 0; i < dataBeanList.size(); i++) {
-//                    Feedback_GroupResponse.DataBean singleStudent = dataBeanList.get(i);
-//                    if (singleStudent.isSelected() == true) {
-//                        data = data + "," + dataBeanList.get(i).getCodes().toString();
-//                    }
-//                }
 
-                getFeedbackGroup();
-
-                ArrayList<String> outputList = new ArrayList<String>();
-                for (String item : mydata) {
-                    //outputList.add("\""+item+"\"");
-                    outputList.add("" + item + "");
-                    // outputList.remove("null");
-                }
-
-                pre_check = String.valueOf(outputList);
-//                   pre_check = pre_check.replaceAll("\\[", "").replaceAll("\\]","");
-//                  System.out.println("EEEEEEEEEEE"+ddd);
-                Log.e("FEEDBACK GROUP", String.valueOf(mydata));
-                // Log.e("FEEDBACK GROUP", String.valueOf(outputList));
-                Log.e("FEEDBACK GROUP 1", pre_check);
-
-                // sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("feedbackgroup", pre_check);
-                Log.e("FeedBack Group", pre_check);
-                editor.putString("Hi", "Nishanth");
-                Log.e("FeedBack Group", "dsfds");
-                editor.apply();
-
-                //  if(data.equals("")){
-                if (mydata.isEmpty()) {
-
-                    alertDialog = new AlertDialog.Builder(Feedback_GroupActivity.this)
-                            .setTitle("Please Selected Value")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    alertDialog.dismiss();
-                                }
-                            })
-                            .show();
-                } else {
-                    Intent send = new Intent(Feedback_GroupActivity.this, Feedback_DetailsActivity.class);
-                    send.putExtra("feedback_group", pre_check);
-                    send.putExtra("bd_details", bd_dta);
-                    send.putExtra("job_id", job_id);
-                    send.putExtra("status", status);
-                    startActivity(send);
-                }
+                str_but_type = "btn_next";
+                str_job_status = "Job Paused";
+                Job_status_update();
+                createLocalvalue();
 
             }
         });
@@ -281,6 +235,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
                                 str_job_status = "Job Paused";
+                                str_but_type = "img_Pause";
                                 Job_status_update();
                                 createLocalvalue();
 
@@ -416,17 +371,9 @@ public class Feedback_GroupActivity extends AppCompatActivity {
                         if (response.body().getData() != null) {
                             dataBeanList = response.body().getData();
 
-//
-//                           if (status.equals("paused")){
-//
-//                               retrive_LocalValue();
-//                           }
-
                             setView(dataBeanList);
-                            Log.d("dataaaaa", String.valueOf(dataBeanList));
-
+                            Log.i(TAG, "onResponse: dataBeanList -> " + new Gson().toJson(dataBeanList));
                         }
-
                     } else if (400 == response.body().getCode()) {
                         if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
 
@@ -438,7 +385,6 @@ public class Feedback_GroupActivity extends AppCompatActivity {
                 } else {
                     ErrorMsgDialog("");
                 }
-
             }
 
             @Override
@@ -575,9 +521,12 @@ public class Feedback_GroupActivity extends AppCompatActivity {
                         if (response.body().getData() != null) {
 
                             Log.d("msg", message);
-
-                            Intent send = new Intent(context, ServicesActivity.class);
-                            startActivity(send);
+                            if (str_but_type.equalsIgnoreCase("img_Pause")) {
+                                Intent send = new Intent(context, ServicesActivity.class);
+                                startActivity(send);
+                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                moveNext();
+                            }
                         }
 
                     } else {
@@ -596,6 +545,62 @@ public class Feedback_GroupActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveNext() {
+
+//                String data = "";
+//                for (int i = 0; i < dataBeanList.size(); i++) {
+//                    Feedback_GroupResponse.DataBean singleStudent = dataBeanList.get(i);
+//                    if (singleStudent.isSelected() == true) {
+//                        data = data + "," + dataBeanList.get(i).getCodes().toString();
+//                    }
+//                }
+
+        getFeedbackGroup();
+
+        ArrayList<String> outputList = new ArrayList<String>();
+        for (String item : mydata) {
+            //outputList.add("\""+item+"\"");
+            outputList.add("" + item + "");
+            // outputList.remove("null");
+        }
+
+        pre_check = String.valueOf(outputList);
+//                   pre_check = pre_check.replaceAll("\\[", "").replaceAll("\\]","");
+//                  System.out.println("EEEEEEEEEEE"+ddd);
+        Log.e("FEEDBACK GROUP", String.valueOf(mydata));
+        // Log.e("FEEDBACK GROUP", String.valueOf(outputList));
+        Log.e("FEEDBACK GROUP 1", pre_check);
+
+        // sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("feedbackgroup", pre_check);
+        Log.e("FeedBack Group", pre_check);
+        editor.putString("Hi", "Nishanth");
+        Log.e("FeedBack Group", "dsfds");
+        editor.apply();
+
+        //  if(data.equals("")){
+        if (mydata.isEmpty()) {
+
+            alertDialog = new AlertDialog.Builder(Feedback_GroupActivity.this)
+                    .setTitle("Please Selected Value")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    })
+                    .show();
+        } else {
+            Intent send = new Intent(Feedback_GroupActivity.this, Feedback_DetailsActivity.class);
+            send.putExtra("feedback_group", pre_check);
+            send.putExtra("bd_details", bd_dta);
+            send.putExtra("job_id", job_id);
+            send.putExtra("status", status);
+            startActivity(send);
+        }
+
     }
 
     private Breakdowm_Submit_Request createLocalRequest() {

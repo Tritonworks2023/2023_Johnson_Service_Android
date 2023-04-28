@@ -88,7 +88,7 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
     private RecyclerView recyclerView;
     private CardViewDataAdapter adapter;
     private String PetBreedType = "";
-    private String Title, petimage, str_StartTime, str_job_status, compno, sertype;
+    private String Title, petimage, str_StartTime, str_job_status, compno, sertype, str_but_type = "";
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,43 +175,11 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Log.e("BD SIZE", "" + breedTypedataBeanList.size());
-                Cursor curs;
+                str_job_status = "Job Paused";
+                str_but_type = "btn_next";
+                Job_status_update();
+                createLocalvalue();
 
-                for (int i = 0; i < breedTypedataBeanList.size(); i++) {
-                    BD_DetailsResponse.DataBean singleStudent = breedTypedataBeanList.get(i);
-                    if (singleStudent.isSelected()) {
-                        data = breedTypedataBeanList.get(i).getTitle().toString();
-                        Log.e("My BD DATA", "" + data);
-//                        CommonUtil.dbUtil.addBDDetails(str_job_id,service_title,data,"1");
-//                            Intent send = new Intent(BD_DetailsActivity.this, Feedback_GroupActivity.class);
-//                            send.putExtra("bd_details",data);
-//                            send.putExtra("job_id",str_job_id);
-//                            send.putExtra("status",status);
-//                            startActivity(send);
-                    }
-                }
-
-                curs = CommonUtil.dbUtil.getBDdetails(str_job_id, service_title, "1");
-                Log.e("BD", "" + curs.getCount());
-
-                if (curs.getCount() > 0) {
-                    Intent send = new Intent(BD_DetailsActivity.this, Feedback_GroupActivity.class);
-                    send.putExtra("bd_details", data);
-                    send.putExtra("job_id", str_job_id);
-                    send.putExtra("status", status);
-                    startActivity(send);
-                } else {
-
-                    alertDialog = new AlertDialog.Builder(BD_DetailsActivity.this)
-                            .setTitle("Please Selected Value")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    alertDialog.dismiss();
-                                }
-                            })
-                            .show();
-                }
             }
         });
 
@@ -249,6 +217,7 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
                                 str_job_status = "Job Paused";
+                                str_but_type = "ic_paused";
                                 Job_status_update();
                                 createLocalvalue();
                             }
@@ -593,8 +562,12 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
                     if (response.body().getCode() == 200) {
                         if (response.body().getData() != null) {
 
-                            Intent send = new Intent(context, ServicesActivity.class);
-                            startActivity(send);
+                            if (str_but_type.equalsIgnoreCase("ic_paused")) {
+                                Intent send = new Intent(context, ServicesActivity.class);
+                                startActivity(send);
+                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                moveNext();
+                            }
                         }
 
                     } else {
@@ -613,6 +586,47 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveNext() {
+
+        Log.e("BD SIZE", "" + breedTypedataBeanList.size());
+        Cursor curs;
+
+        for (int i = 0; i < breedTypedataBeanList.size(); i++) {
+            BD_DetailsResponse.DataBean singleStudent = breedTypedataBeanList.get(i);
+            if (singleStudent.isSelected()) {
+                data = breedTypedataBeanList.get(i).getTitle().toString();
+                Log.e("My BD DATA", "" + data);
+//                        CommonUtil.dbUtil.addBDDetails(str_job_id,service_title,data,"1");
+//                            Intent send = new Intent(BD_DetailsActivity.this, Feedback_GroupActivity.class);
+//                            send.putExtra("bd_details",data);
+//                            send.putExtra("job_id",str_job_id);
+//                            send.putExtra("status",status);
+//                            startActivity(send);
+            }
+        }
+
+        curs = CommonUtil.dbUtil.getBDdetails(str_job_id, service_title, "1");
+        Log.e("BD", "" + curs.getCount());
+
+        if (curs.getCount() > 0) {
+            Intent send = new Intent(BD_DetailsActivity.this, Feedback_GroupActivity.class);
+            send.putExtra("bd_details", data);
+            send.putExtra("job_id", str_job_id);
+            send.putExtra("status", status);
+            startActivity(send);
+        } else {
+
+            alertDialog = new AlertDialog.Builder(BD_DetailsActivity.this)
+                    .setTitle("Please Selected Value")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 
     private void ErrorMsgDialog(String strMsg) {

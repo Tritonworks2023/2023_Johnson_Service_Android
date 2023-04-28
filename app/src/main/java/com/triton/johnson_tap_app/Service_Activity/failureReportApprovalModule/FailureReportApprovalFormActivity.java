@@ -50,12 +50,14 @@ import com.triton.johnson_tap_app.interfaces.OnItemClickDataChangeListener;
 import com.triton.johnson_tap_app.interfaces.OnItemClickFailureReportFetchDetailsByComIdResponseListener;
 import com.triton.johnson_tap_app.requestpojo.FailureReportEditEngRequest;
 import com.triton.johnson_tap_app.requestpojo.FailureReportFetchDetailsByComIdRequest;
+import com.triton.johnson_tap_app.requestpojo.FindFlrRbwNumberRequest;
 import com.triton.johnson_tap_app.requestpojo.PetAppointmentCreateRequest;
 import com.triton.johnson_tap_app.responsepojo.FailureReportCompDeviceListResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportDropDownDataResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportFetchDetailsByComIdResponse;
 import com.triton.johnson_tap_app.responsepojo.FailureReportRequestListByEngCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.FileUploadResponse;
+import com.triton.johnson_tap_app.responsepojo.FindFlrNumberResponse;
 import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
 import com.triton.johnson_tap_app.utils.CommonFunction;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
@@ -93,7 +95,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
-    private RequestBody rbJobId, ebCatType, rbProgramDate;
+    private RequestBody rbJobId, rbSeqNo;
     private Context context;
     private LinearLayout ll_eng_privilege;
     private ImageView img_back, img_search_comp;
@@ -136,6 +138,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
     private ArrayList<FailureReportEditEngRequest.File_image> failureReportEditEngFileImageRequestList = new ArrayList<>();
     private FailureReportFetchDetailsByComIdRequest failureReportFetchDetailsByComIdRequest = new FailureReportFetchDetailsByComIdRequest();
     private FailureReportFetchDetailsByComIdResponse failureReportFetchDetailsByComIdResponse = new FailureReportFetchDetailsByComIdResponse();
+    private FindFlrRbwNumberRequest findFlrRbwNumberRequest = new FindFlrRbwNumberRequest();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,6 +237,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         txt_building_name.setText(CommonFunction.nullPointer(separated[0]));
         if (nullPointerValidator(failureReportRequestListByEngCodeDateResponse.getQr_bar_code())) {
             txt_bc_qr_code.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getQr_bar_code()));
+        } else if (nullPointerValidator(failureReportRequestListByEngCodeDateResponse.getBar_code_job_no())) {
+            txt_bc_qr_code.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getBar_code_job_no()));
         } else {
             txt_bc_qr_code.setText(nullPointer("NO CODE"));
         }
@@ -268,19 +273,24 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         txt_install_address.setText(nullPointer(failureReportRequestListByEngCodeDateResponse.getIns_address()));
         /*txt_engineer_phone.setText(CommonFunction.nullPointer(se_user_mobile_no));*/
 
-        /*if (!failureReportRequestListByEngCodeDateResponse.getFile_image().isEmpty()) {
+        if (!failureReportRequestListByEngCodeDateResponse.getFile_image().isEmpty()) {
 
             for (FailureReportRequestListByEngCodeResponse.File_image img : failureReportRequestListByEngCodeDateResponse.getFile_image()) {
                 pet_imgList.add(new PetAppointmentCreateRequest.PetImgBean(img.getImage()));
             }
             setImageListView();
-        }*/
+        }
+
+        rbSeqNo = RequestBody.create(MediaType.parse("multipart/form-data"), failureReportRequestListByEngCodeDateResponse.getSeq_no());
+
+        findFlrRbwNumberRequest.setBr_code(failureReportRequestListByEngCodeDateResponse.getBr_code());
 
         failureReportEditEngRequest.setStatus(failureReportRequestListByEngCodeDateResponse.getStatus());
         failureReportEditEngRequest.setJob_id(failureReportRequestListByEngCodeDateResponse.getJob_id());
         failureReportEditEngRequest.set_id(failureReportRequestListByEngCodeDateResponse.get_id());
         failureReportEditEngRequest.setQr_bar_code(failureReportRequestListByEngCodeDateResponse.getQr_bar_code());
         failureReportEditEngRequest.setBr_code(failureReportRequestListByEngCodeDateResponse.getBr_code());
+        failureReportEditEngRequest.setSeq_no(failureReportRequestListByEngCodeDateResponse.getSeq_no());
         failureReportEditEngRequest.setMatl_id(failureReportRequestListByEngCodeDateResponse.getMatl_id());
         failureReportEditEngRequest.setComp_device_no(failureReportRequestListByEngCodeDateResponse.getComp_device_no());
         failureReportEditEngRequest.setComp_device_name(failureReportRequestListByEngCodeDateResponse.getComp_device_name());
@@ -397,7 +407,6 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         btn_submit.setOnClickListener(this);
 
         rbJobId = RequestBody.create(MediaType.parse("multipart/form-data"), failureReportRequestListByEngCodeDateResponse.getJob_id());
-        ebCatType = RequestBody.create(MediaType.parse("multipart/form-data"), "FR");
 
         initLoadingDialog();
 
@@ -571,7 +580,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
 
             } else if (strDateType.equalsIgnoreCase("txt_both")) {
 
-                rbProgramDate = RequestBody.create(MediaType.parse("multipart/form-data"), formattedDate);
+//                rbProgramDate = RequestBody.create(MediaType.parse("multipart/form-data"), formattedDate);
                 /*failureReportEditEngRequest.setFailure_date(formattedDate);
                 failureReportEditEngRequest.setSubmitted_by_on(formattedDate);*/
             }
@@ -724,6 +733,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
             ErrorMsgDialog("Please Select Status");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getBr_code())) {
             ErrorMsgDialog("Please Select Branch Code");
+        } else if (!nullPointerValidator(failureReportEditEngRequest.getSeq_no())) {
+            ErrorMsgDialog("Please Select Seq No");
         } else if (!nullPointerValidator(failureReportEditEngRequest.getComp_device_no()) || failureReportEditEngRequest.getComp_device_no().equalsIgnoreCase("No NUM")) {
             ErrorMsgDialog("Please Select Comp/Device ID");
         } else /*if (!nullPointerValidator(failureReportEditEngRequest.getMatl_id()) || failureReportEditEngRequest.getMatl_id().equalsIgnoreCase("NA")) {
@@ -836,7 +847,8 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
                 }
             }
 
-            getFailureReportEditEng(failureReportEditEngRequest);
+            getFindFlrNumber(findFlrRbwNumberRequest);
+//            getFailureReportEditEng(failureReportEditEngRequest);
         }
         Log.i(TAG, "validateCreateFailureReportRequest: failureReportEditEngRequest (2) -> " + new Gson().toJson(failureReportEditEngRequest));
     }
@@ -1120,7 +1132,7 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         }
         APIInterface apiInterface = RetrofitClient.getImageClient().create(APIInterface.class);
 //        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
-        Call<FileUploadResponse> call = apiInterface.getServiceVisibilityUpload(rbJobId, ebCatType, rbProgramDate, filePart);
+        Call<FileUploadResponse> call = apiInterface.getFailureReportUpload(rbJobId, rbSeqNo, filePart);
 
         Log.i(TAG, "getServiceVisibilityUpload: URL -> " + call.request().url().toString());
 
@@ -1158,6 +1170,41 @@ public class FailureReportApprovalFormActivity extends AppCompatActivity impleme
         });
     }
 
+    private void getFindFlrNumber(FindFlrRbwNumberRequest findFlrRbwNumberRequest) {
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+
+        Log.i(TAG, "getFindFlrNumber: findFlrRbwNumberRequest -> " + new Gson().toJson(findFlrRbwNumberRequest));
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+
+        Call<FindFlrNumberResponse> call = apiInterface.getFindFlrNumber(RestUtils.getContentType(), findFlrRbwNumberRequest);
+        Log.i(TAG, "getFindFlrNumber: URL -> " + call.request().url().toString());
+
+        call.enqueue(new Callback<FindFlrNumberResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<FindFlrNumberResponse> call, @NonNull Response<FindFlrNumberResponse> response) {
+                dialog.dismiss();
+                Log.i(TAG, "getFindFlrNumber: onResponse: FindFlrNumberResponse -> " + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (response.body().getCode() == 200) {
+                        failureReportEditEngRequest.setFr_no(response.body().getData().getFLRNO());
+                        getFailureReportEditEng(failureReportEditEngRequest);
+                    } else {
+                        ErrorMsgDialog(response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<FindFlrNumberResponse> call, @NonNull Throwable t) {
+                dialog.dismiss();
+                Log.e(TAG, "getFindFlrNumber: onFailure: error --> " + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void getFailureReportEditEng(FailureReportEditEngRequest failureReportEditEngRequest) {
 

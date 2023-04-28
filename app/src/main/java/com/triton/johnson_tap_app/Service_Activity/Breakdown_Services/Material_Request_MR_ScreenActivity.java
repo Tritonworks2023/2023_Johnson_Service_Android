@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
+import static com.triton.johnson_tap_app.utils.RestUtils.getContentType;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +36,6 @@ import com.triton.johnson_tap_app.responsepojo.Job_status_updateResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveLocalValueBRResponse;
 import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
 import com.triton.johnson_tap_app.utils.CommonFunction;
-import com.triton.johnson_tap_app.utils.RestUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -73,7 +74,7 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
     String s_mr1 = "", s_mr2 = "", s_mr3 = "", s_mr4 = "", s_mr5 = "", s_mr6 = "", s_mr7 = "", s_mr8 = "",
             s_mr9 = "", s_mr10 = "", status, Value;
     TextView txt_Jobid, txt_Starttime;
-    String str_StartTime, str_job_status = "";
+    String str_StartTime, str_job_status = "", str_but_type = "";
     ArrayList<String> mydata = new ArrayList<>();
     double Latitude, Logitude;
     String address = "";
@@ -236,47 +237,11 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                str_but_type = "btn_next";
+                str_job_status = "Job Paused";
+                Job_status_update();
+                createLocalvalue();
                 //    addData();
-
-                String s_mr1 = mr1.getText().toString();
-                String s_mr2 = mr2.getText().toString();
-                String s_mr3 = mr3.getText().toString();
-                String s_mr4 = mr4.getText().toString();
-                String s_mr5 = mr5.getText().toString();
-                String s_mr6 = mr6.getText().toString();
-                String s_mr7 = mr7.getText().toString();
-                String s_mr8 = mr8.getText().toString();
-                String s_mr9 = mr9.getText().toString();
-                String s_mr10 = mr10.getText().toString();
-
-                if (s_mr1.equals("")) {
-                    mr1.setError("Please Enter the MR1");
-                } else {
-                    CommonUtil.dbUtil.addBreakdownMRList(s_mr1, s_mr2, s_mr3, s_mr4, s_mr5, s_mr6, s_mr7,
-                            s_mr8, s_mr9, s_mr10, job_id, service_title);
-                    Cursor c = CommonUtil.dbUtil.getBreakdownMrList();
-                    Log.e("MRLIST", "" + c.getCount());
-                    Intent send = new Intent(Material_Request_MR_ScreenActivity.this, BD_StatusActivity.class);
-                    send.putExtra("value", value);
-                    send.putExtra("feedback_details", feedback_details);
-                    send.putExtra("feedback_group", feedback_group);
-                    send.putExtra("bd_details", bd_dta);
-                    send.putExtra("job_id", job_id);
-                    send.putExtra("feedback_remark", feedback_remark);
-                    send.putExtra("mr1", s_mr1);
-                    send.putExtra("mr2", s_mr2);
-                    send.putExtra("mr3", s_mr3);
-                    send.putExtra("mr4", s_mr4);
-                    send.putExtra("mr5", s_mr5);
-                    send.putExtra("mr6", s_mr6);
-                    send.putExtra("mr7", s_mr7);
-                    send.putExtra("mr8", s_mr8);
-                    send.putExtra("mr9", s_mr9);
-                    send.putExtra("mr10", s_mr10);
-                    send.putExtra("status", status);
-                    Log.i(TAG, "onClick: s_mr1 -> " + s_mr1);
-                    startActivity(send);
-                }
 
             }
         });
@@ -327,6 +292,7 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
                                 str_job_status = "Job Paused";
+                                str_but_type = "img_Pause";
                                 Job_status_update();
                                 createLocalvalue();
 
@@ -372,7 +338,7 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
     private void Job_status_update() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<Job_status_updateResponse> call = apiInterface.job_status_updateResponseCall(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), job_status_updateRequest());
+        Call<Job_status_updateResponse> call = apiInterface.job_status_updateResponseCall(getContentType(), job_status_updateRequest());
         Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<Job_status_updateResponse>() {
@@ -429,7 +395,7 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
     private void createLocalvalue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), createLocalRequest());
+        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(getContentType(), createLocalRequest());
         Log.w(TAG, "Create Local Value Response url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<SuccessResponse>() {
@@ -447,8 +413,13 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
 
                             Log.d("msg", message);
 
-                            Intent send = new Intent(context, ServicesActivity.class);
-                            startActivity(send);
+                            if (str_but_type.equalsIgnoreCase("img_Pause")) {
+                                Intent send = new Intent(context, ServicesActivity.class);
+                                startActivity(send);
+                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                moveNext();
+                            }
+
                         } else {
                             ErrorMsgDialog(message);
                         }
@@ -469,6 +440,50 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveNext() {
+
+        String s_mr1 = mr1.getText().toString();
+        String s_mr2 = mr2.getText().toString();
+        String s_mr3 = mr3.getText().toString();
+        String s_mr4 = mr4.getText().toString();
+        String s_mr5 = mr5.getText().toString();
+        String s_mr6 = mr6.getText().toString();
+        String s_mr7 = mr7.getText().toString();
+        String s_mr8 = mr8.getText().toString();
+        String s_mr9 = mr9.getText().toString();
+        String s_mr10 = mr10.getText().toString();
+
+        if (s_mr1.equals("")) {
+            mr1.setError("Please Enter the MR1");
+        } else {
+            CommonUtil.dbUtil.addBreakdownMRList(s_mr1, s_mr2, s_mr3, s_mr4, s_mr5, s_mr6, s_mr7,
+                    s_mr8, s_mr9, s_mr10, job_id, service_title);
+            Cursor c = CommonUtil.dbUtil.getBreakdownMrList();
+            Log.e("MRLIST", "" + c.getCount());
+            Intent send = new Intent(Material_Request_MR_ScreenActivity.this, BD_StatusActivity.class);
+            send.putExtra("value", value);
+            send.putExtra("feedback_details", feedback_details);
+            send.putExtra("feedback_group", feedback_group);
+            send.putExtra("bd_details", bd_dta);
+            send.putExtra("job_id", job_id);
+            send.putExtra("feedback_remark", feedback_remark);
+            send.putExtra("mr1", s_mr1);
+            send.putExtra("mr2", s_mr2);
+            send.putExtra("mr3", s_mr3);
+            send.putExtra("mr4", s_mr4);
+            send.putExtra("mr5", s_mr5);
+            send.putExtra("mr6", s_mr6);
+            send.putExtra("mr7", s_mr7);
+            send.putExtra("mr8", s_mr8);
+            send.putExtra("mr9", s_mr9);
+            send.putExtra("mr10", s_mr10);
+            send.putExtra("status", status);
+            Log.i(TAG, "onClick: s_mr1 -> " + s_mr1);
+            startActivity(send);
+        }
+
     }
 
     private Breakdowm_Submit_Request createLocalRequest() {
@@ -532,7 +547,7 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
     private void retrive_LocalValue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create((APIInterface.class));
-        Call<RetriveLocalValueBRResponse> call = apiInterface.retriveLocalValueBRCall(RestUtils.getContentType(), localRequest());
+        Call<RetriveLocalValueBRResponse> call = apiInterface.retriveLocalValueBRCall(getContentType(), localRequest());
         Log.w(TAG, "Retrive Local Value url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<RetriveLocalValueBRResponse>() {

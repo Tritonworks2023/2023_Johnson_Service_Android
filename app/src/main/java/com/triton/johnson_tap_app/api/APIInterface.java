@@ -39,6 +39,7 @@ import com.triton.johnson_tap_app.requestpojo.FbTokenRequest;
 import com.triton.johnson_tap_app.requestpojo.Feedback_DetailsRequest;
 import com.triton.johnson_tap_app.requestpojo.Feedback_GroupRequest;
 import com.triton.johnson_tap_app.requestpojo.Fetch_MrList_Request;
+import com.triton.johnson_tap_app.requestpojo.FindFlrRbwNumberRequest;
 import com.triton.johnson_tap_app.requestpojo.GetCustomer_Engineer_Request;
 import com.triton.johnson_tap_app.requestpojo.GetFieldListRequest;
 import com.triton.johnson_tap_app.requestpojo.HelperAttendanceSubmitRequest;
@@ -109,6 +110,8 @@ import com.triton.johnson_tap_app.responsepojo.Feedback_DetailsResponse;
 import com.triton.johnson_tap_app.responsepojo.Feedback_GroupResponse;
 import com.triton.johnson_tap_app.responsepojo.Fetch_MrList_Response;
 import com.triton.johnson_tap_app.responsepojo.FileUploadResponse;
+import com.triton.johnson_tap_app.responsepojo.FindFlrNumberResponse;
+import com.triton.johnson_tap_app.responsepojo.FindRbwNumberResponse;
 import com.triton.johnson_tap_app.responsepojo.FormDataStoreResponse;
 import com.triton.johnson_tap_app.responsepojo.GetFetchLatestVersionResponse;
 import com.triton.johnson_tap_app.responsepojo.GetPopUpImageRequest;
@@ -132,6 +135,7 @@ import com.triton.johnson_tap_app.responsepojo.Material_DetailsResponseACK;
 import com.triton.johnson_tap_app.responsepojo.NewJobListElevatorSurveyResponse;
 import com.triton.johnson_tap_app.responsepojo.NewJobListEscalatorSurveyResponse;
 import com.triton.johnson_tap_app.responsepojo.NewJobListServiceVisibilityResponse;
+import com.triton.johnson_tap_app.responsepojo.NextSeqNoResponse;
 import com.triton.johnson_tap_app.responsepojo.NotificationListResponse;
 import com.triton.johnson_tap_app.responsepojo.Pasused_ListResponse;
 import com.triton.johnson_tap_app.responsepojo.PauseJobListAuditResponse;
@@ -531,7 +535,6 @@ public interface APIInterface {
     @POST("joininspection/create")
     Call<FormDataStoreResponse> joinInspectionCreateRequestCall(@Header("Content-Type") String type, @Body GetFieldListResponse getFieldListResponse);
 
-
     ///// Logout API
 
     @POST("service_userdetails/update_logout_time")
@@ -625,6 +628,17 @@ public interface APIInterface {
             @Part MultipartBody.Part file
     );
 
+    @GET("additional_forms/get_next_seqno")
+    Call<NextSeqNoResponse> getNextSeqNo(@Header("Content-Type") String type);
+
+    @Multipart
+    @POST("failure_report_upload")
+    Call<FileUploadResponse> getFailureReportUpload(
+            @Part("job_id") RequestBody jobId,
+            @Part("seq_no") RequestBody seqNo,
+            @Part MultipartBody.Part file
+    );
+
     @POST("additional_forms/failure_report/create")
     Call<SuccessResponse> getFailureReportCreate(@Header("Content-Type") String type, @Body CreateFailureReportRequest createFailureReportRequest);
 
@@ -676,6 +690,9 @@ public interface APIInterface {
     @POST("additional_forms/temp/failure_report/getlist_by_mech_code")
     Call<FailureReportRequestListByMechCodeResponse> getFailureReportListByMechCode(@Header("Content-Type") String type, @Body FailureReportRequestListByMechCodeRequest failureReportRequestListByMechCodeRequest);
 
+    @POST("additional_forms/find/flrnumber")
+    Call<FindFlrNumberResponse> getFindFlrNumber(@Header("Content-Type") String type, @Body FindFlrRbwNumberRequest findFlrRbwNumberRequest);
+
     @POST("additional_forms/temp/failure_report/edit")
     Call<SuccessResponse> getFailureReportEditEng(@Header("Content-Type") String type, @Body FailureReportEditEngRequest failureReportEditEngRequest);
 
@@ -702,6 +719,9 @@ public interface APIInterface {
 
     @POST("service_userdetails/list_repair_work_mech_brcode")
     Call<RepairWorkMechBrCodeResponse> getRepairWorkMechBrCode(@Header("Content-Type") String type, @Body RepairWorkMechBrCodeRequest repairWorkMechBrCodeRequest);
+
+    @POST("additional_forms/find/rbwnumber")
+    Call<FindRbwNumberResponse> getFindRbwNumber(@Header("Content-Type") String type, @Body FindFlrRbwNumberRequest findFlrRbwNumberRequest);
 
     @POST("additional_forms/repair_work_request_temp/approval_request/create")
     Call<SuccessResponse> getRepairWorkRequestApprovalCreate(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalCreateRequest repairWorkRequestApprovalCreateRequest);

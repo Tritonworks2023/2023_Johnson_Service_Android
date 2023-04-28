@@ -82,7 +82,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
     ArrayList<String> outputList = null;
     TextView txt_Jobid, txt_Starttime;
     String str_StartTime, str_job_status = "", str_BDDetails = "";
-    String networkStatus = "";
+    String networkStatus = "", str_but_type = "";
     double Latitude, Logitude;
     String address = "";
     int PageNumber = 3;
@@ -203,57 +203,11 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                String data = "";
-//                for (int i = 0; i < breedTypedataBeanList.size(); i++) {
-//                    Feedback_DetailsResponse.DataBean singleStudent = breedTypedataBeanList.get(i);
-//                    if (singleStudent.isSelected() == true) {
-//
-//                        data = data + "," + breedTypedataBeanList.get(i).getCodes();
-//                    }
-//
-//               }
-                getFeedBackDesc();
 
-                ArrayList<String> outputList = new ArrayList<String>();
-                for (String item : mydata) {
-                    //outputList.add("\""+item+"\"");
-                    outputList.add("" + item + "");
-                    outputList.remove("null");
-                }
-                pre_check = String.valueOf(outputList);
-//                   pre_check = pre_check.replaceAll("\\[", "").replaceAll("\\]","");
-//                  System.out.println("EEEEEEEEEEE"+ddd);
-
-                //  Log.e("FEEDBACK GROUP", String.valueOf(mydata));
-                Log.e("FeedBack Group", "" + pre_check);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("feedbackdetails", pre_check);
-                Log.e("FeedBack Desc", pre_check);
-                editor.putString("Hi", "Nishanth");
-                Log.e("FeedBack Desc", "dsfds");
-                editor.apply();
-
-                //   if(data.equals("")){
-                if (mydata.isEmpty()) {
-                    alertDialog = new AlertDialog.Builder(Feedback_DetailsActivity.this)
-                            .setTitle("Please Selected Value")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    alertDialog.dismiss();
-                                }
-                            })
-                            .show();
-                } else {
-
-                    Intent send = new Intent(Feedback_DetailsActivity.this, Feedback_RemarkActivity.class);
-//                    send.putExtra("feedback_details",data);
-                    send.putExtra("feedback_group", feedback_group);
-                    send.putExtra("bd_details", bd_dta);
-                    send.putExtra("job_id", job_id);
-                    send.putExtra("status", status);
-                    startActivity(send);
-                }
+                str_job_status = "Job Paused";
+                str_but_type = "btn_next";
+                Job_status_update();
+                createLocalvalue();
             }
         });
 
@@ -336,6 +290,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
                                 str_job_status = "Job Paused";
+                                str_but_type = "img_Pause";
                                 Job_status_update();
                                 createLocalvalue();
 
@@ -453,8 +408,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
                             breedTypedataBeanList = response.body().getData();
 
                             setView(breedTypedataBeanList);
-                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
-
+                            Log.i(TAG, "onResponse: breedTypedataBeanList -> " + new Gson().toJson(breedTypedataBeanList));
                         }
 
                     } else if (400 == response.body().getCode()) {
@@ -604,8 +558,12 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 
                             Log.d("msg", message);
 
-                            Intent send = new Intent(context, ServicesActivity.class);
-                            startActivity(send);
+                            if (str_but_type.equalsIgnoreCase("img_Pause")) {
+                                Intent send = new Intent(context, ServicesActivity.class);
+                                startActivity(send);
+                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                moveNext();
+                            }
                         }
 
                     } else {
@@ -627,6 +585,61 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveNext() {
+
+//                String data = "";
+//                for (int i = 0; i < breedTypedataBeanList.size(); i++) {
+//                    Feedback_DetailsResponse.DataBean singleStudent = breedTypedataBeanList.get(i);
+//                    if (singleStudent.isSelected() == true) {
+//
+//                        data = data + "," + breedTypedataBeanList.get(i).getCodes();
+//                    }
+//
+//               }
+        getFeedBackDesc();
+
+        ArrayList<String> outputList = new ArrayList<String>();
+        for (String item : mydata) {
+            //outputList.add("\""+item+"\"");
+            outputList.add("" + item + "");
+            outputList.remove("null");
+        }
+        pre_check = String.valueOf(outputList);
+//                   pre_check = pre_check.replaceAll("\\[", "").replaceAll("\\]","");
+//                  System.out.println("EEEEEEEEEEE"+ddd);
+
+        //  Log.e("FEEDBACK GROUP", String.valueOf(mydata));
+        Log.e("FeedBack Group", "" + pre_check);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("feedbackdetails", pre_check);
+        Log.e("FeedBack Desc", pre_check);
+        editor.putString("Hi", "Nishanth");
+        Log.e("FeedBack Desc", "dsfds");
+        editor.apply();
+
+        //   if(data.equals("")){
+        if (mydata.isEmpty()) {
+            alertDialog = new AlertDialog.Builder(Feedback_DetailsActivity.this)
+                    .setTitle("Please Selected Value")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    })
+                    .show();
+        } else {
+
+            Intent send = new Intent(Feedback_DetailsActivity.this, Feedback_RemarkActivity.class);
+//                    send.putExtra("feedback_details",data);
+            send.putExtra("feedback_group", feedback_group);
+            send.putExtra("bd_details", bd_dta);
+            send.putExtra("job_id", job_id);
+            send.putExtra("status", status);
+            startActivity(send);
+        }
     }
 
     private Breakdowm_Submit_Request createLocalRequest() {

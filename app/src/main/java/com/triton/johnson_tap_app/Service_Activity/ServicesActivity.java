@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.PetBreedTypeSelectListener;
@@ -59,7 +58,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
     TextView txt_NoRecords, txt_refresh;
     ServiceListAdapter petBreedTypesListAdapter;
     AdditionalServiceListAdapter additionalServiceListAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
+    /*SwipeRefreshLayout swipeRefreshLayout;*/
     Dialog dialog;
     Context context;
     private List<ServiceResponse.DataBean> breedTypedataBeanList;
@@ -78,7 +77,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
         rv_add_list = findViewById(R.id.rv_add_list);
         txt_NoRecords = findViewById(R.id.txt_no_records);
         txt_refresh = findViewById(R.id.txt_refresh);
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        /*swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);*/
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "default value");
@@ -138,7 +137,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             jobFindResponseCall(se_user_mobile_no);
         }
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
@@ -157,7 +156,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
                     LoginResponseCall();
                 }
             }
-        });
+        });*/
 
 //        additionalList.add(new ServiceResponse.DataBean("Failure Report2", "0", "1", "0", "0", "0", "1"));
         if (emp_Type.equalsIgnoreCase("engineer")) {
@@ -190,8 +189,8 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             @Override
             public void onResponse(@NonNull Call<LoginResponse1> call, @NonNull Response<LoginResponse1> response) {
                 dialog.dismiss();
-                swipeRefreshLayout.setRefreshing(false);
-                swipeRefreshLayout.setEnabled(true);
+                /*swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setEnabled(true);*/
                 Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
@@ -217,8 +216,8 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
             @Override
             public void onFailure(@NonNull Call<LoginResponse1> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                swipeRefreshLayout.setRefreshing(false);
-                swipeRefreshLayout.setEnabled(true);
+                /*swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setEnabled(true);*/
                 Log.i(TAG, "LoginResponseCall: onFailure: error -> " + t.getMessage());
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 ErrorMyLocationAlert(t.getMessage());

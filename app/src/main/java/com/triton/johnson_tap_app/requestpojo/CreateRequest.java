@@ -16,6 +16,9 @@ public class CreateRequest {
     private String att_status;
     private String att_start_lat;
     private String att_start_long;
+    private String login_lat;
+    private String login_long;
+    private String login_address;
 
     public String getUser_mobile_no() {
         return user_mobile_no;
@@ -73,4 +76,27 @@ public class CreateRequest {
         this.att_start_long = att_start_long;
     }
 
+    public String getLogin_lat() {
+        return login_lat;
+    }
+
+    public void setLogin_lat(String login_lat) {
+        this.login_lat = login_lat;
+    }
+
+    public String getLogin_long() {
+        return login_long;
+    }
+
+    public void setLogin_long(String login_long) {
+        this.login_long = login_long;
+    }
+
+    public String getLogin_address() {
+        return login_address;
+    }
+
+    public void setLogin_address(String login_address) {
+        this.login_address = login_address;
+    }
 }

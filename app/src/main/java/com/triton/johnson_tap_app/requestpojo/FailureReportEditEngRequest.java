@@ -116,6 +116,9 @@ public class FailureReportEditEngRequest {
     @SerializedName("comp_device_no")
     private String comp_device_no;
     @Expose
+    @SerializedName("fr_no")
+    private String fr_no;
+    @Expose
     @SerializedName("comp_device_name")
     private String comp_device_name;
     @Expose
@@ -124,6 +127,9 @@ public class FailureReportEditEngRequest {
     @Expose
     @SerializedName("br_code")
     private String br_code;
+    @Expose
+    @SerializedName("seq_no")
+    private String seq_no;
     @Expose
     @SerializedName("matl_id")
     private String matl_id;
@@ -428,6 +434,14 @@ public class FailureReportEditEngRequest {
         this.comp_device_no = comp_device_no;
     }
 
+    public String getFr_no() {
+        return fr_no;
+    }
+
+    public void setFr_no(String fr_no) {
+        this.fr_no = fr_no;
+    }
+
     public String getComp_device_name() {
         return comp_device_name;
     }
@@ -450,6 +464,14 @@ public class FailureReportEditEngRequest {
 
     public void setBr_code(String br_code) {
         this.br_code = br_code;
+    }
+
+    public String getSeq_no() {
+        return seq_no;
+    }
+
+    public void setSeq_no(String seq_no) {
+        this.seq_no = seq_no;
     }
 
     public String getMatl_id() {

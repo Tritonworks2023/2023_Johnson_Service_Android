@@ -7,34 +7,37 @@
     tools:context=".Service_Activity.Breakdown_Services.Material_Request_MR_ScreenActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_bar">
+        android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_back_arrow"/>
+                android:src="@drawable/ic_back_arrow" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Material Request"
-                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
+                android:text="Material Request"
                 android:textColor="#ffffff"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/ic_paused"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="end"
-                android:visibility="visible"
-                android:src="@drawable/ic_pause_white"/>
+                android:src="@drawable/ic_pause_white"
+                android:visibility="visible" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -43,9 +46,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_bar"
+        android:background="@color/colorPrimary"
         android:gravity="center_vertical"
-        android:padding="10dp"
-        android:background="@color/colorPrimary">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/txt_jobid"
@@ -61,9 +64,9 @@
             android:id="@+id/txt_starttime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginTop="10dp"
             android:layout_below="@id/txt_jobid"
+            android:layout_marginTop="10dp"
+            android:text=""
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -74,8 +77,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
-        android:layout_below="@id/rel_id">
+        android:layout_below="@id/rel_id"
+        android:layout_marginBottom="80dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,10 +92,10 @@
                 android:id="@+id/card_mr1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -108,23 +111,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 1 *"
                         android:paddingLeft="7dp"
+                        android:text="ITEM 1 *"
                         android:textColor="@color/red"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -134,10 +137,10 @@
                 android:id="@+id/card_mr2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -153,23 +156,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 2 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 2 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -179,10 +182,10 @@
                 android:id="@+id/card_mr3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -198,23 +201,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 3 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 3 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -224,10 +227,10 @@
                 android:id="@+id/card_mr4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -243,23 +246,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 4 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 4 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -269,10 +272,10 @@
                 android:id="@+id/card_mr5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -288,23 +291,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 5 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 5 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -314,10 +317,10 @@
                 android:id="@+id/card_mr6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -333,23 +336,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 6 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 6 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -359,10 +362,10 @@
                 android:id="@+id/card_mr7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -378,23 +381,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 7 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 7 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -404,10 +407,10 @@
                 android:id="@+id/card_mr8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -423,23 +426,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 8"
                         android:paddingLeft="7dp"
+                        android:text="ITEM 8"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -449,10 +452,10 @@
                 android:id="@+id/card_mr9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -468,23 +471,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 9 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 9 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -494,10 +497,10 @@
                 android:id="@+id/card_mr10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -513,23 +516,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="ITEM 10 "
                         android:paddingLeft="7dp"
+                        android:text="ITEM 10 "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mr10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="5dp"
-                        android:text=""
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="" />
 
                 </LinearLayout>
 
@@ -541,10 +544,10 @@
         android:id="@+id/footerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="20dp"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <LinearLayout
@@ -566,6 +569,7 @@
                 android:textColor="@color/white">
 
             </Button>
+
             <Button
                 android:id="@+id/btn_next"
                 android:layout_width="0dp"
@@ -573,12 +577,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/blue_button_background_with_radius"
                 android:drawableEnd="@drawable/icn_next"
-                android:text="@string/next"
-                android:textAlignment="center"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="@color/white">
-            </Button>
+                android:text="@string/next"
+                android:textAlignment="center"
+                android:textColor="@color/white"></Button>
 
             <Button
                 android:id="@+id/btn_success"
@@ -592,8 +595,8 @@
                 android:text="@string/success"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:visibility="gone">
-            </Button>
+                android:visibility="gone"></Button>
+
             <Button
                 android:id="@+id/btn_complete"
                 android:layout_width="0dp"
@@ -606,6 +609,7 @@
                 android:visibility="gone">
 
             </Button>
+
             <Button
                 android:id="@+id/btn_pending"
                 android:layout_width="0dp"
@@ -615,15 +619,16 @@
                 android:text="Pending"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:visibility="gone">
-            </Button>
+                android:visibility="gone"></Button>
 
         </LinearLayout>
+
         <Button
             android:id="@+id/btn_clear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="@dimen/_10dp"
             android:layout_marginEnd="40dp"
             android:background="@drawable/blue_button_background_with_radius"
             android:drawableEnd="@drawable/icn_next"
@@ -633,11 +638,9 @@
             android:paddingEnd="20dp"
             android:text="Clear"
             android:textAlignment="center"
-            android:textColor="@color/white"
             android:textAllCaps="false"
-            android:layout_marginTop="@dimen/_10dp"
-            android:visibility="gone">
-        </Button>
+            android:textColor="@color/white"
+            android:visibility="gone"></Button>
     </LinearLayout>
 
 </RelativeLayout>

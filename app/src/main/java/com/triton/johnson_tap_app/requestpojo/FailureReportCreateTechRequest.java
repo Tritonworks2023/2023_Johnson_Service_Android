@@ -3,6 +3,7 @@ package com.triton.johnson_tap_app.requestpojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FailureReportCreateTechRequest {
@@ -21,7 +22,7 @@ public class FailureReportCreateTechRequest {
     private String submitted_by_emp_code;
     @Expose
     @SerializedName("file_image")
-    private List<File_image> file_image;
+    private ArrayList<File_image> file_image = new ArrayList<>();
     @Expose
     @SerializedName("customer_address")
     private String customer_address;
@@ -140,6 +141,9 @@ public class FailureReportCreateTechRequest {
     @SerializedName("fr_no")
     private String fr_no;
     @Expose
+    @SerializedName("seq_no")
+    private String seq_no;
+    @Expose
     @SerializedName("bar_code_job_no")
     private String bar_code_job_no;
     @Expose
@@ -187,11 +191,11 @@ public class FailureReportCreateTechRequest {
         this.submitted_by_emp_code = submitted_by_emp_code;
     }
 
-    public List<File_image> getFile_image() {
+    public ArrayList<File_image> getFile_image() {
         return file_image;
     }
 
-    public void setFile_image(List<File_image> file_image) {
+    public void setFile_image(ArrayList<File_image> file_image) {
         this.file_image = file_image;
     }
 
@@ -505,6 +509,14 @@ public class FailureReportCreateTechRequest {
 
     public void setFr_no(String fr_no) {
         this.fr_no = fr_no;
+    }
+
+    public String getSeq_no() {
+        return seq_no;
+    }
+
+    public void setSeq_no(String seq_no) {
+        this.seq_no = seq_no;
     }
 
     public String getBar_code_job_no() {

@@ -7,26 +7,29 @@
     tools:context=".Service_Activity.Breakdown_Services.BD_StatusActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_bar">
+        android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_back_arrow"/>
+                android:src="@drawable/ic_back_arrow" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Breakdown Service"
-                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
+                android:text="Breakdown Service"
                 android:textColor="#ffffff"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -35,9 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_bar"
+        android:background="@color/colorPrimary"
         android:gravity="center_vertical"
-        android:padding="10dp"
-        android:background="@color/colorPrimary">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/txt_jobid"
@@ -53,9 +56,9 @@
             android:id="@+id/txt_starttime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginTop="10dp"
             android:layout_below="@id/txt_jobid"
+            android:layout_marginTop="10dp"
+            android:text=""
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -83,8 +86,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="Start Job "
                 android:paddingLeft="10dp"
+                android:text="Start Job "
                 android:textColor="#213e9a"
                 android:textSize="25dp" />
 
@@ -92,10 +95,10 @@
                 android:id="@+id/card_full"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -111,11 +114,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Completed in full"
                         android:paddingLeft="30dp"
+                        android:text="Completed in full"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -126,10 +129,10 @@
                 android:id="@+id/card_material"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -145,11 +148,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Completed but material to be replaced"
                         android:paddingLeft="30dp"
+                        android:text="Completed but material to be replaced"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -159,10 +162,10 @@
                 android:id="@+id/card_lift"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -178,11 +181,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:text="Lift Shutdown"
                         android:paddingLeft="30dp"
+                        android:text="Lift Shutdown"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>

@@ -15,6 +15,9 @@ public class LogoutRequest {
     private String att_end_long;
     private String att_no_of_hrs;
     private String user_mobile_no;
+    private String logout_lat;
+    private String logout_long;
+    private String logout_address;
 
     public String get_id() {
         return _id;
@@ -71,5 +74,29 @@ public class LogoutRequest {
 
     public void setUser_mobile_no(String user_mobile_no) {
         this.user_mobile_no = user_mobile_no;
+    }
+
+    public String getLogout_lat() {
+        return logout_lat;
+    }
+
+    public void setLogout_lat(String logout_lat) {
+        this.logout_lat = logout_lat;
+    }
+
+    public String getLogout_long() {
+        return logout_long;
+    }
+
+    public void setLogout_long(String logout_long) {
+        this.logout_long = logout_long;
+    }
+
+    public String getLogout_address() {
+        return logout_address;
+    }
+
+    public void setLogout_address(String logout_address) {
+        this.logout_address = logout_address;
     }
 }

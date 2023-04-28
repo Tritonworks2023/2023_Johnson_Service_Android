@@ -143,6 +143,9 @@ public class RepairWorkRequestApprovalCreateRequest {
     @SerializedName("job_no")
     private String job_no;
     @Expose
+    @SerializedName("rb_no")
+    private String rb_no;
+    @Expose
     @SerializedName("route_code")
     private String route_code;
     @Expose
@@ -518,6 +521,14 @@ public class RepairWorkRequestApprovalCreateRequest {
 
     public void setJob_no(String job_no) {
         this.job_no = job_no;
+    }
+
+    public String getRb_no() {
+        return rb_no;
+    }
+
+    public void setRb_no(String rb_no) {
+        this.rb_no = rb_no;
     }
 
     public String getRoute_code() {

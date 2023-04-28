@@ -35,10 +35,12 @@ import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.interfaces.OnItemClickRepairWorkRequestMachIdListResponseListener;
 import com.triton.johnson_tap_app.interfaces.OnItemClickRepairWorkRequestNatureOfWorkResponseListener;
+import com.triton.johnson_tap_app.requestpojo.FindFlrRbwNumberRequest;
 import com.triton.johnson_tap_app.requestpojo.JobIdRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkMechBrCodeRequest;
 import com.triton.johnson_tap_app.requestpojo.RepairWorkRequestApprovalCreateRequest;
 import com.triton.johnson_tap_app.responsepojo.FailureReportDropDownDataResponse;
+import com.triton.johnson_tap_app.responsepojo.FindRbwNumberResponse;
 import com.triton.johnson_tap_app.responsepojo.JobListRepairWorkRequestResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkMechBrCodeResponse;
 import com.triton.johnson_tap_app.responsepojo.RepairWorkRequestMechIdListResponse;
@@ -90,6 +92,7 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
     private List<JobListRepairWorkRequestResponse.Data> jobListRepairWorkRequestResponseList = new ArrayList<>();
     private Dialog dialog;
     private FailureReportDropDownDataResponse failureReportDropDownDataResponse = new FailureReportDropDownDataResponse();
+    private FindFlrRbwNumberRequest findFlrRbwNumberRequest = new FindFlrRbwNumberRequest();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -276,6 +279,8 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
         repairWorkRequestApprovalCreateRequest.setSubmitted_by_emp_code(se_user_id);
         repairWorkRequestApprovalCreateRequest.setSubmitted_by_name(se_user_name);
         repairWorkRequestApprovalCreateRequest.setSubmitted_by_num(se_user_mobile_no);
+
+        findFlrRbwNumberRequest.setBr_code(repairWorkRequestMechDataResponse.getBr_code());
 
         getTodayDate();
     }
@@ -626,6 +631,42 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
         });
     }
 
+    private void getFindRbwNumber(FindFlrRbwNumberRequest findFlrRbwNumberRequest) {
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+
+        Log.i(TAG, "getFindRbwNumber: getFindRbwNumber -> " + new Gson().toJson(findFlrRbwNumberRequest));
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+
+        Call<FindRbwNumberResponse> call = apiInterface.getFindRbwNumber(RestUtils.getContentType(), findFlrRbwNumberRequest);
+        Log.i(TAG, "getFindRbwNumber: URL -> " + call.request().url().toString());
+
+        call.enqueue(new Callback<FindRbwNumberResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<FindRbwNumberResponse> call, @NonNull Response<FindRbwNumberResponse> response) {
+                dialog.dismiss();
+                Log.i(TAG, "getFindRbwNumber: onResponse: FindFlrNumberResponse -> " + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (response.body().getCode() == 200) {
+                        repairWorkRequestApprovalCreateRequest.setRb_no(response.body().getData().getRWNO());
+                        getRepairWorkRequestApprovalCreate(repairWorkRequestApprovalCreateRequest);
+                    } else {
+                        ErrorMsgDialog(response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<FindRbwNumberResponse> call, @NonNull Throwable t) {
+                dialog.dismiss();
+                Log.e(TAG, "getFindRbwNumber: onFailure: error --> " + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void getRepairWorkRequestApprovalCreate(RepairWorkRequestApprovalCreateRequest repairWorkRequestApprovalCreateRequest) {
 
         if (!dialog.isShowing()) {
@@ -756,7 +797,8 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
         } else if (!nullPointerValidator(repairWorkRequestApprovalCreateRequest.getRequest_on())) {
             ErrorMsgDialog("Please Select Request On.");
         } else {
-            getRepairWorkRequestApprovalCreate(repairWorkRequestApprovalCreateRequest);
+            getFindRbwNumber(findFlrRbwNumberRequest);
+//            getRepairWorkRequestApprovalCreate(repairWorkRequestApprovalCreateRequest);
         }
 
         Log.i(TAG, "validateRepairWorkRequestApprovalCreate: RepairWorkRequestApprovalCreateRequest (2) -> " + new Gson().toJson(repairWorkRequestApprovalCreateRequest));

@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -39,6 +41,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.triton.johnson_tap_app.Location.GpsTracker;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.Service_Activity.Agent_ProfileActivity;
 import com.triton.johnson_tap_app.Service_Activity.ServicesActivity;
@@ -60,9 +63,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
@@ -83,6 +88,9 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
     Dialog dialog;
     LocationManager locationManager;
     String latitude, longitude, no_of_hours;
+    Geocoder geocoder;
+    String address = "";
+    List<Address> myAddress = new ArrayList<>();
     String endDateandTime, currentDateandTime, currentDate, str_spinner, current, start;
     long elapsedHours, elapsedMinutes;
     String se_user_mobile_no, se_user_name, se_id, check_id, view_count, service_count, notification_count, networkStatus = "";
@@ -94,6 +102,7 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<String> students;
     private JSONArray result;
+    private GpsTracker gpsTracker;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -536,7 +545,6 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
                             startActivity(send);
                         }
 
-
                     } else {
                         ErrorMyLocationAlert(response.body().getMessage());
 //                        Toasty.warning(getApplicationContext(),""+message,Toasty.LENGTH_LONG).show();
@@ -580,8 +588,11 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
         creaRequest.setAtt_status("Present");
         creaRequest.setAtt_start_lat(latitude);
         creaRequest.setAtt_start_long(longitude);
+        creaRequest.setLogin_lat(latitude);
+        creaRequest.setLogin_long(longitude);
+        creaRequest.setLogin_address(address);
 
-        Log.w(TAG, "loginCreateRequest " + new Gson().toJson(creaRequest));
+        Log.i(TAG, "createRequest: creaRequest -> " + new Gson().toJson(creaRequest));
         return creaRequest;
     }
 
@@ -589,7 +600,6 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<SuccessResponse> call = apiInterface.LogoutCall(RestUtils.getContentType(), addReviewRequest());
         Log.w(TAG, "addReviewResponseCall url  :%s" + " " + call.request().url().toString());
-
 
         call.enqueue(new Callback<SuccessResponse>() {
             @Override
@@ -639,7 +649,10 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
 //        addReviewRequest.setAtt_end_long(att_end_long);
 //        addReviewRequest.setAtt_no_of_hrs(att_no_hrs);
         addReviewRequest.setUser_mobile_no(se_user_mobile_no);
-        Log.w(TAG, "addReviewRequest" + new Gson().toJson(addReviewRequest));
+        addReviewRequest.setLogout_lat(latitude);
+        addReviewRequest.setLogout_long(longitude);
+        addReviewRequest.setLogout_address(address);
+        Log.i(TAG, "addReviewRequest: addReviewRequest -> " + new Gson().toJson(addReviewRequest));
         return addReviewRequest;
     }
 
@@ -742,9 +755,28 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
                 double longi = locationGPS.getLongitude();
                 latitude = String.valueOf(lat);
                 longitude = String.valueOf(longi);
-                Log.d("Your Location:", "Latitude: " + latitude + "\n" + "Longitude: " + longitude);
+                Log.i(TAG, "getLocation: latitude - " + latitude + " - longitude - " + longitude);
+
+                gpsTracker = new GpsTracker(context);
+
+                if (lat != 0.0 && longi != 0.0) {
+                    geocoder = new Geocoder(context, Locale.getDefault());
+
+                    try {
+                        myAddress = geocoder.getFromLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude(), 1);
+                        address = myAddress.get(0).getAddressLine(0);
+                    } catch (IOException e) {
+                        Log.e(TAG, "getLocation: error - " + e.getMessage());
+                    }
+
+//                    Toast.makeText(context, "Lat : " + lat + "Long : " + longi + "Add : " + address, Toast.LENGTH_LONG).show();
+                    Log.i(TAG, "getLocation: address - " + address);
+                } else {
+                    ErrorMyLocationAlert("Kindly enable the\nGPS Location and Try again");
+//                Toast.makeText(context, "Kindly enable the GPS Location and Try again", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                // Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
             }
         }
 

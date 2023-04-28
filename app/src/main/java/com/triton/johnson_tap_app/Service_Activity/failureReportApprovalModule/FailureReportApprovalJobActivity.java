@@ -334,4 +334,10 @@ public class FailureReportApprovalJobActivity extends AppCompatActivity
             break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callGetListByEngCode(se_user_id);
+    }
 }

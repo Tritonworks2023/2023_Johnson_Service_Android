@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
+import static com.triton.johnson_tap_app.RestUtils.getContentType;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,7 +62,7 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
     ImageView iv_back, img_Pause;
     EditText feedback_remark;
     String s_feedback_remark;
-    String job_id = "", feedback_details, bd_dta, str_feedback_remark = "", status;
+    String job_id = "", feedback_details, bd_dta, str_feedback_remark = "", status, str_but_type = "";
     String TAG = Feedback_RemarkActivity.class.getSimpleName(), str_job_status = "";
     String se_id, se_user_mobile_no, se_user_name, compno, sertype, message, service_title = "";
     List<RetriveLocalValueBRResponse.Data> databean;
@@ -73,6 +75,7 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
     String address = "";
     int PageNumber = 4;
     private Button btnSelection, btn_prev;
+    private SharedPreferences sharedPreferences;
 
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,10 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
             bd_dta = extras.getString("bd_details");
         }
 
+        if (extras != null && extras.containsKey("feedback_group")) {
+            feedback_group = extras.getString("feedback_group");
+        }
+
         if (extras != null) {
             //   job_id = extras.getString("job_id");
         }
@@ -116,7 +123,7 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
             feedback_remark.setText(str_feedback_remark);
         }
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "default value");
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
@@ -135,7 +142,6 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
 
         txt_Jobid.setText("Job ID : " + job_id);
         txt_Starttime.setText("Start Time : " + str_StartTime);
-
 
         Spannable name_Upload = new SpannableString("Feedback Remark ");
         name_Upload.setSpan(new ForegroundColorSpan(Feedback_RemarkActivity.this.getResources().getColor(R.color.colorAccent)), 0, name_Upload.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -180,21 +186,10 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                s_feedback_remark = feedback_remark.getText().toString();
-
-                if (s_feedback_remark.equals("")) {
-                    feedback_remark.setError("Please Enter the Feedback Remark");
-                } else {
-                    CommonUtil.dbUtil.addFeedback(job_id, service_title, s_feedback_remark, "4");
-                    Cursor cur = CommonUtil.dbUtil.getFeedback(job_id, service_title, "4");
-                    Log.e("Feedback Count", "" + cur.getCount());
-                    Intent send = new Intent(Feedback_RemarkActivity.this, Material_RequestActivity.class);
-                    send.putExtra("status", status);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("feedback_remark", s_feedback_remark);
-                    editor.apply();
-                    startActivity(send);
-                }
+                str_but_type = "btn_next";
+                str_job_status = "Job Paused";
+                Job_status_update();
+                createLocalvalue();
 
             }
         });
@@ -213,6 +208,7 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
                                 str_job_status = "Job Paused";
+                                str_but_type = "img_Pause";
                                 Job_status_update();
                                 createLocalvalue();
 
@@ -277,7 +273,7 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
     private void createLocalvalue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), createLocalRequest());
+        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(getContentType(), createLocalRequest());
 
         Log.i(TAG, "createLocalvalue: URL -> " + call.request().url().toString());
 
@@ -295,8 +291,12 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
 
                             Log.d("msg", message);
 
-                            Intent send = new Intent(context, ServicesActivity.class);
-                            startActivity(send);
+                            if (str_but_type.equalsIgnoreCase("img_Pause")) {
+                                Intent send = new Intent(context, ServicesActivity.class);
+                                startActivity(send);
+                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                moveNext();
+                            }
                         }
 
                     } else {
@@ -315,6 +315,27 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveNext() {
+
+        s_feedback_remark = feedback_remark.getText().toString();
+
+        if (s_feedback_remark.equals("")) {
+            feedback_remark.setError("Please Enter the Feedback Remark");
+        } else {
+            CommonUtil.dbUtil.addFeedback(job_id, service_title, s_feedback_remark, "4");
+            Cursor cur = CommonUtil.dbUtil.getFeedback(job_id, service_title, "4");
+            Log.e("Feedback Count", "" + cur.getCount());
+            Intent send = new Intent(Feedback_RemarkActivity.this, Material_RequestActivity.class);
+            send.putExtra("status", status);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("feedback_remark", s_feedback_remark);
+            editor.putString("feedback_group", feedback_group);
+            editor.apply();
+            startActivity(send);
+        }
+
     }
 
     private void ErrorMsgDialog(String strMsg) {
