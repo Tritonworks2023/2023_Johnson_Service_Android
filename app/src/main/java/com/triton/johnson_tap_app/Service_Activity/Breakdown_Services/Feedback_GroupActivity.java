@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
+import static com.triton.johnson_tap_app.utils.RestUtils.getContentType;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -34,13 +36,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.Db.CommonUtil;
 import com.triton.johnson_tap_app.Db.DbHelper;
-import com.triton.johnson_tap_app.Db.DbUtil;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.RestUtils;
 import com.triton.johnson_tap_app.Service_Activity.ServicesActivity;
 import com.triton.johnson_tap_app.Service_Adapter.Feedback_GroupAdapter;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
+import com.triton.johnson_tap_app.interfaces.OnItemClickCheckBoxFeedbackGroupDetails;
 import com.triton.johnson_tap_app.requestpojo.Breakdowm_Submit_Request;
 import com.triton.johnson_tap_app.requestpojo.Feedback_GroupRequest;
 import com.triton.johnson_tap_app.requestpojo.Job_status_updateRequest;
@@ -58,14 +60,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Feedback_GroupActivity extends AppCompatActivity {
+public class Feedback_GroupActivity extends AppCompatActivity implements OnItemClickCheckBoxFeedbackGroupDetails {
 
     TextView text, txt_no_records;
     Button btnSelection, btn_prev;
@@ -80,7 +81,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
     Context context;
     SharedPreferences sharedPreferences;
     ArrayList<String> mydata = new ArrayList<>();
-    ArrayList<String> outputList = null;
+    ArrayList<String> feedback_group_list = new ArrayList<>();
     TextView txt_Jobid, txt_Starttime;
     String str_StartTime, str_BDDetails = "", feedback_group = "";
     String networkStatus = "", str_but_type = "";
@@ -96,9 +97,9 @@ public class Feedback_GroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feedback_group);
         context = this;
 
-        CommonUtil.dbUtil = new DbUtil(context);
+        /*CommonUtil.dbUtil = new DbUtil(context);
         CommonUtil.dbUtil.open();
-        CommonUtil.dbHelper = new DbHelper(context);
+        CommonUtil.dbHelper = new DbHelper(context);*/
 
         text = findViewById(R.id.text);
         txt_no_records = findViewById(R.id.txt_no_records);
@@ -146,7 +147,6 @@ public class Feedback_GroupActivity extends AppCompatActivity {
             //  job_id = extras.getString("job_id");
         }
 
-
         Spannable name_Upload = new SpannableString("Description ");
         name_Upload.setSpan(new ForegroundColorSpan(Feedback_GroupActivity.this.getResources().getColor(R.color.colorAccent)), 0, name_Upload.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         text.setText(name_Upload);
@@ -165,15 +165,15 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
             NoInternetDialog();
         } else {
-            jobFindResponseCall(job_id);
+
+            retrive_LocalValue();
 
             img_Pause.setVisibility(View.VISIBLE);
         }
 
-        getBDDetails();
+//        getBDDetails();
 
-
-        if (status.equals("new")) {
+        /*if (status.equals("new")) {
 
 
         } else {
@@ -184,7 +184,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
             } else {
                 NoInternetDialog();
             }
-        }
+        }*/
 
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -270,7 +270,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
                 if (Searchvalue.equals("")) {
                     recyclerView.setVisibility(View.VISIBLE);
-                    jobFindResponseCall(job_id);
+//                    jobFindResponseCall(job_id);
                     img_clearsearch.setVisibility(View.INVISIBLE);
                 } else {
                     //   Log.w(TAG,"Search Value---"+Searchvalue);
@@ -284,11 +284,10 @@ public class Feedback_GroupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 etsearch.setText("");
                 recyclerView.setVisibility(View.VISIBLE);
-                jobFindResponseCall(job_id);
+//                jobFindResponseCall(job_id);
                 img_clearsearch.setVisibility(View.INVISIBLE);
             }
         });
-
 
     }
 
@@ -304,7 +303,6 @@ public class Feedback_GroupActivity extends AppCompatActivity {
             Log.e("BD Data Get", "" + str_BDDetails);
         }
 
-
     }
 
     public void NoInternetDialog() {
@@ -313,7 +311,6 @@ public class Feedback_GroupActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mView = inflater.inflate(R.layout.dialog_nointernet, null);
         Button btn_Retry = mView.findViewById(R.id.btn_retry);
-
 
         mBuilder.setView(mView);
         final Dialog dialog = mBuilder.create();
@@ -431,14 +428,13 @@ public class Feedback_GroupActivity extends AppCompatActivity {
     private void Job_status_update() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<Job_status_updateResponse> call = apiInterface.job_status_updateResponseCall(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), job_status_updateRequest());
+        Call<Job_status_updateResponse> call = apiInterface.job_status_updateResponseCall(getContentType(), job_status_updateRequest());
         Log.i(TAG, "Job_status_update: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<Job_status_updateResponse>() {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<Job_status_updateResponse> call, @NonNull Response<Job_status_updateResponse> response) {
-
 
                 Log.i(TAG, "Job_status_update: onResponse: " + new Gson().toJson(response.body()));
                 if (response.body() != null) {
@@ -450,7 +446,6 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
                             Log.d("msg", message);
                         }
-
 
                     } else {
                         Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
@@ -494,18 +489,26 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
     private void setView(List<Feedback_GroupResponse.DataBean> dataBeanList) {
 
-        getFeedbackGroup();
+//        getFeedbackGroup();
+
+        for (int i = 0; i < dataBeanList.size(); i++) {
+            for (String feedback_group_code : feedback_group_list) {
+                if (dataBeanList.get(i).getCodes().equalsIgnoreCase(feedback_group_code)) {
+                    dataBeanList.get(i).setSelected(true);
+                }
+            }
+        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        activityBasedListAdapter = new Feedback_GroupAdapter(getApplicationContext(), dataBeanList, mydata);
+        activityBasedListAdapter = new Feedback_GroupAdapter(getApplicationContext(), dataBeanList, mydata, this);
         recyclerView.setAdapter(activityBasedListAdapter);
     }
 
     private void createLocalvalue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), createLocalRequest());
+        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(getContentType(), createLocalRequest());
         Log.i(TAG, "createLocalvalue: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<SuccessResponse>() {
@@ -549,15 +552,15 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
     private void moveNext() {
 
-//                String data = "";
-//                for (int i = 0; i < dataBeanList.size(); i++) {
-//                    Feedback_GroupResponse.DataBean singleStudent = dataBeanList.get(i);
-//                    if (singleStudent.isSelected() == true) {
-//                        data = data + "," + dataBeanList.get(i).getCodes().toString();
-//                    }
-//                }
+        /*String data = "";
+        for (int i = 0; i < dataBeanList.size(); i++) {
+            Feedback_GroupResponse.DataBean singleStudent = dataBeanList.get(i);
+            if (singleStudent.isSelected()) {
+                data = data + "," + dataBeanList.get(i).getCodes().toString();
+            }
+        }
 
-        getFeedbackGroup();
+//        getFeedbackGroup();
 
         ArrayList<String> outputList = new ArrayList<String>();
         for (String item : mydata) {
@@ -566,23 +569,21 @@ public class Feedback_GroupActivity extends AppCompatActivity {
             // outputList.remove("null");
         }
 
-        pre_check = String.valueOf(outputList);
-//                   pre_check = pre_check.replaceAll("\\[", "").replaceAll("\\]","");
-//                  System.out.println("EEEEEEEEEEE"+ddd);
+//        pre_check = pre_check.replaceAll("\\[", "").replaceAll("\\]", "");
+//        System.out.println("EEEEEEEEEEE" + ddd);
         Log.e("FEEDBACK GROUP", String.valueOf(mydata));
         // Log.e("FEEDBACK GROUP", String.valueOf(outputList));
-        Log.e("FEEDBACK GROUP 1", pre_check);
 
-        // sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        // sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);*/
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("feedbackgroup", pre_check);
-        Log.e("FeedBack Group", pre_check);
+        editor.putString("feedbackgroup", feedback_group);
         editor.putString("Hi", "Nishanth");
         Log.e("FeedBack Group", "dsfds");
         editor.apply();
 
         //  if(data.equals("")){
-        if (mydata.isEmpty()) {
+//        if (mydata.isEmpty()) {
+        if (feedback_group.isEmpty()) {
 
             alertDialog = new AlertDialog.Builder(Feedback_GroupActivity.this)
                     .setTitle("Please Selected Value")
@@ -594,7 +595,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
                     .show();
         } else {
             Intent send = new Intent(Feedback_GroupActivity.this, Feedback_DetailsActivity.class);
-            send.putExtra("feedback_group", pre_check);
+            send.putExtra("feedback_group", feedback_group);
             send.putExtra("bd_details", bd_dta);
             send.putExtra("job_id", job_id);
             send.putExtra("status", status);
@@ -607,10 +608,9 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
         getFeedbackGroup();
 
-        Log.e("before ", String.valueOf(mydata));
+        Log.i(TAG, "createLocalRequest: feedback_group -> " + feedback_group);
 
-        feedback_group = String.valueOf(mydata).replaceAll("\n", "").replaceAll("", "");
-        Log.e("after ", feedback_group);
+        feedback_group = String.valueOf(feedback_group).replaceAll("\n", "").replaceAll("", "");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -620,6 +620,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
         //submitDailyRequest.setFeedback_details(sstring);
         submitDailyRequest.setFeedback_details("");
         submitDailyRequest.setCode_list(feedback_group);
+        submitDailyRequest.setCode_list1(feedback_group_list);
         submitDailyRequest.setFeedback_remark_text("");
         submitDailyRequest.setMr_status("");
         submitDailyRequest.setMr_1("");
@@ -654,13 +655,15 @@ public class Feedback_GroupActivity extends AppCompatActivity {
     private void retrive_LocalValue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create((APIInterface.class));
-        Call<RetriveLocalValueBRResponse> call = apiInterface.retriveLocalValueBRCall(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), localRequest());
-        Log.e("Retrive Local Value url  :%s", " " + call.request().url().toString());
+        Call<RetriveLocalValueBRResponse> call = apiInterface.retriveLocalValueBRCall(getContentType(), localRequest());
+
+        Log.i(TAG, "retrive_LocalValue: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<RetriveLocalValueBRResponse>() {
             @Override
-            public void onResponse(Call<RetriveLocalValueBRResponse> call, Response<RetriveLocalValueBRResponse> response) {
-                Log.e("Retrive Response", "" + new Gson().toJson(response.body()));
+            public void onResponse(@NonNull Call<RetriveLocalValueBRResponse> call, @NonNull Response<RetriveLocalValueBRResponse> response) {
+
+                Log.i(TAG, "retrive_LocalValue: onResponse: RetriveLocalValueBRResponse -> " + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
                     message = response.body().getMessage();
@@ -668,17 +671,11 @@ public class Feedback_GroupActivity extends AppCompatActivity {
                     if (response.body().getCode() == 200) {
 
                         if (response.body().getData() != null) {
-                            Log.d("msg", message);
 
                             str_BDDetails = response.body().getData().getBd_details();
-                            Log.e("Retive BD", "" + str_BDDetails);
                             feedback_group = response.body().getData().getCode_list();
-
-//
-//                           String[]  strValue = feedback_group.split(",");
-//                           mydata= new ArrayList<String>(
-//                                    Arrays.asList(strValue));
-
+                            feedback_group_list = response.body().getData().getCode_list1();
+                            jobFindResponseCall(job_id);
                         }
                     } else {
                         ErrorMsgDialog(message);
@@ -710,7 +707,7 @@ public class Feedback_GroupActivity extends AppCompatActivity {
 
     }
 
-    private void getFeedbackGroup() {
+    /*private void getFeedbackGroup() {
 
         mydata = new ArrayList<>();
 
@@ -728,6 +725,18 @@ public class Feedback_GroupActivity extends AppCompatActivity {
             } while (cur.moveToNext());
 
         }
+    }*/
+
+    private void getFeedbackGroup() {
+
+        feedback_group = "";
+
+        for (Feedback_GroupResponse.DataBean dataList : dataBeanList) {
+            if (dataList.isSelected()) {
+                feedback_group = feedback_group + "," + dataList.getCodes();
+            }
+        }
+
     }
 
     @Override
@@ -737,6 +746,29 @@ public class Feedback_GroupActivity extends AppCompatActivity {
         Intent intent = new Intent(context, BD_DetailsActivity.class);
         intent.putExtra("status", status);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void itemClickCheckBoxFeedbackGroupDetails(int newPosition, Feedback_GroupResponse.DataBean selectedItem) {
+
+        if (dataBeanList != null) {
+            for (int i = 0; i < dataBeanList.size(); i++) {
+                if (dataBeanList.get(i).getCodes().equalsIgnoreCase(selectedItem.getCodes())) {
+                    if (!dataBeanList.get(newPosition).isSelected()) {
+                        dataBeanList.get(newPosition).setSelected(true);
+                        feedback_group_list.add(dataBeanList.get(newPosition).getCodes());
+                    } else {
+                        dataBeanList.get(newPosition).setSelected(false);
+                        for (int j = 0; j < feedback_group_list.size(); i++) {
+                            if (dataBeanList.get(newPosition).getCodes().equalsIgnoreCase(feedback_group_list.get(j))) {
+                                feedback_group_list.remove(j);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
     }
 }

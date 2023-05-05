@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.responsepojo;
 
+import java.util.ArrayList;
+
 public class RetriveLocalValueBRResponse {
 
     private String Status;
@@ -39,7 +41,6 @@ public class RetriveLocalValueBRResponse {
         Code = code;
     }
 
-
     public class Data {
 
         private String SMU_SCH_COMPNO;
@@ -47,6 +48,7 @@ public class RetriveLocalValueBRResponse {
         private String bd_details;
         private String breakdown_service;
         private String code_list;
+        private ArrayList<String> code_list1 = new ArrayList<>();
         private String customer_acknowledgemnet;
         private String customer_name;
         private String customer_number;
@@ -107,6 +109,14 @@ public class RetriveLocalValueBRResponse {
 
         public void setCode_list(String code_list) {
             this.code_list = code_list;
+        }
+
+        public ArrayList<String> getCode_list1() {
+            return code_list1;
+        }
+
+        public void setCode_list1(ArrayList<String> code_list1) {
+            this.code_list1 = code_list1;
         }
 
         public String getCustomer_acknowledgemnet() {

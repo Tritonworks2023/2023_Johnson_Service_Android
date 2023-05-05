@@ -70,8 +70,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
@@ -124,9 +122,9 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_acknowledgement);
         context = this;
 
-        CommonUtil.dbUtil = new DbUtil(context);
+        /*CommonUtil.dbUtil = new DbUtil(context);
         CommonUtil.dbUtil.open();
-        CommonUtil.dbHelper = new DbHelper(context);
+        CommonUtil.dbHelper = new DbHelper(context);*/
 
         signaturePad = (SignaturePad) findViewById(R.id.signaturePad);
         saveButton = (Button) findViewById(R.id.saveButton);
@@ -192,7 +190,7 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
         }
 
-        getBdDetails();
+        /*getBdDetails();
 
         getFeedbackDetails();
 
@@ -204,7 +202,7 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
         getFeedback();
 
-        getSign(job_id, service_title);
+        getSign(job_id, service_title);*/
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
@@ -214,7 +212,7 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
             NoInternetDialog();
 
         } else {
-            Job_status();
+//            Job_status();
 
             job_details_in_text();
         }
@@ -298,15 +296,10 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
                 Log.e("Network", "" + networkStatus);
                 if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
-
                     NoInternetDialog();
-
                 } else {
                     uploadDigitalSignatureImageRequest();
-
                 }
-
-
             }
         });
 
@@ -332,8 +325,7 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
                         NoInternetDialog();
 
                     } else {
-
-                        locationAddResponseCall();
+                        Job_status();
                     }
                 }
 
@@ -542,8 +534,6 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
         //  Log.e("FEEDBACK GROUP", String.valueOf(mydata));
         Log.e("FeedBack Group", "" + Str_feedback_details);
-
-
     }
 
     private Breakdowm_Submit_Request getSample() {
@@ -615,7 +605,9 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
                                 Log.e("Hi", "inside");
 
-                                alert();
+//                                alert();
+
+                                locationAddResponseCall();
                             } else {
                                 Log.e("Hi", "outside");
                             }
@@ -676,16 +668,14 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                str_job_status = "Job Paused";
-
                 alertDialog = new AlertDialog.Builder(context)
                         .setTitle("Are you sure to pause this job ?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
-                                Job_status_update();
-                                createLocalvalue();
 
+                                str_job_status = "Job Paused";
+                                createLocalvalue();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -871,10 +861,18 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
                         if (response.body().getData() != null) {
 
-                            Log.d("msg", message);
+                            Job_status_update();
+                            /*Log.d("msg", message);
+                            Toasty.success(Customer_AcknowledgementActivity.this, "Job Paused Successfully", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
 
-                            Intent send = new Intent(context, ServicesActivity.class);
-                            startActivity(send);
+                            CommonUtil.dbUtil.reportDeletePreventiveListDelete(job_id, service_title);
+                            CommonUtil.dbUtil.deleteSign(job_id, service_title);
+                            CommonUtil.dbUtil.deleteCustAck(job_id, service_title);
+                            CommonUtil.dbUtil.deleteBreakdownMR(job_id, service_title);
+
+                            Intent send = new Intent(Customer_AcknowledgementActivity.this, ServicesActivity.class);
+                            startActivity(send);*/
                         }
 
                     } else {
@@ -1029,7 +1027,6 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
             Log.i(TAG, "locationAddResponseCall: URL - " + call.request().url().toString());
 
-
             call.enqueue(new Callback<SubmitBreakdownResponseee>() {
                 @SuppressLint("LogNotTimber")
                 @Override
@@ -1043,21 +1040,7 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
 
                         if (response.body().getCode() == 200) {
                             dialog.dismiss();
-
-                            Toasty.success(Customer_AcknowledgementActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-
-                            CommonUtil.dbUtil.reportDeletePreventiveListDelete(job_id, service_title);
-
-                            CommonUtil.dbUtil.deleteSign(job_id, service_title);
-
-                            CommonUtil.dbUtil.deleteCustAck(job_id, service_title);
-
-                            CommonUtil.dbUtil.deleteBreakdownMR(job_id, service_title);
-
-
-                            Intent send = new Intent(Customer_AcknowledgementActivity.this, ServicesActivity.class);
-                            startActivity(send);
+                            alert();
 
                         } else {
                             //  showErrorLoading(response.body().getMessage());
@@ -1221,14 +1204,23 @@ public class Customer_AcknowledgementActivity extends AppCompatActivity {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<Job_status_updateResponse> call, @NonNull Response<Job_status_updateResponse> response) {
+                Log.i(TAG, "onResponse: Job_status_updateResponse -> " + new Gson().toJson(response.body()));
 
-                Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     message = response.body().getMessage();
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
-                            Log.d("msg", message);
                             mDialog.dismiss();
+                            Toasty.success(Customer_AcknowledgementActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+
+                            /*CommonUtil.dbUtil.reportDeletePreventiveListDelete(job_id, service_title);
+                            CommonUtil.dbUtil.deleteSign(job_id, service_title);
+                            CommonUtil.dbUtil.deleteCustAck(job_id, service_title);
+                            CommonUtil.dbUtil.deleteBreakdownMR(job_id, service_title);*/
+
+                            Intent send = new Intent(Customer_AcknowledgementActivity.this, ServicesActivity.class);
+                            startActivity(send);
                         }
                     } else {
                         ErrorMyLocationAlert(response.body().getMessage());

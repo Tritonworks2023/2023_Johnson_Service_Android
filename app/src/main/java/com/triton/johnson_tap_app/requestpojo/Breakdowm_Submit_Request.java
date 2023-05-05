@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.requestpojo;
 
+import java.util.ArrayList;
+
 public class Breakdowm_Submit_Request {
 
     private String bd_details;
@@ -7,6 +9,7 @@ public class Breakdowm_Submit_Request {
     private String feedback_remark_text;
     private String mr_status;
     private String code_list;
+    private ArrayList<String> code_list1 = new ArrayList<>();
     private String mr_1;
     private String mr_2;
     private String mr_3;
@@ -25,12 +28,10 @@ public class Breakdowm_Submit_Request {
     private String date_of_submission;
     private String user_mobile_no;
     private String job_id;
-
     private String SMU_SCH_COMPNO;
     private String SMU_SCH_SERTYPE;
 
     private int page_number;
-
 
     public String getBd_details() {
         return bd_details;
@@ -176,7 +177,6 @@ public class Breakdowm_Submit_Request {
         this.customer_number = customer_number;
     }
 
-
     public String getCustomer_acknowledgemnet() {
         return customer_acknowledgemnet;
     }
@@ -231,6 +231,14 @@ public class Breakdowm_Submit_Request {
 
     public void setCode_list(String code_list) {
         this.code_list = code_list;
+    }
+
+    public ArrayList<String> getCode_list1() {
+        return code_list1;
+    }
+
+    public void setCode_list1(ArrayList<String> code_list1) {
+        this.code_list1 = code_list1;
     }
 
     public int getPage_number() {

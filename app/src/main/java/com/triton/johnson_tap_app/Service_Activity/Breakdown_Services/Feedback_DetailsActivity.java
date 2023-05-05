@@ -34,7 +34,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.Db.CommonUtil;
 import com.triton.johnson_tap_app.Db.DbHelper;
-import com.triton.johnson_tap_app.Db.DbUtil;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.RestUtils;
 import com.triton.johnson_tap_app.Service_Activity.ServicesActivity;
@@ -47,6 +46,7 @@ import com.triton.johnson_tap_app.requestpojo.Feedback_DetailsRequest;
 import com.triton.johnson_tap_app.requestpojo.Job_status_updateRequest;
 import com.triton.johnson_tap_app.responsepojo.Feedback_DetailsResponse;
 import com.triton.johnson_tap_app.responsepojo.Job_status_updateResponse;
+import com.triton.johnson_tap_app.responsepojo.RetriveLocalValueBRResponse;
 import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
 import com.triton.johnson_tap_app.utils.CommonFunction;
 import com.triton.johnson_tap_app.utils.ConnectionDetector;
@@ -71,7 +71,8 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
     Button btnSelection, btn_prev;
     int textlength = 0;
     ImageView iv_back, img_clearsearch, img_Pause;
-    String feedback_group = "", TAG = Feedback_DetailsActivity.class.getSimpleName(), message, Title, petimage, str2 = null, sstring = "", bd_dta, job_id, str_feedback_details = "", service_title, feedbackGroup, pre_check, status;
+    String feedback_group = "", TAG = Feedback_DetailsActivity.class.getSimpleName(), message, Title, petimage, str2 = null, sstring = "", bd_dta, job_id,
+            str_feedback_details = "", service_title, feedbackGroup, pre_check, status;
     String se_id, se_user_mobile_no, se_user_name, compno, sertype;
     List<Feedback_DetailsResponse.DataBean> breedTypedataBeanList;
     Feedback_DetailsAdapter activityBasedListAdapter;
@@ -96,9 +97,9 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
         setContentView(R.layout.activity_feedback_details);
         context = this;
 
-        CommonUtil.dbUtil = new DbUtil(context);
+        /*CommonUtil.dbUtil = new DbUtil(context);
         CommonUtil.dbUtil.open();
-        CommonUtil.dbHelper = new DbHelper(context);
+        CommonUtil.dbHelper = new DbHelper(context);*/
 
         text = findViewById(R.id.text);
         btn_prev = (Button) findViewById(R.id.btn_show);
@@ -182,13 +183,13 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
             NoInternetDialog();
 
         } else {
-
+            retrive_LocalValue();
             jobFindResponseCall();
 
         }
 
-        getBDDetails();
-        getFeedbackGroup();
+        /*getBDDetails();
+        getFeedbackGroup();*/
 
         if (status.equals("paused")) {
 
@@ -385,7 +386,60 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
         } else {
             activityBasedListAdapter.filterList(filteredlist);
         }
+    }
 
+    private Job_status_updateRequest localRequest() {
+
+        Job_status_updateRequest custom = new Job_status_updateRequest();
+        custom.setUser_mobile_no(se_user_mobile_no);
+        custom.setJob_id(job_id);
+        custom.setSMU_SCH_COMPNO(compno);
+        //  custom.setSMU_SCH_SERTYPE(sertype);
+        Log.w(TAG, "Request Data " + new Gson().toJson(custom));
+        return custom;
+    }
+
+    private void retrive_LocalValue() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create((APIInterface.class));
+        Call<RetriveLocalValueBRResponse> call = apiInterface.retriveLocalValueBRCall(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), localRequest());
+        Log.i(TAG, "retrive_LocalValue: URL -> " + call.request().url().toString());
+
+        call.enqueue(new Callback<RetriveLocalValueBRResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<RetriveLocalValueBRResponse> call, @NonNull Response<RetriveLocalValueBRResponse> response) {
+                Log.i(TAG, "onResponse: RetriveLocalValueBRResponse -> " + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+
+                    if (response.body().getCode() == 200) {
+
+                        if (response.body().getData() != null) {
+                            Log.d("msg", message);
+
+                            str_feedback_details = response.body().getData().getFeedback_details();
+
+                        }
+                    } else {
+                        ErrorMsgDialog(message);
+                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+                    }
+                } else {
+                    ErrorMsgDialog("");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<RetriveLocalValueBRResponse> call, @NonNull Throwable t) {
+                ErrorMsgDialog(t.getMessage());
+                Log.e("On Failure", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void jobFindResponseCall() {
@@ -598,7 +652,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 //                    }
 //
 //               }
-        getFeedBackDesc();
+//        getFeedBackDesc();
 
         ArrayList<String> outputList = new ArrayList<String>();
         for (String item : mydata) {
@@ -644,7 +698,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 
     private Breakdowm_Submit_Request createLocalRequest() {
 
-        getFeedBackDesc();
+//        getFeedBackDesc();
 
         str_feedback_details = str_feedback_details.replaceAll("\n", "").replaceAll("", "");
         Log.e("after ", str_feedback_details);
@@ -688,7 +742,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 
     private void setView(List<Feedback_DetailsResponse.DataBean> dataBeanList) {
 
-        getFeedBackDesc();
+//        getFeedBackDesc();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());

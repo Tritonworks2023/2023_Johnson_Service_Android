@@ -1,6 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
 import static android.view.View.GONE;
+import static com.triton.johnson_tap_app.utils.RestUtils.getContentType;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -25,12 +26,20 @@ import androidx.cardview.widget.CardView;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
+import com.triton.johnson_tap_app.Service_Activity.ServicesActivity;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
+import com.triton.johnson_tap_app.requestpojo.Breakdowm_Submit_Request;
 import com.triton.johnson_tap_app.requestpojo.Job_status_updateRequest;
+import com.triton.johnson_tap_app.responsepojo.Job_status_updateResponse;
 import com.triton.johnson_tap_app.responsepojo.RetriveLocalValueBRResponse;
+import com.triton.johnson_tap_app.responsepojo.SuccessResponse;
 import com.triton.johnson_tap_app.utils.CommonFunction;
 import com.triton.johnson_tap_app.utils.RestUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -47,9 +56,12 @@ public class BD_StatusActivity extends AppCompatActivity {
     ImageView iv_back;
     SharedPreferences sharedPreferences;
     Context context;
-    String se_id, se_user_mobile_no, sertype, compno, se_user_name;
+    String se_id, se_user_mobile_no, sertype, compno, se_user_name, service_title;
     TextView txt_Jobid, txt_Starttime;
-    String str_StartTime;
+    String str_StartTime, str_job_status = "", str_but_type = "", str_breakdown_services = "", address = "",
+            str_feedback_details = "", str_BDDetails = "";
+    double Latitude, Logitude;
+    int PageNumber = 7;
     private String TAG = BD_StatusActivity.class.getSimpleName();
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
@@ -135,11 +147,16 @@ public class BD_StatusActivity extends AppCompatActivity {
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         compno = sharedPreferences.getString("compno", "123");
+        service_title = sharedPreferences.getString("service_title", "default value");
         sertype = sharedPreferences.getString("sertype", "123");
         job_id = sharedPreferences.getString("job_id", "123");
         Log.e("Value", value);
         str_StartTime = sharedPreferences.getString("starttime", "");
         str_StartTime = str_StartTime.replaceAll("[^0-9-:]", " ");
+        Latitude = Double.parseDouble(sharedPreferences.getString("lati", "0.00000"));
+        Logitude = Double.parseDouble(sharedPreferences.getString("long", "0.00000"));
+        address = sharedPreferences.getString("add", "Chennai");
+        Log.i(TAG, "onCreate: Latitude -> " + Latitude + " Logitude -> " + Logitude + " address -> " + address);
 
         Log.e("Start Time", str_StartTime);
 
@@ -153,7 +170,6 @@ public class BD_StatusActivity extends AppCompatActivity {
 
             txt_Lift.setText("Escalator Shutdown");
         }
-
 
         Spannable name_Upload = new SpannableString("Breakdown Service ");
         name_Upload.setSpan(new ForegroundColorSpan(BD_StatusActivity.this.getResources().getColor(R.color.colorAccent)), 0, name_Upload.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -179,81 +195,34 @@ public class BD_StatusActivity extends AppCompatActivity {
         full.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent send = new Intent(BD_StatusActivity.this, Technician_signatureActivity.class);
-                send.putExtra("value", value);
-                send.putExtra("feedback_details", feedback_details);
-                send.putExtra("feedback_group", feedback_group);
-                send.putExtra("bd_details", bd_dta);
-                send.putExtra("job_id", job_id);
-                send.putExtra("feedback_remark", feedback_remark);
-                send.putExtra("mr1", mr1);
-                send.putExtra("mr2", mr2);
-                send.putExtra("mr3", mr3);
-                send.putExtra("mr4", mr4);
-                send.putExtra("mr5", mr5);
-                send.putExtra("mr6", mr6);
-                send.putExtra("mr7", mr7);
-                send.putExtra("mr8", mr8);
-                send.putExtra("mr9", mr9);
-                send.putExtra("mr10", mr10);
-                send.putExtra("breakdown_service", "Completed in full");
-                send.putExtra("tech_signature", tech_signature);
-                send.putExtra("status", status);
-                startActivity(send);
+                str_but_type = "btn_next";
+                str_job_status = "Job Paused";
+                str_breakdown_services = "Completed in full";
+                Job_status_update();
+                createLocalValue();
             }
         });
 
         material.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent send = new Intent(BD_StatusActivity.this, Technician_signatureActivity.class);
-                send.putExtra("value", value);
-                send.putExtra("feedback_details", feedback_details);
-                send.putExtra("feedback_group", feedback_group);
-                send.putExtra("bd_details", bd_dta);
-                send.putExtra("job_id", job_id);
-                send.putExtra("feedback_remark", feedback_remark);
-                send.putExtra("mr1", mr1);
-                send.putExtra("mr2", mr2);
-                send.putExtra("mr3", mr3);
-                send.putExtra("mr4", mr4);
-                send.putExtra("mr5", mr5);
-                send.putExtra("mr6", mr6);
-                send.putExtra("mr7", mr7);
-                send.putExtra("mr8", mr8);
-                send.putExtra("mr9", mr9);
-                send.putExtra("mr10", mr10);
-                send.putExtra("breakdown_service", "Completed but material to be replaced");
-                send.putExtra("tech_signature", tech_signature);
-                send.putExtra("status", status);
-                startActivity(send);
+                str_but_type = "btn_next";
+                str_job_status = "Job Paused";
+                str_breakdown_services = "Completed but material to be replaced";
+                Job_status_update();
+                createLocalValue();
             }
         });
 
         lift.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent send = new Intent(BD_StatusActivity.this, Technician_signatureActivity.class);
-                send.putExtra("value", value);
-                send.putExtra("feedback_details", feedback_details);
-                send.putExtra("feedback_group", feedback_group);
-                send.putExtra("bd_details", bd_dta);
-                send.putExtra("job_id", job_id);
-                send.putExtra("feedback_remark", feedback_remark);
-                send.putExtra("mr1", mr1);
-                send.putExtra("mr2", mr2);
-                send.putExtra("mr3", mr3);
-                send.putExtra("mr4", mr4);
-                send.putExtra("mr5", mr5);
-                send.putExtra("mr6", mr6);
-                send.putExtra("mr7", mr7);
-                send.putExtra("mr8", mr8);
-                send.putExtra("mr9", mr9);
-                send.putExtra("mr10", mr10);
-                send.putExtra("breakdown_service", "Lift Shutdown");
-                send.putExtra("tech_signature", tech_signature);
-                send.putExtra("status", status);
-                startActivity(send);
+                str_but_type = "btn_next";
+                str_job_status = "Job Paused";
+                str_breakdown_services = "Lift Shutdown";
+                Job_status_update();
+                createLocalValue();
+
             }
         });
 
@@ -261,40 +230,181 @@ public class BD_StatusActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 onBackPressed();
+            }
+        });
+    }
 
-//                if(value.equals("no")) {
-//
-//                    Intent send = new Intent(BD_StatusActivity.this, Material_RequestActivity.class);
-//                    send.putExtra("value", value);
-//                    send.putExtra("feedback_details", feedback_details);
-//                    send.putExtra("feedback_group", feedback_group);
-//                    send.putExtra("bd_details", bd_dta);
-//                    send.putExtra("job_id", job_id);
-//                    send.putExtra("feedback_remark", feedback_remark);
-//                    startActivity(send);
-//                }
-//                else {
-//
-//                    Intent send = new Intent(BD_StatusActivity.this, Material_Request_MR_ScreenActivity.class);
-//                    send.putExtra("mr1", mr1);
-//                    send.putExtra("mr2", mr2);
-//                    send.putExtra("mr3", mr3);
-//                    send.putExtra("mr4", mr4);
-//                    send.putExtra("mr5", mr5);
-//                    send.putExtra("mr6", mr6);
-//                    send.putExtra("mr7", mr7);
-//                    send.putExtra("mr8", mr8);
-//                    send.putExtra("mr9", mr9);
-//                    send.putExtra("mr10", mr10);
-//                    send.putExtra("mr10", mr10);
-//                    send.putExtra("value", value);
-//                    send.putExtra("feedback_details", feedback_details);
-//                    send.putExtra("feedback_group", feedback_group);
-//                    send.putExtra("bd_details", bd_dta);
-//                    send.putExtra("job_id", job_id);
-//                    send.putExtra("feedback_remark", feedback_remark);
-//                    startActivity(send);
-//                }
+    private void moveNext() {
+        Intent send = new Intent(BD_StatusActivity.this, Technician_signatureActivity.class);
+        send.putExtra("value", value);
+        send.putExtra("feedback_details", feedback_details);
+        send.putExtra("feedback_group", feedback_group);
+        send.putExtra("bd_details", bd_dta);
+        send.putExtra("job_id", job_id);
+        send.putExtra("feedback_remark", feedback_remark);
+        send.putExtra("mr1", mr1);
+        send.putExtra("mr2", mr2);
+        send.putExtra("mr3", mr3);
+        send.putExtra("mr4", mr4);
+        send.putExtra("mr5", mr5);
+        send.putExtra("mr6", mr6);
+        send.putExtra("mr7", mr7);
+        send.putExtra("mr8", mr8);
+        send.putExtra("mr9", mr9);
+        send.putExtra("mr10", mr10);
+        send.putExtra("breakdown_service", "str_service_type");
+        send.putExtra("tech_signature", tech_signature);
+        send.putExtra("status", status);
+        startActivity(send);
+    }
+
+    private Job_status_updateRequest job_status_updateRequest() {
+
+        Job_status_updateRequest custom = new Job_status_updateRequest();
+        custom.setUser_mobile_no(se_user_mobile_no);
+        custom.setService_name(service_title);
+        custom.setJob_id(job_id);
+        custom.setStatus(str_job_status);
+        custom.setSMU_SCH_COMPNO(compno);
+        custom.setSMU_SCH_SERTYPE(sertype);
+        custom.setJOB_START_LONG(Logitude);
+        custom.setJOB_START_LAT(Latitude);
+        custom.setJOB_LOCATION(address);
+        Log.e("CompNo", "" + compno);
+        Log.e("SertYpe", "" + sertype);
+        Log.w(TAG, "loginRequest " + new Gson().toJson(custom));
+        return custom;
+    }
+
+    private void Job_status_update() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Job_status_updateResponse> call = apiInterface.job_status_updateResponseCall(getContentType(), job_status_updateRequest());
+        Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<Job_status_updateResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<Job_status_updateResponse> call, @NonNull Response<Job_status_updateResponse> response) {
+
+                Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+
+                            Log.d("msg", message);
+                        }
+                    } else {
+                        ErrorMsgDialog(message);
+//                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+                    }
+                } else {
+                    ErrorMsgDialog("");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Job_status_updateResponse> call, @NonNull Throwable t) {
+                Log.e("OTP", "--->" + t.getMessage());
+                ErrorMsgDialog(t.getMessage());
+//                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private Breakdowm_Submit_Request createLocalRequest() {
+
+        str_feedback_details = str_feedback_details.replaceAll("\n", "").replaceAll("", "");
+        Log.e("after ", str_feedback_details);
+
+        feedback_group = feedback_group.replaceAll("\n", "").replaceAll("", "");
+        Log.e("after ", feedback_group);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        Breakdowm_Submit_Request submitDailyRequest = new Breakdowm_Submit_Request();
+        submitDailyRequest.setBd_details(str_BDDetails);
+        //submitDailyRequest.setFeedback_details(sstring);
+        submitDailyRequest.setFeedback_details(str_feedback_details);
+        submitDailyRequest.setCode_list(feedback_group);
+        submitDailyRequest.setFeedback_remark_text(feedback_remark);
+        submitDailyRequest.setMr_status(value);
+        submitDailyRequest.setMr_1(mr1);
+        submitDailyRequest.setMr_2(mr2);
+        submitDailyRequest.setMr_3(mr3);
+        submitDailyRequest.setMr_4(mr4);
+        submitDailyRequest.setMr_5(mr5);
+        submitDailyRequest.setMr_6(mr6);
+        submitDailyRequest.setMr_7(mr7);
+        submitDailyRequest.setMr_8(mr8);
+        submitDailyRequest.setMr_9(mr9);
+        submitDailyRequest.setMr_10(mr10);
+        submitDailyRequest.setBreakdown_service(str_breakdown_services);
+        submitDailyRequest.setCustomer_name("");
+        submitDailyRequest.setCustomer_number("");
+        submitDailyRequest.setCustomer_acknowledgemnet("");
+        submitDailyRequest.setDate_of_submission(currentDateandTime);
+        submitDailyRequest.setUser_mobile_no(se_user_mobile_no);
+        submitDailyRequest.setJob_id(job_id);
+        submitDailyRequest.setSMU_SCH_COMPNO(compno);
+        submitDailyRequest.setSMU_SCH_SERTYPE(sertype);
+        submitDailyRequest.setPage_number(PageNumber);
+        Log.e("CompNo", "" + compno);
+        Log.e("SertYpe", "" + sertype);
+        Log.w(TAG, " Create Local Value Request" + new Gson().toJson(submitDailyRequest));
+        return submitDailyRequest;
+    }
+
+    private void createLocalValue() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(getContentType(), createLocalRequest());
+        Log.w(TAG, "Create Local Value Response url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+
+                Log.w(TAG, "Create Local Value Response" + "" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+                    message = response.body().getMessage();
+
+                    if (response.body().getCode() == 200) {
+
+                        if (response.body().getData() != null) {
+
+                            Log.d("msg", message);
+
+                            if (str_but_type.equalsIgnoreCase("img_Pause")) {
+                                Intent send = new Intent(context, ServicesActivity.class);
+                                startActivity(send);
+                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                moveNext();
+                            }
+
+                        } else {
+                            ErrorMsgDialog(message);
+                        }
+
+                    } else {
+                        ErrorMsgDialog(message);
+//                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+                    }
+                } else {
+                    ErrorMsgDialog("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SuccessResponse> call, Throwable t) {
+                ErrorMsgDialog(t.getMessage());
+                Log.e("On Failure", "--->" + t.getMessage());
+//                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -309,8 +419,7 @@ public class BD_StatusActivity extends AppCompatActivity {
         call.enqueue(new Callback<RetriveLocalValueBRResponse>() {
             @Override
             public void onResponse(@NonNull Call<RetriveLocalValueBRResponse> call, @NonNull Response<RetriveLocalValueBRResponse> response) {
-
-                Log.e("Retrive Response", "" + new Gson().toJson(response.body()));
+                Log.i(TAG, "retrive_LocalValue: onResponse: RetriveLocalValueBRResponse -> " + new Gson().toJson(response.body()));
 
                 if (response.body() != null) {
 
@@ -320,6 +429,9 @@ public class BD_StatusActivity extends AppCompatActivity {
 
                         if (response.body().getData() != null) {
                             Log.d("msg", message);
+
+                            str_feedback_details = response.body().getData().getFeedback_details();
+                            str_BDDetails = response.body().getData().getBd_details();
 
                             String breakdownservice = response.body().getData().getBreakdown_service();
                             Log.e("mrData", "" + breakdownservice);

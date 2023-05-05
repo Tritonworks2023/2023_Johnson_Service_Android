@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
+import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointer;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -80,7 +82,7 @@ public class Technician_signatureActivity extends AppCompatActivity {
     TextView txt_Jobid, txt_Starttime;
     String str_StartTime, networkStatus = "", str_BDDetails = "", str_feedback_details = "";
     AlertDialog alertDialog;
-    String str_job_status = "";
+    String str_job_status = "", str_but_type = "";
     ArrayList<String> mydata = new ArrayList<>();
     double Latitude, Logitude;
     String address = "";
@@ -95,18 +97,18 @@ public class Technician_signatureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_technician_signature);
         context = this;
 
-        CommonUtil.dbUtil = new DbUtil(context);
+        /*CommonUtil.dbUtil = new DbUtil(context);
         CommonUtil.dbUtil.open();
-        CommonUtil.dbHelper = new DbHelper(context);
+        CommonUtil.dbHelper = new DbHelper(context);*/
 
-        signaturePad = (SignaturePad) findViewById(R.id.signaturePad);
-        saveButton = (Button) findViewById(R.id.saveButton);
-        clearButton = (Button) findViewById(R.id.clearButton);
-        btnSelection = (Button) findViewById(R.id.btn_next);
-        btn_prev = (Button) findViewById(R.id.btn_show);
-        image = (ImageView) findViewById(R.id.image);
-        img_Siganture = (ImageView) findViewById(R.id.img_sign);
-        iv_back = (ImageView) findViewById(R.id.iv_back);
+        signaturePad = findViewById(R.id.signaturePad);
+        saveButton = findViewById(R.id.saveButton);
+        clearButton = findViewById(R.id.clearButton);
+        btnSelection = findViewById(R.id.btn_next);
+        btn_prev = findViewById(R.id.btn_show);
+        image = findViewById(R.id.image);
+        img_Siganture = findViewById(R.id.img_sign);
+        iv_back = findViewById(R.id.iv_back);
         txt_Starttime = findViewById(R.id.txt_starttime);
         txt_Jobid = findViewById(R.id.txt_jobid);
         img_Pause = findViewById(R.id.ic_paused);
@@ -145,80 +147,90 @@ public class Technician_signatureActivity extends AppCompatActivity {
             status = extras.getString("status");
             Log.e("Status", status);
         }
-        if (extras != null) {
-            //  feedback_group = extras.getString("feedback_group");
-        }
 
         if (extras != null) {
-            //  bd_dta = extras.getString("bd_details");
+
+            if (extras.containsKey("feedback_group")) {
+                feedback_group = extras.getString("feedback_group");
+            }
+
+            if (extras.containsKey("job_id")) {
+                job_id = extras.getString("job_id");
+            }
+
+            if (extras.containsKey("bd_details")) {
+                bd_dta = extras.getString("bd_details");
+            }
+
+            if (extras.containsKey("feedback_details")) {
+                feedback_details = extras.getString("feedback_details");
+            }
+
+            if (extras.containsKey("feedback_remark")) {
+                feedback_remark = extras.getString("feedback_remark");
+            }
+
+            if (extras.containsKey("mr1")) {
+                mr1 = extras.getString("mr1");
+            }
+
+            if (extras.containsKey("mr2")) {
+                mr2 = extras.getString("mr2");
+            }
+
+            if (extras.containsKey("mr3")) {
+                mr3 = extras.getString("mr3");
+            }
+
+            if (extras.containsKey("mr4")) {
+                mr4 = extras.getString("mr4");
+            }
+
+            if (extras.containsKey("mr5")) {
+                mr5 = extras.getString("mr5");
+            }
+
+            if (extras.containsKey("mr6")) {
+                mr6 = extras.getString("mr6");
+            }
+
+            if (extras.containsKey("mr7")) {
+                mr7 = extras.getString("mr7");
+            }
+
+            if (extras.containsKey("mr8")) {
+                mr8 = extras.getString("mr8");
+            }
+
+            if (extras.containsKey("mr9")) {
+                mr9 = extras.getString("mr9");
+            }
+
+            if (extras.containsKey("mr10")) {
+                mr10 = extras.getString("mr10");
+            }
+
+            if (extras.containsKey("breakdown_service")) {
+                breakdown_servies = extras.getString("breakdown_service");
+            }
+
+            if (extras.containsKey("tech_signature")) {
+                str_tech_signature = extras.getString("tech_signature");
+                Picasso.get().load(str_tech_signature).into(image);
+            }
         }
 
-        if (extras != null) {
-            //   job_id = extras.getString("job_id");
-        }
-
-        if (extras != null) {
-            //  feedback_details = extras.getString("feedback_details");
-        }
-
-        if (extras != null) {
-            //  feedback_remark = extras.getString("feedback_remark");
-        }
-
-        if (extras != null) {
-            mr1 = extras.getString("mr1");
-        }
-        if (extras != null) {
-            mr2 = extras.getString("mr2");
-        }
-        if (extras != null) {
-            mr3 = extras.getString("mr3");
-        }
-        if (extras != null) {
-            mr4 = extras.getString("mr4");
-        }
-        if (extras != null) {
-            mr5 = extras.getString("mr5");
-        }
-        if (extras != null) {
-            mr6 = extras.getString("mr6");
-        }
-        if (extras != null) {
-            mr7 = extras.getString("mr7");
-        }
-        if (extras != null) {
-            mr8 = extras.getString("mr8");
-        }
-        if (extras != null) {
-            mr9 = extras.getString("mr9");
-        }
-        if (extras != null) {
-            mr10 = extras.getString("mr10");
-        }
-        if (extras != null) {
-            breakdown_servies = extras.getString("breakdown_service");
-//            Log.e("A",breakdown_servies);
-        }
-        if (extras != null) {
-//            str_tech_signature = extras.getString("tech_signature");
-//            Picasso.get().load(str_tech_signature).into(image);
-        }
-
-        getBDDetails();
+        /*getBDDetails();
         getFeedbackGroup();
         getFeedBackDesc();
         getFeedback();
         getData(job_id, service_title);
-        getSign(job_id, service_title);
+        getSign(job_id, service_title);*/
 
         if (status.equals("paused")) {
             retrive_LocalValue();
-
-            //   Picasso.get().load(uploadimagepath).into(img_Siganture);
-
         } else {
             Log.e("Way", "New");
-
         }
 
         saveButton.setEnabled(false);
@@ -289,98 +301,22 @@ public class Technician_signatureActivity extends AppCompatActivity {
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-//                if (signatureBitmap == null && uploadimagepath == null) {
-//                    Toast.makeText(Technician_signatureActivity.this, "Please Drop Signature", Toast.LENGTH_SHORT).show();
-//                }
-
-                Cursor cur = CommonUtil.dbUtil.getEngSign(job_id, service_title);
-                Log.e("ENg Sign", " " + cur.getCount());
-
-                if (signatureBitmap == null && cur.getCount() == 0) {
-                    Toast.makeText(context, "Please Drop Signature", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent send = new Intent(Technician_signatureActivity.this, Customer_Details_BreakdownActivity.class);
-                    send.putExtra("value", value);
-                    send.putExtra("feedback_details", feedback_details);
-                    send.putExtra("feedback_group", feedback_group);
-                    send.putExtra("bd_details", bd_dta);
-                    send.putExtra("job_id", job_id);
-                    send.putExtra("feedback_remark", feedback_remark);
-                    send.putExtra("mr1", mr1);
-                    send.putExtra("mr2", mr2);
-                    send.putExtra("mr3", mr3);
-                    send.putExtra("mr4", mr4);
-                    send.putExtra("mr5", mr5);
-                    send.putExtra("mr6", mr6);
-                    send.putExtra("mr7", mr7);
-                    send.putExtra("mr8", mr8);
-                    send.putExtra("mr9", mr9);
-                    send.putExtra("mr10", mr10);
-                    send.putExtra("breakdown_service", breakdown_servies);
-                    send.putExtra("tech_signature", uploadimagepath);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("tech_sign", uploadimagepath);
-                    editor.apply();
-                    Log.e("Tech Sign", "" + uploadimagepath);
-                    send.putExtra("status", status);
-                    startActivity(send);
-                }
+                str_but_type = "btn_next";
+                str_job_status = "Job Paused";
+                Job_status_update();
+                createLocalvalue();
             }
         });
 
         btn_prev.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 onBackPressed();
-//                if(uploadimagepath.equals("")) {
-//                    Intent send = new Intent(Technician_signatureActivity.this, BD_StatusActivity.class);
-//                    send.putExtra("value", value);
-//                    send.putExtra("feedback_details", feedback_details);
-//                    send.putExtra("feedback_group", feedback_group);
-//                    send.putExtra("bd_details", bd_dta);
-//                    send.putExtra("job_id", job_id);
-//                    send.putExtra("feedback_remark", feedback_remark);
-//                    startActivity(send);
-//                }
-//                else {
-//                    Intent send = new Intent(Technician_signatureActivity.this, BD_StatusActivity.class);
-//                    send.putExtra("value", value);
-//                    send.putExtra("feedback_details", feedback_details);
-//                    send.putExtra("feedback_group", feedback_group);
-//                    send.putExtra("bd_details", bd_dta);
-//                    send.putExtra("job_id", job_id);
-//                    send.putExtra("feedback_remark", feedback_remark);
-//                    send.putExtra("tech_signature", uploadimagepath);
-//                    startActivity(send);
-//                }
             }
         });
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 onBackPressed();
-//                if(uploadimagepath.equals("")) {
-//                    Intent send = new Intent(Technician_signatureActivity.this, BD_StatusActivity.class);
-//                    send.putExtra("value", value);
-//                    send.putExtra("feedback_details", feedback_details);
-//                    send.putExtra("feedback_group", feedback_group);
-//                    send.putExtra("bd_details", bd_dta);
-//                    send.putExtra("job_id", job_id);
-//                    send.putExtra("feedback_remark", feedback_remark);
-//                    startActivity(send);
-//                }
-//                else {
-//                    Intent send = new Intent(Technician_signatureActivity.this, BD_StatusActivity.class);
-//                    send.putExtra("value", value);
-//                    send.putExtra("feedback_details", feedback_details);
-//                    send.putExtra("feedback_group", feedback_group);
-//                    send.putExtra("bd_details", bd_dta);
-//                    send.putExtra("job_id", job_id);
-//                    send.putExtra("feedback_remark", feedback_remark);
-//                    send.putExtra("tech_signature", uploadimagepath);
-//                    startActivity(send);
-//                }
             }
         });
 
@@ -397,6 +333,8 @@ public class Technician_signatureActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
+
+                                str_but_type = "img_Pause";
                                 str_job_status = "Job Paused";
                                 Job_status_update();
                                 createLocalvalue();
@@ -519,8 +457,12 @@ public class Technician_signatureActivity extends AppCompatActivity {
 
                             Log.d("msg", message);
 
-                            Intent send = new Intent(context, ServicesActivity.class);
-                            startActivity(send);
+                            if (str_but_type.equalsIgnoreCase("img_Pause")) {
+                                Intent send = new Intent(context, ServicesActivity.class);
+                                startActivity(send);
+                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                moveNext();
+                            }
                         } else {
                             ErrorMsgDialog(message);
                         }
@@ -541,6 +483,46 @@ public class Technician_signatureActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveNext() {
+
+//                if (signatureBitmap == null && uploadimagepath == null) {
+//                    Toast.makeText(Technician_signatureActivity.this, "Please Drop Signature", Toast.LENGTH_SHORT).show();
+//                }
+
+        /*Cursor cur = CommonUtil.dbUtil.getEngSign(job_id, service_title);
+        Log.e("ENg Sign", " " + cur.getCount());
+
+        if (signatureBitmap == null && cur.getCount() == 0) {
+            Toast.makeText(context, "Please Drop Signature", Toast.LENGTH_SHORT).show();
+        } else {*/
+            Intent send = new Intent(Technician_signatureActivity.this, Customer_Details_BreakdownActivity.class);
+            send.putExtra("value", value);
+            send.putExtra("feedback_details", feedback_details);
+            send.putExtra("feedback_group", feedback_group);
+            send.putExtra("bd_details", bd_dta);
+            send.putExtra("job_id", job_id);
+            send.putExtra("feedback_remark", feedback_remark);
+            send.putExtra("mr1", mr1);
+            send.putExtra("mr2", mr2);
+            send.putExtra("mr3", mr3);
+            send.putExtra("mr4", mr4);
+            send.putExtra("mr5", mr5);
+            send.putExtra("mr6", mr6);
+            send.putExtra("mr7", mr7);
+            send.putExtra("mr8", mr8);
+            send.putExtra("mr9", mr9);
+            send.putExtra("mr10", mr10);
+            send.putExtra("breakdown_service", breakdown_servies);
+            send.putExtra("tech_signature", uploadimagepath);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("tech_sign", uploadimagepath);
+            editor.apply();
+            Log.e("Tech Sign", "" + uploadimagepath);
+            send.putExtra("status", status);
+            startActivity(send);
+        /*}*/
     }
 
     private Breakdowm_Submit_Request createLocalRequest() {
@@ -723,11 +705,11 @@ public class Technician_signatureActivity extends AppCompatActivity {
         if (cur.getCount() > 0 && cur.moveToLast()) {
 
             //  do{
-            signfile = cur.getString(cur.getColumnIndex(DbHelper.SIGN_FILE));
-            String jon = cur.getString(cur.getColumnIndex(DbHelper.JOBID));
-            String ss = cur.getString(cur.getColumnIndex(DbHelper.MYACTIVITY));
+            signfile = nullPointer(cur.getString(cur.getColumnIndex(DbHelper.SIGN_FILE)));
+            String jon = nullPointer(cur.getString(cur.getColumnIndex(DbHelper.JOBID)));
+            String ss = nullPointer(cur.getString(cur.getColumnIndex(DbHelper.MYACTIVITY)));
             if (uploadimagepath.isEmpty() && cur.getString(cur.getColumnIndex(DbHelper.SIGN_PATH)) != null) {
-                uploadimagepath = cur.getString(cur.getColumnIndex(DbHelper.SIGN_PATH));
+                uploadimagepath = nullPointer(cur.getString(cur.getColumnIndex(DbHelper.SIGN_PATH)));
             }
 
             Log.e("job", "" + jon);
@@ -778,7 +760,8 @@ public class Technician_signatureActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
                         Log.w(TAG, "Profpic" + "--->" + new Gson().toJson(response.body()));
-
+//600301513124
+//4748 4688 6172 2005
                         if (uploadimagepath.isEmpty() && response.body().getData() != null) {
                             uploadimagepath = response.body().getData();
                         }
@@ -786,11 +769,11 @@ public class Technician_signatureActivity extends AppCompatActivity {
 
                         if (uploadimagepath != null && !uploadimagepath.isEmpty()) {
 
-                            //   Picasso.get().load(uploadimagepath).into(image);
+                            Picasso.get().load(uploadimagepath).into(image);
 
                             Toast.makeText(Technician_signatureActivity.this, "Signature Saved", Toast.LENGTH_SHORT).show();
                             img_Siganture.setVisibility(View.GONE);
-                            CommonUtil.dbUtil.addEngSign(job_id, service_title, uploadimagepath, file, "0");
+//                            CommonUtil.dbUtil.addEngSign(job_id, service_title, uploadimagepath, file, "0");
                             Log.e("a", "" + job_id);
                             Log.e("b", "" + service_title);
                             Log.e("c", "" + uploadimagepath);
@@ -833,7 +816,7 @@ public class Technician_signatureActivity extends AppCompatActivity {
 
         if (curs.getCount() > 0 && curs.moveToLast()) {
 
-            str_BDDetails = curs.getString(curs.getColumnIndex(DbHelper.BD_DETAILS));
+            str_BDDetails = nullPointer(curs.getString(curs.getColumnIndex(DbHelper.BD_DETAILS)));
             Log.e("BD Data Get", "" + str_BDDetails);
         }
 
@@ -851,7 +834,7 @@ public class Technician_signatureActivity extends AppCompatActivity {
 
             do {
                 @SuppressLint("Range")
-                String abc = cur.getString(cur.getColumnIndex(DbHelper.FEEDBACK_GROUP));
+                String abc = nullPointer(cur.getString(cur.getColumnIndex(DbHelper.FEEDBACK_GROUP)));
                 Log.e("Data Get", "" + abc);
                 mydata.add(abc);
 
@@ -872,7 +855,7 @@ public class Technician_signatureActivity extends AppCompatActivity {
 
             do {
                 @SuppressLint("Range")
-                String abc = cur.getString(cur.getColumnIndex(DbHelper.FEEDBACK_DESCRIPTION));
+                String abc = nullPointer(cur.getString(cur.getColumnIndex(DbHelper.FEEDBACK_DESCRIPTION)));
                 Log.e("Data Get", "" + abc);
                 mydata.add(abc);
 //                outputList = new ArrayList<String>();
@@ -896,7 +879,7 @@ public class Technician_signatureActivity extends AppCompatActivity {
 
         if (cur.getCount() > 0 && cur.moveToLast()) {
 
-            feedback_remark = cur.getString(cur.getColumnIndex(DbHelper.FEEDBACK_REMARKS));
+            feedback_remark = nullPointer(cur.getString(cur.getColumnIndex(DbHelper.FEEDBACK_REMARKS)));
             Log.e("Remarks", "" + feedback_remark);
 
         }
@@ -916,16 +899,16 @@ public class Technician_signatureActivity extends AppCompatActivity {
         if (cur.getCount() > 0 && cur.moveToFirst()) {
 
             do {
-                mr1 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR1));
-                mr2 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR2));
-                mr3 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR3));
-                mr4 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR4));
-                mr5 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR5));
-                mr6 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR6));
-                mr7 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR7));
-                mr8 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR8));
-                mr9 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR9));
-                mr10 = cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR10));
+                mr1 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR1)));
+                mr2 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR2)));
+                mr3 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR3)));
+                mr4 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR4)));
+                mr5 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR5)));
+                mr6 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR6)));
+                mr7 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR7)));
+                mr8 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR8)));
+                mr9 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR9)));
+                mr10 = nullPointer(cur.getString(cur.getColumnIndexOrThrow(DbHelper.MR10)));
             } while (cur.moveToNext());
         }
         cur.close();

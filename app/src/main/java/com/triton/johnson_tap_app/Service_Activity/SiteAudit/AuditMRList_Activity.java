@@ -31,9 +31,6 @@ import com.triton.johnson_tap_app.Db.CommonUtil;
 import com.triton.johnson_tap_app.Db.DbHelper;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.RestUtils;
-import com.triton.johnson_tap_app.Service_Activity.BreakdownMRApprovel.BreakdownMRListOne_Activity;
-import com.triton.johnson_tap_app.Service_Activity.Breakdown_Services.Technician_signatureActivity;
-import com.triton.johnson_tap_app.Service_Adapter.BreakdownMRListTwo_Adapter;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.requestpojo.Fetch_MrList_Request;
@@ -51,24 +48,24 @@ import retrofit2.Response;
 
 public class AuditMRList_Activity extends AppCompatActivity {
 
-    private String TAG ="MRListTWO";
     Context context;
     EditText edtsearch;
     TextView txt_no_records;
-    ImageView iv_back,img_clearsearch;
+    ImageView iv_back, img_clearsearch;
     RecyclerView recyclerView;
     AuditMRList_Adapter MrListtwoAdapter;
-    private String PetBreedType = "";
-    String se_user_mobile_no, se_user_name, se_id,check_id, service_title,job_id,message,status,compno, sertype;
-    private List<Fetch_MrList_Response.Datum> breedTypedataBeanList;
-    String str_mr1 ="",str_mr2="",str_mr3="",str_mr4="",str_mr5="",str_mr6="",str_mr7="",str_mr8="",str_mr9="",str_mr10="",networkStatus="";
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, job_id, message, status, compno, sertype;
+    String str_mr1 = "", str_mr2 = "", str_mr3 = "", str_mr4 = "", str_mr5 = "", str_mr6 = "", str_mr7 = "", str_mr8 = "", str_mr9 = "", str_mr10 = "", networkStatus = "";
     ProgressDialog progressDialog;
-    TextView txt_Jobid,txt_Starttime;
+    TextView txt_Jobid, txt_Starttime;
     String str_StartTime;
     Button btn_Next;
     ArrayList<String> Ar_PartNo = new ArrayList<>();
     ArrayList<String> Ar_PartName = new ArrayList<>();
     ArrayList<String> Ar_PartQuantity = new ArrayList<>();
+    private String TAG = "MRListTWO";
+    private String PetBreedType = "";
+    private List<Fetch_MrList_Response.Datum> breedTypedataBeanList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,17 +86,17 @@ public class AuditMRList_Activity extends AppCompatActivity {
         se_id = sharedPreferences.getString("_id", "default value");
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
-        job_id =sharedPreferences.getString("jobid","L-1234");
-        Log.e("JobID",""+job_id);
+        job_id = sharedPreferences.getString("jobid", "L-1234");
+        Log.e("JobID", "" + job_id);
 
-        str_StartTime = sharedPreferences.getString("starttime","");
+        str_StartTime = sharedPreferences.getString("starttime", "");
         str_StartTime = str_StartTime.replaceAll("[^0-9-:]", " ");
-        Log.e("Start Time",str_StartTime);
+        Log.e("Start Time", str_StartTime);
         txt_Jobid.setText("Job ID : " + job_id);
         txt_Starttime.setText("Start Time : " + str_StartTime);
 
-      //  compno = sharedPreferences.getString("compno","123");
-       // sertype = sharedPreferences.getString("sertype","123");
+        //  compno = sharedPreferences.getString("compno","123");
+        // sertype = sharedPreferences.getString("sertype","123");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -109,7 +106,7 @@ public class AuditMRList_Activity extends AppCompatActivity {
             // Log.d("title",service_title);
         }
         if (extras != null) {
-          //  job_id = extras.getString("job_id");
+            //  job_id = extras.getString("job_id");
             str_mr1 = extras.getString("mr1");
             str_mr2 = extras.getString("mr2");
             str_mr3 = extras.getString("mr3");
@@ -129,12 +126,12 @@ public class AuditMRList_Activity extends AppCompatActivity {
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-        Log.e("Network",""+networkStatus);
+        Log.e("Network", "" + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
 
             NoInternetDialog();
 
-        }else {
+        } else {
 
             fetchmrlistcall();
         }
@@ -159,7 +156,7 @@ public class AuditMRList_Activity extends AppCompatActivity {
 
                 String Search = edtsearch.getText().toString();
 
-                if(Search.equals("")){
+                if (Search.equals("")) {
                     recyclerView.setVisibility(View.VISIBLE);
                     img_clearsearch.setVisibility(View.INVISIBLE);
                 } else {
@@ -198,7 +195,7 @@ public class AuditMRList_Activity extends AppCompatActivity {
 
 
         mBuilder.setView(mView);
-        final Dialog dialog= mBuilder.create();
+        final Dialog dialog = mBuilder.create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
 
@@ -217,24 +214,21 @@ public class AuditMRList_Activity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void filter(String search) {
         List<Fetch_MrList_Response.Datum> filterlist = new ArrayList<>();
-        for (Fetch_MrList_Response.Datum item :breedTypedataBeanList){
-            if(item.getPartname().toLowerCase().contains(search.toLowerCase()))
-            {
-                Log.w(TAG,"filter----"+item.getPartname().toLowerCase().contains(search.toLowerCase()));
+        for (Fetch_MrList_Response.Datum item : breedTypedataBeanList) {
+            if (item.getPartname().toLowerCase().contains(search.toLowerCase())) {
+                Log.w(TAG, "filter----" + item.getPartname().toLowerCase().contains(search.toLowerCase()));
                 filterlist.add(item);
 
             }
         }
 
 
-        if(filterlist.isEmpty())
-        {
-            Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
+        if (filterlist.isEmpty()) {
+            Toast.makeText(this, "No Data Found ... ", Toast.LENGTH_SHORT).show();
             recyclerView.setVisibility(View.GONE);
             txt_no_records.setVisibility(View.VISIBLE);
             txt_no_records.setText("No Data Found");
-        }else
-        {
+        } else {
             MrListtwoAdapter.filterrList(filterlist);
         }
     }
@@ -247,9 +241,9 @@ public class AuditMRList_Activity extends AppCompatActivity {
         progressDialog.show();
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<Fetch_MrList_Response> call = apiInterface.FetchMrListAuditCall(RestUtils.getContentType(),fetch_mrList_request());
+        Call<Fetch_MrList_Response> call = apiInterface.FetchMrListAuditCall(RestUtils.getContentType(), fetch_mrList_request());
 
-        Log.w(TAG,"mrlist url  :%s"+" "+ call.request().url().toString());
+        Log.w(TAG, "mrlist url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<Fetch_MrList_Response>() {
             @Override
@@ -266,15 +260,15 @@ public class AuditMRList_Activity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, delayInMillis);
-                if (response.body() != null){
+                if (response.body() != null) {
                     message = response.body().getMessage();
                     Log.d("message", message);
 
-                    if (200 == response.body().getCode()){
+                    if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
                             breedTypedataBeanList = response.body().getData();
 
-                            if (breedTypedataBeanList.size() == 0){
+                            if (breedTypedataBeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
@@ -286,7 +280,7 @@ public class AuditMRList_Activity extends AppCompatActivity {
                             setBreedTypeView(breedTypedataBeanList);
                             Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
                         }
-                    }else if (400 == response.body().getCode()) {
+                    } else if (400 == response.body().getCode()) {
 
                         progressDialog.dismiss();
                         if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
@@ -328,12 +322,12 @@ public class AuditMRList_Activity extends AppCompatActivity {
 
         getMRList();
 
-        Log.e("Nish",""+breedTypedataBeanList.size());
+        Log.e("Nish", "" + breedTypedataBeanList.size());
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        MrListtwoAdapter = new AuditMRList_Adapter(getApplicationContext(),breedTypedataBeanList,this, service_title,job_id,
-                str_mr1,str_mr2,str_mr3,str_mr4,str_mr5,str_mr6,str_mr7,str_mr8,str_mr9,str_mr10,status,Ar_PartNo,Ar_PartName,Ar_PartQuantity);
+        MrListtwoAdapter = new AuditMRList_Adapter(getApplicationContext(), breedTypedataBeanList, this, service_title, job_id,
+                str_mr1, str_mr2, str_mr3, str_mr4, str_mr5, str_mr6, str_mr7, str_mr8, str_mr9, str_mr10, status, Ar_PartNo, Ar_PartName, Ar_PartQuantity);
         recyclerView.setAdapter(MrListtwoAdapter);
 //        MrListoneAdapter = new BreakdownMRListTwo_Adapter(getApplicationContext(), breedTypedataBeanList,this);
 //        recyclerView.setAdapter(MrListoneAdapter);
@@ -345,8 +339,8 @@ public class AuditMRList_Activity extends AppCompatActivity {
         Ar_PartName = new ArrayList<>();
         Ar_PartQuantity = new ArrayList<>();
 
-        Cursor cur = CommonUtil.dbUtil.getMRList(job_id,"3",service_title);
-        Log.e("List Count",""+cur.getCount());
+        Cursor cur = CommonUtil.dbUtil.getMRList(job_id, "3", service_title);
+        Log.e("List Count", "" + cur.getCount());
 
         if (cur.getCount() > 0 && cur.moveToFirst()) {
 
@@ -371,8 +365,8 @@ public class AuditMRList_Activity extends AppCompatActivity {
         Fetch_MrList_Request mrlistrequest = new Fetch_MrList_Request();
         mrlistrequest.setJobId(job_id);
         mrlistrequest.setUserMobileNo(se_user_mobile_no);
-       // mrlistrequest.setSMU_SCH_COMPNO(compno);
-       // mrlistrequest.setSMU_SCH_SERTYPE(sertype);
+        // mrlistrequest.setSMU_SCH_COMPNO(compno);
+        // mrlistrequest.setSMU_SCH_SERTYPE(sertype);
         Log.w(TAG, "mrlistrequest " + new Gson().toJson(mrlistrequest));
         return mrlistrequest;
     }
@@ -384,7 +378,7 @@ public class AuditMRList_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-      //  super.onBackPressed();
+        //  super.onBackPressed();
         Intent send = new Intent(context, AuditMR_Activity.class);
         send.putExtra("status", status);
         startActivity(send);

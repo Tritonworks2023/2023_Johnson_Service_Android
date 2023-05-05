@@ -556,7 +556,7 @@
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="3"
-                    android:text="1. Access to Machine room is safe &amp; Well lit."
+                    android:text="1. Access to Machine room is safe &amp; Well lit"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -1485,7 +1485,6 @@
                         android:textSize="16sp" />
 
                 </LinearLayout>
-
 
                 <TextView
                     android:layout_width="wrap_content"

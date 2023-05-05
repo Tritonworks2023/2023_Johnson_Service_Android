@@ -79,9 +79,9 @@ public class Customer_Details_BreakdownActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_details_breakdown);
         context = this;
 
-        CommonUtil.dbUtil = new DbUtil(context);
+        /*CommonUtil.dbUtil = new DbUtil(context);
         CommonUtil.dbUtil.open();
-        CommonUtil.dbHelper = new DbHelper(context);
+        CommonUtil.dbHelper = new DbHelper(context);*/
 
         btnSelection = (Button) findViewById(R.id.btn_next);
         txt_cust_name = (TextView) findViewById(R.id.txt_cust_name);
@@ -211,14 +211,13 @@ public class Customer_Details_BreakdownActivity extends AppCompatActivity {
         btn_prev.setTextColor(getResources().getColor(R.color.white));
         btn_prev.setEnabled(true);
 
-
-        getBDDetails();
+        /*getBDDetails();
         getFeedbackGroup();
         getFeedBackDesc();
         getFeedback();
         getData(job_id, service_title);
         getSign(job_id, service_title);
-        getCustomer(job_id, service_title);
+        getCustomer(job_id, service_title);*/
 
         if (status.equals("paused")) {
             retrive_LocalValue();
@@ -232,41 +231,6 @@ public class Customer_Details_BreakdownActivity extends AppCompatActivity {
 
                 addCutomerData();
 
-//                String s_cust_name = et_cust_name.getText().toString();
-//                String s_cust_no = et_cust_no.getText().toString();
-//
-//                if (s_cust_name.equals("")) {
-//                    et_cust_name.setError("Please Enter the Customer Name");
-//                }
-//               else if (s_cust_no.equals("")) {
-//                    et_cust_no.setError("Please Enter the Customer Number");
-//                }
-//                else {
-//                    Intent send = new Intent(Customer_Details_BreakdownActivity.this, Customer_AcknowledgementActivity.class);
-//                    send.putExtra("value", value);
-//                    send.putExtra("feedback_details", feedback_details);
-//                    send.putExtra("feedback_group", feedback_group);
-//                    send.putExtra("bd_details", bd_dta);
-//                    send.putExtra("job_id", job_id);
-//                    send.putExtra("feedback_remark", feedback_remark);
-//                    send.putExtra("mr1", mr1);
-//                    send.putExtra("mr2", mr2);
-//                    send.putExtra("mr3", mr3);
-//                    send.putExtra("mr4", mr4);
-//                    send.putExtra("mr5", mr5);
-//                    send.putExtra("mr6", mr6);
-//                    send.putExtra("mr7", mr7);
-//                    send.putExtra("mr8", mr8);
-//                    send.putExtra("mr9", mr9);
-//                    send.putExtra("mr10", mr10);
-//                    send.putExtra("breakdown_service", breakdown_servies);
-//                    send.putExtra("tech_signature", tech_signature);
-//                    send.putExtra("customer_name", s_cust_name);
-//                    send.putExtra("customer_number", s_cust_no);
-//                    send.putExtra("customer_acknowledgement", customer_acknowledgement);
-//                    send.putExtra("status",status);
-//                    startActivity(send);
-                //  }
             }
         });
 
@@ -274,26 +238,6 @@ public class Customer_Details_BreakdownActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 onBackPressed();
-//                Intent send = new Intent( Customer_Details_BreakdownActivity.this, Technician_signatureActivity.class);
-//                send.putExtra("value",value);
-//                send.putExtra("feedback_details",feedback_details);
-//                send.putExtra("feedback_group",feedback_group);
-//                send.putExtra("bd_details",bd_dta);
-//                send.putExtra("job_id",job_id);
-//                send.putExtra("feedback_remark", feedback_remark);
-//                send.putExtra("mr1", mr1);
-//                send.putExtra("mr2", mr2);
-//                send.putExtra("mr3", mr3);
-//                send.putExtra("mr4", mr4);
-//                send.putExtra("mr5", mr5);
-//                send.putExtra("mr6", mr6);
-//                send.putExtra("mr7", mr7);
-//                send.putExtra("mr8", mr8);
-//                send.putExtra("mr9", mr9);
-//                send.putExtra("mr10", mr10);
-//                send.putExtra("breakdown_service", breakdown_servies);
-//                send.putExtra("tech_signature", tech_signature);
-//                startActivity(send);
             }
         });
 

@@ -154,10 +154,10 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
         btn_prev.setTextColor(getResources().getColor(R.color.white));
         btn_prev.setEnabled(true);
 
-        getBDDetails();
+        /*getBDDetails();
         getFeedbackGroup();
         getFeedBackDesc();
-        getFeedback();
+        getFeedback();*/
 
         if (status.equals("paused")) {
 
@@ -324,9 +324,9 @@ public class Feedback_RemarkActivity extends AppCompatActivity {
         if (s_feedback_remark.equals("")) {
             feedback_remark.setError("Please Enter the Feedback Remark");
         } else {
-            CommonUtil.dbUtil.addFeedback(job_id, service_title, s_feedback_remark, "4");
+            /*CommonUtil.dbUtil.addFeedback(job_id, service_title, s_feedback_remark, "4");
             Cursor cur = CommonUtil.dbUtil.getFeedback(job_id, service_title, "4");
-            Log.e("Feedback Count", "" + cur.getCount());
+            Log.e("Feedback Count", "" + cur.getCount());*/
             Intent send = new Intent(Feedback_RemarkActivity.this, Material_RequestActivity.class);
             send.putExtra("status", status);
             SharedPreferences.Editor editor = sharedPreferences.edit();

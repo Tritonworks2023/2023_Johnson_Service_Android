@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
+import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointerValidator;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -31,7 +33,6 @@ import com.google.gson.Gson;
 import com.triton.johnson_tap_app.Adapter.CardViewDataAdapter;
 import com.triton.johnson_tap_app.Db.CommonUtil;
 import com.triton.johnson_tap_app.Db.DbHelper;
-import com.triton.johnson_tap_app.Db.DbUtil;
 import com.triton.johnson_tap_app.Location.GpsTracker;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.RestUtils;
@@ -40,6 +41,7 @@ import com.triton.johnson_tap_app.Service_Adapter.BD_DetailsAdapter;
 import com.triton.johnson_tap_app.UserTypeSelectListener1;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
+import com.triton.johnson_tap_app.interfaces.OnItemClickCheckBoxBreakDownDetails;
 import com.triton.johnson_tap_app.requestpojo.BD_DetailsRequest;
 import com.triton.johnson_tap_app.requestpojo.Breakdowm_Submit_Request;
 import com.triton.johnson_tap_app.requestpojo.Job_status_updateRequest;
@@ -57,14 +59,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSelectListener1 {
+public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSelectListener1, OnItemClickCheckBoxBreakDownDetails {
 
     ImageView iv_back, ic_paused;
     List<BD_DetailsResponse.DataBean> breedTypedataBeanList;
@@ -89,6 +90,7 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
     private CardViewDataAdapter adapter;
     private String PetBreedType = "";
     private String Title, petimage, str_StartTime, str_job_status, compno, sertype, str_but_type = "";
+    private int oldPosition = -1;
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +99,9 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
         setContentView(R.layout.activity_bd_details);
         context = this;
 
-        CommonUtil.dbUtil = new DbUtil(context);
+        /*CommonUtil.dbUtil = new DbUtil(context);
         CommonUtil.dbUtil.open();
-        CommonUtil.dbHelper = new DbHelper(context);
+        CommonUtil.dbHelper = new DbHelper(context);*/
 
         btnSelection = (Button) findViewById(R.id.btn_next);
         iv_back = (ImageView) findViewById(R.id.iv_back);
@@ -147,29 +149,27 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
 
         Log.e("Network", "" + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
-
             NoInternetDialog();
-
         } else {
-
-            jobFindResponseCall(str_job_id);
+            retrive_LocalValue();
         }
-        getBDDetails();
+//        getBDDetails();
 
-        if (status.equals("new")) {
+        /*if (!Objects.equals(networkStatus, "Not connected to Internet")) {
+            retrive_LocalValue();
+        } else {
+            NoInternetDialog();
+        }*/
 
+        /*if (status.equals("new")) {
 
         } else {
-
             if (!Objects.equals(networkStatus, "Not connected to Internet")) {
-
-
                 retrive_LocalValue();
             } else {
                 NoInternetDialog();
             }
-
-        }
+        }*/
 
 
         btnSelection.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +179,6 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
                 str_but_type = "btn_next";
                 Job_status_update();
                 createLocalvalue();
-
             }
         });
 
@@ -243,7 +242,8 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
         call.enqueue(new Callback<RetriveLocalValueBRResponse>() {
             @Override
             public void onResponse(Call<RetriveLocalValueBRResponse> call, Response<RetriveLocalValueBRResponse> response) {
-                Log.e("Retrive Response", "" + new Gson().toJson(response.body()));
+                Log.i(TAG, "retrive_LocalValue: onResponse: RetriveLocalValueBRResponse -> " + new Gson().toJson(response.body()));
+
                 if (response.body() != null) {
 
                     message = response.body().getMessage();
@@ -256,11 +256,12 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
                             str_BDDetails = response.body().getData().getBd_details();
                             Log.e("Retive BD", "" + str_BDDetails);
 
-                            CommonUtil.dbUtil.addBDDetails(str_job_id, service_title, str_BDDetails, "1");
+                            /*CommonUtil.dbUtil.addBDDetails(str_job_id, service_title, str_BDDetails, "1");
                             Cursor curs = CommonUtil.dbUtil.getBDdetails(str_job_id, service_title, "1");
-                            Log.e("BD", "" + curs.getCount());
+                            Log.e("BD", "" + curs.getCount());*/
 
-                            setView(breedTypedataBeanList);
+                            jobFindResponseCall(str_job_id);
+//                            setView(breedTypedataBeanList);
                         }
                     } else {
                         ErrorMsgDialog(message);
@@ -351,6 +352,15 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         activityBasedListAdapter = new BD_DetailsAdapter(getApplicationContext(), dataBeanList, this, status, str_BDDetails);
         recyclerView.setAdapter(activityBasedListAdapter);
+
+        if (nullPointerValidator(str_BDDetails) && !dataBeanList.isEmpty()) {
+            for (int i = 0; i < dataBeanList.size(); i++) {
+                if (dataBeanList.get(i).getTitle().equalsIgnoreCase(str_BDDetails)) {
+                    itemClickCheckBoxBreakDownDetails(i, dataBeanList.get(i));
+                }
+            }
+        }
+
     }
 
     @SuppressLint("Range")
@@ -364,8 +374,6 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
             str_BDDetails = curs.getString(curs.getColumnIndex(DbHelper.BD_DETAILS));
             Log.e("BD Data Get", "" + str_BDDetails);
         }
-
-
     }
 
     public void userTypeSelectListener1(String usertype, String usertypevalue) {
@@ -591,7 +599,7 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
     private void moveNext() {
 
         Log.e("BD SIZE", "" + breedTypedataBeanList.size());
-        Cursor curs;
+        /*Cursor curs;*/
 
         for (int i = 0; i < breedTypedataBeanList.size(); i++) {
             BD_DetailsResponse.DataBean singleStudent = breedTypedataBeanList.get(i);
@@ -607,10 +615,10 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
             }
         }
 
-        curs = CommonUtil.dbUtil.getBDdetails(str_job_id, service_title, "1");
-        Log.e("BD", "" + curs.getCount());
+        /*curs = CommonUtil.dbUtil.getBDdetails(str_job_id, service_title, "1");
+        Log.e("BD", "" + curs.getCount());*/
 
-        if (curs.getCount() > 0) {
+        if (nullPointerValidator(data)) {
             Intent send = new Intent(BD_DetailsActivity.this, Feedback_GroupActivity.class);
             send.putExtra("bd_details", data);
             send.putExtra("job_id", str_job_id);
@@ -656,7 +664,7 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
 
     private Breakdowm_Submit_Request createLocalRequest() {
 
-        getBDDetails();
+//        getBDDetails();
 
         String codelist = "", feedbackdetails = "";
 
@@ -699,7 +707,6 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
         return submitDailyRequest;
     }
 
-
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
@@ -719,6 +726,19 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
                 })
                 .show();
     }
+
+    @Override
+    public void itemClickCheckBoxBreakDownDetails(int newPosition, BD_DetailsResponse.DataBean selectedItem) {
+
+        if (oldPosition != -1) {
+            breedTypedataBeanList.get(oldPosition).setSelected(false);
+        }
+        oldPosition = newPosition;
+        breedTypedataBeanList.get(oldPosition).setSelected(true);
+
+        str_BDDetails = breedTypedataBeanList.get(oldPosition).getTitle();
+    }
+
 }
 
 

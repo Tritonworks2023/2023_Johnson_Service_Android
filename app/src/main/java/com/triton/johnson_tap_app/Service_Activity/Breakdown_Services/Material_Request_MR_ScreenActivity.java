@@ -88,9 +88,9 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_material_request_mr_screen);
         context = this;
 
-        CommonUtil.dbUtil = new DbUtil(context);
+        /*CommonUtil.dbUtil = new DbUtil(context);
         CommonUtil.dbUtil.open();
-        CommonUtil.dbHelper = new DbHelper(context);
+        CommonUtil.dbHelper = new DbHelper(context);*/
 
         btnSelection = (Button) findViewById(R.id.btn_next);
         btn_prev = (Button) findViewById(R.id.btn_show);
@@ -204,11 +204,11 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
         txt_Jobid.setText("Job ID : " + job_id);
         txt_Starttime.setText("Start Time : " + str_StartTime);
 
-        getBDDetails();
+        /*getBDDetails();
         getFeedbackGroup();
         getFeedBackDesc();
         getFeedback();
-        getData(job_id, service_title);
+        getData(job_id, service_title);*/
 
         if (contract_status.equals("GRACE")) {
 
@@ -458,10 +458,10 @@ public class Material_Request_MR_ScreenActivity extends AppCompatActivity {
         if (s_mr1.equals("")) {
             mr1.setError("Please Enter the MR1");
         } else {
-            CommonUtil.dbUtil.addBreakdownMRList(s_mr1, s_mr2, s_mr3, s_mr4, s_mr5, s_mr6, s_mr7,
+            /*CommonUtil.dbUtil.addBreakdownMRList(s_mr1, s_mr2, s_mr3, s_mr4, s_mr5, s_mr6, s_mr7,
                     s_mr8, s_mr9, s_mr10, job_id, service_title);
             Cursor c = CommonUtil.dbUtil.getBreakdownMrList();
-            Log.e("MRLIST", "" + c.getCount());
+            Log.e("MRLIST", "" + c.getCount());*/
             Intent send = new Intent(Material_Request_MR_ScreenActivity.this, BD_StatusActivity.class);
             send.putExtra("value", value);
             send.putExtra("feedback_details", feedback_details);

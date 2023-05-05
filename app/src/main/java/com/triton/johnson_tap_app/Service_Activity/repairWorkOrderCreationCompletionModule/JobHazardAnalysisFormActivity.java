@@ -426,69 +426,69 @@ public class JobHazardAnalysisFormActivity extends AppCompatActivity implements 
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getNature_of_work())) {
             ErrorMsgDialog("Please Select Nature Of Work.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW01())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 1. Mechanic / team aware of standard repair process and understand to perform activity.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW02())) {
-            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+            ErrorMsgDialog("Please Select 2. mechanic trained / competent to conduct the process.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW03())) {
-            ErrorMsgDialog("Please Select Submitted By Name.");
+            ErrorMsgDialog("Please Select 3. All process related PPEs are available.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW04())) {
-            ErrorMsgDialog("Please Select Submitted By Number.");
+            ErrorMsgDialog("Please Select 4. Proper and special Tools are available.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW05())) {
-            ErrorMsgDialog("Please Select Submitted By On.");
+            ErrorMsgDialog("Please Select 5. Mechanics not working at different levels.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW06())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 6. Barricade and maintenance display card available.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW07())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 7. Disconnecting of electrical circuit while on work.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getGRW08())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 8. Certified Hoisting tools used in process.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW01())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 1. Access to Machine room is safe &amp; Well lit.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW02())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 2. Lighting is adequate on machine room.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW03())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 3. Floor is free of oil &amp; material which may cause tripping Hazard.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW04())) {
-            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+            ErrorMsgDialog("Please Select 4. Oils &amp; Lubricants are in closed &amp; sealed containers.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW05())) {
-            ErrorMsgDialog("Please Select Submitted By Name.");
+            ErrorMsgDialog("Please Select 5. Speed governor functional.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMRW06())) {
-            ErrorMsgDialog("Please Select Submitted By Number.");
+            ErrorMsgDialog("Please Select 6. Safe means of hoisting is available. (Capacity,hook locking,etc).");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW01())) {
-            ErrorMsgDialog("Please Select Submitted By On.");
+            ErrorMsgDialog("Please Select 1. Emergency stop switch easily accessible &amp; identified in Car and Cwt.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW02())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 2. Emergency stop switch functional &amp; verified in Car and Cwt.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW03())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 3. car top inspection box installed &amp; Functioning properly and verified.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW04())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 4. Lighting is adequate on car top.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW05())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 5. Car top barricade angle installed (To loop FBH while on work).");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW06())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 6. Car top wiring guarded to ensure no physical damage of cables / wire while on work.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW07())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 7. Tools &amp; material required for repair activity placed safely on car top.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getCRW08())) {
-            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+            ErrorMsgDialog("Please Select 8. Mechanical safety gear (OSG) functional.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getHRW01())) {
-            ErrorMsgDialog("Please Select Submitted By Name.");
+            ErrorMsgDialog("Please Select 1. Lighting is adequate on hoist way.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getHRW02())) {
-            ErrorMsgDialog("Please Select Submitted By Number.");
+            ErrorMsgDialog("Please Select 2. All covers / Fascia installed.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getHRW03())) {
-            ErrorMsgDialog("Please Select Submitted By On.");
+            ErrorMsgDialog("Please Select 3. Hoistway screening / protection installed.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW01())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 1. Emergency stop switch easily accessible &amp; identified. Functional &amp; Verified in Pit.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW02())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 2. Emergency stop switch functional &amp; verified.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW03())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 3. Lighting is adequate on Pit.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW04())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 4. Pit ladder is installed &amp; easily accessible.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW05())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 5. CWT screen guard installed &amp; level below CWT buffer top.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW06())) {
-            ErrorMsgDialog("Please Select Date.");
+            ErrorMsgDialog("Please Select 6. Exercise caution while working on duplex shafts where PIT separation is not done.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getPRW07())) {
-            ErrorMsgDialog("Please Select Submitted By Emp Code.");
+            ErrorMsgDialog("Please Select 7. Floor must be free of water leakage, oil &amp; materials which may cause tripping Hazard.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getRemarks())) {
             ErrorMsgDialog("Please Enter Remark.");
         } else if (!nullPointerValidator(repairWorkRequestJobHazardCreateRequest.getMech_name())) {
