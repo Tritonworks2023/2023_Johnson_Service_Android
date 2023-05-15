@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.failureReportApprovalModule;
 
+import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointerValidator;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -61,6 +63,13 @@ public class JobListFailureReportApprovalAdapter extends RecyclerView.Adapter<Re
         holder.txt_submitted_by.setText(currentItem.getSubmitted_by_name());
         holder.txt_submitted_on.setText(currentItem.getSubmitted_by_on());
         holder.txt_status.setText(currentItem.getApp_status());
+        holder.txt_fr_no.setText(currentItem.getFr_no());
+
+        if (nullPointerValidator(currentItem.getFr_no())) {
+            holder.txt_fr_no.setVisibility(View.VISIBLE);
+        } else {
+            holder.txt_fr_no.setVisibility(View.GONE);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +91,7 @@ public class JobListFailureReportApprovalAdapter extends RecyclerView.Adapter<Re
 
     private class ViewHolderOne extends RecyclerView.ViewHolder {
 
-        TextView txt_jobid, txt_building_number, txt_submitted_by, txt_submitted_on, txt_status;
+        TextView txt_jobid, txt_building_number, txt_submitted_by, txt_submitted_on, txt_status, txt_fr_no;
 
         public ViewHolderOne(View view) {
             super(view);
@@ -92,6 +101,7 @@ public class JobListFailureReportApprovalAdapter extends RecyclerView.Adapter<Re
             txt_submitted_by = view.findViewById(R.id.txt_submitted_by);
             txt_submitted_on = view.findViewById(R.id.txt_submitted_on);
             txt_status = view.findViewById(R.id.txt_status);
+            txt_fr_no = view.findViewById(R.id.txt_fr_no);
         }
     }
 }

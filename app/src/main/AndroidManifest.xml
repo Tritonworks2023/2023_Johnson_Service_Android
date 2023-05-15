@@ -50,6 +50,9 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
+            android:name=".Engineer_Dashboard.TechnicianSummaryActivity"
+            android:exported="false" />
+        <activity
             android:name=".Service_Activity.repairWorkOrderCreationCompletionModule.JobHazardAnalysisFormViewActivity"
             android:exported="false" />
         <activity

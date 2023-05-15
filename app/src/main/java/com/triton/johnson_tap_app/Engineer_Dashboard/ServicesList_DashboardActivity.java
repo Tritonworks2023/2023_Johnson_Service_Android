@@ -1,13 +1,5 @@
 package com.triton.johnson_tap_app.Engineer_Dashboard;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -24,6 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
@@ -44,17 +43,17 @@ import retrofit2.Response;
 
 public class ServicesList_DashboardActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private EditText etsearch;
-    TextView txt_last_login,txt_Lastlogin;
-    String se_id,se_user_mobile_no,se_user_name,message,agentName,agentNumber,lastLogin;
+    TextView txt_last_login, txt_Lastlogin;
+    String se_id, se_user_mobile_no, se_user_name, message, agentName, agentNumber, lastLogin, TAG = ServicesList_DashboardActivity.class.getSimpleName();
     List<Service_list_new_screenResponse.DataBean> dataBeanList;
-   ServicesList_DashboardAdapter activityBasedListAdapter;
-    TextView text,txt_no_records, title_Welcome;
-    ImageView iv_back,img_clearsearch;
+    ServicesList_DashboardAdapter activityBasedListAdapter;
+    TextView text, txt_no_records, title_Welcome;
+    ImageView iv_back, img_clearsearch;
     String title;
     LinearLayout logout;
     AlertDialog alertDialog;
+    private RecyclerView recyclerView;
+    private EditText etsearch;
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +73,15 @@ public class ServicesList_DashboardActivity extends AppCompatActivity {
         se_id = sharedPreferences.getString("_id", "default value");
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
-        agentName = sharedPreferences.getString("agent_name","name");
-        agentNumber = sharedPreferences.getString("agent_number","123456789");
-        Log.e("Agent Number",""+agentNumber);
-        lastLogin = sharedPreferences.getString("last_login","2020-10-28 05:36:33.000 ");
-       // lastLogin = lastLogin.substring(0,20);
-        lastLogin = lastLogin.substring(0,lastLogin.length() -5);
+        agentName = sharedPreferences.getString("agent_name", "name");
+        agentNumber = sharedPreferences.getString("agent_number", "123456789");
+        Log.e("Agent Number", "" + agentNumber);
+        lastLogin = sharedPreferences.getString("last_login", "2020-10-28 05:36:33.000 ");
+        // lastLogin = lastLogin.substring(0,20);
+        lastLogin = lastLogin.substring(0, lastLogin.length() - 5);
         lastLogin = lastLogin.replaceAll("[^0-9-:]", " ");
 
-        title_Welcome.setText("Welcome " +agentName);
+        title_Welcome.setText("Welcome " + agentName);
         txt_Lastlogin.setText("Last Login : " + lastLogin);
 
         Bundle extras = getIntent().getExtras();
@@ -91,8 +90,8 @@ public class ServicesList_DashboardActivity extends AppCompatActivity {
 //            title_name.setText(title);
         }
 
-                jobFindResponseCall();
-       // jobFindResponseCall("8976322100");
+        jobFindResponseCall();
+        // jobFindResponseCall("8976322100");
 
         etsearch.addTextChangedListener(new TextWatcher() {
 
@@ -112,12 +111,11 @@ public class ServicesList_DashboardActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String Searchvalue = etsearch.getText().toString();
 
-                if(Searchvalue.equals("")){
+                if (Searchvalue.equals("")) {
                     recyclerView.setVisibility(View.VISIBLE);
-                  //  jobFindResponseCall();
+                    //  jobFindResponseCall();
                     img_clearsearch.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     //   Log.w(TAG,"Search Value---"+Searchvalue);
                     filter(Searchvalue);
                 }
@@ -148,7 +146,7 @@ public class ServicesList_DashboardActivity extends AppCompatActivity {
                                 editor.clear();
                                 editor.commit();
 
-                                Toasty.success(getApplicationContext(),"Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
+                                Toasty.success(getApplicationContext(), "Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
                                 Intent send = new Intent(ServicesList_DashboardActivity.this, New_LoginActivity.class);
                                 startActivity(send);
                             }
@@ -166,23 +164,19 @@ public class ServicesList_DashboardActivity extends AppCompatActivity {
 
     private void filter(String s) {
         List<Service_list_new_screenResponse.DataBean> filteredlist = new ArrayList<>();
-        for(Service_list_new_screenResponse.DataBean item : dataBeanList)
-        {
-            if(item.getService_name().toLowerCase().contains(s.toLowerCase()))
-            {
-                Log.w(TAG,"filter----"+item.getService_name().toLowerCase().contains(s.toLowerCase()));
+        for (Service_list_new_screenResponse.DataBean item : dataBeanList) {
+            if (item.getService_name().toLowerCase().contains(s.toLowerCase())) {
+                Log.w(TAG, "filter----" + item.getService_name().toLowerCase().contains(s.toLowerCase()));
                 filteredlist.add(item);
 
             }
         }
-        if(filteredlist.isEmpty())
-        {
-           // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
+        if (filteredlist.isEmpty()) {
+            // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
             recyclerView.setVisibility(View.GONE);
             txt_no_records.setVisibility(View.VISIBLE);
             txt_no_records.setText("No Data Found");
-        }else
-        {
+        } else {
             activityBasedListAdapter.filterList(filteredlist);
         }
 
@@ -208,7 +202,7 @@ public class ServicesList_DashboardActivity extends AppCompatActivity {
                         if (response.body().getData() != null) {
                             dataBeanList = response.body().getData();
 
-                            if (dataBeanList.size() == 0){
+                            if (dataBeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);

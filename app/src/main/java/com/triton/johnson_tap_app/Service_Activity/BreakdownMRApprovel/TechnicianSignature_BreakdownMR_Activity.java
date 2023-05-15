@@ -28,7 +28,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.VolleyLog;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;

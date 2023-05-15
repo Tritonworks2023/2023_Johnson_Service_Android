@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -311,7 +312,10 @@ public class RepairWorkRequestFormActivity extends AppCompatActivity implements 
                 if (response.body() != null) {
                     if (response.body().getCode() == 200) {
                         Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        onBackPressed();
+
+                        Intent intent = new Intent(context, RepairWorkRequestActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     } else {
                         ErrorMsgDialog(response.body().getMessage());
                     }

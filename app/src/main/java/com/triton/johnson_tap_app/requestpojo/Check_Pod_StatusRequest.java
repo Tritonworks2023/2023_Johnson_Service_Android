@@ -4,6 +4,7 @@ public class Check_Pod_StatusRequest {
 
     private String user_mobile_no;
     private String job_id;
+    private String comp_no;
 
     public String getUser_mobile_no() {
         return user_mobile_no;
@@ -21,5 +22,11 @@ public class Check_Pod_StatusRequest {
         this.job_id = job_id;
     }
 
+    public String getComp_no() {
+        return comp_no;
+    }
 
+    public void setComp_no(String comp_no) {
+        this.comp_no = comp_no;
+    }
 }

@@ -130,6 +130,8 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
         compno = sharedPreferences.getString("compno", "123");
         sertype = sharedPreferences.getString("sertype", "123");
 
+        Log.i(TAG, "onCreate: compno -> " + compno);
+
         Spannable name_Upload = new SpannableString("Start Job ");
         name_Upload.setSpan(new ForegroundColorSpan(Start_Job_Text_PreventiveActivity.this.getResources().getColor(R.color.colorAccent)), 0, name_Upload.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         text.setText(name_Upload);
@@ -944,6 +946,7 @@ public class Start_Job_Text_PreventiveActivity extends AppCompatActivity {
         Check_Pod_StatusRequest count = new Check_Pod_StatusRequest();
         count.setUser_mobile_no(se_user_mobile_no);
         count.setJob_id(str_job_id);
+        count.setComp_no(compno);
 
         Log.i(TAG, "count_pasuedRequest: Check_Pod_StatusRequest -> " + new Gson().toJson(count));
         return count;

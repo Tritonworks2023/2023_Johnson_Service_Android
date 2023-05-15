@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -57,7 +58,7 @@ public class AD_DetailsSiteAudit_Activity extends AppCompatActivity {
             str_PendingCompno, str_PendingStartTime, str_PendingPauseTime;
     AlertDialog alertDialog;
     String status, se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, jobid, osacompno,
-            str_Remarks, networkStatus = "";
+            str_Remarks, networkStatus = "", service_type = "";
     GpsTracker gpsTracker;
 
     @SuppressLint("MissingInflatedId")
@@ -73,7 +74,6 @@ public class AD_DetailsSiteAudit_Activity extends AppCompatActivity {
         btn_Prev = findViewById(R.id.btn_prev);
         btn_Next = findViewById(R.id.btn_next);
         btn_Skip = findViewById(R.id.btn_skip);
-
 
         try {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -101,11 +101,10 @@ public class AD_DetailsSiteAudit_Activity extends AppCompatActivity {
         service_title = sharedPreferences.getString("service_title", "Services");
         jobid = sharedPreferences.getString("jobid", "L-1234");
         osacompno = sharedPreferences.getString("osacompno", "ADT2020202020");
+        service_type = sharedPreferences.getString("service_type", "");
 
-        Log.e("Name", "" + service_title);
-        Log.e("Mobile", "" + se_user_mobile_no);
-        Log.e("Jobid", "" + jobid);
-        Log.e("osocompno", "" + osacompno);
+        Log.i(TAG, "onCreate: service_title -> " + service_title + " jobid -> " + jobid
+                + " osacompno -> " + osacompno + " service_type -> " + service_type);
 
         txt_AdNumber.setText(osacompno);
 
@@ -300,13 +299,13 @@ public class AD_DetailsSiteAudit_Activity extends AppCompatActivity {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<CheckOutstandingJobResponse> call = apiInterface.CheckOutstandingJobCall(RestUtils.getContentType(), checkOustandingjob());
-        Log.w(TAG, "Check Outstanding Job url  :%s" + " " + call.request().url().toString());
+
+        Log.i(TAG, "checkOutstandingJobCall: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<CheckOutstandingJobResponse>() {
             @Override
-            public void onResponse(Call<CheckOutstandingJobResponse> call, Response<CheckOutstandingJobResponse> response) {
-
-                Log.w(TAG, " Check Outstanding Response" + new Gson().toJson(response.body()));
+            public void onResponse(@NonNull Call<CheckOutstandingJobResponse> call, @NonNull Response<CheckOutstandingJobResponse> response) {
+                Log.i(TAG, "checkOutstandingJobCall: onResponse: CheckOutstandingJobResponse -> " + new Gson().toJson(response.body()));
 
                 dialog.dismiss();
 
@@ -316,8 +315,6 @@ public class AD_DetailsSiteAudit_Activity extends AppCompatActivity {
 
                         message = response.body().getMessage();
 
-                        Log.e("Message", "" + message);
-
                         if (message.equals("Pending Job")) {
 
                             str_PendingJobid = response.body().getData().getJob_no();
@@ -326,36 +323,22 @@ public class AD_DetailsSiteAudit_Activity extends AppCompatActivity {
                             str_PendingStartTime = response.body().getData().getStart_time();
                             str_PendingStartTime = str_PendingStartTime.replaceAll("[^0-9-:]", " ");
 
-                            Log.e("Pending JobID", "" + str_PendingJobid);
-                            Log.e("Pending Servicename", "" + str_PendingServicename);
-                            Log.e("Pending Compno", "" + str_PendingCompno);
-                            Log.e("Pending StartTime", "" + str_PendingStartTime);
-
                             showPopup();
-
                         } else {
-
                             getMYLocation();
-
                         }
-
-
                     } else {
-
                         dialog.dismiss();
                     }
-
-
                 } else {
-
                     dialog.dismiss();
                 }
-
             }
 
             @Override
-            public void onFailure(Call<CheckOutstandingJobResponse> call, Throwable t) {
-                Log.e("OTP", "--->" + t.getMessage());
+            public void onFailure(@NonNull Call<CheckOutstandingJobResponse> call, @NonNull Throwable t) {
+
+                Log.e(TAG, "checkOutstandingJobCall: onFailure: error -> " + t.getMessage());
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -452,6 +435,7 @@ public class AD_DetailsSiteAudit_Activity extends AppCompatActivity {
 
         CheckOutstandingJobRequest checkOutstandingJobRequest = new CheckOutstandingJobRequest();
         checkOutstandingJobRequest.setUser_mobile_no(se_user_mobile_no);
+        checkOutstandingJobRequest.setJob_id(jobid);
         Log.w(TAG, "Check OutStanding Request " + new Gson().toJson(checkOutstandingJobRequest));
         return checkOutstandingJobRequest;
     }

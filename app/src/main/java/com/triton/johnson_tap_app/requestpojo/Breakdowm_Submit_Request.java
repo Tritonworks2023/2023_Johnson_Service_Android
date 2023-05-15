@@ -6,6 +6,7 @@ public class Breakdowm_Submit_Request {
 
     private String bd_details;
     private String feedback_details;
+    private ArrayList<String> feedback_details_list;
     private String feedback_remark_text;
     private String mr_status;
     private String code_list;
@@ -47,6 +48,14 @@ public class Breakdowm_Submit_Request {
 
     public void setFeedback_details(String feedback_details) {
         this.feedback_details = feedback_details;
+    }
+
+    public ArrayList<String> getFeedback_details_list() {
+        return feedback_details_list;
+    }
+
+    public void setFeedback_details_list(ArrayList<String> feedback_details_list) {
+        this.feedback_details_list = feedback_details_list;
     }
 
     public String getFeedback_remark_text() {

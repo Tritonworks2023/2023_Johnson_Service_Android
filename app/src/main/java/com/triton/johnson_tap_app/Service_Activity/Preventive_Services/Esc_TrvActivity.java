@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.Preventive_Services;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -45,18 +43,18 @@ import retrofit2.Response;
 
 public class Esc_TrvActivity extends AppCompatActivity implements UserTypeSelectListener1 {
 
-    private Button btnSelection;
-    private RecyclerView recyclerView;
-    private CardViewDataAdapter adapter;
-    ImageView iv_back,ic_paused;
+    ImageView iv_back, ic_paused;
     List<BD_DetailsResponse.DataBean> breedTypedataBeanList;
     BD_DetailsAdapter activityBasedListAdapter;
-    private String PetBreedType = "";
-    String message,se_user_mobile_no, se_user_name, se_id,check_id, service_title,str_job_id,data;
-    private String Title,petimage;
+    String message, se_user_mobile_no, se_user_name, se_id, check_id, service_title, str_job_id, data, TAG = Esc_TrvActivity.class.getSimpleName();
     AlertDialog alertDialog;
     ProgressDialog progressDialog;
     ArrayList<String> myData = new ArrayList<>();
+    private Button btnSelection;
+    private RecyclerView recyclerView;
+    private CardViewDataAdapter adapter;
+    private String PetBreedType = "";
+    private String Title, petimage;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,20 +76,20 @@ public class Esc_TrvActivity extends AppCompatActivity implements UserTypeSelect
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "default value");
 
-        MyListData[] myListData = new MyListData[] {
+        MyListData[] myListData = new MyListData[]{
                 new MyListData("MONTHLY"),
                 new MyListData("QUARTERLY"),
                 new MyListData("HALF YEARLY"),
                 new MyListData("YEARLY")
         };
 
-        MyListAdapter adapter = new MyListAdapter(myListData,this);
+        MyListAdapter adapter = new MyListAdapter(myListData, this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         // jobFindResponseCall("L-F3183");
-       // jobFindResponseCall(str_job_id);
+        // jobFindResponseCall(str_job_id);
 
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -119,7 +117,7 @@ public class Esc_TrvActivity extends AppCompatActivity implements UserTypeSelect
 ////                    send.putExtra("bd_details",data);
 ////                    send.putExtra("job_id",str_job_id);
 ////                    startActivity(send);
-   //             }
+                //             }
 
                 Intent send = new Intent(Esc_TrvActivity.this, Quarterly_Top_PitActivity.class);
                 startActivity(send);
@@ -203,18 +201,18 @@ public class Esc_TrvActivity extends AppCompatActivity implements UserTypeSelect
     }
 
     private void setView(List<BD_DetailsResponse.DataBean> dataBeanList) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-      //  activityBasedListAdapter = new BD_DetailsAdapter(getApplicationContext(), dataBeanList,this);
+        //  activityBasedListAdapter = new BD_DetailsAdapter(getApplicationContext(), dataBeanList,this);
         recyclerView.setAdapter(activityBasedListAdapter);
     }
 
     public void userTypeSelectListener1(String usertype, String usertypevalue) {
         Title = usertype;
 
-        Log.w(TAG,"myPetsSelectListener : "+ "petList" +new Gson().toJson(breedTypedataBeanList));
+        Log.w(TAG, "myPetsSelectListener : " + "petList" + new Gson().toJson(breedTypedataBeanList));
 
-        if(breedTypedataBeanList != null && breedTypedataBeanList.size()>0) {
+        if (breedTypedataBeanList != null && breedTypedataBeanList.size() > 0) {
             for (int i = 0; i < breedTypedataBeanList.size(); i++) {
                 if (breedTypedataBeanList.get(i).getTitle().equalsIgnoreCase(breedTypedataBeanList.get(i).getTitle())) {
                     petimage = breedTypedataBeanList.get(i).getTitle();

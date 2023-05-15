@@ -91,7 +91,7 @@ public class TechnicianSigantureAudit_Activity extends AppCompatActivity {
     String userid, value;
     String uploadimagepath = "", signfile;
     String osacompno;
-    String strPartname, strPartno, strPartid, strQuantity;
+    String strPartname = "", strPartno = "", strPartid, strQuantity = "";
     String jsonString = "", str_Partid, str_Partname, str_Partno, str_Quantity, networkStatus = "";
     AlertDialog alertDialog;
     List<AuditRequest.MrDatum> mrData = new ArrayList<>();
@@ -423,21 +423,22 @@ public class TechnicianSigantureAudit_Activity extends AppCompatActivity {
                             service_type = response.body().getData().getService_type();
                             Log.e("Type", "" + service_type);
                             databean = response.body().getData().getMrData();
+                            if (databean != null && !databean.isEmpty()) {
+                                for (int i = 0; i < databean.size(); i++) {
+                                    //  datre =  response.body().getData();
 
-                            for (int i = 0; i < databean.size(); i++) {
-                                //  datre =  response.body().getData();
+                                    strPartno = databean.get(i).getPartno();
+                                    strPartname = databean.get(i).getPartname();
+                                    strQuantity = databean.get(i).getReq();
+                                    //commonutil
 
-                                strPartno = databean.get(i).getPartno();
-                                strPartname = databean.get(i).getPartname();
-                                strQuantity = databean.get(i).getReq();
-                                //commonutil
+                                    Log.e("Part 1", "" + strPartno);
+                                    Log.e("Part 2", "" + strPartname);
+                                    Log.e("Part 3", "" + strQuantity);
 
-                                Log.e("Part 1", "" + strPartno);
-                                Log.e("Part 2", "" + strPartname);
-                                Log.e("Part 3", "" + strQuantity);
+                                    Log.e("jobID", "" + job_id);
 
-                                Log.e("jobID", "" + job_id);
-
+                                }
                             }
 
                             if (CommonUtil.dbUtil.hasMRList(strPartno, strPartname, "3", job_id, service_title)) {

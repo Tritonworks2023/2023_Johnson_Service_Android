@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.LR_Service;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -19,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,14 +38,13 @@ import com.triton.johnson_tap_app.utils.ConnectionDetector;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class JobDetails_LRService_Activity extends AppCompatActivity {
 
-    ImageView img_back,img_clearsearch;
+    ImageView img_back, img_clearsearch;
     RecyclerView recyclerView;
     EditText edtsearch;
     TextView txt_no_records;
@@ -56,14 +52,15 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
     PausedJobListAdapter_LRService pausedlistAdapter;
     RelativeLayout Job;
     Context context;
-    String status,se_user_mobile_no, se_user_name, se_id,check_id, service_title,message,networkStatus="";
+    String status, se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, networkStatus = "",
+            se_user_location = "", emp_Type = "", TAG = JobDetails_LRService_Activity.class.getSimpleName();
     SharedPreferences sharedPreferences;
     List<JobListResponse.DataBean> breedTypedataBeanList;
     List<Pasused_ListResponse.DataBean> databeanList;
     private String PetBreedType = "";
     //ArrayList<String> arli_jobid = new ArrayList<String>();
 
-   // List<arli_jobid> jobid = new ArrayList<>();
+    // List<arli_jobid> jobid = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +68,6 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_jobdetails_lrservice);
         context = this;
-
 
         img_back = (ImageView) findViewById(R.id.img_back);
         edtsearch = (EditText) findViewById(R.id.edt_search);
@@ -85,41 +81,48 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
 
         Log.e("Name", "" + service_title);
-        Log.e("Mobile", ""+ se_user_mobile_no);
-
+        Log.e("Mobile", "" + se_user_mobile_no);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-          //  service_title = extras.getString("service_title");
+            //  service_title = extras.getString("service_title");
             status = extras.getString("status");
-         //   Log.e("Name",":" + service_title);
+            //   Log.e("Name",":" + service_title);
             Log.e("Status", "" + status);
         }
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-        Log.e("Network",""+networkStatus);
+        Log.e("Network", "" + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
 
             NoInternetDialog();
 
-        }
-        else{
+        } else {
 
-            if (status.equals("new")){
+            if (status.equals("new")) {
 
-                jobFindResponseCall(se_user_mobile_no,service_title);
-            }
-            else{
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    NewJobListLR_branch_headCall(se_user_mobile_no, service_title);
+                } else {
+                    jobFindResponseCall(se_user_mobile_no, service_title);
+                }
+            } else {
 
                 Job.setVisibility(View.GONE);
                 edtsearch.setVisibility(View.GONE);
-                pausedjobResponseCall();
+
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    Pasused_listResponseLR_branch_headCall();
+                } else {
+                    pausedjobResponseCall();
+                }
             }
         }
-
 
 
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +149,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
 
                 String Search = edtsearch.getText().toString();
 
-                if(Search.equals("")){
+                if (Search.equals("")) {
                     recyclerView.setVisibility(View.VISIBLE);
                     img_clearsearch.setVisibility(View.INVISIBLE);
                 } else {
@@ -178,7 +181,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
 
 
         mBuilder.setView(mView);
-        final Dialog dialog= mBuilder.create();
+        final Dialog dialog = mBuilder.create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
 
@@ -215,7 +218,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
                         if (response.body().getData() != null) {
                             databeanList = response.body().getData();
 
-                            if (databeanList.size() == 0){
+                            if (databeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
@@ -243,7 +246,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
                         txt_no_records.setVisibility(View.VISIBLE);
                         txt_no_records.setText("Error 404 Found");
                         edtsearch.setEnabled(false);
-                      //  Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                        //  Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
                     }
                 }
             }
@@ -256,7 +259,74 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
                 txt_no_records.setVisibility(View.VISIBLE);
                 txt_no_records.setText("Something Went Wrong.. Try Again Later");
                 edtsearch.setEnabled(false);
-               // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void Pasused_listResponseLR_branch_headCall() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Pasused_ListResponse> call = apiInterface.Pasused_listResponseLR_branch_headCall(RestUtils.getContentType(), serviceRequest());
+        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<Pasused_ListResponse>() {
+            @Override
+            public void onResponse(Call<Pasused_ListResponse> call, Response<Pasused_ListResponse> response) {
+
+                Log.w(TAG, "Paused Job Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            databeanList = response.body().getData();
+
+                            if (databeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+
+                            }
+
+                            setPausedTypeView(databeanList);
+                            Log.d("dataaaaa", String.valueOf(databeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                            edtsearch.setEnabled(false);
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        edtsearch.setEnabled(false);
+                        //  Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Pasused_ListResponse> call, Throwable t) {
+
+                Log.e("Jobno Find ", "--->" + t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                edtsearch.setEnabled(false);
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -265,13 +335,14 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        pausedlistAdapter= new PausedJobListAdapter_LRService(getApplicationContext(), databeanList,status);
+        pausedlistAdapter = new PausedJobListAdapter_LRService(getApplicationContext(), databeanList, status);
         recyclerView.setAdapter(pausedlistAdapter);
     }
 
     private Pasused_ListRequest serviceRequest() {
         Pasused_ListRequest service = new Pasused_ListRequest();
         service.setUser_mobile_no(se_user_mobile_no);
+        service.setBr_code(se_user_location);
         //service.setService_name(title);
         Log.w(TAG, "Paused Request " + new Gson().toJson(service));
         return service;
@@ -281,43 +352,41 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
 
         List<JobListResponse.DataBean> filterlist = new ArrayList<>();
 
-        try{
+        try {
 
-            for (JobListResponse.DataBean item :breedTypedataBeanList) {
-                if(item.getJob_id().toLowerCase().contains(search.toLowerCase())) {
-                    Log.w(TAG,"filter----"+item.getJob_id().toLowerCase().contains(search.toLowerCase()));
+            for (JobListResponse.DataBean item : breedTypedataBeanList) {
+                if (item.getJob_id().toLowerCase().contains(search.toLowerCase())) {
+                    Log.w(TAG, "filter----" + item.getJob_id().toLowerCase().contains(search.toLowerCase()));
                     filterlist.add(item);
 
                 }
             }
 
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
-            Log.e("Hi ",""+e.toString());
+            Log.e("Hi ", "" + e.toString());
         }
 
 
-
-        if(filterlist.isEmpty()) {
+        if (filterlist.isEmpty()) {
             //Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
             recyclerView.setVisibility(View.GONE);
             txt_no_records.setVisibility(View.VISIBLE);
             txt_no_records.setText("No Data Found");
-        }else
-        {
+        } else {
             petBreedTypesListAdapter.filterrList(filterlist);
         }
     }
 
 
-     //   arli_jobid.add("L-1456");
-      //  arli_jobid.add("L-4578");
+    //   arli_jobid.add("L-1456");
+    //  arli_jobid.add("L-4578");
     //    arli_jobid.add("L-6745");
 
     private void jobFindResponseCall(String se_user_mobile_no, String service_title) {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<JobListResponse> call = apiInterface.NewJobListLRCall(RestUtils.getContentType(),joblistlrrequest(se_user_mobile_no,service_title));
+        Call<JobListResponse> call = apiInterface.NewJobListLRCall(RestUtils.getContentType(), joblistlrrequest(se_user_mobile_no, service_title));
         Log.w(TAG, "JobList Response url  :%s" + " " + call.request().url().toString());
         call.enqueue(new Callback<JobListResponse>() {
             @Override
@@ -333,7 +402,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
                         if (response.body().getData() != null) {
                             breedTypedataBeanList = response.body().getData();
 
-                            if (breedTypedataBeanList.size() == 0){
+                            if (breedTypedataBeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
@@ -361,7 +430,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
                         txt_no_records.setVisibility(View.VISIBLE);
                         txt_no_records.setText("Error 404 Found");
                         edtsearch.setEnabled(false);
-                       // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                        // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
                     }
                 }
             }
@@ -370,7 +439,73 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
             public void onFailure(Call<JobListResponse> call, Throwable t) {
 
                 Log.e("JobList On Failure ", "--->" + t.getMessage());
-               // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                edtsearch.setEnabled(false);
+
+            }
+        });
+    }
+
+    private void NewJobListLR_branch_headCall(String se_user_mobile_no, String service_title) {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<JobListResponse> call = apiInterface.NewJobListLR_branch_headCall(RestUtils.getContentType(), joblistlrrequest(se_user_mobile_no, service_title));
+        Log.w(TAG, "JobList Response url  :%s" + " " + call.request().url().toString());
+        call.enqueue(new Callback<JobListResponse>() {
+            @Override
+            public void onResponse(Call<JobListResponse> call, Response<JobListResponse> response) {
+                Log.w(TAG, "JobList Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+
+                            }
+
+                            setBreedTypeView(breedTypedataBeanList);
+                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                            edtsearch.setEnabled(false);
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        edtsearch.setEnabled(false);
+                        // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JobListResponse> call, Throwable t) {
+
+                Log.e("JobList On Failure ", "--->" + t.getMessage());
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 recyclerView.setVisibility(View.GONE);
                 txt_no_records.setVisibility(View.VISIBLE);
                 txt_no_records.setText("Something Went Wrong.. Try Again Later");
@@ -385,7 +520,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        petBreedTypesListAdapter = new JobListAdapter_LRService(getApplicationContext(), breedTypedataBeanList,status);
+        petBreedTypesListAdapter = new JobListAdapter_LRService(getApplicationContext(), breedTypedataBeanList, status);
         recyclerView.setAdapter(petBreedTypesListAdapter);
 
     }
@@ -395,6 +530,7 @@ public class JobDetails_LRService_Activity extends AppCompatActivity {
         JobListRequest joblist = new JobListRequest();
         joblist.setUser_mobile_no(se_user_mobile_no);
         joblist.setService_name(service_title);
+        joblist.setBr_code(se_user_location);
         Log.w(TAG, "JobList Request " + new Gson().toJson(joblist));
         return joblist;
     }

@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -48,7 +46,7 @@ import retrofit2.Response;
 public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTypeSelectListener {
 
     ImageView iv_back, img_clearsearch;
-    String se_user_mobile_no, se_user_name, se_id, check_id, service_title;
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, emp_Type = "", se_user_location = "";
     RecyclerView recyclerView;
     String message, status;
     JobListAdapter petBreedTypesListAdapter;
@@ -56,7 +54,7 @@ public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTy
     TextView txt_no_records;
     Context context;
     private List<JobListResponse.DataBean> breedTypedataBeanList;
-    private String PetBreedType = "", networkStatus = "";
+    private String PetBreedType = "", networkStatus = "", TAG = Job_DetailsActivity.class.getSimpleName();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +72,8 @@ public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTy
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Breakdown Service");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
 
         Log.e("Name", service_title);
 
@@ -101,7 +101,13 @@ public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTy
             NoInternetDialog();
 
         } else {
-            jobFindResponseCall(se_user_mobile_no, service_title);
+
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                jobListBranchHeadResponseCall(se_user_mobile_no, service_title);
+            } else {
+                jobFindResponseCall(se_user_mobile_no, service_title);
+            }
+
         }
 
 
@@ -214,17 +220,17 @@ public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTy
     private void jobFindResponseCall(String job_no, String title) {
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<JobListResponse> call = apiInterface.JobListResponseCall(RestUtils.getContentType(), joblistRequest(job_no, title));
-        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+
+        Log.i(TAG, "jobFindResponseCall: URL: " + call.request().url().toString());
         call.enqueue(new Callback<JobListResponse>() {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<JobListResponse> call, @NonNull Response<JobListResponse> response) {
-                Log.w(TAG, "Jobno Find Response" + new Gson().toJson(response.body()));
 
+                Log.i(TAG, "jobFindResponseCall: onResponse: JobListResponse -> " + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
                     message = response.body().getMessage();
-                    Log.d("message", message);
 
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
@@ -237,7 +243,6 @@ public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTy
                                 edtsearch.setEnabled(false);
                             }
                             setBreedTypeView(breedTypedataBeanList);
-                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
 
                         } else {
                             ErrorMsgDialog("");
@@ -267,7 +272,74 @@ public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTy
 
             @Override
             public void onFailure(@NonNull Call<JobListResponse> call, @NonNull Throwable t) {
-                Log.e("Jobno Find ", "--->" + t.getMessage());
+                Log.e(TAG, "jobFindResponseCall: onFailure: " + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something went wrong..! Try agin");
+                edtsearch.setEnabled(false);
+            }
+        });
+    }
+
+    private void jobListBranchHeadResponseCall(String job_no, String title) {
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<JobListResponse> call = apiInterface.JobListBranchHeadResponseCall(RestUtils.getContentType(), joblistRequest(job_no, title));
+
+        Log.i(TAG, "jobListBranchHeadResponseCall: URL: " + call.request().url().toString());
+        call.enqueue(new Callback<JobListResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<JobListResponse> call, @NonNull Response<JobListResponse> response) {
+
+                Log.i(TAG, "jobListBranchHeadResponseCall: onResponse: JobListResponse -> " + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+                            }
+                            setBreedTypeView(breedTypedataBeanList);
+
+                        } else {
+                            ErrorMsgDialog("");
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found..!");
+                            edtsearch.setEnabled(false);
+                        } else {
+                            ErrorMsgDialog("");
+                        }
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found..!");
+                        edtsearch.setEnabled(false);
+                        ErrorMsgDialog(response.body().getMessage());
+//                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                } else {
+                    ErrorMsgDialog("");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JobListResponse> call, @NonNull Throwable t) {
+                Log.e(TAG, "jobListBranchHeadResponseCall: onFailure: " + t.getMessage());
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 recyclerView.setVisibility(View.GONE);
                 txt_no_records.setVisibility(View.VISIBLE);
@@ -307,7 +379,10 @@ public class Job_DetailsActivity extends AppCompatActivity implements PetBreedTy
         JobListRequest job = new JobListRequest();
         job.setUser_mobile_no(job_no);
         job.setService_name(title);
-        Log.w(TAG, "Jobno Find Request " + new Gson().toJson(job));
+        job.setBr_code(se_user_location);
+
+        Log.i(TAG, "joblistRequest: JobListRequest -> " + new Gson().toJson(job));
+
         return job;
     }
 

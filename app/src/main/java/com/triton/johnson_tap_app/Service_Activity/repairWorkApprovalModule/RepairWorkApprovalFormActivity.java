@@ -142,7 +142,7 @@ public class RepairWorkApprovalFormActivity extends AppCompatActivity implements
         setDateForDate(repairWorkRequestFetchListEngIdDataResponse.getRequest_on());
 
         repairWorkRequestEditEngRequest.set_id(repairWorkRequestFetchListEngIdDataResponse.get_id());
-        repairWorkRequestEditEngRequest.setStatus("APPROVED");
+        repairWorkRequestEditEngRequest.setStatus("RE APPROVED");
 
         repairWorkEngineerList.add("SELECT");
 

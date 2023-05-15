@@ -54,7 +54,8 @@ public class RepairWorkOrderCompletionJobActivity extends AppCompatActivity impl
     RepairWorkOrderCompletionJobListAdapter repairWorkOrderCompletionJobListAdapter;
     Context context;
     String TAG = RepairWorkOrderCompletionJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name,
-            se_user_id, check_id, service_title, message, networkStatus = "", str_title = "", se_user_location = "";
+            se_user_id, check_id, service_title, message, networkStatus = "", str_title = "", se_user_location = "",
+            emp_Type = "";
     SharedPreferences sharedPreferences;
     List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> repairWorkRequestApprovalRequestListRpEngResponseList = new ArrayList<>();
     private Dialog dialog;
@@ -83,6 +84,7 @@ public class RepairWorkOrderCompletionJobActivity extends AppCompatActivity impl
         se_user_name = sharedPreferences.getString("user_name", "default value");
         se_user_location = sharedPreferences.getString("user_location", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
 
         Log.i(TAG, "onCreate: service_title --> " + service_title);
         Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
@@ -213,7 +215,12 @@ public class RepairWorkOrderCompletionJobActivity extends AppCompatActivity impl
             NoInternetDialog();
         } else {
             if (se_user_id != null && !se_user_id.isEmpty()) {
-                getRepairWorkRequestApprovalRequestListRpEng(se_user_id);
+
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    getRepairWorkRequestApprovalRequestListRpEngBranchHead(se_user_id);
+                } else {
+                    getRepairWorkRequestApprovalRequestListRpEng(se_user_id);
+                }
             } else {
                 Toast.makeText(context, "Enter valid Engineer Id", Toast.LENGTH_SHORT).show();
             }
@@ -277,6 +284,63 @@ public class RepairWorkOrderCompletionJobActivity extends AppCompatActivity impl
         }
     }
 
+    private void getRepairWorkRequestApprovalRequestListRpEngBranchHead(String se_user_id) {
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        RepairWorkRequestApprovalRequestListRpEngRequest jobIdRequest = jobListRequest(se_user_id);
+
+        if (jobIdRequest != null) {
+
+            Call<RepairWorkRequestApprovalRequestListRpEngResponse> call = apiInterface.getRepairWorkRequestApprovalRequestListRpEngBranchHead(RestUtils.getContentType(), jobIdRequest);
+            Log.i(TAG, "getRepairWorkRequestApprovalRequestListRpEng: URL -> " + call.request().url().toString());
+
+            call.enqueue(new Callback<RepairWorkRequestApprovalRequestListRpEngResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<RepairWorkRequestApprovalRequestListRpEngResponse> call, @NonNull Response<RepairWorkRequestApprovalRequestListRpEngResponse> response) {
+                    dialog.dismiss();
+                    Log.i(TAG, "getRepairWorkRequestApprovalRequestListRpEng: onResponse: RepairWorkRequestApprovalRequestListRpEngResponse -> " + new Gson().toJson(response.body()));
+                    repairWorkRequestApprovalRequestListRpEngResponseList = new ArrayList<>();
+                    if (response.body() != null) {
+                        message = response.body().getMessage();
+
+                        if (200 == response.body().getCode()) {
+                            if (response.body().getData() != null) {
+                                repairWorkRequestApprovalRequestListRpEngResponseList = response.body().getData();
+
+                                if (repairWorkRequestApprovalRequestListRpEngResponseList.isEmpty()) {
+
+                                    rv_job_repair_work_order_completion_job.setVisibility(View.GONE);
+                                    txt_no_records.setVisibility(View.VISIBLE);
+                                    txt_no_records.setText("No Records Found");
+//                                edtSearch.setEnabled(false);
+                                } else {
+                                    setView(repairWorkRequestApprovalRequestListRpEngResponseList);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<RepairWorkRequestApprovalRequestListRpEngResponse> call, @NonNull Throwable t) {
+                    dialog.dismiss();
+                    Log.e(TAG, "getRepairWorkRequestApprovalRequestListRpEng: onFailure: error --> " + t.getMessage());
+                    rv_job_repair_work_order_completion_job.setVisibility(View.GONE);
+                    txt_no_records.setVisibility(View.VISIBLE);
+                    txt_no_records.setText("Something Went Wrong.. Try Again Later");
+//                edtSearch.setEnabled(false);
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            dialog.dismiss();
+        }
+    }
+
     private void setView(List<RepairWorkRequestApprovalRequestListRpEngResponse.Data> repairWorkRequestApprovalRequestListRpEngResponseList) {
         rv_job_repair_work_order_completion_job.setVisibility(View.VISIBLE);
         txt_no_records.setVisibility(View.GONE);
@@ -292,6 +356,7 @@ public class RepairWorkOrderCompletionJobActivity extends AppCompatActivity impl
 
         if (strSearch != null && !strSearch.isEmpty()) {
             job.setRepair_work_eng_id(strSearch);
+            job.setBr_code(se_user_location);
             Log.i(TAG, "jobListRequest: RepairWorkRequestApprovalRequestListRpEngRequest --> " + new Gson().toJson(job));
             return job;
         } else {

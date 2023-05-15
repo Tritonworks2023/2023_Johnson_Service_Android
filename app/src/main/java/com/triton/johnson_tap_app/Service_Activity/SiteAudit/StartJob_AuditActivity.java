@@ -68,7 +68,7 @@ public class StartJob_AuditActivity extends AppCompatActivity {
     TextView text;
     SharedPreferences sharedPreferences;
     FloatingActionButton send;
-    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, jobid, message, str_job_status, osacompno;
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, jobid, message, str_job_status, osacompno, service_type = "";
     String compno, sertype, status, str_StartTime = "", networkStatus = "";
     TextView txt_DateandTime;
     String currentDateandTime;
@@ -117,12 +117,9 @@ public class StartJob_AuditActivity extends AppCompatActivity {
         service_title = sharedPreferences.getString("service_title", "Services");
         jobid = sharedPreferences.getString("jobid", "L-1234");
         osacompno = sharedPreferences.getString("osacompno", "ADT2020202020");
+        service_type = sharedPreferences.getString("service_type", "");
 
-        Log.e("Name", "" + service_title);
-        Log.e("Mobile", "" + se_user_mobile_no);
-        Log.e("Jobid", "" + jobid);
-        Log.e("osocompno", "" + osacompno);
-
+        Log.i(TAG, "onCreate: service_title -> " + service_title + " jobid -> " + jobid + " osacompno -> " + osacompno + " service_type -> " + service_type);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -140,7 +137,6 @@ public class StartJob_AuditActivity extends AppCompatActivity {
 
         getMYLocation();
         Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
-
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
@@ -209,7 +205,8 @@ public class StartJob_AuditActivity extends AppCompatActivity {
                     } else {
 
                         Log.e("Hi", "outside");
-                        Intent send = new Intent(context, Checklist_AuditActivity.class);
+//                        Intent send = new Intent(context, Checklist_AuditActivity.class);
+                        Intent send = new Intent(context, AuditChecklist.class);
                         send.putExtra("status", status);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("starttime", str_StartTime);
@@ -217,6 +214,7 @@ public class StartJob_AuditActivity extends AppCompatActivity {
                         editor.putString("lati", String.valueOf(Latitude));
                         editor.putString("long", String.valueOf(Logitude));
                         editor.putString("add", address);
+                        editor.putString("service_type", service_type);
                         editor.apply();
                         startActivity(send);
 
@@ -504,7 +502,8 @@ public class StartJob_AuditActivity extends AppCompatActivity {
 
                             if (Objects.equals(status, "new")) {
                                 mDialog.dismiss();
-                                Intent send = new Intent(context, Checklist_AuditActivity.class);
+//                                Intent send = new Intent(context, Checklist_AuditActivity.class);
+                                Intent send = new Intent(context, AuditChecklist.class);
                                 send.putExtra("status", status);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
@@ -512,6 +511,7 @@ public class StartJob_AuditActivity extends AppCompatActivity {
                                 editor.putString("lati", String.valueOf(Latitude));
                                 editor.putString("long", String.valueOf(Logitude));
                                 editor.putString("add", address);
+                                editor.putString("service_type", service_type);
                                 editor.apply();
                                 startActivity(send);
                             } else {

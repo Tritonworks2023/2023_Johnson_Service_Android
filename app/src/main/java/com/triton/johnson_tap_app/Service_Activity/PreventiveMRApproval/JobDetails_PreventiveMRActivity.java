@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.PreventiveMRApproval;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -49,13 +47,13 @@ public class JobDetails_PreventiveMRActivity extends AppCompatActivity implement
     ImageView iv_back, img_clearsearch;
     String se_user_mobile_no, se_user_name, se_id, check_id, service_title;
     RecyclerView recyclerView;
-    String message, status;
+    String message, status, se_user_location = "", emp_Type = "";
     JobListAdapter_PreventiveMR petBreedTypesListAdapter;
     Context context;
     EditText edtsearch;
     TextView txt_no_records;
     private List<JobListResponse.DataBean> breedTypedataBeanList;
-    private String PetBreedType = "", networkStatus = "";
+    private String PetBreedType = "", networkStatus = "", TAG = JobDetails_PreventiveMRActivity.class.getSimpleName();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +72,8 @@ public class JobDetails_PreventiveMRActivity extends AppCompatActivity implement
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "default");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
         Log.e("Name", "" + service_title);
 
 
@@ -106,7 +106,11 @@ public class JobDetails_PreventiveMRActivity extends AppCompatActivity implement
             NoInternetDialog();
 
         } else {
-            jobFindResponseCall(se_user_mobile_no, service_title);
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                NewJobListPrventiveMR_branch_headCall(se_user_mobile_no, service_title);
+            } else {
+                jobFindResponseCall(se_user_mobile_no, service_title);
+            }
         }
 
         edtsearch.addTextChangedListener(new TextWatcher() {
@@ -244,10 +248,79 @@ public class JobDetails_PreventiveMRActivity extends AppCompatActivity implement
 
     }
 
+    private void NewJobListPrventiveMR_branch_headCall(String job_no, String title) {
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<JobListResponse> call = apiInterface.NewJobListPrventiveMR_branch_headCall(RestUtils.getContentType(), joblistRequest(job_no, title));
+        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+        call.enqueue(new Callback<JobListResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<JobListResponse> call, @NonNull Response<JobListResponse> response) {
+                Log.w(TAG, "Jobno Find Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            Log.e("Job Size", "" + breedTypedataBeanList.size());
+
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+
+                            }
+
+                            setBreedTypeView(breedTypedataBeanList);
+                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                            edtsearch.setEnabled(false);
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        edtsearch.setEnabled(false);
+                        // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JobListResponse> call, @NonNull Throwable t) {
+                Log.e("Jobno Find ", "--->" + t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                edtsearch.setEnabled(false);
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private JobListRequest joblistRequest(String job_no, String title) {
         JobListRequest job = new JobListRequest();
         job.setUser_mobile_no(job_no);
         job.setService_name(title);
+        job.setBr_code(se_user_location);
         Log.w(TAG, "Jobno Find Request " + new Gson().toJson(job));
         return job;
     }

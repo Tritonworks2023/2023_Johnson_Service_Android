@@ -7,33 +7,37 @@
     tools:context=".Service_Activity.Breakdown_Services.Technician_signatureActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_bar">
+        android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/img_back"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_back_arrow"/>
+                android:src="@drawable/ic_back_arrow" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Technician Signature"
-                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
+                android:text="Technician Signature"
                 android:textColor="#ffffff"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/img_paused"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="end"
-                android:visibility="gone"
-                android:src="@drawable/ic_pause_white"/>
+                android:src="@drawable/ic_pause_white"
+                android:visibility="gone" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -145,8 +149,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:scaleType="fitXY"
-        android:visibility="gone"
-        android:src="@drawable/ic_delete" />
+        android:src="@drawable/ic_delete"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/image1"
@@ -162,25 +166,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
+        android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <Button
             android:id="@+id/btn_prev"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_weight="1"
             android:background="@drawable/blue_button_background_with_radius"
             android:drawableStart="@drawable/icn_previous"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:layout_alignParentBottom="true"
             android:text="@string/previous"
             android:textAlignment="center"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btn_next"
@@ -192,10 +196,9 @@
             android:paddingEnd="10dp"
             android:text="submit"
             android:textAlignment="center"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

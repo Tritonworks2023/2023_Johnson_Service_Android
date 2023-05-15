@@ -90,7 +90,8 @@ public class SplashActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         buildDateTime = df.format(buildDate);
 
-        txt_version.setText(String.format("Test Build Version - %s V%s", buildDateTime, versionName));
+//        txt_version.setText(String.format("Test Build Version - %s V%s", buildDateTime, versionName));
+        txt_version.setText(String.format("Vr - %s V%s", buildDateTime, versionName));
 
         Log.i(TAG, "onCreate: display DateTimeVer -> " + String.format("%s V%s", buildDateTime, versionName));
 

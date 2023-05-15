@@ -49,14 +49,13 @@ public class JobListRepairWorkRequestActivity extends AppCompatActivity implemen
     ImageView img_back;
     RecyclerView rv_job_repair_work_request;
     EditText edtSearch;
-    TextView txt_no_records, txt_menu_name;
+    TextView txt_no_records;
     RelativeLayout Job;
     JobListRepairWorkRequestAdapter jobListRepairWorkRequestAdapter;
     Context context;
     Button btn_search;
-    String TAG = SafetyAuditJobActivity.class.getSimpleName(), se_user_mobile_no = "", se_user_location = "",
-            se_user_name = "", se_id = "", check_id = "", service_title = "", message = "", networkStatus = "",
-            str_title = "";
+    String TAG = JobListRepairWorkRequestActivity.class.getSimpleName(), se_user_mobile_no = "", se_user_location = "",
+            se_user_name = "", se_id = "", check_id = "", service_title = "", message = "", networkStatus = "";
     SharedPreferences sharedPreferences;
     List<JobListRepairWorkRequestResponse.Data> jobListRepairWorkRequestResponseList = new ArrayList<>();
     private Dialog dialog;
@@ -74,15 +73,7 @@ public class JobListRepairWorkRequestActivity extends AppCompatActivity implemen
         txt_no_records = findViewById(R.id.txt_no_records);
         rv_job_repair_work_request = findViewById(R.id.rv_job_repair_work_request);
         Job = findViewById(R.id.rel_job);
-        txt_menu_name = findViewById(R.id.txt_menu_name);
         btn_search = findViewById(R.id.btn_search);
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            if (extras.containsKey("str_title")) {
-                str_title = extras.getString("str_title");
-            }
-        }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "");
@@ -93,8 +84,6 @@ public class JobListRepairWorkRequestActivity extends AppCompatActivity implemen
 
         Log.i(TAG, "onCreate: service_title --> " + service_title);
         Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
-
-        txt_menu_name.setText(str_title);
 
         img_back.setOnClickListener(this);
         btn_search.setOnClickListener(this);

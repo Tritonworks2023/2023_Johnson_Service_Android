@@ -1,12 +1,5 @@
 package com.triton.johnson_tap_app;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.Adapter.AddEducAdapter;
@@ -27,9 +25,9 @@ import es.dmoral.toasty.Toasty;
 
 public class TestActivity extends AppCompatActivity {
 
-    TextView s,s1,n,n1;
+    TextView s, s1, n, n1;
     Button btn;
-    String str_s,str_s1,str_n,str_n1;
+    String str_s, str_s1, str_n, str_n1, TAG = TestActivity.class.getSimpleName();
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rcyrl_added_edu)
     RecyclerView recylerView_added_education;
@@ -63,28 +61,28 @@ public class TestActivity extends AppCompatActivity {
         });
     }
 
-        private void insertEdu(String job_no, String job_name, String job_no1, String job_name1) {
-            Log.w(TAG,"educationDetailsBeans size: "+educationDetailsBeans.size());
+    private void insertEdu(String job_no, String job_name, String job_no1, String job_name1) {
+        Log.w(TAG, "educationDetailsBeans size: " + educationDetailsBeans.size());
 
-                Toasty.success(getApplicationContext(),"Eductation added successfully",Toast.LENGTH_SHORT).show();
-                educationDetailsBeans.add(new DocUploadRequest.EducationDetailsBean(job_no,job_name));
-                Log.w(TAG,"educationDetailsBeans : "+new Gson().toJson(educationDetailsBeans));
-                if(educationDetailsBeans != null && educationDetailsBeans.size()>0){
-                    recylerView_added_education.setVisibility(View.VISIBLE);
-                    recylerView_added_education.setHasFixedSize(true);
-                    recylerView_added_education.setNestedScrollingEnabled(false);
-                    setViewEducation();
-                }else{
-                    recylerView_added_education.setVisibility(View.GONE);
+        Toasty.success(getApplicationContext(), "Eductation added successfully", Toast.LENGTH_SHORT).show();
+        educationDetailsBeans.add(new DocUploadRequest.EducationDetailsBean(job_no, job_name));
+        Log.w(TAG, "educationDetailsBeans : " + new Gson().toJson(educationDetailsBeans));
+        if (educationDetailsBeans != null && educationDetailsBeans.size() > 0) {
+            recylerView_added_education.setVisibility(View.VISIBLE);
+            recylerView_added_education.setHasFixedSize(true);
+            recylerView_added_education.setNestedScrollingEnabled(false);
+            setViewEducation();
+        } else {
+            recylerView_added_education.setVisibility(View.GONE);
 
-                }
-
-            }
-
-        private void setViewEducation() {
-            recylerView_added_education.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            recylerView_added_education.setItemAnimator(new DefaultItemAnimator());
-            AddEducAdapter addEducAdapter = new AddEducAdapter(getApplicationContext(), educationDetailsBeans);
-            recylerView_added_education.setAdapter(addEducAdapter);
         }
+
+    }
+
+    private void setViewEducation() {
+        recylerView_added_education.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recylerView_added_education.setItemAnimator(new DefaultItemAnimator());
+        AddEducAdapter addEducAdapter = new AddEducAdapter(getApplicationContext(), educationDetailsBeans);
+        recylerView_added_education.setAdapter(addEducAdapter);
+    }
 }

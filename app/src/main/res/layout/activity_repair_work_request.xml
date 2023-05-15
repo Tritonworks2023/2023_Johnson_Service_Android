@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Repair Work Request"
+                android:text="SITE REPAIR WORK REQUEST"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -129,14 +129,16 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/txt_pasused_job"
                         app:layout_constraintTop_toTopOf="parent" />
+                    //Repair work job approval status
+                    //Submitted Pending Request
 
                     <TextView
                         android:id="@+id/txt_pasused_job"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
-                        android:maxLines="1"
-                        android:text="Submitted Pending Request"
+                        android:maxLines="2"
+                        android:text="Repair Work Job Approval Status"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"

@@ -20,11 +20,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Agent List"
+                android:text="Technician List"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
 
             <View
                 android:layout_width="2dp"
@@ -161,7 +160,6 @@
             android:scrollbars="vertical" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     <TextView
         android:id="@+id/txt_no_records"

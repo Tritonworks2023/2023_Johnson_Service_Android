@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app;
 
-import static android.content.ContentValues.TAG;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -76,7 +74,7 @@ public class ImageUploadActivity extends AppCompatActivity {
             Manifest.permission.CAMERA
     };
     private String uploadimagepath = "";
-    private String userid = "";
+    private String userid = "", TAG = ImageUploadActivity.class.getSimpleName();
 
     public static String getFilePathFromURI(Context context, Uri contentUri) {
         //copy file and send new file path
@@ -147,7 +145,6 @@ public class ImageUploadActivity extends AppCompatActivity {
             } else {
                 CropImage.activity().start(ImageUploadActivity.this);
             }
-
         }
     }
 

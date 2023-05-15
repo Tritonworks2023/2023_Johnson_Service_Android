@@ -48,7 +48,7 @@ public class RepairWorkPendingRequestActivity extends AppCompatActivity
     ImageView img_back;
     RecyclerView rv_job_repair_work_pending_request;
     EditText edtSearch;
-    TextView txt_no_records, txt_menu_name;
+    TextView txt_no_records;
     RelativeLayout Job;
     JobListRepairWorkPendingRequestAdapter jobListRepairWorkPendingRequestAdapter;
     Context context;
@@ -70,7 +70,14 @@ public class RepairWorkPendingRequestActivity extends AppCompatActivity
         txt_no_records = findViewById(R.id.txt_no_records);
         rv_job_repair_work_pending_request = findViewById(R.id.rv_job_repair_work_pending_request);
         Job = findViewById(R.id.rel_job);
-        txt_menu_name = findViewById(R.id.txt_menu_name);
+
+        /*Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("str_title")) {
+                str_title = extras.getString("str_title");
+            }
+        }
+        txt_menu_name.setText(str_title);*/
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_user_id = sharedPreferences.getString("user_id", "default value");

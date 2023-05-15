@@ -1,15 +1,5 @@
 package com.triton.johnson_tap_app.Engineer_Dashboard;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +15,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
@@ -45,17 +43,17 @@ import retrofit2.Response;
 
 public class JobList_DashboardActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private EditText etsearch;
-    TextView txt_Lastlogin,txt_Welcome,txt_ServiceTitle,txt_JobCount;
-    String se_id,se_user_mobile_no,se_user_name,message,title,agentName,agentNumber,service_Title,lastLogin;
+    TextView txt_Lastlogin, txt_Welcome, txt_ServiceTitle, txt_JobCount;
+    String se_id, se_user_mobile_no, se_user_name, message, title, agentName, agentNumber, service_Title, lastLogin, TAG = JobList_DashboardActivity.class.getSimpleName();
     List<Joblist_new_screenResponse.DataBean> dataBeanList;
     JobList_DashboardAdapter activityBasedListAdapter;
-    TextView text,txt_no_records,service_title;
-    ImageView iv_back,img_clearsearch;
+    TextView text, txt_no_records, service_title;
+    ImageView iv_back, img_clearsearch;
     LinearLayout logout;
     AlertDialog alertDialog;
     SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView recyclerView;
+    private EditText etsearch;
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +78,22 @@ public class JobList_DashboardActivity extends AppCompatActivity {
         se_id = sharedPreferences.getString("_id", "default value");
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
-        agentName = sharedPreferences.getString("agent_name","name");
-        agentNumber = sharedPreferences.getString("agent_number","123456789");
-        service_Title = sharedPreferences.getString("service_title","ServiceName");
-        lastLogin = sharedPreferences.getString("last_login","2020-10-28 05:36:33.000 ");
-      //  lastLogin = lastLogin.substring(0,20);
-        lastLogin = lastLogin.substring(0,lastLogin.length() -5);
+        agentName = sharedPreferences.getString("agent_name", "name");
+        agentNumber = sharedPreferences.getString("agent_number", "123456789");
+        service_Title = sharedPreferences.getString("service_title", "ServiceName");
+        lastLogin = sharedPreferences.getString("last_login", "2020-10-28 05:36:33.000 ");
+        //  lastLogin = lastLogin.substring(0,20);
+        lastLogin = lastLogin.substring(0, lastLogin.length() - 5);
         lastLogin = lastLogin.replaceAll("[^0-9-:]", " ");
 
 //        StringBuffer sb= new StringBuffer(lastLogin);
 //        sb.deleteCharAt(sb.length()-4);
 
 
-        Log.e("Agent Number",""+agentNumber);
-        Log.e("Service Name",""+service_Title);
+        Log.e("Agent Number", "" + agentNumber);
+        Log.e("Service Name", "" + service_Title);
         service_title.setText(service_Title);
-        txt_Welcome.setText("Welcome " +agentName);
+        txt_Welcome.setText("Welcome " + agentName);
         txt_Lastlogin.setText("Last Login : " + lastLogin);
 
 
@@ -133,12 +131,11 @@ public class JobList_DashboardActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String Searchvalue = etsearch.getText().toString();
 
-                if(Searchvalue.equals("")){
+                if (Searchvalue.equals("")) {
                     recyclerView.setVisibility(View.VISIBLE);
                     jobFindResponseCall();
                     img_clearsearch.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     //   Log.w(TAG,"Search Value---"+Searchvalue);
                     filter(Searchvalue);
                 }
@@ -169,7 +166,7 @@ public class JobList_DashboardActivity extends AppCompatActivity {
                                 editor.clear();
                                 editor.commit();
 
-                                Toasty.success(getApplicationContext(),"Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
+                                Toasty.success(getApplicationContext(), "Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
                                 Intent send = new Intent(JobList_DashboardActivity.this, New_LoginActivity.class);
                                 startActivity(send);
                             }
@@ -188,23 +185,19 @@ public class JobList_DashboardActivity extends AppCompatActivity {
 
     private void filter(String s) {
         List<Joblist_new_screenResponse.DataBean> filteredlist = new ArrayList<>();
-        for(Joblist_new_screenResponse.DataBean item : dataBeanList)
-        {
-            if(item.getJob_no().toLowerCase().contains(s.toLowerCase()))
-            {
-                Log.w(TAG,"filter----"+item.getJob_no().toLowerCase().contains(s.toLowerCase()));
+        for (Joblist_new_screenResponse.DataBean item : dataBeanList) {
+            if (item.getJob_no().toLowerCase().contains(s.toLowerCase())) {
+                Log.w(TAG, "filter----" + item.getJob_no().toLowerCase().contains(s.toLowerCase()));
                 filteredlist.add(item);
 
             }
         }
-        if(filteredlist.isEmpty())
-        {
-           // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
+        if (filteredlist.isEmpty()) {
+            // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
             recyclerView.setVisibility(View.GONE);
             txt_no_records.setVisibility(View.VISIBLE);
             txt_no_records.setText("No Data Found");
-        }else
-        {
+        } else {
             activityBasedListAdapter.filterList(filteredlist);
         }
 
@@ -230,21 +223,21 @@ public class JobList_DashboardActivity extends AppCompatActivity {
                         if (response.body().getData() != null) {
                             dataBeanList = response.body().getData();
 
-                            Log.e("Job List",""+  dataBeanList.size());
+                            Log.e("Job List", "" + dataBeanList.size());
 
-                            if (dataBeanList.size() == 0){
+                            if (dataBeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
                                 txt_no_records.setText("No Records Found");
                                 etsearch.setEnabled(false);
 
-                            }else{
+                            } else {
 
                                 txt_JobCount.setVisibility(View.VISIBLE);
                             }
 
-                            txt_JobCount.setText("Total Jobs : "+ dataBeanList.size());
+                            txt_JobCount.setText("Total Jobs : " + dataBeanList.size());
 
                             setView(dataBeanList);
                             Log.d("dataaaaa", String.valueOf(dataBeanList));

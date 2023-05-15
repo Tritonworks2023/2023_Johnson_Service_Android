@@ -1,10 +1,5 @@
 package com.triton.johnson_tap_app.Engineer_Dashboard;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +12,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
@@ -34,14 +32,15 @@ import retrofit2.Response;
 
 public class CustomerDetails_DashboardActivity extends AppCompatActivity {
 
-   TextView txttitle_JobId,txt_Welcome,txt_LastLogin,txt_Jobid,txt_Customername,txt_Addressone,txt_Addresstwo,txt_Addressthree,txt_Pincode,txt_ContractType,txt_BDnumber,txt_Date,txt_Mechanicname;
-   String str_TitleJobID,str_Keyvalue,agentName,agentNumber,service_Title;
+    TextView txttitle_JobId, txt_Welcome, txt_LastLogin, txt_Jobid, txt_Customername, txt_Addressone, txt_Addresstwo, txt_Addressthree, txt_Pincode, txt_ContractType, txt_BDnumber, txt_Date, txt_Mechanicname;
+    String str_TitleJobID, str_Keyvalue, agentName, agentNumber, service_Title;
     LinearLayout logout;
     AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     Context context;
-    String lastLogin, str_Jobid,str_Customername,str_Addressone,str_Addresstwo,str_Addressthree,str_Pincode,str_Contracttype,str_BDNumber,str_Date,str_Mechanicname,message;
+    String lastLogin, str_Jobid, str_Customername, str_Addressone, str_Addresstwo, str_Addressthree, str_Pincode, str_Contracttype, str_BDNumber, str_Date, str_Mechanicname, message, TAG = CustomerDetails_DashboardActivity.class.getSimpleName();
     CustomerDetails_EngineerResponse.DataBean dataBeanList;
+
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,21 +66,21 @@ public class CustomerDetails_DashboardActivity extends AppCompatActivity {
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        str_TitleJobID = sharedPreferences.getString("jobno","L-1234");
-        str_Keyvalue = sharedPreferences.getString("keyvalue","TN123456789");
+        str_TitleJobID = sharedPreferences.getString("jobno", "L-1234");
+        str_Keyvalue = sharedPreferences.getString("keyvalue", "TN123456789");
         txttitle_JobId.setText(str_TitleJobID);
-        Log.e("Key Value",""+str_Keyvalue);
-        agentName = sharedPreferences.getString("agent_name","name");
-        agentNumber = sharedPreferences.getString("agent_number","123456789");
-        service_Title = sharedPreferences.getString("service_title","ServiceName");
-        Log.e("Agent Number",""+agentNumber);
-        Log.e("Service Name",""+service_Title);
-        lastLogin = sharedPreferences.getString("last_login","2020-10-28 05:36:33.000 ");
-       // lastLogin = lastLogin.substring(0,20);
-        lastLogin = lastLogin.substring(0,lastLogin.length() -5);
+        Log.e("Key Value", "" + str_Keyvalue);
+        agentName = sharedPreferences.getString("agent_name", "name");
+        agentNumber = sharedPreferences.getString("agent_number", "123456789");
+        service_Title = sharedPreferences.getString("service_title", "ServiceName");
+        Log.e("Agent Number", "" + agentNumber);
+        Log.e("Service Name", "" + service_Title);
+        lastLogin = sharedPreferences.getString("last_login", "2020-10-28 05:36:33.000 ");
+        // lastLogin = lastLogin.substring(0,20);
+        lastLogin = lastLogin.substring(0, lastLogin.length() - 5);
         lastLogin = lastLogin.replaceAll("[^0-9-:]", " ");
 
-        txt_Welcome.setText("Welcome " +agentName);
+        txt_Welcome.setText("Welcome " + agentName);
         txt_LastLogin.setText("Last Login : " + lastLogin);
 
         Bundle extras = getIntent().getExtras();
@@ -106,7 +105,7 @@ public class CustomerDetails_DashboardActivity extends AppCompatActivity {
                                 editor.clear();
                                 editor.commit();
 
-                                Toasty.success(getApplicationContext(),"Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
+                                Toasty.success(getApplicationContext(), "Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
                                 Intent send = new Intent(CustomerDetails_DashboardActivity.this, New_LoginActivity.class);
                                 startActivity(send);
                             }
@@ -125,7 +124,7 @@ public class CustomerDetails_DashboardActivity extends AppCompatActivity {
     private void CustomerDetailsCall() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<CustomerDetails_EngineerResponse> call = apiInterface.getCustomerEnginnerCall(RestUtils.getContentType(),getCustomerRequest());
+        Call<CustomerDetails_EngineerResponse> call = apiInterface.getCustomerEnginnerCall(RestUtils.getContentType(), getCustomerRequest());
         Log.e(TAG, "Customer Details Response url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<CustomerDetails_EngineerResponse>() {
@@ -155,7 +154,7 @@ public class CustomerDetails_DashboardActivity extends AppCompatActivity {
                             str_Contracttype = response.body().getData().getContract_type();
                             str_BDNumber = response.body().getData().getNumber();
                             str_Date = response.body().getData().getData_and_time();
-                            str_Mechanicname=response.body().getData().getMech_name();
+                            str_Mechanicname = response.body().getData().getMech_name();
 
                             txt_Jobid.setText(str_Jobid);
                             txt_Customername.setText(str_Customername);

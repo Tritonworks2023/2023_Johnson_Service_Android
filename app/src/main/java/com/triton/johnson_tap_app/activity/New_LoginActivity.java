@@ -68,7 +68,8 @@ public class New_LoginActivity extends AppCompatActivity {
     Button loginButton;
 
     String networkStatus = "", stationId = "";
-    String status, message = "", user_level = "", station_code = "", station_name = "", empid = "", name = "", username = "", mobile, ID;
+    String status, message = "", user_level = "", station_code = "", station_name = "", empid = "",
+            name = "", username = "", mobile, ID;
 
     Dialog dialog;
 
@@ -76,7 +77,8 @@ public class New_LoginActivity extends AppCompatActivity {
     TextView device_id, txt_dev_unique_id;
     Context context;
     AlertDialog alertDialog;
-    private String TAG = New_LoginActivity.class.getSimpleName(), role = "", userid = "", token = "", uniqueID = "", android_id = "";
+    private String TAG = New_LoginActivity.class.getSimpleName(), role = "", userid = "", token = "",
+            uniqueID = "", android_id = "";
     private SharedPreferences sharedpreferences;
 
     protected void onCreate(Bundle savedInstanceState) {

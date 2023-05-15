@@ -402,20 +402,22 @@ public class AuditMR_Activity extends AppCompatActivity implements QuantityListe
 
                             databean = response.body().getData().getMrData();
 
-                            for (int i = 0; i < databean.size(); i++) {
-                                //  datre =  response.body().getData();
+                            if (databean != null && !databean.isEmpty()) {
+                                for (int i = 0; i < databean.size(); i++) {
+                                    //  datre =  response.body().getData();
 
-                                strPartno = databean.get(i).getPartno();
-                                strPartname = databean.get(i).getPartname();
-                                strPartname = strPartname.replace("'", "*");
-                                strQuantity = databean.get(i).getReq();
+                                    strPartno = databean.get(i).getPartno();
+                                    strPartname = databean.get(i).getPartname();
+                                    strPartname = strPartname.replace("'", "*");
+                                    strQuantity = databean.get(i).getReq();
 
-                                Log.e("Part 1", "" + strPartno);
-                                Log.e("Part 2", "" + strPartname);
-                                Log.e("Part 3", "" + strQuantity);
+                                    Log.e("Part 1", "" + strPartno);
+                                    Log.e("Part 2", "" + strPartname);
+                                    Log.e("Part 3", "" + strQuantity);
 
-                                Log.e("jobID", "" + job_id);
+                                    Log.e("jobID", "" + job_id);
 
+                                }
                             }
                             if (CommonUtil.dbUtil.hasMRList(strPartno, strPartname, "3", job_id, service_title)) {
                                 Log.e("Hi Nish", "Had Data");

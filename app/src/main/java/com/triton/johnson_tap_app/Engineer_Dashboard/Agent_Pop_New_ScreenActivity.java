@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Engineer_Dashboard;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -32,8 +30,7 @@ import retrofit2.Callback;
 public class Agent_Pop_New_ScreenActivity extends AppCompatActivity {
 
     TextView txt_last_login, txt_last_job, txt_pending_today, txt_pending_total, txt_completed_today, txt_completed_monthly;
-    String message, se_id, se_user_mobile_no, se_user_name, title;
-    ;
+    String message, se_id, se_user_mobile_no, se_user_name, title, TAG = Agent_Pop_New_ScreenActivity.class.getSimpleName();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +128,7 @@ public class Agent_Pop_New_ScreenActivity extends AppCompatActivity {
     private Agent_new_screenRequest serviceRequest() {
         Agent_new_screenRequest service = new Agent_new_screenRequest();
         service.setUser_mobile_no(se_user_mobile_no);
-        Log.w(ContentValues.TAG, "Jobno Find Request " + new Gson().toJson(service));
+        Log.w(TAG, "Jobno Find Request " + new Gson().toJson(service));
         return service;
     }
 }

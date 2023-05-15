@@ -7,27 +7,30 @@
     tools:context=".Service_Activity.Preventive_Services.PreventiveMaintance_Activity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_bar">
+        android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_back_arrow"/>
+                android:src="@drawable/ic_back_arrow" />
+
             <TextView
                 android:id="@+id/title_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Preventive Service"
-                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
+                android:text="Preventive Service"
                 android:textColor="#ffffff"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

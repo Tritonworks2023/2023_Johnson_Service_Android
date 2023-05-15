@@ -47,8 +47,7 @@ public class Feedback_DetailsResponse {
         private String feedback_group_title;
         private String codes;
         private String title;
-        private boolean isSelected ;
-
+        private boolean isSelected;
 
         public boolean isSelected() {
             return isSelected;
@@ -73,6 +72,7 @@ public class Feedback_DetailsResponse {
         public void setFeedback_group_title(String feedback_group_title) {
             this.feedback_group_title = feedback_group_title;
         }
+
         public String getCodes() {
             return codes;
         }
@@ -80,6 +80,7 @@ public class Feedback_DetailsResponse {
         public void setCodes(String codes) {
             this.codes = codes;
         }
+
         public String getTitle() {
             return title;
         }

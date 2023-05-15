@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.SiteAudit;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,7 +41,8 @@ public class SiteAudit_Activity extends AppCompatActivity {
     TextView pasused_count, title_name;
     Context context;
     SharedPreferences sharedPreferences;
-    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, paused_count, networkStatus = "";
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, paused_count, networkStatus = "",
+            se_user_location = "", emp_Type = "", TAG = SiteAudit_Activity.class.getSimpleName();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +63,8 @@ public class SiteAudit_Activity extends AppCompatActivity {
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
 
         Log.e("name", "" + service_title);
         Log.e("Mobile", "" + se_user_mobile_no);
@@ -76,8 +77,11 @@ public class SiteAudit_Activity extends AppCompatActivity {
             NoInternetDialog();
 
         } else {
-
-            Count_paused();
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                Count_Auditstatuscount_branch_headCall();
+            } else {
+                Count_paused();
+            }
         }
 
         cv_new_job.setOnClickListener(new View.OnClickListener() {
@@ -176,10 +180,53 @@ public class SiteAudit_Activity extends AppCompatActivity {
         });
     }
 
+    private void Count_Auditstatuscount_branch_headCall() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Count_pasusedResponse> call = apiInterface.Count_Auditstatuscount_branch_headCall(RestUtils.getContentType(), count_pasuedRequest());
+        Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<Count_pasusedResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<Count_pasusedResponse> call, @NonNull retrofit2.Response<Count_pasusedResponse> response) {
+
+                Log.w(TAG, "Job RESPONSE" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    message = response.body().getMessage();
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+
+                            paused_count = response.body().getData().getPaused_count();
+                            Log.e("Count", "" + paused_count);
+                            pasused_count.setText("(" + paused_count + ")");
+                            // pasused_count.setText( paused_count);
+                        }
+
+
+                    } else {
+                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Count_pasusedResponse> call, @NonNull Throwable t) {
+                Log.e("OTP", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private CountPausedRequest count_pasuedRequest() {
         CountPausedRequest count = new CountPausedRequest();
         count.setUser_mobile_no(se_user_mobile_no);
         count.setService_name(service_title);
+        count.setBr_code(se_user_location);
         Log.w(TAG, "loginRequest " + new Gson().toJson(count));
         return count;
     }

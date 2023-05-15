@@ -54,6 +54,7 @@ public class RetriveLocalValueBRResponse {
         private String customer_number;
         private String date_of_submission;
         private String feedback_details;
+        private ArrayList<String> feedback_details_list;
         private String feedback_remark_text;
         private String job_id;
         private String mr_status;
@@ -157,6 +158,14 @@ public class RetriveLocalValueBRResponse {
 
         public void setFeedback_details(String feedback_details) {
             this.feedback_details = feedback_details;
+        }
+
+        public ArrayList<String> getFeedback_details_list() {
+            return feedback_details_list;
+        }
+
+        public void setFeedback_details_list(ArrayList<String> feedback_details_list) {
+            this.feedback_details_list = feedback_details_list;
         }
 
         public String getFeedback_remark_text() {

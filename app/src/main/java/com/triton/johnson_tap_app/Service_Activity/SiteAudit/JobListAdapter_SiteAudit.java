@@ -24,7 +24,7 @@ import java.util.List;
 public class JobListAdapter_SiteAudit extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    String status,service_title;
+    String status, service_title, TAG = JobListAdapter_SiteAudit.class.getSimpleName();
     List<JobListResponse.DataBean> breedTypedataBeanList;
     PetBreedTypeSelectListener petBreedTypeSelectListener;
     JobListResponse.DataBean currentItem;
@@ -48,7 +48,7 @@ public class JobListAdapter_SiteAudit extends RecyclerView.Adapter<RecyclerView.
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         service_title = sharedPreferences.getString("service_title", "Services");
 
-        Log.e("Name" , " " +service_title);
+        Log.e("Name", " " + service_title);
 
 
     }
@@ -85,22 +85,32 @@ public class JobListAdapter_SiteAudit extends RecyclerView.Adapter<RecyclerView.
         holder.txt_Custname.setText(currentItem.getName());
         holder.txt_Auditdate.setText(currentItem.getDate());
 
-
         holder.cv_Jobid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String jobid = breedTypedataBeanList.get(position).getJob_id();
                 String osa_compno = breedTypedataBeanList.get(position).getOM_OSA_COMPNO();
-                Log.e("A",""+jobid);
-                Log.e("osacompno",""+osa_compno);
+                String firstChar = jobid.substring(0, 1);
+                String service_type = "";
+
+                Log.i(TAG, "onClick: firstChar -> " + firstChar);
+
+                if (firstChar.equalsIgnoreCase("L")) {
+                    service_type = "L";
+                } else if (firstChar.equalsIgnoreCase("E") || firstChar.equalsIgnoreCase("T")) {
+                    service_type = "E";
+                }
+
+                Log.i(TAG, "onClick: Job_id -> " + jobid + " OSA_COMPNO -> " + osa_compno + " service_type -> " + service_type);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("osacompno", osa_compno);
-                editor.putString("jobid",jobid);
+                editor.putString("jobid", jobid);
+                editor.putString("service_type", service_type);
                 editor.apply();
 
-                Intent intent = new Intent(context,AD_DetailsSiteAudit_Activity.class);
+                Intent intent = new Intent(context, AD_DetailsSiteAudit_Activity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("status", status);
                 context.startActivity(intent);
@@ -121,8 +131,9 @@ public class JobListAdapter_SiteAudit extends RecyclerView.Adapter<RecyclerView.
 
     private class ViewHolderOne extends RecyclerView.ViewHolder {
 
-        TextView txt_JobID,txt_Custname, txt_Auditdate;
+        TextView txt_JobID, txt_Custname, txt_Auditdate;
         CardView cv_Jobid;
+
         public ViewHolderOne(View view) {
             super(view);
 

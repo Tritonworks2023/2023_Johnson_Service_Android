@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,29 +21,27 @@ import com.triton.johnson_tap_app.responsepojo.Agent_new_screenResponse;
 
 import java.util.List;
 
+public class AgentList_DashboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-public class AgentList_DashboardAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private  String TAG = "ActivityBasedListAdapter";
-    private List<Agent_new_screenResponse.DataBean> dataBeanList;
-    private Context context;
     Agent_new_screenResponse.DataBean currentItem;
     SharedPreferences sharedPreferences;
-    private int size;
     String message;
-    TextView  txt_last_login,txt_last_job,txt_pending_today,txt_pending_total,txt_completed_today,txt_completed_monthly;
- //   private UserTypeSelectListener1 userTypeSelectListener;
-  AlertDialog dialog;
+    TextView txt_last_login, txt_last_job, txt_pending_today, txt_pending_total, txt_completed_today, txt_completed_monthly;
+    //   private UserTypeSelectListener1 userTypeSelectListener;
+    AlertDialog dialog;
+    private String TAG = "ActivityBasedListAdapter";
+    private List<Agent_new_screenResponse.DataBean> dataBeanList;
+    private Context context;
+    private int size;
 
     public AgentList_DashboardAdapter(Context mcontext, List<Agent_new_screenResponse.DataBean> dataBeanList) {
         this.context = mcontext;
         this.dataBeanList = dataBeanList;
-      //  this.userTypeSelectListener = userTypeSelectListener;
+        //  this.userTypeSelectListener = userTypeSelectListener;
 
     }
 
-    public void filterList(List<Agent_new_screenResponse.DataBean> filterllist)
-    {
+    public void filterList(List<Agent_new_screenResponse.DataBean> filterllist) {
         dataBeanList = filterllist;
         notifyDataSetChanged();
 
@@ -67,29 +66,28 @@ public class AgentList_DashboardAdapter extends  RecyclerView.Adapter<RecyclerVi
 
         currentItem = dataBeanList.get(position);
 
-        if(currentItem.getUser_name() != null){
+        if (currentItem.getUser_name() != null) {
             holder.txt_Name.setText(currentItem.getUser_name());
-        //    holder.code.setText(currentItem.getCodes());
+            //    holder.code.setText(currentItem.getCodes());
         }
 
-        if(currentItem.getUser_type().equals("USER")){
+        if (currentItem.getUser_type().equals("USER")) {
             holder.img_red.setImageResource(R.drawable.ic_person_blue);
-        }
-        else {
+        } else {
             holder.img_red.setImageResource(R.drawable.ic_person_red);
         }
 
-
-        holder.txt_Name.setOnClickListener(new View.OnClickListener() {
+        holder.btn_summary.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent n_act = new Intent(context, Agent_Pop_New_ScreenActivity.class);
+//                Intent n_act = new Intent(context, Agent_Pop_New_ScreenActivity.class);
+                Intent n_act = new Intent(context, TechnicianSummaryActivity.class);
                 n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(n_act);
             }
         });
 
-        holder.img_icon.setOnClickListener(new View.OnClickListener() {
+        holder.btn_details.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 dataBeanList.get(position).getUser_name();
@@ -98,20 +96,19 @@ public class AgentList_DashboardAdapter extends  RecyclerView.Adapter<RecyclerVi
 
                 sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("agent_name",agent_Name);
-                editor.putString("agent_number",agent_Number);
+                editor.putString("agent_name", agent_Name);
+                editor.putString("agent_number", agent_Number);
                 editor.apply();
 
                 Intent n_act = new Intent(context, ServicesList_DashboardActivity.class);
                 n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              //  n_act.putExtra("title", s);
+                //  n_act.putExtra("title", s);
                 context.startActivity(n_act);
             }
         });
     }
 
     private Object getSystemService(String windowService) {
-
         return 0;
     }
 
@@ -120,21 +117,22 @@ public class AgentList_DashboardAdapter extends  RecyclerView.Adapter<RecyclerVi
         return dataBeanList.size();
     }
 
-
     @Override
     public int getItemViewType(int position) {
         return position;
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        TextView txt_Name,txt_Number,txt_Type;
-        ImageView img_icon,img_red;
+        TextView txt_Name, txt_Number, txt_Type;
+        Button btn_details, btn_summary;
+        ImageView img_red;
 
         public ViewHolderOne(View itemView) {
             super(itemView);
-            txt_Name = (TextView) itemView.findViewById(R.id.text1);
-            img_icon = (ImageView) itemView.findViewById(R.id.img_icon);
-            img_red = (ImageView) itemView.findViewById(R.id.img_red);
+            txt_Name = itemView.findViewById(R.id.text1);
+            img_red = itemView.findViewById(R.id.img_red);
+            btn_details = itemView.findViewById(R.id.btn_details);
+            btn_summary = itemView.findViewById(R.id.btn_summary);
         }
     }
 }

@@ -127,11 +127,11 @@ public class MechSubConListFragment extends Fragment implements OnItemClickRepai
         ArrayList<RepairWorkRequestMechIdListResponse.Data> filterList = new ArrayList<>();
         try {
             for (RepairWorkRequestMechIdListResponse.Data item : repairWorkRequestMechIdListResponseList) {
-                if (item.getEMPCODE().contains(search) ||
+                /*if (item.getEMPCODE().contains(search) ||
                         item.getEMPCODE().toLowerCase().contains(search.toLowerCase())) {
                     Log.i(TAG, "filter: Part Name -> " + item.getEMPCODE().contains(search.toLowerCase()));
                     filterList.add(item);
-                }
+                }*/
                 if (item.getEMPNAME().contains(search) ||
                         item.getEMPNAME().toLowerCase().contains(search.toLowerCase())) {
                     Log.i(TAG, "filter: Part ID -> " + item.getEMPNAME().contains(search.toLowerCase()));

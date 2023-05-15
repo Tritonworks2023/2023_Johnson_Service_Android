@@ -48,12 +48,12 @@ public class RepairWorkOrderCreationCompletionJobActivity extends AppCompatActiv
     ImageView img_back;
     RecyclerView rv_job_repair_work_order_creation_completion;
     EditText edtSearch;
-    TextView txt_no_records, txt_menu_name;
+    TextView txt_no_records;
     RelativeLayout Job;
     RepairWorkOrderCreationCompletionJobListAdapter repairWorkOrderCreationCompletionJobListAdapter;
     Context context;
     String TAG = RepairWorkOrderCreationCompletionJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name,
-            se_user_id, check_id, service_title, message, networkStatus = "", str_title = "", se_user_location = "";
+            se_user_id, check_id, service_title, message, networkStatus = "", se_user_location = "";
     SharedPreferences sharedPreferences;
     List<RepairWorkRequestApprovalRequestListRpMechResponse.Data> repairWorkRequestApprovalRequestListRpMechResponseList = new ArrayList<>();
     private Dialog dialog;
@@ -70,7 +70,6 @@ public class RepairWorkOrderCreationCompletionJobActivity extends AppCompatActiv
         txt_no_records = findViewById(R.id.txt_no_records);
         rv_job_repair_work_order_creation_completion = findViewById(R.id.rv_job_repair_work_order_creation_completion);
         Job = findViewById(R.id.rel_job);
-        txt_menu_name = findViewById(R.id.txt_menu_name);
 
         dialog = new Dialog(context, R.style.NewProgressDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -86,14 +85,14 @@ public class RepairWorkOrderCreationCompletionJobActivity extends AppCompatActiv
         Log.i(TAG, "onCreate: service_title --> " + service_title);
         Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
 
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("str_title")) {
                 str_title = extras.getString("str_title");
             }
         }
         Log.i(TAG, "onCreate: str_title -> " + str_title);
-        txt_menu_name.setText(str_title);
+        txt_menu_name.setText(str_title);*/
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 

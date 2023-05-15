@@ -76,13 +76,13 @@ public class RepairWorkOrderCreationActivity extends AppCompatActivity {
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-        Log.e("Network", "" + networkStatus);
+        /*Log.e("Network", "" + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show();
             NoInternetDialog();
         } else {
             Count_paused();
-        }
+        }*/
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,6 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
+import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointerValidator;
 import static com.triton.johnson_tap_app.utils.RestUtils.getContentType;
 
 import android.annotation.SuppressLint;
@@ -73,7 +74,8 @@ public class Feedback_GroupActivity extends AppCompatActivity implements OnItemC
     ImageView iv_back, img_clearsearch, img_Pause;
     List<Feedback_GroupResponse.DataBean> dataBeanList;
     Feedback_GroupAdapter activityBasedListAdapter;
-    String Title, Codes, petimage, bd_dta, job_id, message, search_string, service_title, pre_check = "", status, str_job_status = "";
+    String Title, Codes, petimage, bd_dta, job_id, message, search_string, service_title, pre_check = "", status,
+            str_job_status = "";
     String se_id, se_user_mobile_no, se_user_name, compno, sertype, TAG = Feedback_GroupActivity.class.getSimpleName();
     int textlength = 0;
     EditText etsearch;
@@ -188,12 +190,26 @@ public class Feedback_GroupActivity extends AppCompatActivity implements OnItemC
 
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (!feedback_group_list.isEmpty()) {
+                    feedback_group = "";
+                    for (String feedback : feedback_group_list) {
+                        feedback_group = String.format("%s,%s", feedback_group, feedback);
+                    }
 
-                str_but_type = "btn_next";
-                str_job_status = "Job Paused";
-                Job_status_update();
-                createLocalvalue();
-
+                    str_but_type = "btn_next";
+                    str_job_status = "Job Paused";
+                    Job_status_update();
+                    createLocalvalue();
+                } else {
+                    alertDialog = new AlertDialog.Builder(Feedback_GroupActivity.this)
+                            .setTitle("Please Selected Value")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    alertDialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
             }
         });
 
@@ -454,8 +470,6 @@ public class Feedback_GroupActivity extends AppCompatActivity implements OnItemC
                 } else {
                     ErrorMsgDialog("");
                 }
-
-
             }
 
             @Override
@@ -508,46 +522,51 @@ public class Feedback_GroupActivity extends AppCompatActivity implements OnItemC
     private void createLocalvalue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(getContentType(), createLocalRequest());
-        Log.i(TAG, "createLocalvalue: URL -> " + call.request().url().toString());
 
-        call.enqueue(new Callback<SuccessResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
-                Log.i(TAG, "onResponse: createLocalvalue -> " + new Gson().toJson(response.body()));
+        Breakdowm_Submit_Request breakdowmSubmitRequest = createLocalRequest();
 
-                if (response.body() != null) {
-                    message = response.body().getMessage();
+        if (breakdowmSubmitRequest != null) {
+            Call<SuccessResponse> call = apiInterface.createLocalvalueBD(getContentType(), breakdowmSubmitRequest);
+            Log.i(TAG, "createLocalvalue: URL -> " + call.request().url().toString());
 
-                    if (response.body().getCode() == 200) {
+            call.enqueue(new Callback<SuccessResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                    Log.i(TAG, "onResponse: createLocalvalue -> " + new Gson().toJson(response.body()));
 
-                        if (response.body().getData() != null) {
+                    if (response.body() != null) {
+                        message = response.body().getMessage();
 
-                            Log.d("msg", message);
-                            if (str_but_type.equalsIgnoreCase("img_Pause")) {
-                                Intent send = new Intent(context, ServicesActivity.class);
-                                startActivity(send);
-                            } else if (str_but_type.equalsIgnoreCase("btn_next")) {
-                                moveNext();
+                        if (response.body().getCode() == 200) {
+
+                            if (response.body().getData() != null) {
+
+                                Log.d("msg", message);
+                                if (str_but_type.equalsIgnoreCase("img_Pause")) {
+                                    Intent send = new Intent(context, ServicesActivity.class);
+                                    startActivity(send);
+                                } else if (str_but_type.equalsIgnoreCase("btn_next")) {
+                                    moveNext();
+                                }
                             }
+
+                        } else {
+                            Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+                            ErrorMsgDialog(message);
                         }
-
                     } else {
-                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
-                        ErrorMsgDialog(message);
+                        ErrorMsgDialog("");
                     }
-                } else {
-                    ErrorMsgDialog("");
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
-                Log.e(TAG, "onFailure: createLocalvalue -> " + t.getMessage());
-                ErrorMsgDialog(t.getMessage());
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                    Log.e(TAG, "onFailure: createLocalvalue -> " + t.getMessage());
+                    ErrorMsgDialog(t.getMessage());
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void moveNext() {
@@ -616,39 +635,44 @@ public class Feedback_GroupActivity extends AppCompatActivity implements OnItemC
         String currentDateandTime = sdf.format(new Date());
 
         Breakdowm_Submit_Request submitDailyRequest = new Breakdowm_Submit_Request();
-        submitDailyRequest.setBd_details(str_BDDetails);
-        //submitDailyRequest.setFeedback_details(sstring);
-        submitDailyRequest.setFeedback_details("");
-        submitDailyRequest.setCode_list(feedback_group);
-        submitDailyRequest.setCode_list1(feedback_group_list);
-        submitDailyRequest.setFeedback_remark_text("");
-        submitDailyRequest.setMr_status("");
-        submitDailyRequest.setMr_1("");
-        submitDailyRequest.setMr_2("");
-        submitDailyRequest.setMr_3("");
-        submitDailyRequest.setMr_4("");
-        submitDailyRequest.setMr_5("");
-        submitDailyRequest.setMr_6("");
-        submitDailyRequest.setMr_7("");
-        submitDailyRequest.setMr_8("");
-        submitDailyRequest.setMr_9("");
-        submitDailyRequest.setMr_10("");
-        submitDailyRequest.setBreakdown_service("");
-        submitDailyRequest.setTech_signature("");
-        submitDailyRequest.setCustomer_name("");
-        submitDailyRequest.setCustomer_number("");
-        submitDailyRequest.setCustomer_acknowledgemnet("");
-        submitDailyRequest.setDate_of_submission(currentDateandTime);
-        submitDailyRequest.setUser_mobile_no(se_user_mobile_no);
-        submitDailyRequest.setJob_id(job_id);
-        submitDailyRequest.setSMU_SCH_COMPNO(compno);
-        submitDailyRequest.setSMU_SCH_SERTYPE(sertype);
-        submitDailyRequest.setPage_number(PageNumber);
 
-        Log.i(TAG, "createLocalRequest: compno -> " + compno);
-        Log.i(TAG, "createLocalRequest: sertype -> " + sertype);
-        Log.i(TAG, "createLocalRequest: Breakdowm_Submit_Request -> " + new Gson().toJson(submitDailyRequest));
-        return submitDailyRequest;
+        if (nullPointerValidator(str_BDDetails)) {
+            submitDailyRequest.setBd_details(str_BDDetails);
+            //submitDailyRequest.setFeedback_details(sstring);
+            submitDailyRequest.setFeedback_details("");
+            submitDailyRequest.setCode_list(feedback_group);
+            submitDailyRequest.setCode_list1(feedback_group_list);
+            submitDailyRequest.setFeedback_remark_text("");
+            submitDailyRequest.setMr_status("");
+            submitDailyRequest.setMr_1("");
+            submitDailyRequest.setMr_2("");
+            submitDailyRequest.setMr_3("");
+            submitDailyRequest.setMr_4("");
+            submitDailyRequest.setMr_5("");
+            submitDailyRequest.setMr_6("");
+            submitDailyRequest.setMr_7("");
+            submitDailyRequest.setMr_8("");
+            submitDailyRequest.setMr_9("");
+            submitDailyRequest.setMr_10("");
+            submitDailyRequest.setBreakdown_service("");
+            submitDailyRequest.setTech_signature("");
+            submitDailyRequest.setCustomer_name("");
+            submitDailyRequest.setCustomer_number("");
+            submitDailyRequest.setCustomer_acknowledgemnet("");
+            submitDailyRequest.setDate_of_submission(currentDateandTime);
+            submitDailyRequest.setUser_mobile_no(se_user_mobile_no);
+            submitDailyRequest.setJob_id(job_id);
+            submitDailyRequest.setSMU_SCH_COMPNO(compno);
+            submitDailyRequest.setSMU_SCH_SERTYPE(sertype);
+            submitDailyRequest.setPage_number(PageNumber);
+
+            Log.i(TAG, "createLocalRequest: compno -> " + compno);
+            Log.i(TAG, "createLocalRequest: sertype -> " + sertype);
+            Log.i(TAG, "createLocalRequest: Breakdowm_Submit_Request -> " + new Gson().toJson(submitDailyRequest));
+            return submitDailyRequest;
+        } else {
+            return null;
+        }
     }
 
     @SuppressLint("LongLogTag")
@@ -752,23 +776,16 @@ public class Feedback_GroupActivity extends AppCompatActivity implements OnItemC
     @Override
     public void itemClickCheckBoxFeedbackGroupDetails(int newPosition, Feedback_GroupResponse.DataBean selectedItem) {
 
-        if (dataBeanList != null) {
-            for (int i = 0; i < dataBeanList.size(); i++) {
-                if (dataBeanList.get(i).getCodes().equalsIgnoreCase(selectedItem.getCodes())) {
-                    if (!dataBeanList.get(newPosition).isSelected()) {
-                        dataBeanList.get(newPosition).setSelected(true);
-                        feedback_group_list.add(dataBeanList.get(newPosition).getCodes());
-                    } else {
-                        dataBeanList.get(newPosition).setSelected(false);
-                        for (int j = 0; j < feedback_group_list.size(); i++) {
-                            if (dataBeanList.get(newPosition).getCodes().equalsIgnoreCase(feedback_group_list.get(j))) {
-                                feedback_group_list.remove(j);
-                            }
-                        }
-                    }
-                }
-            }
+        Log.i(TAG, "itemClickCheckBoxFeedbackGroupDetails: newPosition -> " + newPosition + " selectedItem -> " + new Gson().toJson(selectedItem));
+
+        Log.i(TAG, "itemClickCheckBoxFeedbackGroupDetails: dataBeanList -> " + new Gson().toJson(dataBeanList));
+
+        if (feedback_group_list.contains(selectedItem.getCodes())) {
+            feedback_group_list.remove(selectedItem.getCodes());
+        } else {
+            feedback_group_list.add(selectedItem.getCodes());
         }
 
+        Log.i(TAG, "itemClickCheckBoxFeedbackGroupDetails: feedback_group_list -> " + new Gson().toJson(feedback_group_list));
     }
 }

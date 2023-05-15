@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.activity;
 
+import static com.triton.johnson_tap_app.utils.CommonFunction.nullPointerValidator;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -10,10 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -126,15 +126,7 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
         txt_NotficationCount = findViewById(R.id.txt_notifocationcount);
 
         // ll_Menu.setEnabled(false);
-
-
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            OnGPS();
-        } else {
-            getLocation();
-        }
+        hitLocation();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "default value");
@@ -172,6 +164,7 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
         profile_red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hitLocation();
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Main_Menu_ServicesActivity.this);
                 alertDialogBuilder.setMessage("Your Profile Login?");
@@ -184,7 +177,7 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
 
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+
                     }
                 });
 
@@ -336,7 +329,7 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
                 dialog.show();
 
                 getData();
-
+                hitLocation();
 
                 // retrieveJSON();
 
@@ -391,6 +384,43 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
                 });
             }
         });
+    }
+
+    private void getMYLocation() {
+
+        gpsTracker = new GpsTracker(context);
+        if (gpsTracker.canGetLocation()) {
+            latitude = "" + gpsTracker.getLatitude();
+            longitude = "" + gpsTracker.getLongitude();
+            Log.i(TAG, "getMYLocation: latitude -> " + latitude + " longitude -> " + longitude);
+            if (nullPointerValidator(latitude) && nullPointerValidator(longitude)
+                    && !latitude.equalsIgnoreCase("0.0") && !longitude.equalsIgnoreCase("0.0")) {
+                geocoder = new Geocoder(context, Locale.getDefault());
+                try {
+                    myAddress = geocoder.getFromLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude(), 1);
+                    address = myAddress.get(0).getAddressLine(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.i(TAG, "getMYLocation: address -> " + address);
+            } else {
+                ErrorMyLocationAlert("Kindly enable the\nGPS Location and Try again");
+//                Toast.makeText(context, "Kindly enable the GPS Location and Try again", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            gpsTracker.showSettingsAlert();
+        }
+    }
+
+    private void hitLocation() {
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            OnGPS();
+        } else {
+            getMYLocation();
+        }
     }
 
     public void printDifference(Date startDate, Date endDate) {
@@ -525,44 +555,51 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
     private void CreateResponseCall() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<CreateResponse> call = apiInterface.CreateResponseCall(RestUtils.getContentType(), createRequest());
-        Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
 
-        call.enqueue(new Callback<CreateResponse>() {
-            @SuppressLint("LogNotTimber")
-            @Override
-            public void onResponse(@NonNull Call<CreateResponse> call, @NonNull retrofit2.Response<CreateResponse> response) {
+        CreateRequest createRequest = createRequest();
 
-                Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
-                if (response.body() != null) {
-                    message = response.body().getMessage();
+        if (createRequest != null) {
+            Call<CreateResponse> call = apiInterface.CreateResponseCall(RestUtils.getContentType(), createRequest);
 
-                    if (200 == response.body().getCode()) {
-                        if (response.body().getData() != null) {
+            Log.i(TAG, "CreateResponseCall: URL -> " + call.request().url().toString());
+            call.enqueue(new Callback<CreateResponse>() {
+                @SuppressLint("LogNotTimber")
+                @Override
+                public void onResponse(@NonNull Call<CreateResponse> call, @NonNull retrofit2.Response<CreateResponse> response) {
+                    Log.i(TAG, "CreateResponseCall: onResponse: CreateResponse -> " + new Gson().toJson(response.body()));
 
-                            Toasty.success(getApplicationContext(), "Add Successfully", Toast.LENGTH_SHORT, true).show();
-                            Intent send = new Intent(Main_Menu_ServicesActivity.this, Dashbaord_MainActivity.class);
-                            startActivity(send);
-                        }
+                    if (response.body() != null) {
+                        message = response.body().getMessage();
 
-                    } else {
-                        ErrorMyLocationAlert(response.body().getMessage());
+                        if (200 == response.body().getCode()) {
+                            if (response.body().getData() != null) {
+
+                                Toasty.success(getApplicationContext(), "Add Successfully", Toast.LENGTH_SHORT, true).show();
+
+                                finish();
+                                startActivity(getIntent());
+
+                                /*Intent send = new Intent(Main_Menu_ServicesActivity.this, Dashbaord_MainActivity.class);
+                                startActivity(send);*/
+                            }
+
+                        } else {
+                            ErrorMyLocationAlert(response.body().getMessage());
 //                        Toasty.warning(getApplicationContext(),""+message,Toasty.LENGTH_LONG).show();
 
+                        }
                     }
                 }
 
+                @Override
+                public void onFailure(@NonNull Call<CreateResponse> call, @NonNull Throwable t) {
 
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<CreateResponse> call, @NonNull Throwable t) {
-                Log.e("OTP", "--->" + t.getMessage());
-                ErrorMyLocationAlert(t.getMessage());
+                    Log.e(TAG, "CreateResponseCall: onFailure: error -> " + t.getMessage());
+                    ErrorMyLocationAlert(t.getMessage());
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
+                }
+            });
+        }
     }
 
     private CreateRequest createRequest() {
@@ -573,7 +610,6 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
          * last_login_time : 20-10-2021 11:00 AM
          */
 
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         currentDate = sdf.format(new Date());
 
@@ -581,6 +617,13 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
         current = sdf1.format(new Date());
 
         CreateRequest creaRequest = new CreateRequest();
+        if (!nullPointerValidator(latitude) | !nullPointerValidator(longitude)
+                | latitude.equalsIgnoreCase("0.0") | longitude.equalsIgnoreCase("0.0")) {
+
+            Log.i(TAG, "createRequest: latitude -> " + latitude + " longitude -> " + longitude);
+            ErrorMyLocationAlert("Kindly enable the\nGPS Location and Try again");
+            return null;
+        }
         creaRequest.setUser_mobile_no(se_user_mobile_no);
         creaRequest.setUser_name(se_user_name);
         creaRequest.setAtt_date(currentDate);
@@ -598,50 +641,61 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
 
     private void logoutResponseCall() {
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SuccessResponse> call = apiInterface.LogoutCall(RestUtils.getContentType(), addReviewRequest());
-        Log.w(TAG, "addReviewResponseCall url  :%s" + " " + call.request().url().toString());
 
-        call.enqueue(new Callback<SuccessResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull retrofit2.Response<SuccessResponse> response) {
+        LogoutRequest logoutRequest = addReviewRequest();
 
-                Log.w(TAG, "AddReviewResponse" + "--->" + new Gson().toJson(response.body()));
+        if (logoutRequest != null) {
 
-                //    Log.w(TAG,"Response"+ "--->" + "_id : " + id + "," + "att_end_time : " + att_end_time + ","+ "att_reason : " + att_reason + "," + "att_end_lat : " + att_end_lat + "," + "att_end_long : " + att_end_long + ","+ "att_no_of_hrs : " + att_no_of_hrs);
+            Call<SuccessResponse> call = apiInterface.LogoutCall(RestUtils.getContentType(), logoutRequest);
+            Log.w(TAG, "addReviewResponseCall url  :%s" + " " + call.request().url().toString());
 
-                if (response.body() != null) {
-                    if (response.body().getCode() == 200) {
+            call.enqueue(new Callback<SuccessResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull retrofit2.Response<SuccessResponse> response) {
 
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Main_Menu_ServicesActivity.this);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.commit();
+                    Log.w(TAG, "AddReviewResponse" + "--->" + new Gson().toJson(response.body()));
 
-                        Toasty.success(getApplicationContext(), "Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
-                        Intent send = new Intent(Main_Menu_ServicesActivity.this, New_LoginActivity.class);
-                        startActivity(send);
-                    } else {
-                        ErrorMyLocationAlert(response.body().getMessage());
+                    //    Log.w(TAG,"Response"+ "--->" + "_id : " + id + "," + "att_end_time : " + att_end_time + ","+ "att_reason : " + att_reason + "," + "att_end_lat : " + att_end_lat + "," + "att_end_long : " + att_end_long + ","+ "att_no_of_hrs : " + att_no_of_hrs);
+
+                    if (response.body() != null) {
+                        if (response.body().getCode() == 200) {
+
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Main_Menu_ServicesActivity.this);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.clear();
+                            editor.commit();
+
+                            Toasty.success(getApplicationContext(), "Logout Sucessfully", Toast.LENGTH_SHORT, true).show();
+                            Intent send = new Intent(Main_Menu_ServicesActivity.this, New_LoginActivity.class);
+                            startActivity(send);
+                        } else {
+                            ErrorMyLocationAlert(response.body().getMessage());
+                        }
                     }
                 }
 
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                    ErrorMyLocationAlert(t.getMessage());
 
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
-                ErrorMyLocationAlert(t.getMessage());
-
-                Log.w(TAG, "AddReviewResponse flr" + "--->" + t.getMessage());
-            }
-        });
+                    Log.w(TAG, "AddReviewResponse flr" + "--->" + t.getMessage());
+                }
+            });
+        }
 
     }
 
     private LogoutRequest addReviewRequest() {
 
         LogoutRequest addReviewRequest = new LogoutRequest();
+        if (!nullPointerValidator(latitude) | !nullPointerValidator(longitude)
+                | latitude.equalsIgnoreCase("0.0") | longitude.equalsIgnoreCase("0.0")) {
+
+            Log.i(TAG, "addReviewRequest: latitude -> " + latitude + " longitude -> " + longitude);
+            ErrorMyLocationAlert("Kindly enable the\nGPS Location and Try again");
+            return null;
+        }
 //        addReviewRequest.set_id(id);
 //        addReviewRequest.setAtt_end_time(att_end_time);
         addReviewRequest.setAtt_reason(str_spinner);
@@ -725,7 +779,6 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
         return count;
     }
 
-
     private void OnGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -741,45 +794,6 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
         });
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                Main_Menu_ServicesActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                Main_Menu_ServicesActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        } else {
-            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (locationGPS != null) {
-                double lat = locationGPS.getLatitude();
-                double longi = locationGPS.getLongitude();
-                latitude = String.valueOf(lat);
-                longitude = String.valueOf(longi);
-                Log.i(TAG, "getLocation: latitude - " + latitude + " - longitude - " + longitude);
-
-                gpsTracker = new GpsTracker(context);
-
-                if (lat != 0.0 && longi != 0.0) {
-                    geocoder = new Geocoder(context, Locale.getDefault());
-
-                    try {
-                        myAddress = geocoder.getFromLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude(), 1);
-                        address = myAddress.get(0).getAddressLine(0);
-                    } catch (IOException e) {
-                        Log.e(TAG, "getLocation: error - " + e.getMessage());
-                    }
-
-//                    Toast.makeText(context, "Lat : " + lat + "Long : " + longi + "Add : " + address, Toast.LENGTH_LONG).show();
-                    Log.i(TAG, "getLocation: address - " + address);
-                } else {
-                    ErrorMyLocationAlert("Kindly enable the\nGPS Location and Try again");
-//                Toast.makeText(context, "Kindly enable the GPS Location and Try again", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
-            }
-        }
-
     }
 
     private void getData() {
@@ -865,4 +879,5 @@ public class Main_Menu_ServicesActivity extends AppCompatActivity implements Ada
             e.printStackTrace();
         }
     }
+
 }

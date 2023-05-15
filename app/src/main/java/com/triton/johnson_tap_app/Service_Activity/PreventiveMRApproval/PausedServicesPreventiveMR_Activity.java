@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.PreventiveMRApproval;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -46,12 +44,12 @@ public class PausedServicesPreventiveMR_Activity extends AppCompatActivity imple
     String value = "";
     String se_user_mobile_no, se_user_name, se_id, check_id, service_title;
     RecyclerView recyclerView;
-    String message, status;
+    String message, status, se_user_location = "", emp_Type = "";
     PasusedListAdapter_PreventiveMR petBreedTypesListAdapter;
     TextView txt_no_records;
     Context context;
     private List<Pasused_ListResponse.DataBean> breedTypedataBeanList;
-    private String PetBreedType = "", networkStatus = "";
+    private String PetBreedType = "", networkStatus = "", TAG = PausedServicesPreventiveMR_Activity.class.getSimpleName();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +62,8 @@ public class PausedServicesPreventiveMR_Activity extends AppCompatActivity imple
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "default value");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
         Log.e("Name", "" + service_title);
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
@@ -108,7 +108,11 @@ public class PausedServicesPreventiveMR_Activity extends AppCompatActivity imple
 
         } else {
 
-            jobFindResponseCall(se_user_mobile_no, service_title);
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                Pasused_listResponsePMR_branch_headCall(se_user_mobile_no, service_title);
+            } else {
+                jobFindResponseCall(se_user_mobile_no, service_title);
+            }
         }
 
     }
@@ -176,10 +180,74 @@ public class PausedServicesPreventiveMR_Activity extends AppCompatActivity imple
 
     }
 
+    private void Pasused_listResponsePMR_branch_headCall(String job_no, String title) {
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Pasused_ListResponse> call = apiInterface.Pasused_listResponsePMR_branch_headCall(RestUtils.getContentType(), serviceRequest(job_no, title));
+        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+        call.enqueue(new Callback<Pasused_ListResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<Pasused_ListResponse> call, @NonNull Response<Pasused_ListResponse> response) {
+                Log.w(TAG, "Jobno Find Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+
+                            }
+
+                            setBreedTypeView(breedTypedataBeanList);
+                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Pasused_ListResponse> call, @NonNull Throwable t) {
+                Log.e("Jobno Find ", "--->" + t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private Pasused_ListRequest serviceRequest(String job_no, String title) {
         Pasused_ListRequest service = new Pasused_ListRequest();
         service.setUser_mobile_no(job_no);
         service.setService_name(title);
+        service.setBr_code(se_user_location);
         Log.w(TAG, "Jobno Find Request " + new Gson().toJson(service));
         return service;
     }

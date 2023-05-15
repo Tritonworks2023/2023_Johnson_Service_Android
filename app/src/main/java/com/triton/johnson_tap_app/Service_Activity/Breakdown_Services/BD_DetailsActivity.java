@@ -70,7 +70,8 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
     ImageView iv_back, ic_paused;
     List<BD_DetailsResponse.DataBean> breedTypedataBeanList;
     BD_DetailsAdapter activityBasedListAdapter;
-    String message, se_user_mobile_no, status, se_user_name, se_id, check_id, service_title, str_job_id, data = "", str_BDDetails = "";
+    String message, se_user_mobile_no, status, se_user_name, se_id, check_id, service_title, str_job_id, /*data = "",*/
+            str_BDDetails = "";
     AlertDialog alertDialog;
     ProgressDialog progressDialog;
     Context context;
@@ -171,14 +172,23 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
             }
         }*/
 
-
         btnSelection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                str_job_status = "Job Paused";
-                str_but_type = "btn_next";
-                Job_status_update();
-                createLocalvalue();
+                if (nullPointerValidator(str_BDDetails)) {
+                    str_job_status = "Job Paused";
+                    str_but_type = "btn_next";
+                    Job_status_update();
+                    createLocalvalue();
+                } else {
+                    alertDialog = new AlertDialog.Builder(BD_DetailsActivity.this)
+                            .setTitle("Please Selected Value")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    alertDialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
             }
         });
 
@@ -254,7 +264,7 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
                             Log.d("msg", message);
 
                             str_BDDetails = response.body().getData().getBd_details();
-                            Log.e("Retive BD", "" + str_BDDetails);
+                            Log.i(TAG, "onResponse: str_BDDetails -> " + str_BDDetails);
 
                             /*CommonUtil.dbUtil.addBDDetails(str_job_id, service_title, str_BDDetails, "1");
                             Cursor curs = CommonUtil.dbUtil.getBDdetails(str_job_id, service_title, "1");
@@ -372,7 +382,7 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
         if (curs.getCount() > 0 && curs.moveToLast()) {
 
             str_BDDetails = curs.getString(curs.getColumnIndex(DbHelper.BD_DETAILS));
-            Log.e("BD Data Get", "" + str_BDDetails);
+            Log.i(TAG, "getBDDetails: str_BDDetails -> " + str_BDDetails);
         }
     }
 
@@ -601,11 +611,10 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
         Log.e("BD SIZE", "" + breedTypedataBeanList.size());
         /*Cursor curs;*/
 
-        for (int i = 0; i < breedTypedataBeanList.size(); i++) {
-            BD_DetailsResponse.DataBean singleStudent = breedTypedataBeanList.get(i);
-            if (singleStudent.isSelected()) {
-                data = breedTypedataBeanList.get(i).getTitle().toString();
-                Log.e("My BD DATA", "" + data);
+        /*for (int i = 0; i < breedTypedataBeanList.size(); i++) {
+            if (breedTypedataBeanList.get(i).isSelected()) {
+                str_BDDetails = breedTypedataBeanList.get(i).getTitle().toString();
+                Log.e("My BD DATA", "" + str_BDDetails);
 //                        CommonUtil.dbUtil.addBDDetails(str_job_id,service_title,data,"1");
 //                            Intent send = new Intent(BD_DetailsActivity.this, Feedback_GroupActivity.class);
 //                            send.putExtra("bd_details",data);
@@ -613,14 +622,14 @@ public class BD_DetailsActivity extends AppCompatActivity implements UserTypeSel
 //                            send.putExtra("status",status);
 //                            startActivity(send);
             }
-        }
+        }*/
 
         /*curs = CommonUtil.dbUtil.getBDdetails(str_job_id, service_title, "1");
         Log.e("BD", "" + curs.getCount());*/
 
-        if (nullPointerValidator(data)) {
+        if (nullPointerValidator(str_BDDetails)) {
             Intent send = new Intent(BD_DetailsActivity.this, Feedback_GroupActivity.class);
-            send.putExtra("bd_details", data);
+            send.putExtra("bd_details", str_BDDetails);
             send.putExtra("job_id", str_job_id);
             send.putExtra("status", status);
             startActivity(send);

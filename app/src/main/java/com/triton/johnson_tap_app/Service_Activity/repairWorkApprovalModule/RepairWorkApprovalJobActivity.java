@@ -57,7 +57,8 @@ public class RepairWorkApprovalJobActivity extends AppCompatActivity
     JobListRepairWorkApprovalAdapter jobListRepairWorkApprovalAdapter;
     Context context;
     String TAG = FailureReportApprovalJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name,
-            se_user_id, check_id, service_title, message, networkStatus = "";
+            se_user_id, check_id, service_title, message, networkStatus = "", str_title = "", se_user_location = "",
+            emp_Type = "";
     SharedPreferences sharedPreferences;
     List<RepairWorkRequestFetchListEngIdResponse.Data> repairWorkRequestFetchListEngIdResponseList = new ArrayList<>();
     private Dialog dialog;
@@ -81,6 +82,15 @@ public class RepairWorkApprovalJobActivity extends AppCompatActivity
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("str_title")) {
+                str_title = extras.getString("str_title");
+            }
+        }
 
         Log.i(TAG, "onCreate: service_title --> " + service_title);
         Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
@@ -91,6 +101,8 @@ public class RepairWorkApprovalJobActivity extends AppCompatActivity
 
         img_back.setOnClickListener(this);
         callGetListByEngCode(se_user_id);
+
+//        txt_menu_name.setText(str_title);
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -188,7 +200,12 @@ public class RepairWorkApprovalJobActivity extends AppCompatActivity
             NoInternetDialog();
         } else {
             if (se_id != null && !se_id.isEmpty()) {
-                getRepairWorkRequestFetchListEngId(se_id);
+
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    getRepairWorkRequestFetchListEngIdBranchHead(se_id);
+                } else {
+                    getRepairWorkRequestFetchListEngId(se_id);
+                }
             } else {
                 Toast.makeText(context, "Enter valid Engineer Id", Toast.LENGTH_SHORT).show();
             }
@@ -256,6 +273,67 @@ public class RepairWorkApprovalJobActivity extends AppCompatActivity
         }
     }
 
+    private void getRepairWorkRequestFetchListEngIdBranchHead(String strSearch) {
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        RepairWorkRequestFetchListEngIdRequest jobIdRequest = jobListRequest(strSearch);
+
+        if (jobIdRequest != null) {
+
+            Call<RepairWorkRequestFetchListEngIdResponse> call = apiInterface.getRepairWorkRequestFetchListEngIdBranchHead(RestUtils.getContentType(), jobIdRequest);
+            Log.i(TAG, "getRepairWorkRequestFetchListEngId: URL -> " + call.request().url().toString());
+
+            call.enqueue(new Callback<RepairWorkRequestFetchListEngIdResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<RepairWorkRequestFetchListEngIdResponse> call, @NonNull Response<RepairWorkRequestFetchListEngIdResponse> response) {
+                    dialog.dismiss();
+                    Log.i(TAG, "getRepairWorkRequestFetchListEngId: onResponse: RepairWorkRequestFetchListEngIdResponse -> " + new Gson().toJson(response.body()));
+                    repairWorkRequestFetchListEngIdResponseList = new ArrayList<>();
+                    if (response.body() != null) {
+                        message = response.body().getMessage();
+
+                        if (200 == response.body().getCode()) {
+                            if (response.body().getData() != null) {
+                                repairWorkRequestFetchListEngIdResponseList = response.body().getData();
+
+                                if (repairWorkRequestFetchListEngIdResponseList.isEmpty()) {
+
+                                    rv_job_repair_work_approval.setVisibility(View.GONE);
+                                    txt_no_records.setVisibility(View.VISIBLE);
+                                    txt_no_records.setText("No Records Found");
+//                                edtSearch.setEnabled(false);
+                                } else {
+                                    setView(repairWorkRequestFetchListEngIdResponseList);
+                                }
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<RepairWorkRequestFetchListEngIdResponse> call, @NonNull Throwable t) {
+                    dialog.dismiss();
+                    Log.e(TAG, "getRepairWorkRequestFetchListEngId: onFailure: error --> " + t.getMessage());
+                    rv_job_repair_work_approval.setVisibility(View.GONE);
+                    txt_no_records.setVisibility(View.VISIBLE);
+                    txt_no_records.setText("Something Went Wrong.. Try Again Later");
+//                edtSearch.setEnabled(false);
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            dialog.dismiss();
+        }
+    }
+
     private void setView(List<RepairWorkRequestFetchListEngIdResponse.Data> repairWorkRequestFetchListEngIdResponseList) {
         rv_job_repair_work_approval.setVisibility(View.VISIBLE);
         txt_no_records.setVisibility(View.GONE);
@@ -271,6 +349,7 @@ public class RepairWorkApprovalJobActivity extends AppCompatActivity
 
         if (strSearch != null && !strSearch.isEmpty()) {
             job.setEng_code(strSearch);
+            job.setBr_code(se_user_location);
             Log.i(TAG, "jobListRequest: RepairWorkRequestFetchListEngIdRequest --> " + new Gson().toJson(job));
             return job;
         } else {

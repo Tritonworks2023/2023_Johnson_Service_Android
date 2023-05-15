@@ -7,27 +7,30 @@
     tools:context=".Service_Activity.BreakdownMRApprovel.BreakdownMR_Activity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_bar">
+        android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_back_arrow"/>
+                android:src="@drawable/ic_back_arrow" />
+
             <TextView
                 android:id="@+id/title_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Breakdown MR Approval"
-                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
+                android:text="Breakdown MR Approval"
                 android:textColor="#ffffff"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -68,7 +71,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:maxLines="1"
-                        android:text="New Jobs"
+                        android:text="New MR"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -91,6 +94,7 @@
                 android:id="@+id/cv_pasused_job"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="5dp"
@@ -134,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:maxLines="1"
-                        android:text="Paused Jobs"
+                        android:text="Paused MR"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"

@@ -431,6 +431,7 @@ public class MRDetails_Activity extends AppCompatActivity {
 
         CheckOutstandingJobRequest checkOutstandingJobRequest = new CheckOutstandingJobRequest();
         checkOutstandingJobRequest.setUser_mobile_no(se_user_mobile_no);
+        checkOutstandingJobRequest.setJob_id(job_id);
         Log.w(TAG, "Check OutStanding Request " + new Gson().toJson(checkOutstandingJobRequest));
         return checkOutstandingJobRequest;
     }

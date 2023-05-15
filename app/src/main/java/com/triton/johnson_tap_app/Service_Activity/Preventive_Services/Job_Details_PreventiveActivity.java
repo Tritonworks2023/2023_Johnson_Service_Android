@@ -50,7 +50,7 @@ import retrofit2.Response;
 public class Job_Details_PreventiveActivity extends AppCompatActivity implements PetBreedTypeSelectListener {
 
     ImageView iv_back, img_clearsearch;
-    String se_user_mobile_no, se_user_name, se_id, check_id, service_title = "", status;
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title = "", status, se_user_location = "", emp_Type = "";
     List<Pasused_ListResponse.DataBean> dataBeanList;
     RecyclerView recyclerView;
     RelativeLayout rel_job;
@@ -80,6 +80,8 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Preventive Maintenance");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
         Log.e("Name", service_title);
 
         Bundle extras = getIntent().getExtras();
@@ -100,7 +102,11 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
 
             if (!Objects.equals(networkStatus, "Not connected to Internet")) {
 
-                jobFindResponseCall(se_user_mobile_no, service_title);
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    JobList_branch_head_PreventiveResponseCall(se_user_mobile_no, service_title);
+                } else {
+                    jobFindResponseCall(se_user_mobile_no, service_title);
+                }
             } else {
                 NoInternetDialog();
 
@@ -113,7 +119,11 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
 
             if (!Objects.equals(networkStatus, "Not connected to Internet")) {
 
-                pausedJobListCall();
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    Pasused_listBMR_branch_headResponseCall();
+                } else {
+                    pausedJobListCall();
+                }
             } else {
                 NoInternetDialog();
 
@@ -236,18 +246,17 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<Pasused_ListResponse> call = apiInterface.Pasused_listBMRResponseCall(RestUtils.getContentType(), pausejoblistRequest());
-        Log.w(TAG, "Pause JOB Response url :%s" + " " + call.request().url().toString());
+        Log.i(TAG, "pausedJobListCall: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<Pasused_ListResponse>() {
             @Override
             public void onResponse(Call<Pasused_ListResponse> call, Response<Pasused_ListResponse> response) {
 
-                Log.w(TAG, "Pause Job Response" + new Gson().toJson(response.body()));
+                Log.i(TAG, "pausedJobListCall: Pasused_ListResponse -> " + new Gson().toJson(response.body()));
 
                 if (response.body() != null) {
 
                     message = response.body().getMessage();
-                    Log.d("message", message);
 
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
@@ -261,8 +270,6 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
                             }
 
                             setView(dataBeanList);
-                            Log.d("dataaaaa", String.valueOf(dataBeanList));
-
                         }
 
                     } else if (400 == response.body().getCode()) {
@@ -280,12 +287,62 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
             @Override
             public void onFailure(Call<Pasused_ListResponse> call, Throwable t) {
 
+                Log.e(TAG, "pausedJobListCall: onFailure: error -> " + t.getMessage());
                 Log.e("On Failure ", "--->" + t.getMessage());
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void Pasused_listBMR_branch_headResponseCall() {
 
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Pasused_ListResponse> call = apiInterface.Pasused_listBMR_branch_headResponseCall(RestUtils.getContentType(), pausejoblistRequest());
+        Log.i(TAG, "Pasused_listBMR_branch_headResponseCall: URL -> " + call.request().url().toString());
+
+        call.enqueue(new Callback<Pasused_ListResponse>() {
+            @Override
+            public void onResponse(Call<Pasused_ListResponse> call, Response<Pasused_ListResponse> response) {
+
+                Log.i(TAG, "Pasused_listBMR_branch_headResponseCall: Pasused_ListResponse -> " + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            dataBeanList = response.body().getData();
+
+                            if (dataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                            }
+
+                            setView(dataBeanList);
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                        }
+                    } else {
+
+                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Pasused_ListResponse> call, Throwable t) {
+                Log.e(TAG, "Pasused_listBMR_branch_headResponseCall: onFailure: error -> " + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setView(List<Pasused_ListResponse.DataBean> dataBeanList) {
@@ -300,31 +357,31 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
         Pasused_ListRequest service = new Pasused_ListRequest();
         service.setUser_mobile_no(se_user_mobile_no);
         service.setService_name(service_title);
-        Log.w(TAG, "Jobno Find Request " + new Gson().toJson(service));
+        service.setBr_code(se_user_location);
+        Log.i(TAG, "pausejoblistRequest: Pasused_ListRequest -> " + new Gson().toJson(service));
         return service;
     }
 
     private void jobFindResponseCall(String job_no, String title) {
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<JobListResponse> call = apiInterface.JobList_PreventiveResponseCall(RestUtils.getContentType(), joblistRequest(job_no, title));
-        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+
+        Log.i(TAG, "jobFindResponseCall: URL -> " + call.request().url().toString());
         call.enqueue(new Callback<JobListResponse>() {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<JobListResponse> call, @NonNull Response<JobListResponse> response) {
-                Log.w(TAG, "Jobno Find Response" + new Gson().toJson(response.body()));
 
+                Log.i(TAG, "jobFindResponseCall: onResponse: JobListResponse -> " + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
                     message = response.body().getMessage();
-                    Log.d("message", message);
 
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
                             breedTypedataBeanList = response.body().getData();
 
                             setBreedTypeView(breedTypedataBeanList);
-                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
 
                         }
 
@@ -343,7 +400,53 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
 
             @Override
             public void onFailure(@NonNull Call<JobListResponse> call, @NonNull Throwable t) {
-                Log.e("Jobno Find ", "--->" + t.getMessage());
+                Log.e(TAG, "jobFindResponseCall: onFailure: error " + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void JobList_branch_head_PreventiveResponseCall(String job_no, String title) {
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<JobListResponse> call = apiInterface.JobList_branch_head_PreventiveResponseCall(RestUtils.getContentType(), joblistRequest(job_no, title));
+
+        Log.i(TAG, "JobList_branch_head_PreventiveResponseCall: URL -> " + call.request().url().toString());
+        call.enqueue(new Callback<JobListResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<JobListResponse> call, @NonNull Response<JobListResponse> response) {
+
+                Log.i(TAG, "JobList_branch_head_PreventiveResponseCall: onResponse: JobListResponse -> " + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            setBreedTypeView(breedTypedataBeanList);
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                        }
+                    } else {
+
+                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JobListResponse> call, @NonNull Throwable t) {
+                Log.e(TAG, "JobList_branch_head_PreventiveResponseCall: onFailure: error " + t.getMessage());
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -354,7 +457,8 @@ public class Job_Details_PreventiveActivity extends AppCompatActivity implements
         JobListRequest job = new JobListRequest();
         job.setUser_mobile_no(job_no);
         job.setService_name(title);
-        Log.w(TAG, "Jobno Find Request " + new Gson().toJson(job));
+        job.setBr_code(se_user_location);
+        Log.i(TAG, "joblistRequest: " + new Gson().toJson(job));
         return job;
     }
 

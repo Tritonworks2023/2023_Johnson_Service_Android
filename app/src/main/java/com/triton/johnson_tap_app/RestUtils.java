@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 
 public class RestUtils {
     private static final String TAG = "RestUtils";
+    public static String Access_Token = "";
     private static RestUtils instance;
 
     private RestUtils() {
@@ -21,8 +22,6 @@ public class RestUtils {
         return instance;
     }
 
-    public static String Access_Token = "";
-
     public static String getAuthorizationHeader(String Accesstoken) {
         Log.d(TAG, "getAuthorizationHeader: Base64 " + Access_Token);
 
@@ -35,8 +34,6 @@ public class RestUtils {
         String encodedToken = Base64.encodeToString(data, Base64.DEFAULT);
         Log.d(TAG, "getAuthorizationHeader: encoded Basic " + encodedToken);
         return "Basic " + encodedToken.trim();
-
-
     }
 
     public static String getContentType() {
@@ -52,7 +49,6 @@ public class RestUtils {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
         if (!text.isEmpty()) {
             String namepass[] = text.split(":");
             if (namepass.length > 1) {
@@ -60,11 +56,7 @@ public class RestUtils {
             } else {
                 text = "";
             }
-
-
         }
-
         return text;
-
     }
 }

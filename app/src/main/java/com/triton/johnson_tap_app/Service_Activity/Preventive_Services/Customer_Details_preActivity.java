@@ -471,6 +471,7 @@ public class Customer_Details_preActivity extends AppCompatActivity {
 
         CheckOutstandingJobRequest checkOutstandingJobRequest = new CheckOutstandingJobRequest();
         checkOutstandingJobRequest.setUser_mobile_no(se_user_mobile_no);
+        checkOutstandingJobRequest.setJob_id(str_job_id);
         Log.w(TAG, "Check OutStanding Request " + new Gson().toJson(checkOutstandingJobRequest));
         return checkOutstandingJobRequest;
     }

@@ -305,11 +305,13 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -30);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.DAY_OF_MONTH, 30);
 
         datePickerDialog = new DatePickerDialog(this,
                 (view, year1, monthOfYear, dayOfMonth) ->
                         setDate(dayOfMonth, monthOfYear, year1), year, month, day);
-        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.getDatePicker().setMaxDate(calendar2.getTimeInMillis());
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
         datePickerDialog.show();
     }
@@ -1073,6 +1075,7 @@ public class RepairWorkApprovalRequestFormActivity extends AppCompatActivity imp
 
         if (count == 0) {
             super.onBackPressed();
+            finish();
             //additional code
         } else {
             getSupportFragmentManager().popBackStack();

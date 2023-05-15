@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.PartsReplacementACK;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -20,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.RestUtils;
-import com.triton.johnson_tap_app.Service_Activity.LR_Service.PausedJobListAdapter_LRService;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
 import com.triton.johnson_tap_app.requestpojo.JobListRequest;
@@ -43,28 +39,28 @@ import com.triton.johnson_tap_app.utils.ConnectionDetector;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class JobDetails_ACKActivity extends AppCompatActivity {
 
-    ImageView img_back,img_clearsearch;
+    ImageView img_back, img_clearsearch;
     RecyclerView recyclerView;
     EditText edtsearch;
     TextView txt_no_records;
     JobListAdapter_ACKService petBreedTypesListAdapter;
     Context context;
     RelativeLayout Job;
-    String status,se_user_mobile_no, se_user_name, se_id,check_id, service_title,message,networkStatus="";
+    String status, se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, networkStatus = "",
+            se_user_location = "", emp_Type = "", TAG = JobDetails_ACKActivity.class.getSimpleName();
     SharedPreferences sharedPreferences;
     List<JobListResponse.DataBean> breedTypedataBeanList;
     List<Pasused_ListResponse.DataBean> databeanList;
     PausedJobListAdapter_ACKService pausedlistAdapter;
     private String PetBreedType = "";
 
- //   ArrayList<String> arli_jobid = new ArrayList<String>();
+    //   ArrayList<String> arli_jobid = new ArrayList<String>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,15 +76,16 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         Job = findViewById(R.id.rel_job);
 
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "default value");
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
 
         Log.e("Name", "" + service_title);
-        Log.e("Mobile", ""+ se_user_mobile_no);
+        Log.e("Mobile", "" + se_user_mobile_no);
 
         Bundle extras = getIntent().getExtras();
 
@@ -99,36 +96,43 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
             Log.e("Status", "" + status);
         }
 
-        if (status.equals("new")){
+        if (status.equals("new")) {
 
             networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-            Log.e("Network",""+networkStatus);
-            if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
-
-               NoInternetDialog();
-
-            }else {
-
-                jobFindResponseCall(se_user_mobile_no, service_title);
-            }
-        }else{
-
-            networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
-
-            Log.e("Network",""+networkStatus);
+            Log.e("Network", "" + networkStatus);
             if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
 
                 NoInternetDialog();
 
-            }else{
+            } else {
+
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    NewJobListACK_branch_headCall(se_user_mobile_no, service_title);
+                } else {
+                    jobFindResponseCall(se_user_mobile_no, service_title);
+                }
+            }
+        } else {
+
+            networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
+
+            Log.e("Network", "" + networkStatus);
+            if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
+
+                NoInternetDialog();
+
+            } else {
 
                 Job.setVisibility(View.GONE);
                 edtsearch.setVisibility(View.GONE);
-                pausedjobResponseCall();
+
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    Paused_listACK_branch_headCall();
+                } else {
+                    pausedjobResponseCall();
+                }
             }
-
-
         }
 
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +158,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
 
                 String Search = edtsearch.getText().toString();
 
-                if(Search.equals("")){
+                if (Search.equals("")) {
                     recyclerView.setVisibility(View.VISIBLE);
                     img_clearsearch.setVisibility(View.INVISIBLE);
                 } else {
@@ -200,7 +204,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
 
 
         mBuilder.setView(mView);
-        final Dialog dialog= mBuilder.create();
+        final Dialog dialog = mBuilder.create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
 
@@ -215,6 +219,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
             }
         });
     }
+
     private void pausedjobResponseCall() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
@@ -236,7 +241,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
                         if (response.body().getData() != null) {
                             databeanList = response.body().getData();
 
-                            if (databeanList.size() == 0){
+                            if (databeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
@@ -264,7 +269,75 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
                         txt_no_records.setVisibility(View.VISIBLE);
                         txt_no_records.setText("Error 404 Found");
                         edtsearch.setEnabled(false);
-                      //  Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                        //  Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onFailure(Call<Pasused_ListResponse> call, Throwable t) {
+
+                Log.e("Jobno On Failure", "--->" + t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                edtsearch.setEnabled(false);
+                //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void Paused_listACK_branch_headCall() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Pasused_ListResponse> call = apiInterface.Paused_listACK_branch_headCall(RestUtils.getContentType(), pausedjobRequest());
+        Log.w(TAG, "Paused Job List Response url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<Pasused_ListResponse>() {
+            @Override
+            public void onResponse(Call<Pasused_ListResponse> call, Response<Pasused_ListResponse> response) {
+
+                Log.w(TAG, "Paused Job Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            databeanList = response.body().getData();
+
+                            if (databeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+
+                            }
+
+                            setPausedTypeView(databeanList);
+                            Log.d("dataaaaa", String.valueOf(databeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                            edtsearch.setEnabled(false);
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        edtsearch.setEnabled(false);
+                        //  Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
                     }
                 }
             }
@@ -287,7 +360,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        pausedlistAdapter= new PausedJobListAdapter_ACKService(getApplicationContext(), databeanList,status);
+        pausedlistAdapter = new PausedJobListAdapter_ACKService(getApplicationContext(), databeanList, status);
         recyclerView.setAdapter(pausedlistAdapter);
     }
 
@@ -295,6 +368,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
 
         Pasused_ListRequest pausedRequest = new Pasused_ListRequest();
         pausedRequest.setUser_mobile_no(se_user_mobile_no);
+        pausedRequest.setBr_code(se_user_location);
         //service.setService_name(title);
         Log.w(TAG, "Paused Request " + new Gson().toJson(pausedRequest));
         return pausedRequest;
@@ -305,31 +379,28 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
 
         List<JobListResponse.DataBean> filterlist = new ArrayList<>();
 
-            try{
-                for (JobListResponse.DataBean item :breedTypedataBeanList){
+        try {
+            for (JobListResponse.DataBean item : breedTypedataBeanList) {
 
-                    if(item.getJob_id().toLowerCase().contains(search.toLowerCase()))
-                    {
-                        Log.w(TAG,"filter----"+item.getJob_id().toLowerCase().contains(search.toLowerCase()));
-                        filterlist.add(item);
+                if (item.getJob_id().toLowerCase().contains(search.toLowerCase())) {
+                    Log.w(TAG, "filter----" + item.getJob_id().toLowerCase().contains(search.toLowerCase()));
+                    filterlist.add(item);
 
-                    }
                 }
-
-            }catch (NullPointerException e){
-                e.printStackTrace();
-                Log.e("Hi ",""+e.toString());
             }
 
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Log.e("Hi ", "" + e.toString());
+        }
 
-        if(filterlist.isEmpty())
-        {
-           // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
+
+        if (filterlist.isEmpty()) {
+            // Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
             recyclerView.setVisibility(View.GONE);
             txt_no_records.setVisibility(View.VISIBLE);
             txt_no_records.setText("No Data Found");
-        }else
-        {
+        } else {
             petBreedTypesListAdapter.filterrList(filterlist);
         }
     }
@@ -337,7 +408,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
     private void jobFindResponseCall(String se_user_mobile_no, String service_title) {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<JobListResponse> call = apiInterface.NewJobListACKCall(RestUtils.getContentType(),joblistlrrequest(se_user_mobile_no,service_title));
+        Call<JobListResponse> call = apiInterface.NewJobListACKCall(RestUtils.getContentType(), joblistlrrequest(se_user_mobile_no, service_title));
         Log.w(TAG, "JobList Response url  :%s" + " " + call.request().url().toString());
         call.enqueue(new Callback<JobListResponse>() {
             @Override
@@ -353,7 +424,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
                         if (response.body().getData() != null) {
                             breedTypedataBeanList = response.body().getData();
 
-                            if (breedTypedataBeanList.size() == 0){
+                            if (breedTypedataBeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
@@ -375,14 +446,13 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
                             txt_no_records.setText("Error 404 Found");
                             edtsearch.setEnabled(false);
                         }
-                    }
-                    else {
+                    } else {
 
                         recyclerView.setVisibility(View.GONE);
                         txt_no_records.setVisibility(View.VISIBLE);
                         txt_no_records.setText("Error 404 Found");
                         edtsearch.setEnabled(false);
-                       // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                        // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
                     }
                 }
             }
@@ -395,7 +465,73 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
                 txt_no_records.setVisibility(View.VISIBLE);
                 txt_no_records.setText("Something Went Wrong.. Try Again Later");
                 edtsearch.setEnabled(false);
-              //  Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void NewJobListACK_branch_headCall(String se_user_mobile_no, String service_title) {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<JobListResponse> call = apiInterface.NewJobListACK_branch_headCall(RestUtils.getContentType(), joblistlrrequest(se_user_mobile_no, service_title));
+        Log.w(TAG, "JobList Response url  :%s" + " " + call.request().url().toString());
+        call.enqueue(new Callback<JobListResponse>() {
+            @Override
+            public void onResponse(Call<JobListResponse> call, Response<JobListResponse> response) {
+                Log.w(TAG, "JobList Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+
+                            }
+
+                            setBreedTypeView(breedTypedataBeanList);
+                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                            edtsearch.setEnabled(false);
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        edtsearch.setEnabled(false);
+                        // Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JobListResponse> call, Throwable t) {
+
+                Log.e("JobList On Failure ", "--->" + t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                edtsearch.setEnabled(false);
+                //  Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -405,7 +541,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        petBreedTypesListAdapter = new JobListAdapter_ACKService(getApplicationContext(), breedTypedataBeanList,status);
+        petBreedTypesListAdapter = new JobListAdapter_ACKService(getApplicationContext(), breedTypedataBeanList, status);
         recyclerView.setAdapter(petBreedTypesListAdapter);
     }
 
@@ -414,6 +550,7 @@ public class JobDetails_ACKActivity extends AppCompatActivity {
         JobListRequest joblist = new JobListRequest();
         joblist.setUser_mobile_no(se_user_mobile_no);
         joblist.setService_name(service_title);
+        joblist.setBr_code(se_user_location);
         Log.w(TAG, "JobList Request " + new Gson().toJson(joblist));
         return joblist;
     }

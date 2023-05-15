@@ -1121,9 +1121,24 @@ public class AuditChecklist extends AppCompatActivity implements GetSpinnerListe
     public void onBackPressed() {
         // super.onBackPressed();
 
-        Intent send = new Intent(context, Checklist_AuditActivity.class);
+        /*Intent send = new Intent(context, Checklist_AuditActivity.class);
         send.putExtra("status", status);
-        startActivity(send);
+        startActivity(send);*/
+
+        alertDialog = new android.app.AlertDialog.Builder(context)
+                .setTitle("Are you sure to close this job ?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent send = new Intent(context, ServicesActivity.class);
+                        startActivity(send);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        alertDialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     private void Job_status_update() {

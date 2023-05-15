@@ -38,7 +38,7 @@ public class PreventiveMaintance_Activity extends AppCompatActivity {
     ImageView iv_back;
     CardView cv_new_job, cv_pasused_job;
     String TAG = PreventiveMaintance_Activity.class.getSimpleName(), service_title, se_user_mobile_no,
-            se_user_name, se_id, check_id, message, paused_count, networkStatus = "";
+            se_user_name, se_id, check_id, message, paused_count, networkStatus = "", se_user_location = "", emp_Type = "";
     TextView pasused_count, title_name;
     Context context;
 
@@ -60,6 +60,8 @@ public class PreventiveMaintance_Activity extends AppCompatActivity {
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Preventive Maintenance");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
         Log.e("Name", service_title);
         title_name.setText(service_title);
 
@@ -79,7 +81,11 @@ public class PreventiveMaintance_Activity extends AppCompatActivity {
 
         } else {
 
-            Count_paused();
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                Count_pasused_second_branch_headResponseCall();
+            } else {
+                Count_paused();
+            }
         }
 
 
@@ -190,11 +196,53 @@ public class PreventiveMaintance_Activity extends AppCompatActivity {
 
     }
 
+    private void Count_pasused_second_branch_headResponseCall() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Count_pasusedResponse> call = apiInterface.Count_pasused_second_branch_headResponseCall(RestUtils.getContentType(), count_pasuedRequest());
+        Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<Count_pasusedResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<Count_pasusedResponse> call, @NonNull retrofit2.Response<Count_pasusedResponse> response) {
+
+                Log.w(TAG, "SignupResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    message = response.body().getMessage();
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+
+                            paused_count = response.body().getData().getPaused_count();
+                            pasused_count.setText("(" + paused_count + ")");
+                        }
+
+
+                    } else {
+                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Count_pasusedResponse> call, @NonNull Throwable t) {
+                Log.e("OTP", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private CountPausedRequest count_pasuedRequest() {
 
         CountPausedRequest count = new CountPausedRequest();
         count.setUser_mobile_no(se_user_mobile_no);
         count.setService_name(service_title);
+        count.setBr_code(se_user_location);
         Log.w(TAG, "loginRequest " + new Gson().toJson(count));
         return count;
     }

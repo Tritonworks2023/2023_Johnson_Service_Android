@@ -35,7 +35,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toStartOf="@id/txt_refresh"
                     android:layout_toEndOf="@id/iv_back"
-                    android:text="Service"
+                    android:text="Activities"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
                     android:textStyle="bold" />

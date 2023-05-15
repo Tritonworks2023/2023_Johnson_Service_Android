@@ -164,24 +164,26 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     n_act.putExtra("str_title", "FAILURE REPORT REQUEST");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
-                } else if (s.equalsIgnoreCase("SITE REPAIR WORK REQUEST - (TECH)")) {
+                } else if (s.equalsIgnoreCase("SITE REPAIR WORK REQUEST")) {
                     Intent n_act = new Intent(context, RepairWorkRequestActivity.class);
-                    n_act.putExtra("str_title", "SITE REPAIR WORK REQUEST - (TECH)");
+                    n_act.putExtra("str_title", "SITE REPAIR WORK REQUEST");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
-                } else if (s.equalsIgnoreCase("SITE REPAIR WORK APPROVAL- (ENG)")) {
+                } else if (s.equalsIgnoreCase("SITE REPAIR WORK APPROVAL")) {
                     Intent n_act = new Intent(context, RepairWorkApprovalJobActivity.class);
-                    n_act.putExtra("str_title", "SITE REPAIR WORK APPROVAL- (ENG)");
+                    n_act.putExtra("str_title", "SITE REPAIR WORK APPROVAL");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
-                } else if (s.equalsIgnoreCase("REPAIR WORK ORDER CREATION")) {
-                    Intent n_act = new Intent(context, RepairWorkOrderCreationActivity.class);
-                    n_act.putExtra("str_title", "REPAIR WORK ORDER CREATION");
+                } else if (s.equalsIgnoreCase("REPAIR WORK JOB DETAILS")) {
+//                    Intent n_act = new Intent(context, RepairWorkOrderCreationActivity.class);
+                    Intent n_act = new Intent(context, RepairWorkOrderCreationCompletionJobActivity.class);
+                    n_act.putExtra("str_title", "REPAIR WORK JOB DETAILS");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);
                 } else if (s.equalsIgnoreCase("REPAIR WORK ORDER CREATION & COMPLETION")) {
 //                    Intent n_act = new Intent(context, JobHazardAnalysisFormActivity.class);
-                    Intent n_act = new Intent(context, RepairWorkOrderCreationCompletionJobActivity.class);
+//                    Intent n_act = new Intent(context, RepairWorkOrderCreationCompletionJobActivity.class);
+                    Intent n_act = new Intent(context, RepairWorkOrderCreationActivity.class);
                     n_act.putExtra("str_title", "REPAIR WORK ORDER CREATION & COMPLETION");
                     n_act.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(n_act);

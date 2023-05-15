@@ -26,10 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Repair Work Pending Request Job List"
+                android:text="SITE REPAIR WORK REQUEST"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+            <!--android:text="Repair Work Pending Request Job List"-->
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

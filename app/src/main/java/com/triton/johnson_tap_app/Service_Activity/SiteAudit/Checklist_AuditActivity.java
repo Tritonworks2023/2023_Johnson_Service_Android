@@ -20,16 +20,15 @@ import androidx.cardview.widget.CardView;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.Service_Activity.ServicesActivity;
 
-
 public class Checklist_AuditActivity extends AppCompatActivity {
 
     Context context;
     ImageView img_Back;
     CardView cv_Lift, cv_Escalator;
-    String se_user_mobile_no, se_user_name,status,se_id,check_id, service_title,jobid,message,str_job_status,osacompno;
+    String se_user_mobile_no, se_user_name, status, se_id, check_id, service_title, jobid, message, str_job_status, osacompno;
     SharedPreferences sharedPreferences;
     AlertDialog alertDialog;
-    TextView txt_Jobid,txt_Starttime;
+    TextView txt_Jobid, txt_Starttime;
     String str_StartTime;
 
     @SuppressLint("MissingInflatedId")
@@ -51,16 +50,16 @@ public class Checklist_AuditActivity extends AppCompatActivity {
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
-        jobid =sharedPreferences.getString("jobid","L-1234");
-        osacompno = sharedPreferences.getString("osacompno","ADT2020202020");
+        jobid = sharedPreferences.getString("jobid", "L-1234");
+        osacompno = sharedPreferences.getString("osacompno", "ADT2020202020");
         Log.e("Name", "" + service_title);
-        Log.e("Mobile", ""+ se_user_mobile_no);
-        Log.e("Jobid",""+ jobid);
-        Log.e("osocompno",""+ osacompno);
+        Log.e("Mobile", "" + se_user_mobile_no);
+        Log.e("Jobid", "" + jobid);
+        Log.e("osocompno", "" + osacompno);
 
-        str_StartTime = sharedPreferences.getString("starttime","");
+        str_StartTime = sharedPreferences.getString("starttime", "");
         str_StartTime = str_StartTime.replaceAll("[^0-9-:]", " ");
-        Log.e("Start Time",str_StartTime);
+        Log.e("Start Time", str_StartTime);
         txt_Jobid.setText("Job ID : " + jobid);
         txt_Starttime.setText("Start Time : " + str_StartTime);
 
@@ -86,16 +85,16 @@ public class Checklist_AuditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent send = new Intent(context, AuditChecklist.class);
+                /*Intent send = new Intent(context, AuditChecklist.class);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("service_type","L");
-                Log.e("Type 1","L");
+                editor.putString("service_type", "L");
+                Log.e("Type 1", "L");
                 editor.apply();
                 send.putExtra("status", status);
-                Log.e("Type","L");
+                Log.e("Type", "L");
 //                send.putExtra("service_type","L");
-                startActivity(send);
+                startActivity(send);*/
             }
         });
 
@@ -103,13 +102,13 @@ public class Checklist_AuditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent send = new Intent(context, AuditChecklist.class);
+                /*Intent send = new Intent(context, AuditChecklist.class);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("service_type","E");
+                editor.putString("service_type", "E");
                 editor.apply();
                 send.putExtra("status", status);
-               // send.putExtra("service_type","E");
-                startActivity(send);
+                // send.putExtra("service_type","E");
+                startActivity(send);*/
             }
         });
 
@@ -117,7 +116,7 @@ public class Checklist_AuditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-      //  super.onBackPressed();
+        //  super.onBackPressed();
 //        Intent send = new Intent(context, StartJob_AuditActivity.class);
 //        send.putExtra("status", status);
 //        startActivity(send);

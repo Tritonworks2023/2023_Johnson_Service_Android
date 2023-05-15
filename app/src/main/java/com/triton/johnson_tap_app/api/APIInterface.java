@@ -215,6 +215,9 @@ public interface APIInterface {
     @POST("service_userdetails/job_status_count")
     Call<Count_pasusedResponse> Count_pasusedResponseCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
+    @POST("service_userdetails/branch_head/job_status_count")
+    Call<Count_pasusedResponse> Count_pausedBranchHeadResponseCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
+
     @POST("service_userdetails/customer_details")
     Call<Custom_detailsResponse> Custom_detailsResponseCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
 
@@ -233,14 +236,23 @@ public interface APIInterface {
     @POST("service_userdetails/service_list")
     Call<ServiceResponse> ServiceResponseCall(@Header("Content-Type") String type, @Body ServiceRequest serviceRequest);
 
+    @POST("service_userdetails/branch_head/service_list")
+    Call<ServiceResponse> BranchHeadServiceResponseCall(@Header("Content-Type") String type, @Body ServiceRequest serviceRequest);
+
     @POST("service_userdetails/pause_job_list")
     Call<Pasused_ListResponse> Pasused_listResponseCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
+
+    @POST("service_userdetails/branch_head/pause_job_list")
+    Call<Pasused_ListResponse> BranchHeadPasused_listResponseCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
 
     @POST("service_userdetails/fetch_view_status")
     Call<ViewStatusResponse> View_statusResponseCall(@Header("Content-Type") String type, @Body ViewStatusRequest viewRequest);
 
     @POST("service_userdetails/new_job_list")
     Call<JobListResponse> JobListResponseCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
+
+    @POST("service_userdetails/branch_head/new_job_list")
+    Call<JobListResponse> JobListBranchHeadResponseCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
     //    /*Email OTP */
 
     @POST("activity/form3_rtgs_jobno_find")
@@ -292,11 +304,20 @@ public interface APIInterface {
     @POST("preventive_service_data_management/job_status_count")
     Call<Count_pasusedResponse> Count_pasused_secondResponseCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
+    @POST("preventive_service_data_management/branch_head/job_status_count")
+    Call<Count_pasusedResponse> Count_pasused_second_branch_headResponseCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
+
     @POST("preventive_service_data_management/new_job_list")
     Call<JobListResponse> JobList_PreventiveResponseCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
 
+    @POST("preventive_service_data_management/branch_head/new_job_list")
+    Call<JobListResponse> JobList_branch_head_PreventiveResponseCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
+
     @POST("preventive_service_data_management/pause_job_list_pm")
     Call<Pasused_ListResponse> Pasused_listBMRResponseCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
+
+    @POST("preventive_service_data_management/branch_head/pause_job_list_pm")
+    Call<Pasused_ListResponse> Pasused_listBMR_branch_headResponseCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
 
     @POST("preventive_service_data_management/customer_details")
     Call<Custom_detailsResponse> Custom_details_PreventiveResponseCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
@@ -340,6 +361,9 @@ public interface APIInterface {
     @POST("breakdown_data_management/service_mr_job_status_count")
     Call<Count_pasusedResponse> Count_JobstatuscountCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
+    @POST("breakdown_data_management/branch_head/service_mr_job_status_count")
+    Call<Count_pasusedResponse> Count_Jobstatuscount_branch_headCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
+
     @POST("breakdown_data_management/service_mr_customer_details")
     Call<Custom_detailsResponse> Customer_detailsResponseCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
 
@@ -349,6 +373,9 @@ public interface APIInterface {
     @POST("breakdown_data_management/pause_job_list")
     Call<Pasused_ListResponse> Pasused_listResponseBMRCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
 
+    @POST("breakdown_data_management/branch_head/pause_job_list")
+    Call<Pasused_ListResponse> Pasused_listResponseBMR_branch_headCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
+
     @POST("breakdown_data_management/service_mr_eng_mrlist")
     Call<ServiceUserdetailsResponse> ServiceUserdetailsResponseMRlistCall(@Header("Content-Type") String type, @Body ServiceUserdetailsRequest serviceUserdetailsRequest);
 
@@ -357,6 +384,9 @@ public interface APIInterface {
 
     @POST("breakdown_data_management/service_mr_new_job_list")
     Call<JobListResponse> NewJobListCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
+
+    @POST("breakdown_data_management/branch_head/service_mr_new_job_list")
+    Call<JobListResponse> NewJobList_branch_headCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
 
     @POST("breakdown_data_management/fetch_mr_list")
     Call<Fetch_MrList_Response> FetchMrListBreakdownMRCall(@Header("Content-Type") String type, @Body Fetch_MrList_Request fetchMrListRequest);
@@ -372,11 +402,20 @@ public interface APIInterface {
     @POST("preventive_service_data_management/service_mr_job_status_count")
     Call<Count_pasusedResponse> Count_JobstatuscountPrventiveMRCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
+    @POST("preventive_service_data_management/branch_head/service_mr_job_status_count")
+    Call<Count_pasusedResponse> Count_JobstatuscountPrventiveMR_branch_headCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
+
     @POST("preventive_service_data_management/service_mr_new_job_list")
     Call<JobListResponse> NewJobListPrventiveMRCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
 
+    @POST("preventive_service_data_management/branch_head/service_mr_new_job_list")
+    Call<JobListResponse> NewJobListPrventiveMR_branch_headCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
+
     @POST("preventive_service_data_management/pause_job_list")
     Call<Pasused_ListResponse> Pasused_listResponsePMRCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
+
+    @POST("preventive_service_data_management/branch_head/pause_job_list")
+    Call<Pasused_ListResponse> Pasused_listResponsePMR_branch_headCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
 
     @POST("preventive_service_data_management/service_mr_customer_details")
     Call<Custom_detailsResponse> Customer_detailsResponsePrventiveMRCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
@@ -409,11 +448,20 @@ public interface APIInterface {
     @POST("lr_service_data_management/service_lr_job_status_count")
     Call<Count_pasusedResponse> Count_JobstatuscountLRCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
+    @POST("lr_service_data_management/branch_head/service_lr_job_status_count")
+    Call<Count_pasusedResponse> Count_JobstatuscountLR_branch_headCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
+
     @POST("lr_service_data_management/service_lr_new_job_list")
     Call<JobListResponse> NewJobListLRCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
 
+    @POST("lr_service_data_management/branch_head/service_lr_new_job_list")
+    Call<JobListResponse> NewJobListLR_branch_headCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
+
     @POST("lr_service_data_management/pause_job_list")
     Call<Pasused_ListResponse> Pasused_listResponseLRCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
+
+    @POST("lr_service_data_management/branch_head/pause_job_list")
+    Call<Pasused_ListResponse> Pasused_listResponseLR_branch_headCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
 
     @POST("lr_service_data_management/service_lr_customer_details")
     Call<LR_DetailsResponse> LRDetailsResponseCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
@@ -441,11 +489,20 @@ public interface APIInterface {
     @POST("part_replacement/service_prtrpmt_job_status_count")
     Call<Count_pasusedResponse> Count_JobstatuscountACKCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
+    @POST("part_replacement/branch_head/service_prtrpmt_job_status_count")
+    Call<Count_pasusedResponse> Count_JobstatuscountACK_branch_headCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
+
     @POST("part_replacement/service_prtrpmt_new_job_list")
     Call<JobListResponse> NewJobListACKCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
 
+    @POST("part_replacement/branch_head/service_prtrpmt_new_job_list")
+    Call<JobListResponse> NewJobListACK_branch_headCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
+
     @POST("part_replacement/pause_job_list")
     Call<Pasused_ListResponse> Pasused_listACKCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
+
+    @POST("part_replacement/branch_head/pause_job_list")
+    Call<Pasused_ListResponse> Paused_listACK_branch_headCall(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
 
     @POST("part_replacement/service_prtrpmt_customer_details")
     Call<MR_DetailsResponse> MRDetailsResponseCall(@Header("Content-Type") String type, @Body Custom_detailsRequest custom_detailsRequest);
@@ -476,11 +533,20 @@ public interface APIInterface {
     @POST("audit_data_management/service_audit_job_status_count")
     Call<Count_pasusedResponse> Count_AuditstatuscountCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
 
+    @POST("audit_data_management/branch_head/service_audit_job_status_count")
+    Call<Count_pasusedResponse> Count_Auditstatuscount_branch_headCall(@Header("Content-Type") String type, @Body CountPausedRequest countRequest);
+
     @POST("audit_data_management/service_audit_new_job_list")
     Call<JobListResponse> NewJobAuditListCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
 
+    @POST("audit_data_management/branch_head/service_audit_new_job_list")
+    Call<JobListResponse> NewJobAuditList_branch_headCall(@Header("Content-Type") String type, @Body JobListRequest joblistRequest);
+
     @POST("audit_data_management/pause_job_list")
     Call<PauseJobListAuditResponse> PausedJobListAudit(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
+
+    @POST("audit_data_management/branch_head/pause_job_list")
+    Call<PauseJobListAuditResponse> PausedJobList_branch_headAudit(@Header("Content-Type") String type, @Body Pasused_ListRequest pasusedRequest);
 
     @POST("audit_data_management/service_audit_check_work_status")
     Call<Job_statusResponse> CheckworkAuditStatusCall(@Header("Content-Type") String type, @Body Job_statusRequest custom_detailsRequest);
@@ -687,6 +753,9 @@ public interface APIInterface {
     @POST("additional_forms/temp/failure_report/getlist_by_eng_code")
     Call<FailureReportRequestListByEngCodeResponse> getListByEngCode(@Header("Content-Type") String type, @Body FailureReportRequestListByEngCodeRequest failureReportRequestListByEngCodeRequest);
 
+    @POST("additional_forms/temp/failure_report/branch_head/getlist_by_eng_code")
+    Call<FailureReportRequestListByEngCodeResponse> getListByEngCodeBranchHead(@Header("Content-Type") String type, @Body FailureReportRequestListByEngCodeRequest failureReportRequestListByEngCodeRequest);
+
     @POST("additional_forms/temp/failure_report/getlist_by_mech_code")
     Call<FailureReportRequestListByMechCodeResponse> getFailureReportListByMechCode(@Header("Content-Type") String type, @Body FailureReportRequestListByMechCodeRequest failureReportRequestListByMechCodeRequest);
 
@@ -708,6 +777,9 @@ public interface APIInterface {
     @POST("additional_forms/repair_work_request_temp/fetch_list_eng_id")
     Call<RepairWorkRequestFetchListEngIdResponse> getRepairWorkRequestFetchListEngId(@Header("Content-Type") String type, @Body RepairWorkRequestFetchListEngIdRequest repairWorkRequestFetchListEngIdRequest);
 
+    @POST("additional_forms/repair_work_request_temp/branch_head/fetch_list_eng_id")
+    Call<RepairWorkRequestFetchListEngIdResponse> getRepairWorkRequestFetchListEngIdBranchHead(@Header("Content-Type") String type, @Body RepairWorkRequestFetchListEngIdRequest repairWorkRequestFetchListEngIdRequest);
+
     @POST("service_userdetails/list_repair_work_eng_brcode")
     Call<RepairWorkEngBrCodeResponse> getListRepairWorkEngBrCode(@Header("Content-Type") String type, @Body RepairWorkEngBrCodeRequest repairWorkEngBrCodeRequest);
 
@@ -716,6 +788,9 @@ public interface APIInterface {
 
     @POST("additional_forms/repair_work_request_temp/mech/request")
     Call<RepairWorkRequestMechResponse> getRepairWorkRequestMechRequest(@Header("Content-Type") String type, @Body RepairWorkRequestMechRequest repairWorkRequestMechRequest);
+
+    @POST("additional_forms/repair_work_request_temp/mech/branch_head/request")
+    Call<RepairWorkRequestMechResponse> getRepairWorkRequestMechRequestBranchHead(@Header("Content-Type") String type, @Body RepairWorkRequestMechRequest repairWorkRequestMechRequest);
 
     @POST("service_userdetails/list_repair_work_mech_brcode")
     Call<RepairWorkMechBrCodeResponse> getRepairWorkMechBrCode(@Header("Content-Type") String type, @Body RepairWorkMechBrCodeRequest repairWorkMechBrCodeRequest);
@@ -728,6 +803,9 @@ public interface APIInterface {
 
     @POST("additional_forms/repair_work_request_temp/approval_request/getlist_by_rp_eng")
     Call<RepairWorkRequestApprovalRequestListRpEngResponse> getRepairWorkRequestApprovalRequestListRpEng(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalRequestListRpEngRequest repairWorkRequestApprovalRequestListRpEngRequest);
+
+    @POST("additional_forms/repair_work_request_temp/approval_request/branch_head/getlist_by_rp_eng")
+    Call<RepairWorkRequestApprovalRequestListRpEngResponse> getRepairWorkRequestApprovalRequestListRpEngBranchHead(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalRequestListRpEngRequest repairWorkRequestApprovalRequestListRpEngRequest);
 
     @POST("additional_forms/repair_work_request_temp/approval_request/getlist_by_rp_mech")
     Call<RepairWorkRequestApprovalRequestListRpMechResponse> getRepairWorkRequestApprovalRequestListRpMech(@Header("Content-Type") String type, @Body RepairWorkRequestApprovalRequestListRpMechRequest repairWorkRequestApprovalRequestListRpMechRequest);

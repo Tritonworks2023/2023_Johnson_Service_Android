@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:maxLines="1"
-                        android:text="Submitted Pending Request"
+                        android:text="Submitted Job Status"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"

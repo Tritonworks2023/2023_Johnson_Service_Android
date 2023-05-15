@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.SiteAudit;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -57,7 +55,8 @@ public class JobdetailsSiteaudit_Activity extends AppCompatActivity implements P
     RelativeLayout Job;
     JobListAdapter_SiteAudit petBreedTypesListAdapter;
     Context context;
-    String status, se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, networkStatus = "";
+    String status, se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, networkStatus = "",
+            se_user_location = "", emp_Type = "", TAG = JobdetailsSiteaudit_Activity.class.getSimpleName();
     SharedPreferences sharedPreferences;
     List<JobListResponse.DataBean> breedTypedataBeanList;
     List<PauseJobListAuditResponse.PauseData> databeanList;
@@ -87,6 +86,8 @@ public class JobdetailsSiteaudit_Activity extends AppCompatActivity implements P
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
 
         Log.e("Name", "" + service_title);
         Log.e("Mobile", "" + se_user_mobile_no);
@@ -110,12 +111,21 @@ public class JobdetailsSiteaudit_Activity extends AppCompatActivity implements P
 
             if (status.equals("new")) {
 
-                newJoblist();
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    NewJobAuditList_branch_headCall();
+                } else {
+                    newJoblist();
+                }
             } else {
 
                 Job.setVisibility(View.GONE);
                 edtsearch.setVisibility(View.GONE);
-                pausedjobResponseCall();
+
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    PausedJobList_branch_headAudit();
+                } else {
+                    pausedjobResponseCall();
+                }
             }
         }
 
@@ -252,6 +262,73 @@ public class JobdetailsSiteaudit_Activity extends AppCompatActivity implements P
         });
     }
 
+    private void PausedJobList_branch_headAudit() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<PauseJobListAuditResponse> call = apiInterface.PausedJobList_branch_headAudit(RestUtils.getContentType(), serviceRequest());
+        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<PauseJobListAuditResponse>() {
+            @Override
+            public void onResponse(Call<PauseJobListAuditResponse> call, Response<PauseJobListAuditResponse> response) {
+
+                Log.w(TAG, "Paused Job Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            databeanList = response.body().getData();
+
+                            if (databeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+
+                            }
+
+                            setPausedTypeView(databeanList);
+                            Log.d("dataaaaa", String.valueOf(databeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                            edtsearch.setEnabled(false);
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        edtsearch.setEnabled(false);
+                        //  Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PauseJobListAuditResponse> call, Throwable t) {
+
+                Log.e("Jobno Find ", "--->" + t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                edtsearch.setEnabled(false);
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void setPausedTypeView(List<PauseJobListAuditResponse.PauseData> databeanList) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -263,6 +340,7 @@ public class JobdetailsSiteaudit_Activity extends AppCompatActivity implements P
     private Pasused_ListRequest serviceRequest() {
         Pasused_ListRequest service = new Pasused_ListRequest();
         service.setUser_mobile_no(se_user_mobile_no);
+        service.setBr_code(se_user_location);
         //service.setService_name(title);
         Log.w(TAG, "Paused Request " + new Gson().toJson(service));
         return service;
@@ -389,6 +467,74 @@ public class JobdetailsSiteaudit_Activity extends AppCompatActivity implements P
 
     }
 
+    private void NewJobAuditList_branch_headCall() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<JobListResponse> call = apiInterface.NewJobAuditList_branch_headCall(RestUtils.getContentType(), joblistRequest());
+        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+        call.enqueue(new Callback<JobListResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<JobListResponse> call, @NonNull Response<JobListResponse> response) {
+                Log.w(TAG, "Job List Response" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No Records Found");
+                                edtsearch.setEnabled(false);
+
+                            }
+
+                            setBreedTypeView(breedTypedataBeanList);
+                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
+
+                        }
+
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                            recyclerView.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("Error 404 Found");
+                            edtsearch.setEnabled(false);
+                        }
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("Error 404 Found");
+                        edtsearch.setEnabled(false);
+                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JobListResponse> call, @NonNull Throwable t) {
+                Log.e("Job List on Failure", "--->" + t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("Something Went Wrong.. Try Again Later");
+                edtsearch.setEnabled(false);
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private void setBreedTypeView(List<JobListResponse.DataBean> breedTypedataBeanList) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -402,6 +548,7 @@ public class JobdetailsSiteaudit_Activity extends AppCompatActivity implements P
         JobListRequest job = new JobListRequest();
         job.setUser_mobile_no(se_user_mobile_no);
         job.setService_name(service_title);
+        job.setBr_code(se_user_location);
         Log.w(TAG, "Job List Request " + new Gson().toJson(job));
         return job;
     }

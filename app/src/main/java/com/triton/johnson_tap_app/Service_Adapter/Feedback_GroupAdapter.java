@@ -100,12 +100,13 @@ public class Feedback_GroupAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Log.e("Nish", "inside" + holder.code.getText().toString());
             //holder.chkSelected.setSelected(true);
             // breedTypedataBeanList.get(position).setSelected(true);
-            holder.chx_usertypes.setChecked(true);
+//            holder.chx_usertypes.setChecked(true);
         }
 
-        if (currentItem.isSelected()) {
+        holder.chx_usertypes.setChecked(currentItem.isSelected());
+        /*if (currentItem.isSelected()) {
             holder.chx_usertypes.setChecked(true);
-        }
+        }*/
 
         /*holder.chx_usertypes.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
@@ -141,7 +142,8 @@ public class Feedback_GroupAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 String data = "";
-                dataBeanList.get(position).setSelected(true);
+                dataBeanList.get(position).setSelected(b);
+//                dataBeanList.get(position).setSelected(true);
                 data = data + "\n" + dataBeanList.get(position).getCodes();
                 Log.i(TAG, "onClick: data -> " + data);
 

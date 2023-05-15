@@ -48,6 +48,7 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
     private EditText edt_qr_code_number, edt_bar_code_number, edt_job_num;
     private Dialog dialog;
     private TextView txt_menu_name;
+    private Button btn_search_bar_code, btn_search_job_num;
     private FailureReportFetchDetailsByJobCodeResponse failureReportFetchDetailsByJobCodeResponse = new FailureReportFetchDetailsByJobCodeResponse();
     private String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -77,6 +78,8 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
         edt_job_num = findViewById(R.id.edt_job_num);
 
         txt_menu_name = findViewById(R.id.txt_menu_name);
+        btn_search_bar_code = findViewById(R.id.btn_search_bar_code);
+        btn_search_job_num = findViewById(R.id.btn_search_job_num);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -93,6 +96,8 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
         img_scan_qr_code.setOnClickListener(this);
         img_scan_bar_code.setOnClickListener(this);
         img_search_job_num.setOnClickListener(this);
+        btn_search_bar_code.setOnClickListener(this);
+        btn_search_job_num.setOnClickListener(this);
 
         initLoadingDialog();
     }
@@ -366,7 +371,9 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                 }
             }
             break;
-            case R.id.img_search_bar_code: {
+
+            case R.id.img_search_bar_code:
+            case R.id.btn_search_bar_code: {
                 networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
                 Log.i(TAG, "onClick: img_search_bar_code ->" + networkStatus);
@@ -382,8 +389,8 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                     }
                 }
             }
-
             break;
+
             case R.id.img_scan_qr_code: {
 
                 if (!hasPermissions(this, PERMISSIONS)) {
@@ -425,7 +432,8 @@ public class FailureReportRequestScannerActivity extends AppCompatActivity imple
                 }
             }
             break;
-            case R.id.img_search_job_num: {
+            case R.id.img_search_job_num:
+            case R.id.btn_search_job_num: {
                 networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
                 Log.i(TAG, "onCreate: networkStatus --> " + networkStatus);

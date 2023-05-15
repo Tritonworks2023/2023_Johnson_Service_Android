@@ -66,6 +66,7 @@ public class RepairWorkOrderCompletionJobListAdapter extends RecyclerView.Adapte
         holder.txt_survey_on.setText(currentItem.getZonal_eng_id());
         holder.txt_date.setText(currentItem.getZonal_eng_name());
         holder.txt_route.setText(currentItem.getRoute_code());
+        holder.txt_rb_no.setText(currentItem.getRb_no());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +89,7 @@ public class RepairWorkOrderCompletionJobListAdapter extends RecyclerView.Adapte
     private class ViewHolderOne extends RecyclerView.ViewHolder {
 
         TextView txt_jobid, txt_building_number, txt_machine_type, txt_date_of_app, txt_status, txt_controllerType,
-                txt_installed_date, txt_survey_on, txt_date, txt_route;
+                txt_installed_date, txt_survey_on, txt_date, txt_route, txt_rb_no;
 
         public ViewHolderOne(View view) {
             super(view);
@@ -103,6 +104,7 @@ public class RepairWorkOrderCompletionJobListAdapter extends RecyclerView.Adapte
             txt_survey_on = view.findViewById(R.id.txt_survey_on);
             txt_date = view.findViewById(R.id.txt_date);
             txt_route = view.findViewById(R.id.txt_route);
+            txt_rb_no = view.findViewById(R.id.txt_rb_no);
         }
     }
 }

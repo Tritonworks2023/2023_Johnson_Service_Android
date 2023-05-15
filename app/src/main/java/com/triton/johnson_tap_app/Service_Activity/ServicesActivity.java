@@ -51,11 +51,11 @@ import retrofit2.Response;
 public class ServicesActivity extends AppCompatActivity implements PetBreedTypeSelectListener {
 
     ImageView iv_back;
-    String TAG = ServicesActivity.class.getSimpleName(), se_user_mobile_no, se_user_name, se_user_password,
-            se_id, check_id, service_title;
+    String TAG = ServicesActivity.class.getSimpleName(), se_user_mobile_no = "", se_user_name = "",
+            se_user_password = "", se_user_location = "", se_id = "", check_id = "", service_title = "";
     RecyclerView recyclerView, rv_add_list;
     String message, ID, emp_Type;
-    TextView txt_NoRecords, txt_refresh;
+    TextView /*txt_NoRecords,*/ txt_refresh;
     ServiceListAdapter petBreedTypesListAdapter;
     AdditionalServiceListAdapter additionalServiceListAdapter;
     /*SwipeRefreshLayout swipeRefreshLayout;*/
@@ -75,7 +75,7 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
         iv_back = (ImageView) findViewById(R.id.iv_back);
         recyclerView = findViewById(R.id.recyclerView);
         rv_add_list = findViewById(R.id.rv_add_list);
-        txt_NoRecords = findViewById(R.id.txt_no_records);
+        /*txt_NoRecords = findViewById(R.id.txt_no_records);*/
         txt_refresh = findViewById(R.id.txt_refresh);
         /*swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);*/
 
@@ -84,12 +84,15 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
         se_user_password = sharedPreferences.getString("user_password", "default value");
         Log.e("username", se_user_name);
         Log.e("password", se_user_password);
         Log.e("mobilenumber", se_user_mobile_no);
 
-        Log.i(TAG, "onCreate: emp_Type --> " + emp_Type);
+        Log.i(TAG, "onCreate: se_user_name -> " + se_user_name + " se_user_password -> " + se_user_password
+                + " se_user_mobile_no -> " + se_user_mobile_no + " emp_Type -> " + emp_Type + " se_user_location -> "
+                + se_user_location);
 
         /*if (emp_Type.equalsIgnoreCase("engineer")) {
             rv_add_list.setVisibility(View.VISIBLE);
@@ -134,7 +137,11 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
 
         } else {
 
-            jobFindResponseCall(se_user_mobile_no);
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                jobFindBranchHeadResponseCall(se_user_mobile_no);
+            } else {
+                jobFindResponseCall(se_user_mobile_no);
+            }
         }
 
         /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -204,7 +211,11 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
 
                             Log.e("msg", "" + message);
 
-                            jobFindResponseCall(se_user_mobile_no);
+                            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                                jobFindBranchHeadResponseCall(se_user_mobile_no);
+                            } else {
+                                jobFindResponseCall(se_user_mobile_no);
+                            }
                         }
 
                     } else {
@@ -285,8 +296,8 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
                             if (breedTypedataBeanList.size() == 0) {
 
                                 recyclerView.setVisibility(View.GONE);
-                                txt_NoRecords.setVisibility(View.VISIBLE);
-                                txt_NoRecords.setText("No Records Found");
+                                /*txt_NoRecords.setVisibility(View.VISIBLE);
+                                txt_NoRecords.setText("No Records Found");*/
                             }
                             setBreedTypeView(breedTypedataBeanList);
                             Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
@@ -312,12 +323,70 @@ public class ServicesActivity extends AppCompatActivity implements PetBreedTypeS
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void jobFindBranchHeadResponseCall(String job_no) {
+        dialog.show();
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<ServiceResponse> call = apiInterface.BranchHeadServiceResponseCall(RestUtils.getContentType(), serviceRequest(job_no));
+
+        Log.i(TAG, "jobFindBranchHeadResponseCall: URL -> " + call.request().url().toString());
+        call.enqueue(new Callback<ServiceResponse>() {
+
+            @Override
+            public void onResponse(@NonNull Call<ServiceResponse> call, @NonNull Response<ServiceResponse> response) {
+
+                Log.i(TAG, "jobFindBranchHeadResponseCall: onResponse: -> " + new Gson().toJson(response.body()));
+                dialog.dismiss();
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+                    Log.d("message", message);
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                /*txt_NoRecords.setVisibility(View.VISIBLE);
+                                txt_NoRecords.setText("No Records Found");*/
+                            }
+                            setBreedTypeView(breedTypedataBeanList);
+                        }
+
+                    } /*else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                        }
+                    }*/ else {
+                        ErrorMyLocationAlert(message);
+
+//                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ServiceResponse> call, @NonNull Throwable t) {
+
+                Log.e(TAG, "jobFindBranchHeadResponseCall: error -> " + t.getMessage());
+                ErrorMyLocationAlert(t.getMessage());
+                dialog.dismiss();
+//                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     private ServiceRequest serviceRequest(String job_no) {
         ServiceRequest service = new ServiceRequest();
         service.setUser_mobile_no(job_no);
+        service.setUser_type(emp_Type);
+        service.setBr_code(se_user_location);
+
+
         Log.w(TAG, "Jobno Find Request " + new Gson().toJson(service));
         return service;
     }

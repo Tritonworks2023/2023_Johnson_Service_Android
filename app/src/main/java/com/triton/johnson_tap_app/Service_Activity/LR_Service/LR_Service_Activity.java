@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.LR_Service;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -42,10 +40,11 @@ public class LR_Service_Activity extends AppCompatActivity {
 
     ImageView img_back;
     CardView cv_new_job, cv_pasused_job;
-    TextView pasused_count,title_name;
+    TextView pasused_count, title_name;
     Context context;
     SharedPreferences sharedPreferences;
-    String se_user_mobile_no, se_user_name, se_id,check_id, service_title,message,paused_count,networkStatus ="";
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, message, paused_count,
+            networkStatus = "", se_user_location = "", emp_Type = "", TAG = LR_Service_Activity.class.getSimpleName();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,35 +57,40 @@ public class LR_Service_Activity extends AppCompatActivity {
         cv_new_job = (CardView) findViewById(R.id.cv_new_job);
         cv_pasused_job = (CardView) findViewById(R.id.cv_paused_job);
         pasused_count = (TextView) findViewById(R.id.paused_count);
-        title_name = (TextView)findViewById(R.id.title_name);
+        title_name = (TextView) findViewById(R.id.title_name);
 
-        sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "default value");
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
 
-        Log.e("name",""+service_title);
-        Log.e("Mobile", ""+ se_user_mobile_no);
+        Log.e("name", "" + service_title);
+        Log.e("Mobile", "" + se_user_mobile_no);
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
 
-        Log.e("Network",""+networkStatus);
+        Log.e("Network", "" + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
 
             NoInternetDialog();
 
-        }else{
-            Count_paused();
+        } else {
+
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                Count_JobstatuscountLR_branch_headCall();
+            } else {
+                Count_paused();
+            }
         }
-
-
 
         cv_new_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,JobDetails_LRService_Activity.class);
-                intent.putExtra("status" , "new");
+                Intent intent = new Intent(context, JobDetails_LRService_Activity.class);
+                intent.putExtra("status", "new");
                 startActivity(intent);
             }
         });
@@ -94,12 +98,11 @@ public class LR_Service_Activity extends AppCompatActivity {
         cv_pasused_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,JobDetails_LRService_Activity.class);
-                intent.putExtra("status" , "pause");
+                Intent intent = new Intent(context, JobDetails_LRService_Activity.class);
+                intent.putExtra("status", "pause");
                 startActivity(intent);
             }
         });
-
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,28 +119,28 @@ public class LR_Service_Activity extends AppCompatActivity {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<Count_pasusedResponse> call = apiInterface.Count_JobstatuscountLRCall(RestUtils.getContentType(), count_pasuedRequest());
-        Log.w(TAG," Count Paused Response url  :%s"+" "+ call.request().url().toString());
+        Log.w(TAG, " Count Paused Response url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<Count_pasusedResponse>() {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<Count_pasusedResponse> call, @NonNull Response<Count_pasusedResponse> response) {
 
-                Log.w(TAG,"Count RESPONSE" + new Gson().toJson(response.body()));
+                Log.w(TAG, "Count RESPONSE" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     message = response.body().getMessage();
 
                     if (200 == response.body().getCode()) {
-                        if(response.body().getData() != null){
+                        if (response.body().getData() != null) {
 
                             paused_count = response.body().getData().getPaused_count();
-                            pasused_count.setText("(" +paused_count +")");
+                            pasused_count.setText("(" + paused_count + ")");
 
                         }
 
 
                     } else {
-                        Toasty.warning(getApplicationContext(),""+message,Toasty.LENGTH_LONG).show();
+                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
 
                     }
                 }
@@ -153,12 +156,56 @@ public class LR_Service_Activity extends AppCompatActivity {
         });
 
     }
+
+    private void Count_JobstatuscountLR_branch_headCall() {
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Count_pasusedResponse> call = apiInterface.Count_JobstatuscountLR_branch_headCall(RestUtils.getContentType(), count_pasuedRequest());
+        Log.w(TAG, " Count Paused Response url  :%s" + " " + call.request().url().toString());
+
+        call.enqueue(new Callback<Count_pasusedResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<Count_pasusedResponse> call, @NonNull Response<Count_pasusedResponse> response) {
+
+                Log.w(TAG, "Count RESPONSE" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    message = response.body().getMessage();
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+
+                            paused_count = response.body().getData().getPaused_count();
+                            pasused_count.setText("(" + paused_count + ")");
+
+                        }
+
+
+                    } else {
+                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Count_pasusedResponse> call, @NonNull Throwable t) {
+                Log.e("OTP", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private CountPausedRequest count_pasuedRequest() {
 
         CountPausedRequest count = new CountPausedRequest();
         count.setUser_mobile_no(se_user_mobile_no);
         count.setService_name(service_title);
-        Log.w(TAG,"loginRequest "+ new Gson().toJson(count));
+        count.setBr_code(se_user_location);
+        Log.w(TAG, "loginRequest " + new Gson().toJson(count));
         return count;
 
     }
@@ -172,7 +219,7 @@ public class LR_Service_Activity extends AppCompatActivity {
 
 
         mBuilder.setView(mView);
-        final Dialog dialog= mBuilder.create();
+        final Dialog dialog = mBuilder.create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
 

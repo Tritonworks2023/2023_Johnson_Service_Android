@@ -54,7 +54,8 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
     RepairWorkOrderCreationJobListAdapter repairWorkOrderCreationJobListAdapter;
     Context context;
     String TAG = RepairWorkOrderCreationJobActivity.class.getSimpleName(), se_user_mobile_no, se_user_name,
-            se_user_id, check_id, service_title, message, networkStatus = "", str_title = "", se_user_location = "";
+            se_user_id, check_id, service_title, message, networkStatus = "", str_title = "", se_user_location = "",
+            emp_Type = "";
     SharedPreferences sharedPreferences;
     List<RepairWorkRequestMechResponse.Data> repairWorkRequestMechResponseList = new ArrayList<>();
     private Dialog dialog;
@@ -83,6 +84,7 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
         se_user_name = sharedPreferences.getString("user_name", "default value");
         se_user_location = sharedPreferences.getString("user_location", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
 
         Log.i(TAG, "onCreate: service_title --> " + service_title);
         Log.i(TAG, "onCreate: se_user_mobile_no --> " + se_user_mobile_no);
@@ -213,7 +215,12 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
             NoInternetDialog();
         } else {
             if (se_user_id != null && !se_user_id.isEmpty()) {
-                getFailureReportListByMechCode(se_user_id);
+
+                if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                    getRepairWorkRequestMechRequestBranchHead(se_user_id);
+                } else {
+                    getFailureReportListByMechCode(se_user_id);
+                }
             } else {
                 Toast.makeText(context, "Enter valid Engineer Id", Toast.LENGTH_SHORT).show();
             }
@@ -277,6 +284,63 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
         }
     }
 
+    private void getRepairWorkRequestMechRequestBranchHead(String se_user_id) {
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        RepairWorkRequestMechRequest jobIdRequest = jobListRequest(se_user_id);
+
+        if (jobIdRequest != null) {
+
+            Call<RepairWorkRequestMechResponse> call = apiInterface.getRepairWorkRequestMechRequestBranchHead(RestUtils.getContentType(), jobIdRequest);
+            Log.i(TAG, "getFailureReportListByMechCode: URL -> " + call.request().url().toString());
+
+            call.enqueue(new Callback<RepairWorkRequestMechResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<RepairWorkRequestMechResponse> call, @NonNull Response<RepairWorkRequestMechResponse> response) {
+                    dialog.dismiss();
+                    Log.i(TAG, "getFailureReportListByMechCode: onResponse: FailureReportRequestListByMechCodeResponse -> " + new Gson().toJson(response.body()));
+                    repairWorkRequestMechResponseList = new ArrayList<>();
+                    if (response.body() != null) {
+                        message = response.body().getMessage();
+
+                        if (200 == response.body().getCode()) {
+                            if (response.body().getData() != null) {
+                                repairWorkRequestMechResponseList = response.body().getData();
+
+                                if (repairWorkRequestMechResponseList.isEmpty()) {
+
+                                    rv_job_failure_report_pending_request.setVisibility(View.GONE);
+                                    txt_no_records.setVisibility(View.VISIBLE);
+                                    txt_no_records.setText("No Records Found");
+//                                edtSearch.setEnabled(false);
+                                } else {
+                                    setView(repairWorkRequestMechResponseList);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<RepairWorkRequestMechResponse> call, @NonNull Throwable t) {
+                    dialog.dismiss();
+                    Log.e(TAG, "getFailureReportListByMechCode: onFailure: error --> " + t.getMessage());
+                    rv_job_failure_report_pending_request.setVisibility(View.GONE);
+                    txt_no_records.setVisibility(View.VISIBLE);
+                    txt_no_records.setText("Something Went Wrong.. Try Again Later");
+//                edtSearch.setEnabled(false);
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            dialog.dismiss();
+        }
+    }
+
     private void setView(List<RepairWorkRequestMechResponse.Data> repairWorkRequestMechResponseList) {
         rv_job_failure_report_pending_request.setVisibility(View.VISIBLE);
         txt_no_records.setVisibility(View.GONE);
@@ -292,6 +356,7 @@ public class RepairWorkOrderCreationJobActivity extends AppCompatActivity implem
 
         if (strSearch != null && !strSearch.isEmpty()) {
             job.setRep_eng_code(strSearch);
+            job.setBr_code(se_user_location);
             Log.i(TAG, "jobListRequest: RepairWorkRequestMechRequest --> " + new Gson().toJson(job));
             return job;
         } else {

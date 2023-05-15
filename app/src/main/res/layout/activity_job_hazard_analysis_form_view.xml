@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Repair Work Approval Request"
+                android:text="Repair Work Order Completion"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />

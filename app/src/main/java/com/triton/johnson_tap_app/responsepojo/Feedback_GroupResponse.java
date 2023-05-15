@@ -50,7 +50,7 @@ public class Feedback_GroupResponse {
     public static class DataBean {
         private String title;
         private String codes;
-        private boolean isSelected ;
+        private boolean isSelected = false;
 
 
         public boolean isSelected() {

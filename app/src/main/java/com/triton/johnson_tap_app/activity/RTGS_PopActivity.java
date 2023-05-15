@@ -1,6 +1,16 @@
 package com.triton.johnson_tap_app.activity;
 
-import static android.content.ContentValues.TAG;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,28 +18,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.triton.johnson_tap_app.R;
 import com.triton.johnson_tap_app.RTGS_Pop_Adapter;
 import com.triton.johnson_tap_app.RestUtils;
-import com.triton.johnson_tap_app.Service_Adapter.BD_DetailsAdapter;
-import com.triton.johnson_tap_app.UserTypeSelectListener1;
 import com.triton.johnson_tap_app.api.APIInterface;
 import com.triton.johnson_tap_app.api.RetrofitClient;
-import com.triton.johnson_tap_app.responsepojo.Feedback_GroupResponse;
 import com.triton.johnson_tap_app.responsepojo.RTGS_PopResponse;
 
 import java.util.ArrayList;
@@ -42,23 +36,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RTGS_PopActivity extends AppCompatActivity{
+public class RTGS_PopActivity extends AppCompatActivity {
 
-//    private RetrofitAdapter retrofitAdapter;
-    private RecyclerView recyclerView;
     ImageView iv_back;
     List<RTGS_PopResponse.DataBean> breedTypedataBeanList;
     RTGS_Pop_Adapter activityBasedListAdapter;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_search)
     EditText edt_search;
-    String petimage;
+    String petimage, TAG = RTGS_PopActivity.class.getSimpleName();
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_clearsearch)
     ImageView img_clearsearch;
-    TextView text,txt_no_records;
-
-    private String search_string ="",agent_code;
+    TextView text, txt_no_records;
+    //    private RetrofitAdapter retrofitAdapter;
+    private RecyclerView recyclerView;
+    private String search_string = "", agent_code;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,20 +65,20 @@ public class RTGS_PopActivity extends AppCompatActivity{
             agent_code = extras.getString("agent_code");
         }
 
-    //    Toast.makeText(RTGS_PopActivity.this, "N" + agent_code, Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(RTGS_PopActivity.this, "N" + agent_code, Toast.LENGTH_SHORT).show();
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
         recyclerView = findViewById(R.id.recycler1);
 
-       // fetchJSON();
+        // fetchJSON();
 
         jobFindResponseCall();
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent send = new Intent(RTGS_PopActivity.this, Daily_Collection_DetailsActivity.class);
-                send.putExtra("Radio_button","RTGS");
-                send.putExtra("agent_code",agent_code);
+                send.putExtra("Radio_button", "RTGS");
+                send.putExtra("agent_code", agent_code);
                 startActivity(send);
             }
         });
@@ -97,7 +90,7 @@ public class RTGS_PopActivity extends AppCompatActivity{
 
                 String Searchvalue = edt_search.getText().toString();
 
-                Log.e("Search",""+Searchvalue);
+                Log.e("Search", "" + Searchvalue);
 
                 recyclerView.setVisibility(View.VISIBLE);
                 txt_no_records.setVisibility(View.GONE);
@@ -113,18 +106,17 @@ public class RTGS_PopActivity extends AppCompatActivity{
 
                 String Searchvalue = edt_search.getText().toString();
 
-                Log.e("Search",""+Searchvalue);
+                Log.e("Search", "" + Searchvalue);
 
-                if(Searchvalue.equals("")){
+                if (Searchvalue.equals("")) {
 
-                    Log.e("Search 1",""+Searchvalue);
+                    Log.e("Search 1", "" + Searchvalue);
 
                     recyclerView.setVisibility(View.VISIBLE);
-                //   jobFindResponseCall();
+                    //   jobFindResponseCall();
                     img_clearsearch.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    Log.e("Search 2",""+Searchvalue);
+                } else {
+                    Log.e("Search 2", "" + Searchvalue);
                     //   Log.w(TAG,"Search Value---"+Searchvalue);
                     filter(Searchvalue);
                 }
@@ -145,34 +137,30 @@ public class RTGS_PopActivity extends AppCompatActivity{
 
     private void filter(String s) {
         List<RTGS_PopResponse.DataBean> filteredlist = new ArrayList<>();
-        for(RTGS_PopResponse.DataBean item : breedTypedataBeanList)
-        {
-           // if(item.getFA_BSD_UTRNO().toLowerCase().contains(s.toLowerCase()) ||
+        for (RTGS_PopResponse.DataBean item : breedTypedataBeanList) {
+            // if(item.getFA_BSD_UTRNO().toLowerCase().contains(s.toLowerCase()) ||
             // item.getFA_BSD_BANKDT().toLowerCase().contains(s.toLowerCase()) ||
             // item.getFA_BSD_AMOUNT().toLowerCase().contains(s.toLowerCase()) ||
             // item.getFA_BSD_CUSACNM().toLowerCase().contains(s.toLowerCase()) || error
             // item.getFA_BSD_BALAMT().toLowerCase().contains(s.toLowerCase()))
-            if(item.getFA_BSD_UTRNO().toString().contains(s.toString()))
-            {
-                Log.e("A","" + item.getFA_BSD_UTRNO().toString());
+            if (item.getFA_BSD_UTRNO().toString().contains(s.toString())) {
+                Log.e("A", "" + item.getFA_BSD_UTRNO().toString());
 //                Log.e("A","" + item.getFA_BSD_BANKDT().toString());
 //                Log.e("A","" + item.getFA_BSD_AMOUNT().toString());
 //                Log.e("A","" + item.getFA_BSD_CUSACNM().toString());
 //                Log.e("A","" + item.getFA_BSD_BALAMT().toString());
 
-                Log.w(TAG,"filter----"+item.getFA_BSD_UTRNO().toLowerCase().contains(s.toLowerCase()));
+                Log.w(TAG, "filter----" + item.getFA_BSD_UTRNO().toLowerCase().contains(s.toLowerCase()));
                 filteredlist.add(item);
 
             }
         }
-        if(filteredlist.isEmpty())
-        {
-            Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
+        if (filteredlist.isEmpty()) {
+            Toast.makeText(this, "No Data Found ... ", Toast.LENGTH_SHORT).show();
             recyclerView.setVisibility(View.GONE);
             txt_no_records.setVisibility(View.VISIBLE);
             txt_no_records.setText("No Data Found");
-        }else
-        {
+        } else {
             activityBasedListAdapter.filterList(filteredlist);
         }
 
@@ -190,7 +178,7 @@ public class RTGS_PopActivity extends AppCompatActivity{
 
                 if (response.body() != null) {
 
-                   String message = response.body().getMessage();
+                    String message = response.body().getMessage();
                     Log.d("message", message);
 
                     if (200 == response.body().getCode()) {
@@ -225,11 +213,11 @@ public class RTGS_PopActivity extends AppCompatActivity{
     }
 
     private void setView(List<RTGS_PopResponse.DataBean> dataBeanList) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        activityBasedListAdapter = new  RTGS_Pop_Adapter(getApplicationContext(), dataBeanList);
+        activityBasedListAdapter = new RTGS_Pop_Adapter(getApplicationContext(), dataBeanList);
         recyclerView.setAdapter(activityBasedListAdapter);
     }
 
-    }
+}
 

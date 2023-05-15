@@ -247,6 +247,9 @@ public class RepairWorkRequestApprovalRequestListRpEngResponse implements Parcel
         @SerializedName("route_code")
         private String route_code;
         @Expose
+        @SerializedName("rb_no")
+        private String rb_no;
+        @Expose
         @SerializedName("br_code")
         private String br_code;
         @Expose
@@ -309,6 +312,7 @@ public class RepairWorkRequestApprovalRequestListRpEngResponse implements Parcel
             customer_name = in.readString();
             job_no = in.readString();
             route_code = in.readString();
+            rb_no = in.readString();
             br_code = in.readString();
             request_on = in.readString();
             _id = in.readString();
@@ -706,6 +710,14 @@ public class RepairWorkRequestApprovalRequestListRpEngResponse implements Parcel
             this.route_code = route_code;
         }
 
+        public String getRb_no() {
+            return rb_no;
+        }
+
+        public void setRb_no(String rb_no) {
+            this.rb_no = rb_no;
+        }
+
         public String getBr_code() {
             return br_code;
         }
@@ -786,6 +798,7 @@ public class RepairWorkRequestApprovalRequestListRpEngResponse implements Parcel
             parcel.writeString(customer_name);
             parcel.writeString(job_no);
             parcel.writeString(route_code);
+            parcel.writeString(rb_no);
             parcel.writeString(br_code);
             parcel.writeString(request_on);
             parcel.writeString(_id);

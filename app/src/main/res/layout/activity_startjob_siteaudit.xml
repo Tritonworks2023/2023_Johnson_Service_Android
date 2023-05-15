@@ -7,26 +7,29 @@
     tools:context=".Service_Activity.BreakdownMRApprovel.StartJob_BreakdownMR_Activity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_bar">
+        android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/img_back"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_back_arrow"/>
+                android:src="@drawable/ic_back_arrow" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Audit"
-                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
+                android:text="Audit"
                 android:textColor="#ffffff"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -86,10 +89,10 @@
                 android:id="@+id/txt_datetime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:visibility="gone"
                 android:layout_gravity="center"
-                android:padding="5dp"/>
+                android:gravity="center"
+                android:padding="5dp"
+                android:visibility="gone" />
 
 
             <TextView
@@ -97,33 +100,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="Lat :"
-                android:visibility="gone"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/longitude"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:text="Long :"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                android:text="Long :"
-                />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:text="Address :"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                android:text="Address :"
-                />
+                android:visibility="gone" />
 
 
         </LinearLayout>
-
 
 
     </ScrollView>

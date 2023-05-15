@@ -1,5 +1,7 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
+import static com.triton.johnson_tap_app.utils.RestUtils.getContentType;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -71,8 +73,9 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
     Button btnSelection, btn_prev;
     int textlength = 0;
     ImageView iv_back, img_clearsearch, img_Pause;
-    String feedback_group = "", TAG = Feedback_DetailsActivity.class.getSimpleName(), message, Title, petimage, str2 = null, sstring = "", bd_dta, job_id,
-            str_feedback_details = "", service_title, feedbackGroup, pre_check, status;
+    String feedback_group = "", TAG = Feedback_DetailsActivity.class.getSimpleName(), message, Title,
+            petimage, str2 = null, sstring = "", bd_dta, job_id, str_feedback_details = "", service_title,
+            feedbackGroup, pre_check, status;
     String se_id, se_user_mobile_no, se_user_name, compno, sertype;
     List<Feedback_DetailsResponse.DataBean> breedTypedataBeanList;
     Feedback_DetailsAdapter activityBasedListAdapter;
@@ -80,6 +83,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
     SharedPreferences sharedPreferences;
     Context context;
     ArrayList<String> mydata = new ArrayList<>();
+    ArrayList<String> feedback_details_list = new ArrayList<>();
     ArrayList<String> outputList = null;
     TextView txt_Jobid, txt_Starttime;
     String str_StartTime, str_job_status = "", str_BDDetails = "";
@@ -157,11 +161,10 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 
         //  CommonUtil.dbUtil.reportDeletePreventiveListDelete(job_id,service_title);
 
-
-//            str2 = feedback_group.substring(1, feedback_group.length());
-//            String[] sArr = str2.split(",");
-//            List<String> sList = Arrays.asList(sArr);
-//            sstring = String.valueOf(sList);
+//        str2 = feedback_group.substring(1, feedback_group.length());
+//        String[] sArr = str2.split(",");
+//        List<String> sList = Arrays.asList(sArr);
+//        sstring = String.valueOf(sList);
 
         Spannable name_Upload = new SpannableString("Feedback Description ");
         name_Upload.setSpan(new ForegroundColorSpan(Feedback_DetailsActivity.this.getResources().getColor(R.color.colorAccent)), 0, name_Upload.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -179,13 +182,9 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 
         Log.e("Network", "" + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
-
             NoInternetDialog();
-
         } else {
             retrive_LocalValue();
-            jobFindResponseCall();
-
         }
 
         /*getBDDetails();
@@ -402,7 +401,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
     private void retrive_LocalValue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create((APIInterface.class));
-        Call<RetriveLocalValueBRResponse> call = apiInterface.retriveLocalValueBRCall(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), localRequest());
+        Call<RetriveLocalValueBRResponse> call = apiInterface.retriveLocalValueBRCall(getContentType(), localRequest());
         Log.i(TAG, "retrive_LocalValue: URL -> " + call.request().url().toString());
 
         call.enqueue(new Callback<RetriveLocalValueBRResponse>() {
@@ -418,9 +417,8 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
 
                         if (response.body().getData() != null) {
                             Log.d("msg", message);
-
                             str_feedback_details = response.body().getData().getFeedback_details();
-
+                            jobFindResponseCall();
                         }
                     } else {
                         ErrorMsgDialog(message);
@@ -429,8 +427,6 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
                 } else {
                     ErrorMsgDialog("");
                 }
-
-
             }
 
             @Override
@@ -450,7 +446,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<Feedback_DetailsResponse> call, @NonNull Response<Feedback_DetailsResponse> response) {
-                Log.w(TAG, "Jobno Find Response" + new Gson().toJson(response.body()));
+                Log.i(TAG, "onResponse: Feedback_DetailsResponse -> " + new Gson().toJson(response.body()));
 
                 if (response.body() != null) {
 
@@ -531,7 +527,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
     private void Job_status_update() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<Job_status_updateResponse> call = apiInterface.job_status_updateResponseCall(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), job_status_updateRequest());
+        Call<Job_status_updateResponse> call = apiInterface.job_status_updateResponseCall(getContentType(), job_status_updateRequest());
         Log.w(TAG, "SignupResponse url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<Job_status_updateResponse>() {
@@ -594,7 +590,7 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
     private void createLocalvalue() {
 
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(com.triton.johnson_tap_app.utils.RestUtils.getContentType(), createLocalRequest());
+        Call<SuccessResponse> call = apiInterface.createLocalvalueBD(getContentType(), createLocalRequest());
         Log.w(TAG, "Create Local Value Response url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<SuccessResponse>() {
@@ -795,6 +791,5 @@ public class Feedback_DetailsActivity extends AppCompatActivity implements UserT
         Intent intent = new Intent(context, Feedback_GroupActivity.class);
         intent.putExtra("status", status);
         startActivity(intent);
-
     }
 }

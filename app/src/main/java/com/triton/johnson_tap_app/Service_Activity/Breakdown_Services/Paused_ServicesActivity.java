@@ -1,7 +1,5 @@
 package com.triton.johnson_tap_app.Service_Activity.Breakdown_Services;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -45,14 +43,14 @@ public class Paused_ServicesActivity extends AppCompatActivity implements PetBre
 
     ImageView iv_back;
     String value = "";
-    String se_user_mobile_no, se_user_name, se_id, check_id, service_title;
+    String se_user_mobile_no, se_user_name, se_id, check_id, service_title, emp_Type = "", se_user_location = "";
     RecyclerView recyclerView;
     String message;
     PasusedListAdapter petBreedTypesListAdapter;
     TextView txt_Title, txt_NoRecords;
     Context context;
     private List<Pasused_ListResponse.DataBean> breedTypedataBeanList;
-    private String PetBreedType = "", status, networkStatus = "";
+    private String PetBreedType = "", status, networkStatus = "", TAG = Paused_ServicesActivity.class.getSimpleName();
 
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +69,10 @@ public class Paused_ServicesActivity extends AppCompatActivity implements PetBre
         se_user_mobile_no = sharedPreferences.getString("user_mobile_no", "default value");
         se_user_name = sharedPreferences.getString("user_name", "default value");
         service_title = sharedPreferences.getString("service_title", "Services");
-        txt_Title.setText(service_title);
+        emp_Type = sharedPreferences.getString("emp_type", "ABCD");
+        se_user_location = sharedPreferences.getString("user_location", "default value");
 
+        txt_Title.setText(service_title);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -109,7 +109,12 @@ public class Paused_ServicesActivity extends AppCompatActivity implements PetBre
             NoInternetDialog();
 
         } else {
-            jobFindResponseCall(se_user_mobile_no, service_title);
+
+            if (emp_Type.equalsIgnoreCase("Branch Head")) {
+                jobFindBranchHeadResponseCall(se_user_mobile_no, service_title);
+            } else {
+                jobFindResponseCall(se_user_mobile_no, service_title);
+            }
         }
     }
 
@@ -141,17 +146,18 @@ public class Paused_ServicesActivity extends AppCompatActivity implements PetBre
     private void jobFindResponseCall(String job_no, String title) {
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<Pasused_ListResponse> call = apiInterface.Pasused_listResponseCall(RestUtils.getContentType(), serviceRequest(job_no, title));
-        Log.w(TAG, "Jobno Find Response url  :%s" + " " + call.request().url().toString());
+
+        Log.i(TAG, "jobFindResponseCall: URL -> " + call.request().url().toString());
         call.enqueue(new Callback<Pasused_ListResponse>() {
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<Pasused_ListResponse> call, @NonNull Response<Pasused_ListResponse> response) {
-                Log.w(TAG, "Jobno Find Response" + new Gson().toJson(response.body()));
+
+                Log.i(TAG, "jobFindResponseCall: onResponse: Pasused_ListResponse-> " + new Gson().toJson(response.body()));
 
                 if (response.body() != null) {
 
                     message = response.body().getMessage();
-                    Log.d("message", message);
 
                     if (200 == response.body().getCode()) {
                         if (response.body().getData() != null) {
@@ -165,7 +171,6 @@ public class Paused_ServicesActivity extends AppCompatActivity implements PetBre
                             }
 
                             setBreedTypeView(breedTypedataBeanList);
-                            Log.d("dataaaaa", String.valueOf(breedTypedataBeanList));
 
                         } else {
                             ErrorMsgDialog(message);
@@ -185,12 +190,66 @@ public class Paused_ServicesActivity extends AppCompatActivity implements PetBre
 
             @Override
             public void onFailure(@NonNull Call<Pasused_ListResponse> call, @NonNull Throwable t) {
-                Log.e("Jobno Find ", "--->" + t.getMessage());
+
+                Log.i(TAG, "jobFindResponseCall: onFailure: error -> " + t.getMessage());
                 ErrorMsgDialog(t.getMessage());
 //                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void jobFindBranchHeadResponseCall(String job_no, String title) {
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<Pasused_ListResponse> call = apiInterface.BranchHeadPasused_listResponseCall(RestUtils.getContentType(), serviceRequest(job_no, title));
+
+        Log.i(TAG, "jobFindBranchHeadResponseCall: URL -> " + call.request().url().toString());
+        call.enqueue(new Callback<Pasused_ListResponse>() {
+
+            @Override
+            public void onResponse(@NonNull Call<Pasused_ListResponse> call, @NonNull Response<Pasused_ListResponse> response) {
+
+                Log.i(TAG, "jobFindBranchHeadResponseCall: onResponse: Pasused_ListResponse -> " + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+
+                    message = response.body().getMessage();
+
+                    if (200 == response.body().getCode()) {
+                        if (response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+
+                            if (breedTypedataBeanList.size() == 0) {
+
+                                recyclerView.setVisibility(View.GONE);
+                                txt_NoRecords.setVisibility(View.VISIBLE);
+                                txt_NoRecords.setText("No Records Found");
+                            }
+
+                            setBreedTypeView(breedTypedataBeanList);
+
+                        } else {
+                            ErrorMsgDialog(message);
+                        }
+                    } else if (400 == response.body().getCode()) {
+                        if (response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("There is already a user registered with this email id. Please add new email id")) {
+
+                        }
+                    } else {
+                        ErrorMsgDialog(message);
+//                        Toasty.warning(getApplicationContext(), "" + response.body().getMessage(), Toasty.LENGTH_LONG).show();
+                    }
+                } else {
+                    ErrorMsgDialog("");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Pasused_ListResponse> call, @NonNull Throwable t) {
+
+                Log.e(TAG, "jobFindBranchHeadResponseCall: onFailure: error -> " + t.getMessage());
+                ErrorMsgDialog(t.getMessage());
+//                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void ErrorMsgDialog(String strMsg) {
@@ -222,7 +281,10 @@ public class Paused_ServicesActivity extends AppCompatActivity implements PetBre
         Pasused_ListRequest service = new Pasused_ListRequest();
         service.setUser_mobile_no(job_no);
         service.setService_name(title);
-        Log.w(TAG, "Jobno Find Request " + new Gson().toJson(service));
+        service.setBr_code(se_user_location);
+
+        Log.i(TAG, "serviceRequest: Pasused_ListRequest -> " + new Gson().toJson(service));
+
         return service;
     }
 

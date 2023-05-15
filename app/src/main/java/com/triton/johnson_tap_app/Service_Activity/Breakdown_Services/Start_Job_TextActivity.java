@@ -68,11 +68,11 @@ public class Start_Job_TextActivity extends AppCompatActivity {
     ImageView iv_back;
     String TAG = Start_Job_TextActivity.class.getSimpleName(), se_user_mobile_no, se_user_name, se_id, check_id,
             service_title, str_job_id, message, str_job_status, currentDateandTime;
-    String compno, sertype, status, str_StartTime;
+    String compno, sertype, status = "", str_StartTime;
     TextView txt_DateandTime;
     GpsTracker gpsTracker;
     Geocoder geocoder;
-    double Latitude, Logitude;
+    double Latitude, Longitude;
     String address = "", networkStatus = "";
     List<Address> myAddress = new ArrayList<>();
     Context context;
@@ -92,7 +92,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
         txt_DateandTime = findViewById(R.id.txt_datetime);
 
 //        Latitude = Double.parseDouble("0.0");
-//        Logitude = Double.parseDouble("0.0");
+//        Longitude = Double.parseDouble("0.0");
 
         try {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -104,10 +104,11 @@ public class Start_Job_TextActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            // str_job_id = extras.getString("job_id");
-            status = extras.getString("status");
-            Log.e("Status", status);
+            if (extras.containsKey("status")) {
+                status = extras.getString("status");
+            }
         }
+        Log.i(TAG, "onCreate: status -> " + status);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         se_id = sharedPreferences.getString("_id", "default value");
@@ -119,9 +120,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
         compno = sharedPreferences.getString("compno", "123");
         sertype = sharedPreferences.getString("sertype", "123");
 
-        Log.e("Name", service_title);
-        Log.e("JobID", str_job_id);
-
+        Log.i(TAG, "onCreate: service_title -> " + service_title + " str_job_id -> " + str_job_id);
 
         Spannable name_Upload = new SpannableString("Start Job ");
         name_Upload.setSpan(new ForegroundColorSpan(Start_Job_TextActivity.this.getResources().getColor(R.color.colorAccent)), 0, name_Upload.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -131,12 +130,11 @@ public class Start_Job_TextActivity extends AppCompatActivity {
         text.append(name_Upload1);
 
         getMYLocation();
-        Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Lat : " + Latitude + "Long : " + Longitude + "Add : " + address, Toast.LENGTH_LONG).show();
 
 
         networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
-
-        Log.e("Network", "" + networkStatus);
+        Log.i(TAG, "onCreate: networkStatus -> " + networkStatus);
         if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
 
             NoInternetDialog();
@@ -153,24 +151,18 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Log.e("Status", "" + message);
-
-
-//                    getSapmleLoc();
+                    Log.i(TAG, "onClick: message -> " + message);
 
                     if (Objects.equals(message, "Not Started")) {
 
-                        Log.e("Hi", "inside");
                         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         currentDateandTime = df.format(Calendar.getInstance().getTime());
-                        Log.e("Start Time", "" + currentDateandTime);
+                        Log.i(TAG, "onClick: currentDateandTime -> " + currentDateandTime);
                         str_StartTime = currentDateandTime;
 
                         alert();
 
                     } else {
-
-                        Log.e("Hi", "outside");
 
                         Intent send = new Intent(Start_Job_TextActivity.this, BD_DetailsActivity.class);
                         send.putExtra("job_id", str_job_id);
@@ -178,7 +170,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("starttime", str_StartTime);
                         editor.putString("lati", String.valueOf(Latitude));
-                        editor.putString("long", String.valueOf(Logitude));
+                        editor.putString("long", String.valueOf(Longitude));
                         editor.putString("add", address);
                         editor.apply();
                         startActivity(send);
@@ -222,9 +214,9 @@ public class Start_Job_TextActivity extends AppCompatActivity {
 
                     } else {
 
-                        Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Lat : " + Latitude + "Long : " + Longitude + "Add : " + address, Toast.LENGTH_LONG).show();
 
-                        if (Latitude != 0.0 && Logitude != 0.0 && !Objects.equals(address, "")) {
+                        if (Latitude != 0.0 && Longitude != 0.0 && !Objects.equals(address, "")) {
 
                             Job_status_update();
 
@@ -282,7 +274,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -294,7 +286,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -306,7 +298,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -318,7 +310,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -330,7 +322,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -342,7 +334,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -354,7 +346,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -365,7 +357,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -439,7 +431,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
         custom.setSMU_SCH_SERTYPE(sertype);
         custom.setJOB_LOCATION(address);
         custom.setJOB_START_LAT((Latitude));
-        custom.setJOB_START_LONG((Logitude));
+        custom.setJOB_START_LONG((Longitude));
         Log.e("CompNo", "" + compno);
         Log.e("SertYpe", "" + sertype);
         Log.w(TAG, "loginRequest " + new Gson().toJson(custom));
@@ -538,9 +530,9 @@ public class Start_Job_TextActivity extends AppCompatActivity {
 
                 } else {
 
-                    Toast.makeText(context, "Lat : " + Latitude + "Long : " + Logitude + "Add : " + address, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Lat : " + Latitude + "Long : " + Longitude + "Add : " + address, Toast.LENGTH_LONG).show();
 
-                    if (Latitude != 0.0 && Logitude != 0.0 && !Objects.equals(address, "")) {
+                    if (Latitude != 0.0 && Longitude != 0.0 && !Objects.equals(address, "")) {
 
                         Job_status_update();
 
@@ -593,7 +585,6 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                 } else {
                     ErrorMsgDialog("");
                 }
-
 
             }
 
@@ -648,7 +639,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("starttime", str_StartTime);
                                 editor.putString("lati", String.valueOf(Latitude));
-                                editor.putString("long", String.valueOf(Logitude));
+                                editor.putString("long", String.valueOf(Longitude));
                                 editor.putString("add", address);
                                 editor.apply();
                                 startActivity(send);
@@ -689,7 +680,7 @@ public class Start_Job_TextActivity extends AppCompatActivity {
         custom.setSMU_SCH_SERTYPE(sertype);
         custom.setJOB_LOCATION(address);
         custom.setJOB_START_LAT((Latitude));
-        custom.setJOB_START_LONG((Logitude));
+        custom.setJOB_START_LONG((Longitude));
         Log.e("CompNo", "" + compno);
         Log.e("SertYpe", "" + sertype);
         Log.w(TAG, "loginRequest " + new Gson().toJson(custom));
@@ -704,24 +695,20 @@ public class Start_Job_TextActivity extends AppCompatActivity {
 
     private void getMYLocation() {
 
-        Log.e("Hi", "Getting Your Location");
         gpsTracker = new GpsTracker(Start_Job_TextActivity.this);
         if (gpsTracker.canGetLocation()) {
             Latitude = gpsTracker.getLatitude();
-            Logitude = gpsTracker.getLongitude();
-            Log.e("Lat ", Latitude + " Long: " + Logitude);
-
-            if (Latitude != 0.0 && Logitude != 0.0) {
+            Longitude = gpsTracker.getLongitude();
+            Log.i(TAG, "getMYLocation: Latitude -> " + Latitude + " Longitude -> " + Longitude);
+            if (Latitude != 0.0 && Longitude != 0.0) {
                 geocoder = new Geocoder(context, Locale.getDefault());
-
                 try {
                     myAddress = geocoder.getFromLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude(), 1);
                     address = myAddress.get(0).getAddressLine(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                Log.e("Address", address);
+                Log.i(TAG, "getMYLocation: address -> " + address);
             } else {
                 ErrorMyLocationAlert("Kindly enable the\nGPS Location and Try again");
 //                Toast.makeText(context, "Kindly enable the GPS Location and Try again", Toast.LENGTH_SHORT).show();
